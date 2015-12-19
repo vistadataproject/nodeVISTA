@@ -13,4 +13,4 @@ This work will create a series of _node.js_ command line commands such as a _VPR
 
 Specifically, these commands can demonstrate data-centric write-back works BEFORE the VDM Package or VDMN Module exists.
 
-See [issue 3](https://github.com/vistadataproject/nodeVistA/issues/3)
+See [Command Line node.js issue](https://github.com/vistadataproject/nodeVistA/issues/3)
