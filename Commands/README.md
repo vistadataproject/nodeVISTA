@@ -11,6 +11,6 @@ and there will be a command to let you invoke any FMQL command from the command-
   
 This work will create a series of _node.js_ command line commands such as a _VPR Invoker_, _Vitals Adder_ to try out node.js Javascript-VISTA interactions. _CPRS_, VISTA's client, must understand data arrangements made by data-changing commands.
 
-Specifically, these commands can show data write-back works BEFORE the VDM Package or VDMN Module exists.
+Specifically, these commands can demonstrate data-centric write-back works BEFORE the VDM Package or VDMN Module exists.
 
 See [issue 3](https://github.com/vistadataproject/nodeVistA/issues/3)
