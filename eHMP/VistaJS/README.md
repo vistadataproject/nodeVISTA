@@ -1,6 +1,4 @@
-From eHMP release made available by OSEHRA. 
-
-From: _VA Code in Flight Submission - Enterprise Health M/ehmp-r1.2.0/ehmp_1.2.0/rdk_1.2.0/rdk_1.2.0/rdk/product/production/rdk/VistaJS_
+__From:__ _VA Code in Flight Submission - Enterprise Health M/ehmp-r1.2.0/ehmp_1.2.0/rdk_1.2.0/rdk_1.2.0/rdk/product/production/rdk/VistaJS_ (eHMP from OSEHRA)
 
 VistaJS: a Javascript equivalent to various RPC Broker client side libraries in Python (in FMQL) and Java (in MDWS). 
 
