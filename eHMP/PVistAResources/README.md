@@ -17,7 +17,7 @@ KMR, a contractor on eHMP, host an older version of OSEHRA's eHMP release (v1.2)
 This _Resource Pattern_ and its supporting utilities is eHMP's main addition to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is appropriate that the "RDK" is called __node-vistaexpress__ in its package.json (see copies of server setup and scripts in _RDKServer_). 
 
 A bit more context:
-  * __Server Framework__: _RDK/node-vistaexpress_ is a peer of EWD, a VistA and NoSQL-aware node.js server framework. While _RDK_ is "express (async) with a design pattern", EWD is more task oriented and focused on synchronous, process bound services, a pattern required by non thread safe VistA. 
+  * __Server Framework__: _RDK/node-vistaexpress_ is a peer of [EWD](https://github.com/robtweed/ewd.js/tree/master), a VistA and NoSQL-aware node.js server framework. While _RDK_ is "express (async) with a design pattern", EWD is more task oriented and focused on synchronous, process bound services, a pattern required by non thread safe VistA. 
   * __Object Framework__: the _Resource Pattern_ implementation is akin to the [mongoose](http://mongoosejs.com/) object framework, a node.js framework for object oriented application development over MongoDB, the noSQL database. As expected of a widely used framework, _mongoose_ presents a more finished face with a well defined data definition (schema) workflow. It is something the Project plans to emulate in the VDM and VDMN modules.
 
 The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. Is _symmetric data-driven read-write_ better?
