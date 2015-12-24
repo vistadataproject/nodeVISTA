@@ -12,7 +12,9 @@ KMR, a contractor on eHMP, host an older version of OSEHRA's eHMP release (v1.2)
 
 In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is appropriate that the "RDK" is called __node-vistaexpress__ in its package.json (see copies of server setup and scripts in _RDKServer_) and this _node-vistaexpress_ is a peer of EWD, a VistA and NoSQL aware node.js server framework (oh the parallel plumbing we weave ...).
 
-The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. The directory "Tests" has eHMP's tests for some of these resources.
+The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. Is _symmetric data-driven read-write_ better?
+
+The directory "Tests" has eHMP's tests for some of these resources.
 
 ### Summary
 
