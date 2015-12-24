@@ -1,8 +1,9 @@
 ## RPC-backed, Patient (P) Resources
 
 __From:__  _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/ehmp-r1.2.0/ehmp_1.2.0/rdk_1.2.0/rdk_1.2.0/rdk/product/production/rdk/resources_ (June 2015)
-
 __Note:__ need to update from _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/eHMP/rdk-r1.3.M1/rdk/product/production/rdk/src/resources_ (more recent: Oct 2015)
+
+### Resources
 
 "Resources" are hand written node.js modules that implement REST calls running in an express server - the [express framework](http://expressjs.com/en/index.html) is the most widely used node.js web framework. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
 
@@ -14,7 +15,7 @@ This _Resource Pattern_ and its supporting utilities is eHMP's main addition to 
 
 A bit more context:
   * __Server Framework__: _RDK/node-vistaexpress_ is a peer of EWD, a VistA and NoSQL-aware node.js server framework. While _RDK_ is "express with a design pattern", EWD is more task oriented and focused on synchronous, process bound services, a pattern required by non thread safe VistA. 
-  * __Object Framework__: the _Resource Pattern_ implementation is akin to the [mongoose](http://mongoosejs.com/) object framework, a node.js framework for object oriented application development over MongoDB, the noSQL database. As expected of a widely used framework, _mongoose_ presents a more finished face and is something the Project plans to emulate in the VDM and VDMN modules.
+  * __Object Framework__: the _Resource Pattern_ implementation is akin to the [mongoose](http://mongoosejs.com/) object framework, a node.js framework for object oriented application development over MongoDB, the noSQL database. As expected of a widely used framework, _mongoose_ presents a more finished face with a well defined data definition (schema) workflow. It is something the Project plans to emulate in the VDM and VDMN modules.
 
 The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. Is _symmetric data-driven read-write_ better?
 
