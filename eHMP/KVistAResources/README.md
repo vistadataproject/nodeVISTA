@@ -6,3 +6,4 @@ __TODO__: ala PResources, find RPCs for the K resources.
 
 __PIKS__: eHMP does not break Resources or any of its code down according to _PIKS_. A P/K split fits eHMP code into the Project.
 
+For more information on eHMP's Node Server Framework, _RDK_, see the [README for PVistAResources](https://github.com/vistadataproject/nodeVistA/blob/master/eHMP/PVistAResources/README.md)
