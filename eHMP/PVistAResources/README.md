@@ -14,6 +14,20 @@ In effect, here are some additional patterns added onto to _express_ and other c
 
 The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. The directory "Tests" has eHMP's tests for some of these resources.
 
+### Summary
+
+  * invocation is behind an express-implemented REST interface (RDF Fetch Server?)
+  * that interface sometimes goes to JDS-backed Resources, sometimes to RPC-backed Resources
+  * the method parameter definitions lack commonplaces of data modeling like ranges, something that prevents data-driving the code
+  * each RPC needs a custom parser and formatter to become JSON-enabled. That's a lot of custom wrapper code!
+    * could get some automation by using VistA's file 8994 (remote procedure). It breaks out RPC parameters formally. Even though
+      this would only allow _native RPC JSON_, it would be a starting point
+  * as if VPR RPC doesn't exist
+    * RPC Resource's get responses differ from VPR equivalents
+    * IEN based, not URN based
+  * only some have test code 
+  * there are placeholders in this _production code_: see _lab_ writebacks
+
 ### Which Resources are RPC-backed
 
 We ran a simple grep: _grep -rnw 'Resources' -e "VistaJS.callRpc"_ to distinguish RPC-backed Resources from their JDS-only peers. They are ...
@@ -126,18 +140,4 @@ These two write resources have a _get_ sibling, _vitalsResource.js_.
   * uses two RPCs (_GMV V/M ALLDATA_, _GMV VITALS/CAT/QUAL_) in its operations 
   * reformats replies into "nice" JSON
   * _apiDocs_ is "new" - the write backs don't have it.
-
-### Summary
-
-  * invocation is behind an express-implemented REST interface (RDF Fetch Server?)
-  * that interface sometimes goes to JDS-backed Resources, sometimes to RPC-backed Resources
-  * the method parameter definitions lack commonplaces of data modeling like ranges, something that prevents data-driving the code
-  * each RPC needs a custom parser and formatter to become JSON-enabled. That's a lot of custom wrapper code!
-    * could get some automation by using VistA's file 8994 (remote procedure). It breaks out RPC parameters formally. Even though
-      this would only allow _native RPC JSON_, it would be a starting point
-  * as if VPR RPC doesn't exist
-    * RPC Resource's get responses differ from VPR equivalents
-    * IEN based, not URN based
-  * only some have test code 
-  * there are placeholders in this _production code_: see _lab_ writebacks
 
