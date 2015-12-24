@@ -1,10 +1,16 @@
-## Resources
+## Resources (RPC-backed)
 
 __From:__ _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/ehmp-r1.2.0/ehmp_1.2.0/rdk_1.2.0/rdk_1.2.0/rdk/product/production/rdk/resources_
 
-"Resources" appear to be hand written node.js modules that implement express server supported REST calls, some against JDS, some using VistA RPCs ("RPC-backed Resources"). The Project is interested in the RPC wrappers in order to compare VDM(N), data-centric write-back with the RPC alternative. 
+"Resources" are hand written node.js modules that implement express-server supported REST calls. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
 
-Directory Tests has tests for some of these resources.
+KMR, a contractor on eHMP, hosted OSEHRA's eHMP release on their [own git](https://github.com/KRMAssociatesInc/eHMP/tree/master/rdk/product/production/rdk) and started some badly needed documentation ...
+
+>> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems, and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, VistA Exchange API Resource Server.
+
+In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services.
+
+The Project is interested in the RPC-backed Resources in order to compare VDM(N), data-centric write-back with the RPC alternative. The directory "Tests" has tests for some of these resources.
 
 ### Which Resources are RPC-backed
 
