@@ -20,7 +20,7 @@ cdsadvice/getCDSAdviceDetail.js:113 | 'ORQQPX REMINDER DETAIL'
 cdsadvice/getCDSAdviceList.js:171 | 'ORQQPX REMINDERS LIST'
 &nbsp; | &nbsp; |
 __clinicalreminders__/getClinicalReminderDetail.js:65 | 'ORQQPX REMINDER DETAIL'
-clinicalreminders__/getClinicalReminderList.js:58 | 'ORQQPX REMINDERS LIST'
+__clinicalreminders__/getClinicalReminderList.js:58 | 'ORQQPX REMINDERS LIST'
 &nbsp; | &nbsp; |
 __healthsummaries__/healthSummariesResource.js:79 | REPORTLISTRPC
 __healthsummaries__/healthSummariesResource.js:268 | REPORTCONTENTRPC
