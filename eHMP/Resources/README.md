@@ -10,7 +10,7 @@ KMR, a contractor on eHMP, hosted OSEHRA's eHMP release on their [own git](https
 
 >> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems, and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, VistA Exchange API Resource Server.
 
-In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is interesting that the "RDK" is called _node-vistaexpress_ in its package.json (see copies of server setup and scripts in _RDKServer_) - an altogether better name. _node-vistaexpress_ is a peer of EWD, a VistA and NoSQL aware node.js server framework (oh the parallel plumbing we weave ...).
+In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is interesting that the "RDK" is called __node-vistaexpress__ in its package.json (see copies of server setup and scripts in _RDKServer_) - an altogether better name. _node-vistaexpress_ is a peer of EWD, a VistA and NoSQL aware node.js server framework (oh the parallel plumbing we weave ...).
 
 The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. The directory "Tests" has tests for some of these resources.
 
