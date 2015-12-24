@@ -1,6 +1,8 @@
 ## Resources (RPC-backed)
 
-__From:__ _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/ehmp-r1.2.0/ehmp_1.2.0/rdk_1.2.0/rdk_1.2.0/rdk/product/production/rdk/resources_
+__From:__  _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/ehmp-r1.2.0/ehmp_1.2.0/rdk_1.2.0/rdk_1.2.0/rdk/product/production/rdk/resources_ (June 2015)
+
+__Note:__ need to update from _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/eHMP/rdk-r1.3.M1/rdk/product/production/rdk/src/resources_ (more recent: Oct 2015)
 
 "Resources" are hand written node.js modules that implement express-server supported REST calls. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
 
@@ -8,13 +10,15 @@ KMR, a contractor on eHMP, hosted OSEHRA's eHMP release on their [own git](https
 
 >> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems, and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, VistA Exchange API Resource Server.
 
-In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services.
+In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is interesting that the "RDK" is called _node-vistaexpress_ in its package.json (see copies of server setup and scripts in _RDKServer_) - an altogether better name.
 
-The Project is interested in the RPC-backed Resources in order to compare VDM(N), data-centric write-back with the RPC alternative. The directory "Tests" has tests for some of these resources.
+The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. The directory "Tests" has tests for some of these resources.
 
 ### Which Resources are RPC-backed
 
 We ran a simple grep: _grep -rnw 'Resources' -e "VistaJS.callRpc"_ to get the data for ...
+
+TODO: run on Oct 2015 copy. Has _writebacknote_ etc. Need to update tests too
 
 We only copied these Resources from eHMP's OSEHRA release.
 
@@ -81,7 +85,7 @@ Notes:
   * _labs_ and _radiology_ just have placeholders for VistA interaction ("production code"). Left in as presume these will be/have been fleshed out
   * _visits_ is just JDS and so isn't here
 
-### A RPC-backed Resource - Vitals
+### An RPC-backed Resource - Vitals
 
 Vitals get three "resources". Two allow write back (entered in error and save resource) and one allows a variety of reads. All three in _resources/vitals_.
 
