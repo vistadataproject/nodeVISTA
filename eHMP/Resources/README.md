@@ -46,27 +46,27 @@ __vitals__/vitalsResource.js:228 | 'GMV V/M ALLDATA' |
 __vitals__/vitalsResource.js:230, 501 | 'GMV VITALS/CAT/QUAL' |
 __vitals__/writebackvitalssaveResource.js:228 | 'GMV ADD VM' |
 &nbsp; | &nbsp; |
-writeback__allergy__/enteredinerrorResource.js:100 | 'ORWDAL32 SAVE ALLERGY'
-writeback__allergy__/enteredinerrorResource.js:155 | 'ORWDAL32 CLINUSER'
-writeback__allergy__/operationaldataResource.js:103 | 'ORWDAL32 ALLERGY MATCH'
-writeback__allergy__/operationaldataResource.js:131 | 'ORWDAL32 SYMPTOMS'
-writeback__allergy__/writebackallergysaveResource.js:331 | 'ORWDAL32 SAVE ALLERGY'
+writeback __allergy__/enteredinerrorResource.js:100 | 'ORWDAL32 SAVE ALLERGY'
+writeback __allergy__/enteredinerrorResource.js:155 | 'ORWDAL32 CLINUSER'
+writeback __allergy__/operationaldataResource.js:103 | 'ORWDAL32 ALLERGY MATCH'
+writeback __allergy__/operationaldataResource.js:131 | 'ORWDAL32 SYMPTOMS'
+writeback __allergy__/writebackallergysaveResource.js:331 | 'ORWDAL32 SAVE ALLERGY'
 &nbsp; | &nbsp; |
-writeback__med__/operationaldataResource.js:479 | 'ORWDX LOADRSP'
-writeback__med__/operationaldataResource.js:567 | 'ORWUL FVIDX'
-writeback__med__/operationaldataResource.js:725 | getVistaRpcConfiguration(req.app.config, req.session.user.site),
-writeback__med__/operationaldataResource.js:804 | 'ORWDPS2 OISLCT'
-writeback__med__/operationaldataResource.js:879 | 'ORWDX DLGDEF'
-writeback__med__/operationaldataResource.js:915 | 'ORWDX2 DCREASON'
-writeback__med__/operationaldataResource.js:972 | 'ORWDPS2 DAY2QTY'
-writeback__med__/writebackmedicationsaveResource.js:127 | 'ORWDXA DC'
-writeback__med__/writebackmedicationsaveResource.js:214 | 'ORWDX SAVE'
-writeback__med__/writebackmedicationsaveResource.js:247 | 'ORWDX SEND'
-writeback__med__/writebackopmedorderResource.js:126 | 'ORWDX SAVE' | outpatient med is like vital, a one-file, stateless record
-writeback__med__/writebackopmedorderResource.js:156 | 'ORWDX SEND'
-writeback__med__/writebackopmedorderResource.js:254 | 'ORWUL FV4DG'
-writeback__med__/writebackopmedorderResource.js:262 | 'ORWUL FVIDX'
-writeback__med__/writebackopmedorderResource.js:281 | 'ORWUL FVSUB'
+writeback __med__/operationaldataResource.js:479 | 'ORWDX LOADRSP'
+writeback __med__/operationaldataResource.js:567 | 'ORWUL FVIDX'
+writeback __med__/operationaldataResource.js:725 | getVistaRpcConfiguration(req.app.config, req.session.user.site),
+writeback __med__/operationaldataResource.js:804 | 'ORWDPS2 OISLCT'
+writeback __med__/operationaldataResource.js:879 | 'ORWDX DLGDEF'
+writeback __med__/operationaldataResource.js:915 | 'ORWDX2 DCREASON'
+writeback __med__/operationaldataResource.js:972 | 'ORWDPS2 DAY2QTY'
+writeback __med__/writebackmedicationsaveResource.js:127 | 'ORWDXA DC'
+writeback __med__/writebackmedicationsaveResource.js:214 | 'ORWDX SAVE'
+writeback __med__/writebackmedicationsaveResource.js:247 | 'ORWDX SEND'
+writeback __med__/writebackopmedorderResource.js:126 | 'ORWDX SAVE' | outpatient med is like vital, a one-file, stateless record
+writeback __med__/writebackopmedorderResource.js:156 | 'ORWDX SEND'
+writeback __med__/writebackopmedorderResource.js:254 | 'ORWUL FV4DG'
+writeback __med__/writebackopmedorderResource.js:262 | 'ORWUL FVIDX'
+writeback __med__/writebackopmedorderResource.js:281 | 'ORWUL FVSUB'
 &nbsp; | &nbsp; |
 
 Notes:
