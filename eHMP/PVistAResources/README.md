@@ -4,13 +4,17 @@ __From:__  _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/ehmp-r1.2
 
 __Note:__ need to update from _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ Health\ M/eHMP/rdk-r1.3.M1/rdk/product/production/rdk/src/resources_ (more recent: Oct 2015)
 
-"Resources" are hand written node.js modules that implement express-server supported REST calls. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
+"Resources" are hand written node.js modules that implement REST calls running in an express server - the [express framework](http://expressjs.com/en/index.html) is the most widely used node.js web framework. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
 
 KMR, a contractor on eHMP, host an older version of OSEHRA's eHMP release (v1.2) on their [own git](https://github.com/KRMAssociatesInc/eHMP/tree/master/rdk/product/production/rdk) and started some badly needed documentation ...
 
->> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems [VistA, JDS], and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, VistA Exchange API Resource Server.
+>> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems [VistA, JDS], and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, _VistA Exchange API Resource Server_.
 
-In effect, here are some additional patterns added onto to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is appropriate that the "RDK" is called __node-vistaexpress__ in its package.json (see copies of server setup and scripts in _RDKServer_) and this _node-vistaexpress_ is a peer of EWD, a VistA and NoSQL aware node.js server framework (oh the parallel plumbing we weave ...).
+This _Resource Pattern_ and its supporting utilities is eHMP's main addition to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is appropriate that the "RDK" is called __node-vistaexpress__ in its package.json (see copies of server setup and scripts in _RDKServer_). 
+
+A bit more context:
+  * __Server Framework__: _RDK/node-vistaexpress_ is a peer of EWD, a VistA and NoSQL-aware node.js server framework. While _RDK_ is "express with a design pattern", EWD is more task oriented and focused on synchronous, process bound services, a pattern required by non thread safe VistA. 
+  * __Object Framework__: the _Resource Pattern_ implementation is akin to the [mongoose](http://mongoosejs.com/) object framework, a node.js framework for object oriented application development over MongoDB, the noSQL database. As expected of a widely used framework, _mongoose_ presents a more finished face and is something the Project plans to emulate in the VDM and VDMN modules.
 
 The Project is only interested in the RPC-backed Resources, the ones that talk to VistA. We will compare VDM(N), data-centric write-back with the RPC alternative. Is _symmetric data-driven read-write_ better?
 
