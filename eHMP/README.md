@@ -7,7 +7,7 @@ What is here: ... fill in
   * test code, focus on write-back which is RPC (direct to VISTA) centric
   * ...
 
-ie/ not putting in JDS and its MUMPS/Javascript etc as VistA Data will go "direct to VistA". By extension sync isn't interesting either
+ie/ not putting in JDS and its MUMPS/Javascript etc as VISTA Data will go "direct to VISTA". By extension sync isn't interesting either
 
 What is NOT here:
   * HMP UI

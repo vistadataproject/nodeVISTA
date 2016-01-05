@@ -3,5 +3,5 @@ __From:__ _VA Code in Flight Submission - Enterprise Health M/ehmp-r1.2.0/ehmp_1
 Subset to support _RPC backed Resources_ (found using _grep * -e "require('../resources"_)
 
   * Tests run in [Jasmine](http://jasmine.github.io/2.4/introduction.html)
-  * there are FHIR tests (for the FHIR module). These aren't included. They should be examined as part of VDMNmap
+  * there are FHIR tests (for the FHIR module). These aren't included. They should be examined as part of MVDMmap
   * kept _inputData_ as gives example JSON. Not referenced in these tests - need to find where ...
