@@ -34,7 +34,7 @@ Adding user `vdp' ...
 Enter new UNIX password: vistaisdata <------- our message is our password!
 ...
 >> cd /home/vdp
->> cp -r /vagrant/nodemExamples <------- we put _nodemExamples_ in the synchronized directory on our host machine
+>> cp -r /vagrant/nodemExamples . <------- we put _nodemExamples_ in the synchronized directory on our host machine
 >> cd nodemExamples
 ```
 
