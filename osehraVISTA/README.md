@@ -34,9 +34,9 @@ Enter new UNIX password: vistaisdata <------- our message is our password!
 >> cd nodemExamples
 ```
 
-Note: you need to copy _nodemExamples_ into osehraVISTA/VistA/Scripts/Install which OSEHRA's VAGRANT sets up to be a synchonized directory, accessible from _/vagrant_ inside the VM.
+_nodemExamples_? We copied _nodemExamples_ into _VistA/Scripts/Install_ which OSEHRA's VAGRANT sets up to be a synchonized directory, accessible from _/vagrant_ inside the VM.
 
-Now let's setup user _vdp_ so it can run the same node as _osehraVISTA_ and access the system using _nodem_ ...
+Now let's setup user _vdp_ so it can run the node used by _osehraVISTA_ ...
 
 ```text
 >> source /home/osehra/.nvm/nvm.sh <------ OSEHRA uses the _node version manager_
@@ -47,7 +47,7 @@ Now let's setup user _vdp_ so it can run the same node as _osehraVISTA_ and acce
 drwxrwxr-x 7 vdp vdp 4096 Jan 12 04:24 nodem
 ```
 
-Note that the first two lines are in user _osehra_'s .profile. (We will move appropriate setups into .profile of vdp). 
+Note that the first two lines are in user _osehra_'s _.profile_. (__TODO:__ move appropriate setups into .profile of vdp). 
 
 Now let's run some basic clients ...
 
