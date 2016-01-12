@@ -20,7 +20,7 @@ the provider 'virtualbox'. Note that if the URL does not have
 
 ```
 
-We will add to the osehraVISTA VM in VDP. Let's go into the VM and add a _vdp_ user so we have a place to assemble working code ...
+We will add to the osehraVISTA VM in VDP. Let's go into the VM and add a _vdp_ development user ...
 
 ```text
 >> vagrant ssh <-------- go into the VM
