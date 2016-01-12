@@ -4,8 +4,6 @@ The following outlines how to install osehraVISTA, view its EWD applications and
 
 ## Installing and Basic Use
 
-### 1. Install OSEHRA's VistA using Vagrant
-
 [OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear.
 
 Highlights beyond installing Vagrant, VirtualBox and Git ...
@@ -64,32 +62,3 @@ Basic nodem calls ...
 ...
 ```
 
-### 2. See the basic node.js hosted Applications
-
-Vagrant forwards ports 8080, 8000, 8001 that serve up three simple "EWD" (a node module) applications that access VistA using node.js.
-
-```text
-  config.vm.network :forwarded_port, guest: 8080, host: 8080 # EWD.js
-  config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWD.js Webservices
-  config.vm.network :forwarded_port, guest: 8081, host: 8081 # EWD VistA Term
-```
-
-_osehraVISTA embeds _EWD_. To see it, in your browser go to _https://localhost:8080/ewd/VistADemo/index.html_ to see ...
-
-![EWD Open Screen](/osehraVISTA/imgs/ewdOpenScreen.png)
-
-The access code is _fakedoc1_, the verify code is _1Doc!@#$_. This is a basic framework for a _backbone_ application served up by node.js over VistA.
-
-Other application - https://localhost:8080/ewd/ewdMonitor/index.html - password is _keepThisSecret!_.
-
-![EWD Monitor](/osehraVISTA/imgs/ewdMonitor.png)
-
-### 3. Add FMQL 
-
-Using the _vdp_ user, follow the [FMQL Install in Vagrant Instructions](https://github.com/caregraf/FMQL/wiki/Add-FMQL-to-OSEHRA-Vagrant-VistA)
-
-Note:
-  * extra step not in there: after doing _git clone_ of this repository into your Vagrant Ubuntu, copy an updated (osehraVISTA has its own encoding string) _brokerRPC.py_ into _/usr/local/fmql_ and restart Apache. 
-  * this will be replaced by node-based access
-
-![FMQL from host machine](/osehraVISTA/imgs/FMQLRamblerToVagrant8082.png)
