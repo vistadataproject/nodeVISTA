@@ -21,23 +21,46 @@ Bringing machine 'OSEHRA VistA - Ubuntu' up with 'virtualbox' provider...
 [OSEHRA VistA - Ubuntu] Box 'Official Ubuntu 12.04 current daily Cloud Image amd64' was not found. Fetching box from specified URL for
 the provider 'virtualbox'. Note that if the URL does not have
 ... lot's of stuff that's takes 20+ minutes
->> 
 
 ```
 
-We will __add to this Vagrant setup__ in VDP. Let's add a _vdp_ user so we have a place to assemble working code ...
+We will add to the osehraVISTA VM in VDP. Let's go into the VM and add a _vdp_ user so we have a place to assemble working code ...
 
 ```text
+>> vagrant ssh <-------- got into the VM
 >> sudo adduser vdp
->> sudo chmod a+w /home/vdp <------ crude: will move over to this user properly later
+Adding user `vdp' ...
+...
+Enter new UNIX password: vistaisdata <------- our message is our password!
+...
 >> cd /home/vdp
+>> cp -r /vagrant/nodemExamples <------- we put _nodemExamples_ in the synchronized directory on our host machine
+>> cd nodemExamples
 ```
 
-git is already enabled on Vagrant Ubuntu so we can 
+Note: _nodemExamples_ should be copied into osehraVISTA/VistA/Scripts/Install which OSEHRA's VAGRANT sets up to be a synchonized directory, accessible from _/vagrant_ inside the VM.
+
+Now let's setup user _vdp_ so it can run the same node as _osehraVISTA_ and access the system using _nodem_ ...
 
 ```text
->> cd /home/vdp
->> git clone https://github.com/vdp/vistaref.git
+>> source /home/osehra/.nvm/nvm.sh <------ OSEHRA uses the _node version manager_
+>> nvm use 0.12 <------ this is the version it wants (the only one it installs!)
+>> source /home/osehra/etc/env <------ sets up variables ???
+>> npm install --quiet nodem >> nodemInstall.log <------ installs nodem in node_modules
+>> ls node_modules
+drwxrwxr-x 7 vdp vdp 4096 Jan 12 04:24 nodem
+```
+
+Note that the first two lines are in user _osehra_'s .profile. (We will move appropriate setups into .profile of vdp). 
+
+Now let's run some basic clients ...
+
+```text
+>> node basic.js 
+Basic nodem calls ...
+	db.open returns: {"ok":1,"result":"1"}
+	...
+>> node vistaFunctions.js
 ...
 ```
 
