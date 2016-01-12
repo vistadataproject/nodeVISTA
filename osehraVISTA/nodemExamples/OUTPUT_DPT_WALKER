@@ -1,0 +1,530 @@
+Reporting on Patient Global (DPT):
+
+META:	PATIENT^2I^25^25
+
+IEN:	1
+	0:	"CARTER,DAVID JR^M^3010302^^^^^^000000113^^Santa Monica^6^^^56^3151003^^^^1^1"
+	0.29:	"^^^^^^^^^^^"
+	0.3:	"N^^^^^^^^^^^^^"
+	0.36:	"^^^^^^^^^^^^"
+	0.362:	"^^^^^^^^^^^^^^^^^^^"
+	0.52:	"^^^^^^^"
+	NAME:	59
+	SSN:	""
+	TYPE:	13
+	VET:	"N"
+
+IEN:	2
+	0:	"FOURTEEN,PATIENT N^M^2560708^^^^^^444678924^^Boston^25^^^1^3151003^^^^1"
+	0.24:	"^^RONDA,"
+	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	DAC:	"^"
+	MPIMB:	"N"
+	NAME:	"60^^^^^61"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	3
+	0:	"SEVEN,PATIENT G^M^2450502^^^^^^656771234^^Boston^25^^^1^3151003^^^^1"
+	0.24:	"^^DAVIS,"
+	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	DAC:	"^"
+	MPIMB:	"N"
+	NAME:	"62^^^^^63"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	4
+	0:	"ONE,PATIENT A^M^2591003^^^^^^543236666^^Flower Mound^48^^^1^3151003^^^^1"
+	0.24:	"^^SHEEP,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"64^^^^^65"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	5
+	0:	"NINE,PATIENT I^M^2660101^^^^^^323123456^^Providence^44^^^1^3151003^^^^1"
+	0.24:	"^^DOUGLAS,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"66^^^^^67"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	6
+	0:	"ELEVEN,PATIENT K^M^2330501^^^^^^354623902^^London^25^^^1^3151003^^^^1"
+	0.24:	"^^ALBUM,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"68^^^^^69"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	7
+	0:	"SIX,PATIENT F^M^2410501^^^^^^656451234^^Canton^25^^^1^3151003^^^^1"
+	0.24:	"^^JOHNS,"
+	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	DAC:	"^"
+	MPIMB:	"N"
+	NAME:	"70^^^^^71"
+	SSN:	""
+	TYPE:	12
+	VET:	"Y"
+
+IEN:	8
+	0:	"TWENTYTWO,PATIENT V^M^2440706^^^^^^323556789^^Monmoth^34^^^1^3151003^^^^1"
+	0.24:	"^^ROGERS,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"72^^^^^73"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	9
+	0:	"NINETEEN,PATIENT S^M^2550910^^^^^^311776543^^Weare^33^^^1^3151003^^^^1"
+	0.24:	"^^RUDINSK,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"74^^^^^75"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	10
+	0:	"THREE,PATIENT C^M^2540330^^^^^^333224444^^Ripley^25^^^1^3151003^^^^1"
+	0.24:	"^^CLAPP,"
+	0.29:	"^^^^^^^^^^^"
+	0.3:	"N^^^^^^^^^^^^^"
+	0.36:	"^^^^^^^^^^^^"
+	0.362:	"^^^^^^^^^^^^^^^^^^^"
+	0.52:	"^^^^^^^"
+	MPIMB:	"N"
+	NAME:	"76^^^^^77"
+	S:	MULTIPLE ... TODO
+	SSN:	""
+	TYPE:	12
+	VET:	"N"
+
+IEN:	11
+	0:	"TWO,PATIENT B^M^2320226^^^^^^888776666^^kingsland^4^^^1^3151003^^^^1"
+	0.1:	"TESTWARD1"
+	0.102:	17
+	0.103:	1
+	0.104:	55
+	0.1041:	54
+	0.105:	14
+	0.109:	0
+	0.24:	"^^RIVERS,"
+	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	DAC:	"S^3151003"
+	MPIMB:	"N"
+	NAME:	"78^^^^^79"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	12
+	0:	"TWENTY,PATIENT T^M^2570102^^^^^^411555432^^Concord^33^^^1^3151003^^^^1"
+	0.24:	"^^PARSONS,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"80^^^^^81"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	13
+	0:	"TWENTYFOUR,PATIENT X^M^2480302^^^^^^323554567^^Trenton^34^^^1^3151003^^^^1"
+	0.24:	"^^ZEBRA,"
+	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	MPIMB:	"N"
+	NAME:	"82^^^^^83"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	14
+	0:	"TWENTYTHREE,PATIENT W^M^2460605^^^^^^123455678^^Redbank^34^^^1^3151003^^^^1"
+	0.24:	"^^BRADY,"
+	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	MPIMB:	"N"
+	NAME:	"84^^^^^85"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	15
+	0:	"TEN,PATIENT J^M^2330401^^^^^^345238901^^Manchester^33^^^1^3151003^^^^1"
+	0.24:	"^^WHITE,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"86^^^^^87"
+	SSN:	""
+	TYPE:	12
+	VET:	"Y"
+
+IEN:	16
+	0:	"SEVENTEEN,PATIENT Q^M^2670607^^^^^^212118765^^Beverly^25^^^1^3151003^^^^1"
+	0.24:	"^^CASH,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"88^^^^^89"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	17
+	0:	"SIXTEEN,PATIENT P^M^2660506^^^^^^222559876^^Wakefield^44^^^1^3151003^^^^1"
+	0.24:	"^^REASON,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"90^^^^^91"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	18
+	0:	"EIGHT,PATIENT H^M^2330401^^^^^^655447777^^Boston^25^^^1^3151003^^^^1"
+	0.24:	"^^SMITH,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"92^^^^^93"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	19
+	0:	"FIFTEEN,PATIENT O^M^2450414^^^^^^301444321^^Boston^25^^^1^3151003^^^^1"
+	0.24:	"^^SMITH,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"94^^^^^95"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	20
+	0:	"TWELVE,PATIENT L^M^2330601^^^^^^345678233^^Liverpool^25^^^1^3151003^^^^1"
+	0.24:	"^^ABBEY,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"96^^^^^97"
+	SSN:	""
+	TYPE:	12
+	VET:	"Y"
+
+IEN:	21
+	0:	"FIVE,PATIENT E^M^2220501^^^^^^656454321^^Springfield^25^^^1^3151003^^^^1"
+	0.24:	"^^JOHNSON,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"98^^^^^99"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	22
+	0:	"TWENTYONE,PATIENT U^M^2590304^^^^^^711667890^^New London^^^^1^3151003^^^^1"
+	0.24:	"^^RAM,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"100^^^^^101"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	23
+	0:	"EIGHTEEN,PATIENT R^M^2690708^^^^^^111257654^^Lincoln^33^^^1^3151003^^^^1"
+	0.24:	"^^FOOBAR,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"102^^^^^103"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	24
+	0:	"THIRTEEN,PATIENT M^M^2540707^^^^^^323678904^^Boston^25^^^1^3151003^^^^1"
+	0.24:	"^^ROAD,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"104^^^^^105"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+IEN:	25
+	0:	"FOUR,PATIENT D^M^2550401^^^^^^666551234^^Providence^44^^^1^3151003^^^^1"
+	0.24:	"^^SMITH,"
+	0.3:	"Y"
+	MPIMB:	"N"
+	NAME:	"106^^^^^107"
+	SSN:	""
+	TYPE:	1
+	VET:	"Y"
+
+INDEX:	AAP
+	Value:	54	IEN:	11
+INDEX:	ACA
+	Value:	14	IEN:	11
+INDEX:	ACN
+	Value:	TESTWARD1	IEN:	11
+INDEX:	ADOB
+	Value:	2220501	IEN:	21
+	Value:	2320226	IEN:	11
+	Value:	2330401	IEN:	15
+	Value:	2330401	IEN:	18
+	Value:	2330501	IEN:	6
+	Value:	2330601	IEN:	20
+	Value:	2410501	IEN:	7
+	Value:	2440706	IEN:	8
+	Value:	2450414	IEN:	19
+	Value:	2450502	IEN:	3
+	Value:	2460605	IEN:	14
+	Value:	2480302	IEN:	13
+	Value:	2540330	IEN:	10
+	Value:	2540707	IEN:	24
+	Value:	2550401	IEN:	25
+	Value:	2550910	IEN:	9
+	Value:	2560708	IEN:	2
+	Value:	2570102	IEN:	12
+	Value:	2590304	IEN:	22
+	Value:	2591003	IEN:	4
+	Value:	2660101	IEN:	5
+	Value:	2660506	IEN:	17
+	Value:	2670607	IEN:	16
+	Value:	2690708	IEN:	23
+	Value:	3010302	IEN:	1
+INDEX:	AMPIMIS
+	:1 - 
+	:2 - 
+	:3 - 
+	:4 - 
+	:5 - 
+	:6 - 
+	:7 - 
+	:8 - 
+	:9 - 
+	:10 - 
+	:11 - 
+	:12 - 
+	:13 - 
+	:14 - 
+	:15 - 
+	:16 - 
+	:17 - 
+	:18 - 
+	:19 - 
+	:20 - 
+	:21 - 
+	:22 - 
+	:23 - 
+	:24 - 
+	:25 - 
+INDEX:	ANEW
+	:1 - 
+	:2 - 
+	:3 - 
+	:4 - 
+	:5 - 
+	:6 - 
+	:7 - 
+	:8 - 
+	:9 - 
+	:10 - 
+	:11 - 
+	:12 - 
+	:13 - 
+	:14 - 
+	:15 - 
+	:16 - 
+	:17 - 
+	:18 - 
+	:19 - 
+	:20 - 
+	:21 - 
+	:22 - 
+	:23 - 
+	:24 - 
+	:25 - 
+INDEX:	APR
+	Value:	55	IEN:	11
+INDEX:	APTYPE
+	Value:	1	IEN:	2
+	Value:	1	IEN:	3
+	Value:	1	IEN:	4
+	Value:	1	IEN:	5
+	Value:	1	IEN:	6
+	Value:	1	IEN:	8
+	Value:	1	IEN:	9
+	Value:	1	IEN:	11
+	Value:	1	IEN:	12
+	Value:	1	IEN:	13
+	Value:	1	IEN:	14
+	Value:	1	IEN:	16
+	Value:	1	IEN:	17
+	Value:	1	IEN:	18
+	Value:	1	IEN:	19
+	Value:	1	IEN:	21
+	Value:	1	IEN:	22
+	Value:	1	IEN:	23
+	Value:	1	IEN:	24
+	Value:	1	IEN:	25
+	Value:	12	IEN:	7
+	Value:	12	IEN:	10
+	Value:	12	IEN:	15
+	Value:	12	IEN:	20
+	Value:	13	IEN:	1
+INDEX:	AS
+	Value:	S	IEN:	11
+INDEX:	ASADM
+	Value:	3151003	IEN:	10
+INDEX:	ASX
+	Value:	M	IEN:	1
+	Value:	M	IEN:	2
+	Value:	M	IEN:	3
+	Value:	M	IEN:	4
+	Value:	M	IEN:	5
+	Value:	M	IEN:	6
+	Value:	M	IEN:	7
+	Value:	M	IEN:	8
+	Value:	M	IEN:	9
+	Value:	M	IEN:	10
+	Value:	M	IEN:	11
+	Value:	M	IEN:	12
+	Value:	M	IEN:	13
+	Value:	M	IEN:	14
+	Value:	M	IEN:	15
+	Value:	M	IEN:	16
+	Value:	M	IEN:	17
+	Value:	M	IEN:	18
+	Value:	M	IEN:	19
+	Value:	M	IEN:	20
+	Value:	M	IEN:	21
+	Value:	M	IEN:	22
+	Value:	M	IEN:	23
+	Value:	M	IEN:	24
+	Value:	M	IEN:	25
+INDEX:	ATEST
+	:1 - 
+INDEX:	ATR
+	Value:	1	IEN:	11
+INDEX:	B
+	Value:	CARTER,DAVID JR	IEN:	1
+	Value:	EIGHT,PATIENT H	IEN:	18
+	Value:	EIGHTEEN,PATIENT R	IEN:	23
+	Value:	ELEVEN,PATIENT K	IEN:	6
+	Value:	FIFTEEN,PATIENT O	IEN:	19
+	Value:	FIVE,PATIENT E	IEN:	21
+	Value:	FOUR,PATIENT D	IEN:	25
+	Value:	FOURTEEN,PATIENT N	IEN:	2
+	Value:	NINE,PATIENT I	IEN:	5
+	Value:	NINETEEN,PATIENT S	IEN:	9
+	Value:	ONE,PATIENT A	IEN:	4
+	Value:	SEVEN,PATIENT G	IEN:	3
+	Value:	SEVENTEEN,PATIENT Q	IEN:	16
+	Value:	SIX,PATIENT F	IEN:	7
+	Value:	SIXTEEN,PATIENT P	IEN:	17
+	Value:	TEN,PATIENT J	IEN:	15
+	Value:	THIRTEEN,PATIENT M	IEN:	24
+	Value:	THREE,PATIENT C	IEN:	10
+	Value:	TWELVE,PATIENT L	IEN:	20
+	Value:	TWENTY,PATIENT T	IEN:	12
+	Value:	TWENTYFOUR,PATIENT X	IEN:	13
+	Value:	TWENTYONE,PATIENT U	IEN:	22
+	Value:	TWENTYTHREE,PATIENT W	IEN:	14
+	Value:	TWENTYTWO,PATIENT V	IEN:	8
+	Value:	TWO,PATIENT B	IEN:	11
+INDEX:	BS
+	Value:	1234	IEN:	3
+	Value:	1234	IEN:	7
+	Value:	1234	IEN:	25
+	Value:	3456	IEN:	5
+	Value:	3902	IEN:	6
+	Value:	4321	IEN:	19
+	Value:	4321	IEN:	21
+	Value:	4444	IEN:	10
+	Value:	4567	IEN:	13
+	Value:	5432	IEN:	12
+	Value:	5678	IEN:	14
+	Value:	6543	IEN:	9
+	Value:	6666	IEN:	4
+	Value:	6666	IEN:	11
+	Value:	6789	IEN:	8
+	Value:	7654	IEN:	23
+	Value:	7777	IEN:	18
+	Value:	7890	IEN:	22
+	Value:	8233	IEN:	20
+	Value:	8765	IEN:	16
+	Value:	8901	IEN:	15
+	Value:	8904	IEN:	24
+	Value:	8924	IEN:	2
+	Value:	9876	IEN:	17
+	Value:	0113	IEN:	1
+INDEX:	BS5
+	Value:	C0113	IEN:	1
+	Value:	E3902	IEN:	6
+	Value:	E7654	IEN:	23
+	Value:	E7777	IEN:	18
+	Value:	F1234	IEN:	25
+	Value:	F4321	IEN:	19
+	Value:	F4321	IEN:	21
+	Value:	F8924	IEN:	2
+	Value:	N3456	IEN:	5
+	Value:	N6543	IEN:	9
+	Value:	O6666	IEN:	4
+	Value:	S1234	IEN:	3
+	Value:	S1234	IEN:	7
+	Value:	S8765	IEN:	16
+	Value:	S9876	IEN:	17
+	Value:	T4444	IEN:	10
+	Value:	T4567	IEN:	13
+	Value:	T5432	IEN:	12
+	Value:	T5678	IEN:	14
+	Value:	T6666	IEN:	11
+	Value:	T6789	IEN:	8
+	Value:	T7890	IEN:	22
+	Value:	T8233	IEN:	20
+	Value:	T8901	IEN:	15
+	Value:	T8904	IEN:	24
+INDEX:	CN
+	Value:	TESTWARD1	IEN:	11
+INDEX:	SSN
+	Value:	111257654	IEN:	23
+	Value:	123455678	IEN:	14
+	Value:	212118765	IEN:	16
+	Value:	222559876	IEN:	17
+	Value:	301444321	IEN:	19
+	Value:	311776543	IEN:	9
+	Value:	323123456	IEN:	5
+	Value:	323554567	IEN:	13
+	Value:	323556789	IEN:	8
+	Value:	323678904	IEN:	24
+	Value:	333224444	IEN:	10
+	Value:	345238901	IEN:	15
+	Value:	345678233	IEN:	20
+	Value:	354623902	IEN:	6
+	Value:	411555432	IEN:	12
+	Value:	444678924	IEN:	2
+	Value:	543236666	IEN:	4
+	Value:	655447777	IEN:	18
+	Value:	656451234	IEN:	7
+	Value:	656454321	IEN:	21
+	Value:	656771234	IEN:	3
+	Value:	666551234	IEN:	25
+	Value:	711667890	IEN:	22
+	Value:	888776666	IEN:	11
+	Value:	000000113	IEN:	1
