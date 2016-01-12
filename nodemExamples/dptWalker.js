@@ -99,3 +99,5 @@ while ((node = db.next(node)).result !== "") {
     } 
     console.log();
 }
+
+db.close();
