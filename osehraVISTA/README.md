@@ -1,10 +1,8 @@
-# osehraVISTA 
+# osehraVISTA to nodeVISTA
 
 The following outlines how to install osehraVISTA and enable nodeVISTA development.
 
-[OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear.
-
-Highlights beyond installing Vagrant, VirtualBox and Git ...
+[OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear. The most important steps are ...
 
 ```text
 
@@ -20,7 +18,7 @@ the provider 'virtualbox'. Note that if the URL does not have
 
 ```
 
-We will add to the osehraVISTA VM in VDP. Let's go into the VM and add a _vdp_ development user ...
+We will add to the osehraVISTA VM in VDP. Let's go into the VM and add a _vdp_ development user and become that user ...
 
 ```text
 >> vagrant ssh <-------- go into the VM
@@ -29,25 +27,37 @@ Adding user `vdp' ...
 ...
 Enter new UNIX password: vistaisdata <------- our message is our password!
 ...
+>> sudo usermod -a -G sudo vdp <-------- like user osehra, add vdp to the sudo group
 >> cd /home/vdp
->> cp -r /vagrant/nodemExamples . <------- we put _nodemExamples_ in the synchronized directory on our host machine
->> cd nodemExamples
+>> su vdp
+password: vistaisdata
 ```
 
-_nodemExamples_? We copied _nodemExamples_ into _VistA/Scripts/Install_ which OSEHRA's VAGRANT sets up to be a synchonized directory, accessible from _/vagrant_ inside the VM.
-
-Now let's setup user _vdp_ so it can run the node used by _osehraVISTA_ ...
+Now let's make sure VDP user can run OSEHRA VISTA's version of node and use _nodem_ ...
 
 ```text
 >> source /home/osehra/.nvm/nvm.sh <------ OSEHRA uses "Node Version Manager"
 >> nvm use 0.12 <------ this is the version it wants (the only one it installs!)
->> source /home/osehra/etc/env <------ sets up variables ???
+>> source /home/osehra/etc/env <------ sets up environment variables
+>> export gtm_tmp=/tmp <------ avoid permission issues/linking problems for vdp user
+```
+
+Note: we will move the settings above into vdp user's _.profile_ and _.bashrc_ so they mirror those of user _osehra_.
+
+We need a copy of _nodemExamples_ in the VM. OSEHRA's Vagrant synchronizes the host directory _VistA/Scripts/Install_  with _/vagrant_ in the VM. On the host, copy _nodemExamples_ into that synchronized directory and in the VM ...
+
+```text
+>> cp -r /vagrant/nodemExamples . <------- we put _nodemExamples_ in the synchronized directory on our host machine
+>> cd nodemExamples
+```
+
+We need to make the module _nodem_ available to _node_ in order to run _nodemExamples_ ...
+
+```text
 >> npm install --quiet nodem >> nodemInstall.log <------ installs nodem in node_modules
 >> ls node_modules
 drwxrwxr-x 7 vdp vdp 4096 Jan 12 04:24 nodem
 ```
-
-Note that the first two lines are in user _osehra_'s _.profile_. (__TODO:__ move appropriate setups into .profile of vdp). 
 
 Now let's run some basic clients ...
 
@@ -56,7 +66,7 @@ Now let's run some basic clients ...
 Basic nodem calls ...
 	db.open returns: {"ok":1,"result":"1"}
 	...
->> node vistaFunctions.js
+>> node readFunctions.js
 ...
 ```
 
