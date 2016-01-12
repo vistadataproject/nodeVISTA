@@ -1,8 +1,6 @@
 # osehraVISTA 
 
-The following outlines how to install osehraVISTA, view its EWD applications and add FMQL to it.
-
-## Installing and Basic Use
+The following outlines how to install osehraVISTA and enable nodeVISTA development.
 
 [OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear.
 
@@ -25,7 +23,7 @@ the provider 'virtualbox'. Note that if the URL does not have
 We will add to the osehraVISTA VM in VDP. Let's go into the VM and add a _vdp_ user so we have a place to assemble working code ...
 
 ```text
->> vagrant ssh <-------- got into the VM
+>> vagrant ssh <-------- go into the VM
 >> sudo adduser vdp
 Adding user `vdp' ...
 ...
@@ -36,7 +34,7 @@ Enter new UNIX password: vistaisdata <------- our message is our password!
 >> cd nodemExamples
 ```
 
-Note: _nodemExamples_ should be copied into osehraVISTA/VistA/Scripts/Install which OSEHRA's VAGRANT sets up to be a synchonized directory, accessible from _/vagrant_ inside the VM.
+Note: you need to copy _nodemExamples_ into osehraVISTA/VistA/Scripts/Install which OSEHRA's VAGRANT sets up to be a synchonized directory, accessible from _/vagrant_ inside the VM.
 
 Now let's setup user _vdp_ so it can run the same node as _osehraVISTA_ and access the system using _nodem_ ...
 
