@@ -39,7 +39,7 @@ _nodemExamples_? We copied _nodemExamples_ into _VistA/Scripts/Install_ which OS
 Now let's setup user _vdp_ so it can run the node used by _osehraVISTA_ ...
 
 ```text
->> source /home/osehra/.nvm/nvm.sh <------ OSEHRA uses the _node version manager_
+>> source /home/osehra/.nvm/nvm.sh <------ OSEHRA uses "Node Version Manager"
 >> nvm use 0.12 <------ this is the version it wants (the only one it installs!)
 >> source /home/osehra/etc/env <------ sets up variables ???
 >> npm install --quiet nodem >> nodemInstall.log <------ installs nodem in node_modules
