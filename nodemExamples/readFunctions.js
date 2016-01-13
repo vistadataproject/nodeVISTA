@@ -2,24 +2,12 @@
  * VistA Functions - simple wrapped VistA functions
  *
  * - some that need no wrapper as return is simple?
- * - VPR 
  *
  * Things to note:
  * - simple lookups that return strings and take pass by value arguments are
  *   the "sweet spot"
  *   - small variation where expect VistA globals to be initialized (U etc)
  * - if pass by reference then need wrappers
- *
- * Moving to three scenarios: JS ala in process MUMPS with no security, JS
- * secured and traced in standard, new node way and JS security via RPC
- * broker security where entry points must be declared for the broker along
- * with keys to use with an application context. 
- *
- * TODO: https://nikolaytopalov.wordpress.com/2014/02/25/calling-vista-remote-procedure-call-in-ewd-js/
- * ie/ work thru exs ... main is LIST form of RPC
- * ie/ want VPR too => LIST form => see EWD on it as ex above uses it
- *
- * EXPAND TO TRY SOME FUNCTIONS: see all about RPCs
  */
 
 var nodem = require('nodem');
@@ -76,9 +64,6 @@ var fs = require('fs'),
     fd;
 fd = fs.openSync("NODEFUNC.m", "a");
 fs.writeSync(fd, 'INIT() S U="^" Q "DONE"\n\n');
-fs.writeSync(fd, 'WRAPVPRV() N RET D VERSION^VPRD(.RET) Q RET  ; Wrap VPR version - ref to value\n\n');
-// Could generalize this for all RPCs of a certain kind
-fs.writeSync(fd, 'WRAPVPRG(DFN) N VPR D GET^VPRDJ(.VPR,DFN) Q VPR  ; Wrap VPR get - global TMP name to value\n\n'); 
 fs.writeSync(fd, 'zwr(glvn) s:$e(glvn)\'="^" glvn="^"_glvn zwr @glvn q ""');
 
 /*
@@ -114,28 +99,9 @@ console.log("\t2nd time lucky - initialized U etc: %j", db.function({function: "
  * Pass by reference handling - need to have wrappers that turn by reference returns into explicit returns OR
  * pass back the name of global that holds a return value.
  */
-console.log("\n\nNeed wrappers for pass by reference return values whether simple literals or globals");
-
-// https://github.com/OSEHRA/VistA-M/blob/master/Packages/Virtual%20Patient%20Record/Routines/VPRD.m
-// VPR Stuff - first simple version wrapper with pass by reference 
-console.log("\n\tSimple VPR Wrapper invocation - version: %j", db.function({function: "WRAPVPRV^NODEFUNC"}));
-
-// RPC motif: 1. VPR GET PATIENT DATA JSON - case of TMP ie/ ^TMP("VPR",$J) which needs to be killed after use
-// when ZWR it ... seems like thinks DFN 0 ... issue of FILTER argument ... but how to pass?
-var rpcGlobal = db.function({function: "WRAPVPRG^NODEFUNC", arguments: ["patientId", "1"]}).result;
-console.log("\r\tVPR (RPC Pattern) invocation through wrapper - adds to global: %j", rpcGlobal); 
-// db.kill({global: 'TMP', subscripts: [jobnumber]});
-console.log(process.pid);
-console.log("Data: %j", db.get({ global: "TMP", subscripts: ["VPR", process.pid] }));
 
 // ... to see TMP ... taken from David Wicksell's zwrite.js
 // db.function({function: "zwr^NODEFUNC", arguments: ["TMP"]});
-
-console.log("\n");
-
-/*
- * Pass by value returns - nearly all VPR (see VPRD.m) even VERSION^VPRD as called over RPC Broker
- */
 
 // No need to keep around 
 fs.closeSync(fd);
