@@ -9,9 +9,7 @@
  * Ex invocation ...
  *   ./invokeFMQL.js "DESCRIBE 2 LIMIT 10"
  *
- * TODO: fmql.js module allowing fmql.query("DESCRIBE 2-1") etc. which
- * should return JSON (and soon JSON-LD). Note for use in web service
- * may make JSON.parse optional ie/ just pass through the JSON string.
+ * IMPORTANT: FMQL (MUMPS) must be installed in the VISTA
  */
 
 var args = process.argv.slice(2);
