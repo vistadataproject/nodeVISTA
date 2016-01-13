@@ -94,6 +94,9 @@ JSON: {"results":[{"name":{"fmId":".01","fmType":"4","value":"NINETEEN,PATIENT S
 ...
 
 >> node invokeFMQL.js "DESCRIBE TYPE 2"
+Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(19809,\"FMQLJSON\")","arguments":["DESCRIBE TYPE 2"]}
+
+JSON: {"name":"PATIENT","number":"2","location":"^DPT(","count":"25","lastIEN":"25","description":{"fmId":"-1","fmType":"5","type":"typed-literal","datatype":"http:/
 ...
 ```
 
