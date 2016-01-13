@@ -55,4 +55,6 @@ json = JSON.parse(json);
 console.log("\nJSON: %j\n", json);
 db.kill({"global": "TMP", subscripts: [process.pid]});
 
+db.close();
+
 
