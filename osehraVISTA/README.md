@@ -44,19 +44,19 @@ Now let's make sure VDP user can run OSEHRA VISTA's version of node and use _nod
 
 Note: we will move the settings above into vdp user's _.profile_ and _.bashrc_ so they mirror those of user _osehra_.
 
-We need a copy of _nodemExamples_ in the VM. OSEHRA's Vagrant synchronizes the host directory _VistA/Scripts/Install_  with _/vagrant_ in the VM. On the host, copy _nodemExamples_ into that synchronized directory and in the VM ...
-
-```text
->> cp -r /vagrant/nodemExamples . <------- we put _nodemExamples_ in the synchronized directory on our host machine
->> cd nodemExamples
-```
-
-We need to make the module _nodem_ available to _node_ in order to run _nodemExamples_ ...
+We need to make the module _nodem_ available to _node_ in order to run _nodemExamples_ and _commands_ ...
 
 ```text
 >> npm install --quiet nodem >> nodemInstall.log <------ installs nodem in node_modules
 >> ls node_modules
 drwxrwxr-x 7 vdp vdp 4096 Jan 12 04:24 nodem
+```
+
+Now we need a copy of _nodemExamples_ in the VM. OSEHRA's Vagrant synchronizes the host directory _VistA/Scripts/Install_  with _/vagrant_ in the VM. On the host, copy _nodemExamples_ into that synchronized directory and in the VM ...
+
+```text
+>> cp -r /vagrant/nodemExamples . <------- we put _nodemExamples_ in the synchronized directory on our host machine
+>> cd nodemExamples
 ```
 
 Now let's run some basic clients ...
@@ -66,7 +66,7 @@ Now let's run some basic clients ...
 Basic nodem calls ...
 	db.open returns: {"ok":1,"result":"1"}
 	...
->> node readFunctions.js
+>> node patterns.js
 ...
 ```
 
@@ -87,16 +87,13 @@ __Note:__ normally you load FMQL using KIDS. The KIDS has more than MUMPS code -
 And to see FMQL ...
 
 ```text
->> node invokeFMQL.js "DESCRIBE 2-9"
-Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(18899,\"FMQLJSON\")","arguments":["DESCRIBE 2-9"]}
-
-JSON: {"results":[{"name":{"fmId":".01","fmType":"4","value":"NINETEEN,PATIENT S","type":"literal"},"uri":{"fmId":".01","fmType":"7","val
-...
-
->> node invokeFMQL.js "DESCRIBE TYPE 2"
-Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(19809,\"FMQLJSON\")","arguments":["DESCRIBE TYPE 2"]}
-
-JSON: {"name":"PATIENT","number":"2","location":"^DPT(","count":"25","lastIEN":"25","description":{"fmId":"-1","fmType":"5","type":"typed-literal","datatype":"http:/
-...
+>> node fmql.js
+Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(29852,\"FMQLJSON\")","arguments":["DESCRIBE 2-1"]}
+{ results: 
+   [ { name: 
+        { fmId: '.01',
+          fmType: '4',
+          value: 'CARTER,DAVID JR',
+          type: 'literal' },
 ```
 
