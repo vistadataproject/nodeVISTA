@@ -2,7 +2,7 @@
 
 The following outlines how to install osehraVISTA and enable nodeVISTA development.
 
-[OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear. Once you have Vagrant and VBox setup, you ...
+[OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear. Once you have Vagrant and VirtualBox and Git setup, you ...
 
 ```text
 >> git clone https://github.com/OSEHRA/VistA.git
