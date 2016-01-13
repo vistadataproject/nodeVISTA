@@ -5,7 +5,7 @@ To run ...
 ```text
 >> vagrant ssh <-------- enter the osehra VISTA VM
 >> cd vdp
->> git clone "THIS REPOSITORY"
+>> git clone https://github.com/vistadataproject/nodeVISTA.git <------ this repository
 >> cd nodeVISTA/nodemExamples
 ```
 
