@@ -70,3 +70,28 @@ Basic nodem calls ...
 ...
 ```
 
+Let's add FMQL in a "quick and dirty way" ...
+
+```text
+>> cd /tmp
+>> git clone https://github.com/caregraf/FMQL.git
+>> cd FMQL/MUMPS
+>> cp *.m /home/osehra/p
+>> sudo chown osehra:osehra /home/osehra/p/FMQL*
+```
+
+__Note:__ normally you load FMQL using KIDS. The KIDS has more than MUMPS code - it has a key used for providing secure RPC based access. But ala the MUMPS installed by the EWD installer used in the _osehraVISTA_ build, here we ignore security keys and just add MUMPS directly to the GT/M based system. This suffices for now as we're just developing and calling all routines directly without any Broker based security.
+
+And to see FMQL ...
+
+```text
+>> node invokeFMQL.js "DESCRIBE 2-9"
+Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(18899,\"FMQLJSON\")","arguments":["DESCRIBE 2-9"]}
+
+JSON: {"results":[{"name":{"fmId":".01","fmType":"4","value":"NINETEEN,PATIENT S","type":"literal"},"uri":{"fmId":".01","fmType":"7","val
+...
+
+>> node invokeFMQL.js "DESCRIBE TYPE 2"
+...
+```
+
