@@ -78,6 +78,8 @@ Let's add FMQL in a "quick and dirty way" ...
 >> cd FMQL/MUMPS
 >> cp *.m /home/osehra/p
 >> sudo chown osehra:osehra /home/osehra/p/FMQL*
+>> cd
+>> rm -r /tmp/FMQL
 ```
 
 __Note:__ normally you load FMQL using KIDS. The KIDS has more than MUMPS code - it has a key used for providing secure RPC based access. But ala the MUMPS installed by the EWD installer used in the _osehraVISTA_ build, here we ignore security keys and just add MUMPS directly to the GT/M based system. This suffices for now as we're just developing and calling all routines directly without any Broker based security.
