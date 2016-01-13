@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Calling some basic nodem routines - open db, about
  * db, globals list ...

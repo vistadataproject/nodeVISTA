@@ -1,10 +1,251 @@
-root@vagrant-ubuntu-precise-64:/home/hokukahu/lpi/vistaref/nodemExamples# node ./invokeFMQL.js "DESCRIBE 2-1"
-Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(5828,\"FMQLJSON\")","arguments":["DESCRIBE 2-1"]}
+Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(27854,\"FMQLJSON\")","arguments":["DESCRIBE 2-1"]}
+{ results: 
+   [ { name: 
+        { fmId: '.01',
+          fmType: '4',
+          value: 'CARTER,DAVID JR',
+          type: 'literal' },
+       uri: 
+        { fmId: '.01',
+          fmType: '7',
+          value: '2-1',
+          type: 'uri',
+          label: 'PATIENT/CARTER,DAVID JR' },
+       sex: 
+        { fmId: '.02',
+          fmType: '3',
+          value: 'MALE',
+          type: 'literal',
+          ivalue: 'M' },
+       date_of_birth: 
+        { fmId: '.03',
+          fmType: '1',
+          value: '2001-03-02T00:00:00Z',
+          type: 'typed-literal',
+          datatype: 'xsd:dateTime' },
+       check_for_duplicate: 
+        { fmId: '.083',
+          fmType: '12',
+          value: 'true',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       social_security_number: { fmId: '.09', fmType: '4', value: '000000113', type: 'literal' },
+       place_of_birth_city: 
+        { fmId: '.092',
+          fmType: '4',
+          value: 'Santa Monica',
+          type: 'literal' },
+       place_of_birth_state: 
+        { fmId: '.093',
+          fmType: '7',
+          value: '5-6',
+          type: 'uri',
+          label: 'STATE/CALIFORNIA',
+          sameAs: 'VA:5-6',
+          sameAsLabel: 'CALIFORNIA' },
+       who_entered_patient: 
+        { fmId: '.096',
+          fmType: '7',
+          value: '200-57',
+          type: 'uri',
+          label: 'NEW PERSON/CLERK,JOE',
+          sameAs: 'LOCAL' },
+       date_entered_into_file: 
+        { fmId: '.097',
+          fmType: '1',
+          value: '2016-01-12T00:00:00Z',
+          type: 'typed-literal',
+          datatype: 'xsd:dateTime' },
+       service_connected: 
+        { fmId: '.301',
+          fmType: '12',
+          value: 'false',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       test_patient_indicator: 
+        { fmId: '.6',
+          fmType: '12',
+          value: 'true',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       name_components: 
+        { fmId: '1.01',
+          fmType: '7',
+          value: '20-60',
+          type: 'uri',
+          label: 'NAME COMPONENTS/2' },
+       type: 
+        { fmId: '391',
+          fmType: '7',
+          value: '391-13',
+          type: 'uri',
+          label: 'TYPE OF PATIENT/NON-VETERAN (OTHER)' },
+       veteran_y_n: 
+        { fmId: '1901',
+          fmType: '12',
+          value: 'false',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' } } ],
+  fmql: { OP: 'DESCRIBE', URI: '2-1', CSTOP: '10' } }
 
-JSON: {"results":[{"name":{"fmId":".01","fmType":"4","value":"CARTER,DAVID JR","type":"literal"},"uri":{"fmId":".01","fmType":"7","value":"2-1","type":"uri","label":"PATIENT/CARTER,DAVID JR"},"sex":{"fmId":".02","fmType":"3","value":"MALE","type":"literal","ivalue":"M"},"date_of_birth":{"fmId":".03","fmType":"1","value":"2001-03-02T00:00:00Z","type":"typed-literal","datatype":"xsd:dateTime"},"check_for_duplicate":{"fmId":".083","fmType":"12","value":"true","type":"typed-literal","datatype":"xsd:boolean"},"social_security_number":{"fmId":".09","fmType":"4","value":"000000113","type":"literal"},"place_of_birth_city":{"fmId":".092","fmType":"4","value":"Santa Monica","type":"literal"},"place_of_birth_state":{"fmId":".093","fmType":"7","value":"5-6","type":"uri","label":"STATE/CALIFORNIA","sameAs":"VA:5-6","sameAsLabel":"CALIFORNIA"},"who_entered_patient":{"fmId":".096","fmType":"7","value":"200-56","type":"uri","label":"NEW PERSON/CLERK,JOE","sameAs":"LOCAL"},"date_entered_into_file":{"fmId":".097","fmType":"1","value":"2015-10-03T00:00:00Z","type":"typed-literal","datatype":"xsd:dateTime"},"service_connected":{"fmId":".301","fmType":"12","value":"false","type":"typed-literal","datatype":"xsd:boolean"},"test_patient_indicator":{"fmId":".6","fmType":"12","value":"true","type":"typed-literal","datatype":"xsd:boolean"},"name_components":{"fmId":"1.01","fmType":"7","value":"20-59","type":"uri","label":"NAME COMPONENTS/2"},"type":{"fmId":"391","fmType":"7","value":"391-13","type":"uri","label":"TYPE OF PATIENT/NON-VETERAN (OTHER)"},"veteran_y_n":{"fmId":"1901","fmType":"12","value":"false","type":"typed-literal","datatype":"xsd:boolean"}}],"fmql":{"OP":"DESCRIBE","URI":"2-1","CSTOP":"10"}}
 
-root@vagrant-ubuntu-precise-64:/home/hokukahu/lpi/vistaref/nodemExamples# ./invokeFMQL.js "DESCRIBE 50_68-1"
-Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(5950,\"FMQLJSON\")","arguments":["DESCRIBE 50_68-1"]}
 
-JSON: {"results":[{"name":{"fmId":".01","fmType":"4","value":"ATROPINE SO4 0.4MG TAB","type":"literal"},"uri":{"fmId":".01","fmType":"7","value":"50_68-1","type":"uri","label":"VA PRODUCT/ATROPINE SO4 0.4MG TAB","sameAs":"VA:4000624","sameAsLabel":"VA PRODUCT-ATROPINE SO4 0.4MG TAB"},"va_generic_name":{"fmId":".05","fmType":"7","value":"50_6-1","type":"uri","label":"VA GENERIC/ATROPINE","sameAs":"VA:4019591","sameAsLabel":"VA GENERIC-ATROPINE"},"dosage_form":{"fmId":"1","fmType":"7","value":"50_606-63","type":"uri","label":"DOSAGE FORM/TAB"},"strength":{"fmId":"2","fmType":"4","value":"0.4","type":"literal"},"units":{"fmId":"3","fmType":"7","value":"50_607-20","type":"uri","label":"DRUG UNITS/MG"},"national_formulary_name":{"fmId":"4","fmType":"4","value":"ATROPINE TAB","type":"literal"},"va_print_name":{"fmId":"5","fmType":"4","value":"ATROPINE SULFATE 0.4MG TAB","type":"literal"},"va_product_identifier":{"fmId":"6","fmType":"4","value":"A0457","type":"literal"},"transmit_to_cmop":{"fmId":"7","fmType":"12","value":"true","type":"typed-literal","datatype":"xsd:boolean"},"va_dispense_unit":{"fmId":"8","fmType":"7","value":"50_64-1","type":"uri","label":"VA DISPENSE UNIT/TAB"},"active_ingredients":{"fmId":"14","type":"cnodes","file":"50_6814","value":[{"active_ingredients":{"fmId":".01","fmType":"7","value":"50_416-1","type":"uri","label":"DRUG INGREDIENTS/ATROPINE SULFATE","sameAs":"VA:4017410","sameAsLabel":"DRUG INGREDIENTS-ATROPINE SULFATE"},"uri":{"fmId":".01","fmType":"7","value":"50_6814-1_1","type":"uri","label":"ACTIVE INGREDIENTS/ATROPINE SULFATE"},"strength":{"fmId":"1","fmType":"4","value":"0.4","type":"literal"},"units":{"fmId":"2","fmType":"7","value":"50_607-20","type":"uri","label":"DRUG UNITS/MG"}}]},"primary_va_drug_class":{"fmId":"15","fmType":"7","value":"50_605-43","type":"uri","label":"VA DRUG CLASS/AU350","sameAs":"VA:4021554","sameAsLabel":"VA DRUG CLASS-AU350"},"national_formulary_indicator":{"fmId":"17","fmType":"12","value":"false","type":"typed-literal","datatype":"xsd:boolean"},"cs_federal_schedule":{"fmId":"19","fmType":"3","value":"Unscheduled","type":"literal","ivalue":"0"},"single_multi_source_product":{"fmId":"20","fmType":"3","value":"Single source","type":"literal","ivalue":"S"},"inactivation_date":{"fmId":"21","fmType":"1","value":"2014-06-12T00:00:00Z","type":"typed-literal","datatype":"xsd:dateTime"},"dss_number":{"fmId":"30","fmType":"2","value":"1","type":"literal"},"override_df_dose_chk_exclusion":{"fmId":"31","fmType":"12","value":"false","type":"typed-literal","datatype":"xsd:boolean"},"create_default_possible_dosage":{"fmId":"40","fmType":"12","value":"true","type":"typed-literal","datatype":"xsd:boolean"},"master_entry_for_vuid":{"fmId":"99.98","fmType":"12","value":"true","type":"typed-literal","datatype":"xsd:boolean"},"vuid":{"fmId":"99.99","fmType":"4","value":"4000624","type":"literal"},"effective_date_time":{"fmId":"99.991","type":"cnodes","file":"50_6899","value":[{"effective_date_time":{"fmId":".01","fmType":"1","value":"2005-03-10T00:00:00Z","type":"typed-literal","datatype":"xsd:dateTime"},"uri":{"fmId":".01","fmType":"7","value":"50_6899-1_1","type":"uri","label":"EFFECTIVE DATE_TIME/2005-03-10T00:00:00Z"},"status":{"fmId":".02","fmType":"3","value":"ACTIVE","type":"literal","ivalue":"1"}}]},"service_code":{"fmId":"2000","fmType":"2","value":"600001","type":"literal"}}],"fmql":{"OP":"DESCRIBE","URI":"50_68-1","CSTOP":"10"}}
-
+vdp@vagrant-ubuntu-precise-64:~/nodemExamples$ ./invokeFMQL.js "DESCRIBE 50_68-1"
+Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(27880,\"FMQLJSON\")","arguments":["DESCRIBE 50_68-1"]}
+{ results: 
+   [ { name: 
+        { fmId: '.01',
+          fmType: '4',
+          value: 'ATROPINE SO4 0.4MG TAB',
+          type: 'literal' },
+       uri: 
+        { fmId: '.01',
+          fmType: '7',
+          value: '50_68-1',
+          type: 'uri',
+          label: 'VA PRODUCT/ATROPINE SO4 0.4MG TAB',
+          sameAs: 'VA:4000624',
+          sameAsLabel: 'VA PRODUCT-ATROPINE SO4 0.4MG TAB' },
+       va_generic_name: 
+        { fmId: '.05',
+          fmType: '7',
+          value: '50_6-1',
+          type: 'uri',
+          label: 'VA GENERIC/ATROPINE',
+          sameAs: 'VA:4019591',
+          sameAsLabel: 'VA GENERIC-ATROPINE' },
+       dosage_form: 
+        { fmId: '1',
+          fmType: '7',
+          value: '50_606-63',
+          type: 'uri',
+          label: 'DOSAGE FORM/TAB' },
+       strength: { fmId: '2', fmType: '4', value: '0.4', type: 'literal' },
+       units: 
+        { fmId: '3',
+          fmType: '7',
+          value: '50_607-20',
+          type: 'uri',
+          label: 'DRUG UNITS/MG' },
+       national_formulary_name: { fmId: '4', fmType: '4', value: 'ATROPINE TAB', type: 'literal' },
+       va_print_name: 
+        { fmId: '5',
+          fmType: '4',
+          value: 'ATROPINE SULFATE 0.4MG TAB',
+          type: 'literal' },
+       va_product_identifier: { fmId: '6', fmType: '4', value: 'A0457', type: 'literal' },
+       transmit_to_cmop: 
+        { fmId: '7',
+          fmType: '12',
+          value: 'true',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       va_dispense_unit: 
+        { fmId: '8',
+          fmType: '7',
+          value: '50_64-1',
+          type: 'uri',
+          label: 'VA DISPENSE UNIT/TAB' },
+       active_ingredients: 
+        { fmId: '14',
+          type: 'cnodes',
+          file: '50_6814',
+          value: 
+           [ { active_ingredients: 
+                { fmId: '.01',
+                  fmType: '7',
+                  value: '50_416-1',
+                  type: 'uri',
+                  label: 'DRUG INGREDIENTS/ATROPINE SULFATE',
+                  sameAs: 'VA:4017410',
+                  sameAsLabel: 'DRUG INGREDIENTS-ATROPINE SULFATE' },
+               uri: 
+                { fmId: '.01',
+                  fmType: '7',
+                  value: '50_6814-1_1',
+                  type: 'uri',
+                  label: 'ACTIVE INGREDIENTS/ATROPINE SULFATE' },
+               strength: { fmId: '1', fmType: '4', value: '0.4', type: 'literal' },
+               units: 
+                { fmId: '2',
+                  fmType: '7',
+                  value: '50_607-20',
+                  type: 'uri',
+                  label: 'DRUG UNITS/MG' } } ] },
+       primary_va_drug_class: 
+        { fmId: '15',
+          fmType: '7',
+          value: '50_605-43',
+          type: 'uri',
+          label: 'VA DRUG CLASS/AU350',
+          sameAs: 'VA:4021554',
+          sameAsLabel: 'VA DRUG CLASS-AU350' },
+       national_formulary_indicator: 
+        { fmId: '17',
+          fmType: '12',
+          value: 'false',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       cs_federal_schedule: 
+        { fmId: '19',
+          fmType: '3',
+          value: 'Unscheduled',
+          type: 'literal',
+          ivalue: '0' },
+       single_multi_source_product: 
+        { fmId: '20',
+          fmType: '3',
+          value: 'Single source',
+          type: 'literal',
+          ivalue: 'S' },
+       inactivation_date: 
+        { fmId: '21',
+          fmType: '1',
+          value: '2014-06-12T00:00:00Z',
+          type: 'typed-literal',
+          datatype: 'xsd:dateTime' },
+       dss_number: { fmId: '30', fmType: '2', value: '1', type: 'literal' },
+       override_df_dose_chk_exclusion: 
+        { fmId: '31',
+          fmType: '12',
+          value: 'false',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       create_default_possible_dosage: 
+        { fmId: '40',
+          fmType: '12',
+          value: 'true',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       master_entry_for_vuid: 
+        { fmId: '99.98',
+          fmType: '12',
+          value: 'true',
+          type: 'typed-literal',
+          datatype: 'xsd:boolean' },
+       vuid: { fmId: '99.99', fmType: '4', value: '4000624', type: 'literal' },
+       effective_date_time: 
+        { fmId: '99.991',
+          type: 'cnodes',
+          file: '50_6899',
+          value: 
+           [ { effective_date_time: 
+                { fmId: '.01',
+                  fmType: '1',
+                  value: '2005-03-10T00:00:00Z',
+                  type: 'typed-literal',
+                  datatype: 'xsd:dateTime' },
+               uri: 
+                { fmId: '.01',
+                  fmType: '7',
+                  value: '50_6899-1_1',
+                  type: 'uri',
+                  label: 'EFFECTIVE DATE_TIME/2005-03-10T00:00:00Z' },
+               status: 
+                { fmId: '.02',
+                  fmType: '3',
+                  value: 'ACTIVE',
+                  type: 'literal',
+                  ivalue: '1' } } ] },
+       service_code: { fmId: '2000', fmType: '2', value: '600001', type: 'literal' } } ],
+  fmql: { OP: 'DESCRIBE', URI: '50_68-1', CSTOP: '10' } }

@@ -9,7 +9,9 @@
  * Ex invocation ...
  *   ./invokeFMQL.js "DESCRIBE 2 LIMIT 10"
  *
- * IMPORTANT: FMQL (MUMPS) must be installed in the VISTA
+ * TODO: fmql.js module allowing fmql.query("DESCRIBE 2-1") etc. which
+ * should return JSON (and soon JSON-LD). Note for use in web service
+ * may make JSON.parse optional ie/ just pass through the JSON string.
  */
 
 var args = process.argv.slice(2);
@@ -18,6 +20,7 @@ if (args.length != 1) {
   process.exit(1);
 }
 
+var util = require('util');
 var nodem = require('nodem');
 var db = new nodem.Gtm();
 
@@ -50,9 +53,11 @@ while (true) {
     }
 }
 json = JSON.parse(json);
-console.log("\nJSON: %j\n", json);
+// console.log("\nJSON: %j\n", json);
+console.log(util.inspect(json, {depth: null, colors: true}));
+console.log("\n\n");
 db.kill({"global": "TMP", subscripts: [process.pid]});
 
-db.close();
+db.close()
 
 

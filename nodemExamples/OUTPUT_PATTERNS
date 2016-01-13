@@ -1,0 +1,16 @@
+vdp@vagrant-ubuntu-precise-64:~/nodemExamples$ ./patterns.js 
+
+SIMPLE FUNCTIONS: simple return value, arguments pass by value
+
+	version from nodem: {"ok":1,"function":"version^v4wNode","result":"Node.js Adaptor for GT.M: Version: 0.6.2 (FWSLC); GT.M V6.2-000 Linux x86_64"}
+	DT currently in VistA: 3160113
+
+	VERSION of package - left out package argument so errorCode: 150373850 -- message: VERSION+3^XPDUTL,%GTM-E-UNDEF, Undefined local variable: X
+	VERSION of FileMan package: "22.0"
+
+	snomed body structure in STATCHK: "1^7106536^3050701"
+	icd lookup (EXP^LEXCODE): "-1^Active code/expression not found for ICD-9-CM code 250.81 on 01/13/2016"
+
+	Expect error of undefined code from GT.M because VistA constant U is not defined: {"ok":0,"errorCode":150373850,"errorMessage":"CODE+78^LEXTRAN,%GTM-E-UNDEF, Undefined local variable: U"}
+		... inserting function to set U etc and invoking it
+	2nd time lucky - initialized U etc: {"ok":1,"function":"CODE^LEXTRAN","result":"1^123037004","arguments":["123037004","SCT"]}

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Showcase node global traversal by walking the DPT (Patient) FileMan global
  *

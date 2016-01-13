@@ -1,13 +1,20 @@
+#!/usr/bin/env node
+
 /**
  * VistA Functions - simple wrapped VistA functions
  *
- * - some that need no wrapper as return is simple?
+ * Direct invocation of pure local and RPC Broker accessible functions through
+ * nodem. Shows how to dynamically wrap those where either [1] return values
+ * or [2] arguments are passed by reference.
  *
- * Things to note:
- * - simple lookups that return strings and take pass by value arguments are
- *   the "sweet spot"
- *   - small variation where expect VistA globals to be initialized (U etc)
- * - if pass by reference then need wrappers
+ * Also shows how some constants normally initialized by the Kernel or the 
+ * RPC Broker need to be explicitly initialized by this process in order
+ * for VISTA functions to run.
+ *
+ * TODO: round out many examples of TMP walking and wrapping by reference
+ * function calls.
+ *
+ * NOTE: issue of ,,,, missing optionals below
  */
 
 var nodem = require('nodem');
@@ -23,7 +30,7 @@ process.on('uncaughtException', function(err) {
   process.exit(1);
 });
 
-// important - allow for dynamic code addition but also must be set up here
+// Important - allow for dynamic code addition but also must be set up here
 // before gtm loads code ie/ before db.function or other db calls are made.
 // Copied from David Wicksell's zwrite.js
 process.env.gtmroutines = process.env.gtmroutines + ' .';
@@ -62,9 +69,10 @@ console.log("\ticd lookup (EXP^LEXCODE): %j", db.function({function: "EXP^LEXCOD
 var fs = require('fs'),
     ret,
     fd;
-fd = fs.openSync("NODEFUNC.m", "a");
+fd = fs.openSync("NODEFUNC.m", "w");
 fs.writeSync(fd, 'INIT() S U="^" Q "DONE"\n\n');
 fs.writeSync(fd, 'zwr(glvn) s:$e(glvn)\'="^" glvn="^"_glvn zwr @glvn q ""');
+fs.closeSync(fd);
 
 /*
  expect certain global variables to be set
@@ -103,8 +111,9 @@ console.log("\t2nd time lucky - initialized U etc: %j", db.function({function: "
 // ... to see TMP ... taken from David Wicksell's zwrite.js
 // db.function({function: "zwr^NODEFUNC", arguments: ["TMP"]});
 
+console.log("\n\n");
+
 // No need to keep around 
-fs.closeSync(fd);
 fs.unlinkSync("NODEFUNC.m");
 fs.unlinkSync("NODEFUNC.o");
 

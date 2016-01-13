@@ -3,105 +3,116 @@ Reporting on Patient Global (DPT):
 META:	PATIENT^2I^25^25
 
 IEN:	1
-	0:	"CARTER,DAVID JR^M^3010302^^^^^^000000113^^Santa Monica^6^^^56^3151003^^^^1^1"
+	0:	"CARTER,DAVID JR^M^3010302^^^^^^000000113^^Santa Monica^6^^^57^3160112^^^^1^1"
 	0.29:	"^^^^^^^^^^^"
 	0.3:	"N^^^^^^^^^^^^^"
 	0.36:	"^^^^^^^^^^^^"
 	0.362:	"^^^^^^^^^^^^^^^^^^^"
 	0.52:	"^^^^^^^"
-	NAME:	59
+	NAME:	60
 	SSN:	""
 	TYPE:	13
 	VET:	"N"
 
 IEN:	2
-	0:	"FOURTEEN,PATIENT N^M^2560708^^^^^^444678924^^Boston^25^^^1^3151003^^^^1"
+	0:	"FOURTEEN,PATIENT N^M^2560708^^^^^^444678924^^Boston^25^^^1^3160112^^^^1"
 	0.24:	"^^RONDA,"
 	0.3:	"Y"
 	0.361:	"^^^^^^3160000^1"
 	DAC:	"^"
 	MPIMB:	"N"
-	NAME:	"60^^^^^61"
+	NAME:	"61^^^^^62"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	3
-	0:	"SEVEN,PATIENT G^M^2450502^^^^^^656771234^^Boston^25^^^1^3151003^^^^1"
+	0:	"SEVEN,PATIENT G^M^2450502^^^^^^656771234^^Boston^25^^^1^3160112^^^^1"
 	0.24:	"^^DAVIS,"
 	0.3:	"Y"
 	0.361:	"^^^^^^3160000^1"
 	DAC:	"^"
 	MPIMB:	"N"
-	NAME:	"62^^^^^63"
+	NAME:	"63^^^^^64"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	4
-	0:	"ONE,PATIENT A^M^2591003^^^^^^543236666^^Flower Mound^48^^^1^3151003^^^^1"
+	0:	"ONE,PATIENT A^M^2591003^^^^^^543236666^^Flower Mound^48^^^1^3160112^^^^1"
 	0.24:	"^^SHEEP,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	DE:	MULTIPLE ... TODO
+	ENR:	1
 	MPIMB:	"N"
-	NAME:	"64^^^^^65"
+	NAME:	"65^^^^^66"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	5
-	0:	"NINE,PATIENT I^M^2660101^^^^^^323123456^^Providence^44^^^1^3151003^^^^1"
+	0:	"NINE,PATIENT I^M^2660101^^2^^^111^323123456^^Providence^44^^^1^3160112^^^^1"
+	0.02:	MULTIPLE ... TODO
+	0.06:	MULTIPLE ... TODO
+	0.11:	"123 SMITH STREET^^^WASHINGTON^11^20005^1^^^1^^20005^3160112.021514^VAMC^1^^1"
+	0.121:	"^^^^^^^^N^^^^3160112.021515^1"
+	0.13:	"2021112222^"
+	0.132:	"3160112.021514^VAMC^1"
 	0.24:	"^^DOUGLAS,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"66^^^^^67"
+	NAME:	"67^^^^^68"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	6
-	0:	"ELEVEN,PATIENT K^M^2330501^^^^^^354623902^^London^25^^^1^3151003^^^^1"
+	0:	"ELEVEN,PATIENT K^M^2330501^^^^^^354623902^^London^25^^^1^3160112^^^^1"
 	0.24:	"^^ALBUM,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"68^^^^^69"
+	NAME:	"69^^^^^70"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	7
-	0:	"SIX,PATIENT F^M^2410501^^^^^^656451234^^Canton^25^^^1^3151003^^^^1"
+	0:	"SIX,PATIENT F^M^2410501^^^^^^656451234^^Canton^25^^^1^3160112^^^^1"
 	0.24:	"^^JOHNS,"
 	0.3:	"Y"
 	0.361:	"^^^^^^3160000^1"
 	DAC:	"^"
 	MPIMB:	"N"
-	NAME:	"70^^^^^71"
+	NAME:	"71^^^^^72"
 	SSN:	""
 	TYPE:	12
 	VET:	"Y"
 
 IEN:	8
-	0:	"TWENTYTWO,PATIENT V^M^2440706^^^^^^323556789^^Monmoth^34^^^1^3151003^^^^1"
+	0:	"TWENTYTWO,PATIENT V^M^2440706^^^^^^323556789^^Monmoth^34^^^1^3160112^^^^1"
 	0.24:	"^^ROGERS,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"72^^^^^73"
+	NAME:	"73^^^^^74"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	9
-	0:	"NINETEEN,PATIENT S^M^2550910^^^^^^311776543^^Weare^33^^^1^3151003^^^^1"
+	0:	"NINETEEN,PATIENT S^M^2550910^^^^^^311776543^^Weare^33^^^1^3160112^^^^1"
 	0.24:	"^^RUDINSK,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"74^^^^^75"
+	NAME:	"75^^^^^76"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	10
-	0:	"THREE,PATIENT C^M^2540330^^^^^^333224444^^Ripley^25^^^1^3151003^^^^1"
+	0:	"THREE,PATIENT C^M^2540330^^^^^^333224444^^Ripley^25^^^1^3160112^^^^1"
 	0.24:	"^^CLAPP,"
 	0.29:	"^^^^^^^^^^^"
 	0.3:	"N^^^^^^^^^^^^^"
@@ -109,175 +120,191 @@ IEN:	10
 	0.362:	"^^^^^^^^^^^^^^^^^^^"
 	0.52:	"^^^^^^^"
 	MPIMB:	"N"
-	NAME:	"76^^^^^77"
+	NAME:	"77^^^^^78"
 	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	12
 	VET:	"N"
 
 IEN:	11
-	0:	"TWO,PATIENT B^M^2320226^^^^^^888776666^^kingsland^4^^^1^3151003^^^^1"
+	0:	"TWO,PATIENT B^M^2320226^^^^^^888776666^^kingsland^4^^^1^3160112^^^^1"
 	0.1:	"TESTWARD1"
 	0.102:	17
 	0.103:	1
-	0.104:	55
-	0.1041:	54
+	0.104:	56
+	0.1041:	55
 	0.105:	14
 	0.109:	0
 	0.24:	"^^RIVERS,"
 	0.3:	"Y"
 	0.361:	"^^^^^^3160000^1"
-	DAC:	"S^3151003"
+	DAC:	"S^3160112"
 	MPIMB:	"N"
-	NAME:	"78^^^^^79"
+	NAME:	"79^^^^^80"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	12
-	0:	"TWENTY,PATIENT T^M^2570102^^^^^^411555432^^Concord^33^^^1^3151003^^^^1"
+	0:	"TWENTY,PATIENT T^M^2570102^^^^^^411555432^^Concord^33^^^1^3160112^^^^1"
 	0.24:	"^^PARSONS,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"80^^^^^81"
+	NAME:	"81^^^^^82"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	13
-	0:	"TWENTYFOUR,PATIENT X^M^2480302^^^^^^323554567^^Trenton^34^^^1^3151003^^^^1"
+	0:	"TWENTYFOUR,PATIENT X^M^2480302^^^^^^323554567^^Trenton^34^^^1^3160112^^^^1"
 	0.24:	"^^ZEBRA,"
 	0.3:	"Y"
 	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"82^^^^^83"
+	NAME:	"83^^^^^84"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	14
-	0:	"TWENTYTHREE,PATIENT W^M^2460605^^^^^^123455678^^Redbank^34^^^1^3151003^^^^1"
+	0:	"TWENTYTHREE,PATIENT W^M^2460605^^^^^^123455678^^Redbank^34^^^1^3160112^^^^1"
 	0.24:	"^^BRADY,"
 	0.3:	"Y"
 	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"84^^^^^85"
+	NAME:	"85^^^^^86"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	15
-	0:	"TEN,PATIENT J^M^2330401^^^^^^345238901^^Manchester^33^^^1^3151003^^^^1"
+	0:	"TEN,PATIENT J^M^2330401^^2^^^^345238901^^Manchester^33^^^1^3160112^^^^1"
+	0.02:	MULTIPLE ... TODO
+	0.06:	MULTIPLE ... TODO
+	0.121:	"^^^^^^^^N^^^^3160112.021418^1"
 	0.24:	"^^WHITE,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"86^^^^^87"
+	NAME:	"87^^^^^88"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	12
 	VET:	"Y"
 
 IEN:	16
-	0:	"SEVENTEEN,PATIENT Q^M^2670607^^^^^^212118765^^Beverly^25^^^1^3151003^^^^1"
+	0:	"SEVENTEEN,PATIENT Q^M^2670607^^^^^^212118765^^Beverly^25^^^1^3160112^^^^1"
 	0.24:	"^^CASH,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"88^^^^^89"
+	NAME:	"89^^^^^90"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	17
-	0:	"SIXTEEN,PATIENT P^M^2660506^^^^^^222559876^^Wakefield^44^^^1^3151003^^^^1"
+	0:	"SIXTEEN,PATIENT P^M^2660506^^^^^^222559876^^Wakefield^44^^^1^3160112^^^^1"
 	0.24:	"^^REASON,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"90^^^^^91"
+	NAME:	"91^^^^^92"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	18
-	0:	"EIGHT,PATIENT H^M^2330401^^^^^^655447777^^Boston^25^^^1^3151003^^^^1"
+	0:	"EIGHT,PATIENT H^M^2330401^^^^^^655447777^^Boston^25^^^1^3160112^^^^1"
 	0.24:	"^^SMITH,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"92^^^^^93"
+	NAME:	"93^^^^^94"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	19
-	0:	"FIFTEEN,PATIENT O^M^2450414^^^^^^301444321^^Boston^25^^^1^3151003^^^^1"
+	0:	"FIFTEEN,PATIENT O^M^2450414^^^^^^301444321^^Boston^25^^^1^3160112^^^^1"
 	0.24:	"^^SMITH,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"94^^^^^95"
+	NAME:	"95^^^^^96"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	20
-	0:	"TWELVE,PATIENT L^M^2330601^^^^^^345678233^^Liverpool^25^^^1^3151003^^^^1"
+	0:	"TWELVE,PATIENT L^M^2330601^^^^^^345678233^^Liverpool^25^^^1^3160112^^^^1"
 	0.24:	"^^ABBEY,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"96^^^^^97"
+	NAME:	"97^^^^^98"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	12
 	VET:	"Y"
 
 IEN:	21
-	0:	"FIVE,PATIENT E^M^2220501^^^^^^656454321^^Springfield^25^^^1^3151003^^^^1"
+	0:	"FIVE,PATIENT E^M^2220501^^^^^^656454321^^Springfield^25^^^1^3160112^^^^1"
 	0.24:	"^^JOHNSON,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
+	ENR:	2
 	MPIMB:	"N"
-	NAME:	"98^^^^^99"
+	NAME:	"99^^^^^100"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	22
-	0:	"TWENTYONE,PATIENT U^M^2590304^^^^^^711667890^^New London^^^^1^3151003^^^^1"
+	0:	"TWENTYONE,PATIENT U^M^2590304^^^^^^711667890^^New London^^^^1^3160112^^^^1"
 	0.24:	"^^RAM,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"100^^^^^101"
+	NAME:	"101^^^^^102"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	23
-	0:	"EIGHTEEN,PATIENT R^M^2690708^^^^^^111257654^^Lincoln^33^^^1^3151003^^^^1"
+	0:	"EIGHTEEN,PATIENT R^M^2690708^^^^^^111257654^^Lincoln^33^^^1^3160112^^^^1"
 	0.24:	"^^FOOBAR,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"102^^^^^103"
+	NAME:	"103^^^^^104"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	24
-	0:	"THIRTEEN,PATIENT M^M^2540707^^^^^^323678904^^Boston^25^^^1^3151003^^^^1"
+	0:	"THIRTEEN,PATIENT M^M^2540707^^^^^^323678904^^Boston^25^^^1^3160112^^^^1"
 	0.24:	"^^ROAD,"
 	0.3:	"Y"
+	0.361:	"^^^^^^3160000^1"
 	MPIMB:	"N"
-	NAME:	"104^^^^^105"
+	NAME:	"105^^^^^106"
+	S:	MULTIPLE ... TODO
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 IEN:	25
-	0:	"FOUR,PATIENT D^M^2550401^^^^^^666551234^^Providence^44^^^1^3151003^^^^1"
+	0:	"FOUR,PATIENT D^M^2550401^^^^^^666551234^^Providence^44^^^1^3160112^^^^1"
 	0.24:	"^^SMITH,"
 	0.3:	"Y"
 	MPIMB:	"N"
-	NAME:	"106^^^^^107"
+	NAME:	"107^^^^^108"
 	SSN:	""
 	TYPE:	1
 	VET:	"Y"
 
 INDEX:	AAP
-	Value:	54	IEN:	11
+	Value:	55	IEN:	11
 INDEX:	ACA
 	Value:	14	IEN:	11
 INDEX:	ACN
@@ -308,6 +335,11 @@ INDEX:	ADOB
 	Value:	2670607	IEN:	16
 	Value:	2690708	IEN:	23
 	Value:	3010302	IEN:	1
+INDEX:	AEB1
+	Value:	4	IEN:	3160112
+INDEX:	AENRC
+	Value:	1	IEN:	4
+	Value:	1	IEN:	21
 INDEX:	AMPIMIS
 	:1 - 
 	:2 - 
@@ -361,7 +393,7 @@ INDEX:	ANEW
 	:24 - 
 	:25 - 
 INDEX:	APR
-	Value:	55	IEN:	11
+	Value:	56	IEN:	11
 INDEX:	APTYPE
 	Value:	1	IEN:	2
 	Value:	1	IEN:	3
@@ -391,7 +423,17 @@ INDEX:	APTYPE
 INDEX:	AS
 	Value:	S	IEN:	11
 INDEX:	ASADM
-	Value:	3151003	IEN:	10
+	Value:	3160112	IEN:	4
+	Value:	3160112	IEN:	10
+	Value:	3160112	IEN:	15
+	Value:	3160112	IEN:	17
+	Value:	3160112	IEN:	18
+	Value:	3160112	IEN:	20
+	Value:	3160112	IEN:	21
+	Value:	3160112	IEN:	24
+INDEX:	ASDCN
+	Value:	4	IEN:	3160112.0214
+	Value:	6	IEN:	3160118.2
 INDEX:	ASX
 	Value:	M	IEN:	1
 	Value:	M	IEN:	2
@@ -502,6 +544,8 @@ INDEX:	BS5
 	Value:	T8904	IEN:	24
 INDEX:	CN
 	Value:	TESTWARD1	IEN:	11
+INDEX:	F
+	Value:	2021112222	IEN:	5
 INDEX:	SSN
 	Value:	111257654	IEN:	23
 	Value:	123455678	IEN:	14
