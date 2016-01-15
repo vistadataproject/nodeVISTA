@@ -1,0 +1,12 @@
+{
+    "name": "fmqlServer",
+    "description": "Adds REST interface to FMQL and provides access to FMQL one page apps",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "4.x",
+        "morgan": "1.3.*",
+        "compression": "1.6.*",
+        "nodem": "*"
+    }
+}

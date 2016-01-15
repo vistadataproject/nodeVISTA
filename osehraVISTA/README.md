@@ -100,3 +100,4 @@ JSON: {"name":"PATIENT","number":"2","location":"^DPT(","count":"25","lastIEN":"
 ...
 ```
 
+See [fmql](/fmql) on how to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
