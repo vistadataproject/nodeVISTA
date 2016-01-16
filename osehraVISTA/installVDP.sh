@@ -1,8 +1,10 @@
 # After 'vagrant up' first but want in post hook of osehra setup
 # and want -s to skip testing, -p for post hook, -e (ewd) as want npm for now
 # and leave instance as osehra ... go 2 can change it
+# ... one issue: why npm install for fmqlServer doesn't reuse top level node_modules nodem
+# ... another: recheck FMQL MUMPS copying
 
-vdpid=vdp9
+vdpid=vdp13
 test -d /home/$vdpid &&
 { echo "VISTA Data Project user $vdpid already Installed. Aborting."; exit 0; }
 echo "Creating VISTA Data Project user, $vdpid"
@@ -20,14 +22,21 @@ echo "" >> $vdphome/.bashrc
 echo "source $osehrahome/etc/env" >> $vdphome/.bashrc
 # osehra uses Node Version Manager (EWD sets it up)
 echo "export NVM_DIR=\"$osehrahome/.nvm\"" >> $vdphome/.bashrc
-echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> $vdphome/.bashrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> $vdphome/.bashrc 
 # VDP Extra: override 'gtm_tmp' to /tmp to avoid write/link errors"
 echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
 # Copy unique end of .profile of osehra
 echo "source $osehrahome/.nvm/nvm.sh" >> $vdphome/.profile
+# Set nodever ala EWD/ewd.js. Otherwise $nodever .profile won't exist and npm install below will fail
+nodever="0.12"
 echo "nvm use $nodever" >> $vdphome/.profile
 
 cd $vdphome
+
+# install nodem in node_modules in $HOME
+echo "Installing 'nodem' for $vdpid - slowest piece"
+su $vdpid -c "mkdir logs"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> logs/nodemInstall.log"
 
 # git clone nodeVISTA into /tmp and take parts
 echo "Cloning nodeVISTA client code for use by $vdpid"
@@ -37,17 +46,22 @@ su $vdpid -c "cp -r nodeVISTA/fmql ."
 su $vdpid -c "cp -r nodeVISTA/Commands ."
 rm -rf nodeVISTA
 
-# install nodem in node_modules in $HOME
-echo "Installing 'nodem' for $vdpid"
-su $vdpid -c "mkdir logs"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> logs/nodemInstall.log"
-
-# copy in FMQL MUMPS directly into OSEHRA VISTA p
+# Add FMQL x 2
+echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
+git clone -q https://github.com/caregraf/FMQL.git
 # echo "Adding FMQL (MUMPS) to osehraVISTA"
-# git clone -q https://github.com/caregraf/FMQL.git
 # su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
 # su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
-# rm -r FMQL
+echo "Adding FMQL one pagers"
+su $vdpid -c "mkdir fmql/static"
+su $vdpid -c "cp FMQL/Clients/HTML/* fmql/static"
+# Note: took fmqlServer above from the copy in nodeVISTA git
+rm -r FMQL
+
+#
+# NOTE: for now, not installing the FMQL server app. Go into $vdphome/fmql and follow the 
+# instructions in the README. Will change when put app under an init.d
+#
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
