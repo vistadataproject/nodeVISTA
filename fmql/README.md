@@ -1,13 +1,4 @@
-## Using FMQL behind a node-based service.
-
-Download the FMQL release and copy the FMQL applications to a subdirectory called "static/" ...
-
-```text
->> wget https://github.com/caregraf/FMQL/releases/download/v1.1/CGFMQL1_1.zip
->> unzip CGFMQL1_1.zip
->> mkdir static
->> cp CGFMQL1_1/usrlocalfmql/* static
-```
+## Adding an FMQL web service to nodeVISTA
 
 Add a new port forward instruction to osehraVISTA's VagrantFile (Scripts/Install/Ubuntu) ...
 
@@ -17,17 +8,21 @@ Add a new port forward instruction to osehraVISTA's VagrantFile (Scripts/Install
   config.vm.network :forwarded_port, guest: 9000, host: 9000 # For FMQL Server
 ```
 
-and reload Vagrant with _vagrant reload_. Then _vagrant ssh_ into the VM and add the one page clients
-from the latest FMQL release.
+and reload Vagrant with _vagrant reload_. 
+
+Then _vagrant ssh_ into the VM and ... 
 
 ```text
 >> su vdp
 password: vistaisdata
->> cd ~/fmql
->> wget https://github.com/caregraf/FMQL/releases/download/v1.1/CGFMQL1_1.zip <--- download latest FMQL release
->> unzip CGFMQL1_1.zip
->> mkdir static
->> cp CGFMQL1_1/usrlocalfmql/* static <--- copy one page client files into static
+>> mkdir ~/fmql
+>> cd fmql
+>> git clone https://github.com/caregraf/FMQL.git
+>> mv FMQL/HTML static
+>> mv FMQL/webservice/fmqlServer.js .
+>> mv FMQL/webservice/package.json
+>> rm -r FMQL
+>> npm install <--- installs dependencies
 ```
 
 and finally bring up the _fmqlServer_ ...
