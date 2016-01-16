@@ -1,5 +1,7 @@
 ## Adding an FMQL web service to nodeVISTA
 
+The script _installVDP.sh_ sets up this _fmql server_ directory. But to see the server running, three more steps are needed ...
+
 Add a new port forward instruction to osehraVISTA's VagrantFile (Scripts/Install/Ubuntu) ...
 
 ```text
@@ -15,20 +17,22 @@ Then _vagrant ssh_ into the VM and ...
 ```text
 >> su vdp
 password: vistaisdata
->> mkdir ~/fmql
->> cd fmql
->> git clone https://github.com/caregraf/FMQL.git
->> mv FMQL/HTML static
->> mv FMQL/webservice/fmqlServer.js .
->> mv FMQL/webservice/package.json
->> rm -r FMQL
+>> cd /home/vdp/fmql
 >> npm install <--- installs dependencies
 ```
 
 and finally bring up the _fmqlServer_ ...
 
 ```text
->> nohup node fmqlServer.js >> SEESERVER &
+>> nohup node fmqlServer.js >> SEESERVERRUN &
+```
+
+and try a query ...
+
+```text
+>> curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1
+
+{"results" ...
 ```
 
 You can now exit the VM (exit/exit) and in the host system's browser, use FMQL and its clients to view
