@@ -60,3 +60,5 @@ Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(29852,\"FMQLJ
 ```
 
 FMQL also runs as a service. See [fmql](/fmql) on how to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
+
+Note: to temporarily suspend the VM, just call _vagrant halt_.
