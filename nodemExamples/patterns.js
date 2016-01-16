@@ -13,6 +13,7 @@
  *
  * TODO: round out many examples of TMP walking and wrapping by reference
  * function calls.
+ * Add simplest calls: https://github.com/OSEHRA/VistA-M/blob/master/Packages/Kernel/Routines/XLFSTR.m
  *
  * NOTE: issue of ,,,, missing optionals below
  */
