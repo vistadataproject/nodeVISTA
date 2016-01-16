@@ -42,7 +42,7 @@ Switch to become _vdp_ user and run some basic clients ...
 >> su vdp
 password: vistaisdata
 >> cd
->> cd nodem
+>> cd nodemExamples
 >> node basic.js 
 Basic nodem calls ...
 	db.open returns: {"ok":1,"result":"1"}
