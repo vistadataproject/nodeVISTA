@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*
  * Simple cluster-based FMQL server that can also statically serve Rambler and
  * other one page apps and their CSS/JS.
