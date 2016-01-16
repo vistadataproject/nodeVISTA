@@ -4,7 +4,7 @@
 # ... one issue: why npm install for fmqlServer doesn't reuse top level node_modules nodem
 # ... another: recheck FMQL MUMPS copying
 
-vdpid=vdp13
+vdpid=vdp
 test -d /home/$vdpid &&
 { echo "VISTA Data Project user $vdpid already Installed. Aborting."; exit 0; }
 echo "Creating VISTA Data Project user, $vdpid"
