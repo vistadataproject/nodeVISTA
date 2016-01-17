@@ -1,5 +1,5 @@
 # nodeVISTA
 
-The Project calls for the development of a test VISTA system ("_nodeVISTA_"). nodeVISTA will be based on OSEHRA's Vagrant VISTA, refined to meet Project requirements.
+The Project calls for the assembly of a test VISTA system ("_nodeVISTA_"). _nodeVISTA_ is based on OSEHRA's Vagrant VISTA. 
 
-The Project will build a series of datasets for nodeVISTA to suit different demonstrations and tests, some of which will come from or be inspired by the VISTA systems furnished by the government.
+__Important__: _nodeVISTA_ is not a new distribution of VISTA. It is not an alternative to _osehraVISTA_ or _worldVISTA_ or to other efforts that involve Node.js and VISTA. It is a __packaging honed for our mission, to provide a Node.js-enabled, secure read-write model for VISTA__.
