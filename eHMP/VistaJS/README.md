@@ -5,3 +5,5 @@ VistaJS: a Javascript equivalent to various RPC Broker client side libraries in 
 Note: __not node.js Vista.js__ - a separate project to provide a node.js module for node on VistA. There's a lot of unfortunate name reuse in VistA now. 
 
 TODO: get v1.3 version
+
+__Relevance__: no direct relevance to VDP. VDP calls are inside VISTA, relying on _cache.node_/_nodem_. Anything you can do over the broker using this Vista.js or its equivalents can be done directly inside VISTA.
