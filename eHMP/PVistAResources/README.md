@@ -10,9 +10,9 @@ __PIKS__: eHMP does not break Resources or any of its code down according to _PI
 
 "Resources" are hand written node.js modules that implement REST calls running in an express server - the [express framework](http://expressjs.com/en/index.html) is the most widely used node.js web framework. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
 
-KMR, a contractor on eHMP, host an older version of OSEHRA's eHMP release (v1.2) on their [own git](https://github.com/KRMAssociatesInc/eHMP/tree/master/rdk/product/production/rdk) and started some badly needed documentation ...
+__KRM__, a contractor on eHMP, host an older version of OSEHRA's eHMP release (v1.2) on their [own git](https://github.com/KRMAssociatesInc/eHMP/tree/master/rdk/product/production/rdk) and started some badly needed documentation ...
 
->> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems [VistA, JDS], and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, _VistA Exchange API Resource Server_.
+> A resource is a single web service (allergies, or "save allergies"). ... A resource is responsible for receiving an HTTP request, performing the processing by interacting with other subsystems [VistA, JDS], and then returning an HTTP response. ... A resource server is a deployable unit, including a set of resource and specific configuration. ... the VistA Core ecosystem has one single resource server, _VistA Exchange API Resource Server_.
 
 This _Resource Pattern_ and its supporting utilities is eHMP's main addition to _express_ and other common node.js modules to discipline the development of VistA and JDS services. It is appropriate that the "RDK" is called __node-vistaexpress__ in its package.json (see copies of server setup and scripts in _RDKServer_). 
 
