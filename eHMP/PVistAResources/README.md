@@ -6,6 +6,8 @@ __Note:__ need to update from _VA\ Code\ in\ Flight\ Submission\ -\ Enterprise\ 
 
 __PIKS__: eHMP does not break Resources or any of its code down according to _PIKS_. A P/K split fits eHMP code into the Project.
 
+__MORE INFO__: [VISTA Sandbox's VXAPI Hosting](https://ehmp.vaftl.us/resource/docs/vx-api/) has a lot more docs.
+
 ### The Resource Pattern
 
 "Resources" are hand written node.js modules that implement REST calls running in an express server - the [express framework](http://expressjs.com/en/index.html) is the most widely used node.js web framework. Some use JDS, some use VistA RPCs ("RPC-backed Resources"). The name "Resource" comes from eHMP's _Resource Development Kit (RDK)_. 
