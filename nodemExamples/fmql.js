@@ -50,5 +50,6 @@ invokeQuery("DESCRIBE 2-1");
 invokeQuery("COUNT 2");
 invokeQuery("COUNT 52");
 invokeQuery("COUNT 63");
+invokeQuery("DESCRIBE 120_5 FILTER(.02=2-1)"); // all vitals of patient 1
 
 db.close()
