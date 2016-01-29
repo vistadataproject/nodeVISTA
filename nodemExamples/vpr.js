@@ -84,7 +84,7 @@ function getPatientData(arguments) {
 }
 
 // 2 VPR GET PATIENT DATA JSON - all
-getPatientData(["3"]); // patient 3 (seems to have some data
+getPatientData(["1"]); // patient 1 (seems to have some data and is used for testing Vitals etc result)
 
 // 3. VPR GET PATIENT DATA JSON - patient domain only
 getPatientData(["1", "patient"]);
