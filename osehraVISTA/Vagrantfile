@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # EWD.js
   config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWD.js Webservices
   config.vm.network :forwarded_port, guest: 8081, host: 8081 # EWD VistA Term
-  # New Forward VDP
+  # VDP: new Forward VDP
   config.vm.network :forwarded_port, guest: 9000, host: 9000 # For FMQL Server
 
   # Create a private network, which allows host-only access to the machine
@@ -145,6 +145,8 @@ Vagrant.configure("2") do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
   #
+  # VDP: added -s to skip tests during install
+  # 
   config.vm.provision :shell do |s|
     s.path = "autoInstaller.sh"
     s.args = "-e -s -i " + "#{ENV['instance']}"
