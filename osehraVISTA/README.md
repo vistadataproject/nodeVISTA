@@ -8,13 +8,12 @@ The following outlines how to install osehraVISTA and enable nodeVISTA developme
 >> git clone https://github.com/OSEHRA/VistA.git
 ```
 
-and copy the script _installVDP.sh_ inside ...
+and copy the script _installVDP.sh_ and a changed _VagrantFile_ inside ...
 
 ```text
 >> cp installVDP.sh VistA/Scripts/Install/.
+>> cp VagrantFile VistA/Scripts/Install/Ubuntu/. 
 ```
-
-Note: this is a temporary step. We intend to have this script run at the end of OSEHRA's VISTA build.
 
 Then install _osehraVISTA_ ...
 
