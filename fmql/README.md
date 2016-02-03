@@ -15,22 +15,22 @@ and reload Vagrant with _vagrant reload_.
 Then _vagrant ssh_ into the VM and ... 
 
 ```text
->> su vdp
+$ su vdp
 password: vistaisdata
->> cd /home/vdp/fmql
->> npm install <--- installs dependencies
+$ cd /home/vdp/fmql
+$ npm install <--- installs dependencies
 ```
 
 and finally bring up the _fmqlServer_ ...
 
 ```text
->> nohup node fmqlServer.js >> SEESERVERRUN &
+$ nohup node fmqlServer.js >> SEESERVERRUN &
 ```
 
 and try a query ...
 
 ```text
->> curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1
+$ curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1
 
 {"results" ...
 ```
