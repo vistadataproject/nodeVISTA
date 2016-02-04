@@ -55,6 +55,9 @@ su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
 echo "Adding FMQL one pagers"
 su $vdpid -c "mkdir fmql/static"
 su $vdpid -c "cp FMQL/Clients/HTML/* fmql/static"
+# TODO: check if this removes NPM install step from fmql server setup
+# cd fmql
+# su $vdpid npm install
 # Note: took fmqlServer above from the copy in nodeVISTA git
 rm -r FMQL
 
