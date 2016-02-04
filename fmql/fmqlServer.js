@@ -21,12 +21,21 @@
  *   - more logging with other modules
  * - more on dev vs prod: var env = process.env.NODE_ENV || 'development';
  * - try on Cache (vs nodem GTM). Add explicit support. Test one/close DB vs keep DB open in worker
+ *
+ * LICENSE:
+ * This program is free software; you can redistribute it and/or modify it under the terms of 
+ * the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
+ * Foundation.
+ * (c) 2016 caregraf
  */
+
+'use strict';
 
 var express = require("express"),
     compress = require("compression"),
     cluster = require('cluster'),
     nodem = require('nodem'),
+    fmql = require('./fmql'),
     port = process.argv[2] || 9000;
 
 /* 
@@ -59,7 +68,7 @@ if (cluster.isMaster) {
 }
 else {
 
-    const db = new nodem.Gtm();
+    var db = new nodem.Gtm();
     // { ok: 1, result: '1' }
     var ok = db.open();
 
@@ -120,26 +129,8 @@ else {
 
         console.log("Worker %s: invoking FMQL %s", cluster.worker.id, query);
 
-        // FMQL setup for direct (Synchronous) calling from node. No need for wrapper.
-        // $J in MUMPS matches process.pid in Node so no need for result ^TMP parse
-        var tmpFMQL = db.function({function: "QUERY^FMQLQP", arguments: [query]});
-        // {"ok":1,"function":"QUERY^FMQLQP","arguments":["DESCRIBE 2-100"],"result":"^TMP(4012,\"FMQLJSON\")"}
+        var jsont = fmql.query(db, query, false); // ask for text to preserve order 
 
-        // Reassembling JSON from TMP - rem no advantage to chunk as sync call only
-        // returns when TMP JSON completely built.  
-        var jsont = "";
-        var next = {global: "TMP", subscripts:[process.pid, "FMQLJSON", ""]};
-        while (true) {
-            next = db.next(next);
-            if (next.subscripts[2] === '')
-                break;
-            else {
-                var text = db.get(next).data;
-                jsont += text;
-            }
-        }
-        // could do JSON.parse(jsont) and response.write(typeof JSON.parse(jsont))
-        db.kill({"global": "TMP", subscripts: [process.pid]});
         // could use response.json but will be changing to jsonld so making explicit
         response.type('application/json');
         response.send(jsont);
