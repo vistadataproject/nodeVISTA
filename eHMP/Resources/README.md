@@ -42,6 +42,7 @@ From: parseResourcesForRPCs.py
 
 Number of files considered - 170 vs matched - 22
 
+\# | RPC | where
 :---: | :--- | ---
 1 | GMV ADD VM | vitals/writebackvitalssaveResource.js
 2 | GMV CLOSEST READING | vitals/vitals-resource.js
