@@ -50,8 +50,8 @@ rm -rf nodeVISTA
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
 # echo "Adding FMQL (MUMPS) to osehraVISTA"
-# su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
-# su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
+su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
+su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
 echo "Adding FMQL one pagers"
 su $vdpid -c "mkdir fmql/static"
 su $vdpid -c "cp FMQL/Clients/HTML/* fmql/static"
