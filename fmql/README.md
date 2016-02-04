@@ -1,18 +1,6 @@
 ## Adding an FMQL web service to nodeVISTA
 
-The script _installVDP.sh_ sets up this _fmql server_ directory. But to see the server running, three more steps are needed ...
-
-Add a new port forward instruction to osehraVISTA's VagrantFile (Scripts/Install/Ubuntu) ...
-
-```text
-  config.vm.network :forwarded_port, guest: 8081, host: 8081 # EWD VistA Term
-  # New Forward VDP
-  config.vm.network :forwarded_port, guest: 9000, host: 9000 # For FMQL Server
-```
-
-and reload Vagrant with _vagrant reload_. 
-
-Then _vagrant ssh_ into the VM and ... 
+_vagrant ssh_ into the VM and if you haven't already, perform an _npm install_: 
 
 ```text
 $ su vdp
@@ -21,7 +9,7 @@ $ cd /home/vdp/fmql
 $ npm install <--- installs dependencies
 ```
 
-and finally bring up the _fmqlServer_ ...
+and bring up the _fmqlServer_ ...
 
 ```text
 $ nohup node fmqlServer.js >> SEESERVERRUN &
