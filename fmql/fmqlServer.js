@@ -11,16 +11,18 @@
  * - SIGKILL (kill -9) - cluster will kill workers (once they are done)
  * - see: curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 -v
  *
- * TODO:
+ * QUEUE TODO:
+ * kue or bull to queue incoming FMQL requests so available workers aren't
+ * overwhelmed - see issue: https://github.com/vistadataproject/nodeVISTA/issues/30
+ *
+ * MONITOR/LOGGING TODO:
  * - more robust/tested restart/shutdown
  *   - more on SIGKILL, SIGINT, cluster vs worker (issues/misleading stuff)
  *     http://stackoverflow.com/questions/19796102/exit-event-in-worker-process-when-killed-from-master-within-a-node-js-cluster
- * - stress it
  * - morgan: See https://github.com/expressjs/morgan, apache like access/error log
  *   - cluster sharing log? 
  *   - more logging with other modules
  * - more on dev vs prod: var env = process.env.NODE_ENV || 'development';
- * - try on Cache (vs nodem GTM). Add explicit support. Test one/close DB vs keep DB open in worker
  *
  * LICENSE:
  * This program is free software; you can redistribute it and/or modify it under the terms of 
