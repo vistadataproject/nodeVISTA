@@ -8,6 +8,7 @@
         "express": "4.x",
         "morgan": "1.3.*",
         "compression": "1.6.*",
-        "nodem": "latest"
+        "nodem": "latest",
+        "kue": "0.9"
     }
 }
