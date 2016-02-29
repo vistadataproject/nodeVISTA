@@ -1,3 +1,37 @@
+#!/usr/bin/env node
+
+/*
+ * Simple cluster-based FMQL server that can also statically serve Rambler and
+ * other one page apps and their CSS/JS.
+ * 
+ * For local test invoke with: nohup node fmqlServer.js > SEESERVERRUN &
+ *
+ * Context: replaces use of Apache/Python for Web access to FMQL.
+ *
+ * - SIGKILL (kill -9) - cluster will kill workers (once they are done)
+ * - see: curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 -v
+ *
+ * QUEUE STRESS TEST:
+ * npm install nperf
+ * nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1D //succeed
+ * nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overolading due to no kue
+ *
+ * MONITOR/LOGGING TODO:
+ * - more robust/tested restart/shutdown
+ *   - more on SIGKILL, SIGINT, cluster vs worker (issues/misleading stuff)
+ *     http://stackoverflow.com/questions/19796102/exit-event-in-worker-process-when-killed-from-master-within-a-node-js-cluster
+ * - morgan: See https://github.com/expressjs/morgan, apache like access/error log
+ *   - cluster sharing log? 
+ *   - more logging with other modules
+ * - more on dev vs prod: var env = process.env.NODE_ENV || 'development';
+ *
+ * LICENSE:
+ * This program is free software; you can redistribute it and/or modify it under the terms of 
+ * the GNU Affero General Public License version 3 (AGPL) as published by the Free Software 
+ * Foundation.
+ * (c) 2016 caregraf
+ */
+
 'use strict';
 
 var express = require("express"),
