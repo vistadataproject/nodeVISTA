@@ -1,45 +1,44 @@
-## Adding an FMQL web service to nodeVISTA
+## FMQL web service with queueing service
 
-_vagrant ssh_ into the VM and if you haven't already, perform an _npm install_: 
-
-```text
-$ su vdp
-password: vistaisdata
-$ cd /home/vdp/fmql
-$ npm install <--- installs dependencies
-```
-
-and bring up the _fmqlServer_ ...
+install the redis server required for kue: 
 
 ```text
-$ nohup node fmqlServer.js >> SEESERVERRUN &
+sudo -i
+wget http://download.redis.io/redis-stable.tar.gz
+tar xvzf redis-stable.tar.gz
+cd redis-stable
+make
+# optional test
+make test 
+make install
+# start redis server
+cd utils
+./install_server.sh
+
+service redis_6379 start
+# service redis_6379 stop
+exit 
 ```
 
-and try a query ...
+(optional)redis server has the snapshot auto-save enabled and we will change the path for the autosave to a temp location (so that we don't get the permission deny error due to the auto-save operation)
 
 ```text
-$ curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1
-
-{"results" ...
+vdp@vagrant-ubuntu-precise-64:~$ mkdir redistmp
+vdp@vagrant-ubuntu-precise-64:~$ cd fmql
+vdp@vagrant-ubuntu-precise-64:~/fmql$ redis-cli
+127.0.0.1:6379> config set dir /home/vdp/redistmp
+OK
+127.0.0.1:6379> config set dbfilename tmp.rdb
+OK
+127.0.0.1:6379> exit
 ```
 
-You can now exit the VM (exit/exit) and in the host system's browser, use FMQL and its clients to view
-all the data and schema of the osehraVISTA system. 
+and try a stress test with http-perf
 
-## Some one page client screens
-
-FMQL comes with three one page clients, _Rambler_ for viewing data, _Schema_ for viewing a VISTA's schema and _Query_ for invoking FMQL queries directly.
-
-__List of populated files in the system and their sizes__ ...
-
-![Schema Opener](/fmql/images/schema.png?raw=true)
-
-__One Patient's 'Patient Record'__ ...
-
-![Rambler Patient](/fmql/images/ramblerPatient.png?raw=true)
-
-__Invoking a query directly__ ...
-
-![Query Patient](/fmql/images/queryPatient.png?raw=true)
+```text
+npm install -g http-perf
+nperf -c 200 -n 10000 http://localhost:9000/schema  // this will fail as there's no kue added 
+nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1D //succeed
+```
 
 
