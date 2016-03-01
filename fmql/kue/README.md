@@ -4,6 +4,8 @@ install the redis server required for kue:
 
 ```text
 sudo -i
+# install tcl if you don't have it yet
+apt-get install tcl8.5
 wget http://download.redis.io/redis-stable.tar.gz
 tar xvzf redis-stable.tar.gz
 cd redis-stable
