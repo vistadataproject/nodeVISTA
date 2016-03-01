@@ -38,7 +38,7 @@ var express = require("express"),
     compress = require("compression"),
     cluster = require('cluster'),
     nodem = require('nodem'),
-    fmql = require('./fmql'),
+    fmql = require('../fmql'),
     port = process.argv[2] || 9000,
     kue = require('kue');
 
@@ -52,7 +52,7 @@ var jobDelay = 0;
 if (cluster.isMaster) {
 
     var numCPUs = require('os').cpus().length;
-
+    console.log('cpus: ' + numCPUs);
     // Create a worker for each CPU
     for (var i = 0; i < numCPUs; i += 1) {
         cluster.fork();
@@ -137,7 +137,7 @@ if (cluster.isMaster) {
         var data = {
             query: query
         };
-
+        console.log(data);    
         //create a new job and push to queue
         var job = jobs.create(jobType, data).save(function(err) {
             if (err) {
@@ -148,7 +148,7 @@ if (cluster.isMaster) {
         });
         job.on('complete', function(result) {
             // could use response.json but will be changing to jsonld so making explicit
-            console.log(result);      
+            console.log('result:', result);      
             response.type('application/json');
             response.send(result);
         });
@@ -166,7 +166,7 @@ if (cluster.isMaster) {
     });
 
     // Not FMQL - try static - Express 4 respects order
-    app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
+    app.use(express.static("../static")); //use static files in ROOT/public folder
 
     var server = app.listen(port, function() {
         console.log("FMQL worker %d, process %d, listening to port ", cluster.worker.id, process.pid, port);

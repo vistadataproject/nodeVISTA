@@ -9,6 +9,6 @@
         "morgan": "1.3.*",
         "compression": "1.6.*",
         "nodem": "latest",
-        "kue": "0.9"
+        "kue": "0.10.x"
     }
 }
