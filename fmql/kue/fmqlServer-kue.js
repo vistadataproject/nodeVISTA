@@ -13,7 +13,7 @@
  *
  * QUEUE STRESS TEST:
  * npm install nperf
- * nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1D //send 200 requests with 10000 concurrent requests > succeed
+ * nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1D //send 10000 requests with 200 concurrent requests > succeed
  * nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overolading around 6555 of the 10000 requests due to no kue
  *
  * MONITOR/LOGGING TODO:
