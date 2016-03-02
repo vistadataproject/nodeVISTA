@@ -22,7 +22,10 @@ service redis_6379 start
 exit 
 ```
 
-(optional)redis server has the snapshot auto-save enabled and we will change the path for the autosave to a temp location (so that we don't get the permission deny error due to the auto-save operation)
+(optional)redis server has the snapshot auto-save enabled and we will change the path for the autosave to a temp location (so that we don't get the error like the following due to the auto-save operation)
+```text
+Error: MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error.
+```
 
 ```text
 vdp@vagrant-ubuntu-precise-64:~$ mkdir redistmp
