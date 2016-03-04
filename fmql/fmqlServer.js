@@ -22,6 +22,7 @@
  * - morgan: See https://github.com/expressjs/morgan, apache like access/error log
  *   - cluster sharing log? 
  *   - more logging with other modules
+ *   - see: http://tostring.it/2014/06/23/advanced-logging-with-nodejs/ (gets into winston too)
  * - more on dev vs prod: var env = process.env.NODE_ENV || 'development';
  *
  * LICENSE:
