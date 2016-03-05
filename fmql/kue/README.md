@@ -29,7 +29,6 @@ Error: MISCONF Redis is configured to save RDB snapshots, but is currently not a
 
 ```text
 vdp@vagrant-ubuntu-precise-64:~$ mkdir redistmp
-vdp@vagrant-ubuntu-precise-64:~$ cd fmql
 vdp@vagrant-ubuntu-precise-64:~/fmql$ redis-cli
 127.0.0.1:6379> config set dir /home/vdp/redistmp
 OK
