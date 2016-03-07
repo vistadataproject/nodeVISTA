@@ -86,7 +86,7 @@ function workAround(worker) {
   }
   
 ```
-Even with the workaround, sometimes the work may die due to unknown reason, this is an unsolved issue:
+Even with the workaround, sometimes the work may die due to unknown reason, this is an [unsolved issue] (https://github.com/vistadataproject/nodeVISTA/issues/33):
 ```text
 Worker 2 died :( - starting a new one
 ```
