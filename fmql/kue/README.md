@@ -1,4 +1,4 @@
-## FMQL web service with queueing service
+## FMQL web service with queuing  service
 
 install the redis server required for kue: 
 
@@ -50,12 +50,12 @@ and try a stress test with http-perf
 ```text
 npm install -g http-perf
 nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 //send 10000 requests with 200 concurrent requests > succeed
-nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overolading around 6555 of the 10000 requests due to no kue
+nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overloading around 6555 of the 10000 requests due to no kue
 ```
 
-The stress test oftentime gets failed around 9000 out of the 10000 requests even for the successful URL in kued server version and even in NON KUED server version as well. 
-This is due to the old node version (v.0.12) that may cause the resouce leak issue. 
-There is a workaround to allivate the leak, otherwise, we need to upgrade to latest node 5.x to fix the issue:
+The stress test oftentimes gets failed around 9000 out of the 10000 requests even for the successful URL in kued server version and even in NON KUED server version as well. 
+This is due to the old node version (v.0.12) that may cause the resource leak issue. 
+There is a workaround to alleviate the leak, otherwise, we need to upgrade to latest node 5.x to fix the issue:
 
 ```text
 AssertionError: Resource leak detected.
