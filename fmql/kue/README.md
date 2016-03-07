@@ -22,19 +22,27 @@ service redis_6379 start
 exit 
 ```
 
-(optional)redis server has the snapshot auto-save enabled and we will change the path for the autosave to a temp location (so that we don't get the error like the following due to the auto-save operation)
+(optional) redis server has the snapshot auto-save enabled and we will change the path for the autosave to a temp location (so that we don't get the error like the following due to the auto-save operation)
 ```text
 Error: MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error.
+....
+Can’t save in background: fork: Cannot allocate memory
 ```
 
 ```text
 vdp@vagrant-ubuntu-precise-64:~$ mkdir redistmp
 vdp@vagrant-ubuntu-precise-64:~/fmql$ redis-cli
+# the following two command lines fix the ERROR: MISCONF Redis is configured to save RDB ....
 127.0.0.1:6379> config set dir /home/vdp/redistmp
 OK
 127.0.0.1:6379> config set dbfilename tmp.rdb
 OK
+# the command line below fixes the Can's save in background error
+127.0.0.1:6379> config set stop-writes-on-bgsave-error no
+OK
 127.0.0.1:6379> exit
+
+# if the tmp.rdb gets too big, you may need to delete it and redo the "config set dbfilename tmp.rdb" comannd
 ```
 
 and try a stress test with http-perf
@@ -45,4 +53,40 @@ nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 //send 10
 nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overolading around 6555 of the 10000 requests due to no kue
 ```
 
+The stress test oftentime gets failed around 9000 out of the 10000 requests even for the successful URL in kued server version and even in NON KUED server version as well. 
+This is due to the old node version (v.0.12) that may cause the resouce leak issue. 
+There is a workaround to allivate the leak, otherwise, we need to upgrade to latest node 5.x to fix the issue:
 
+```text
+AssertionError: Resource leak detected.
+  at removeWorker (cluster.js:346:9)
+  at ChildProcess.<anonymous> (cluster.js:366:34)
+  at ChildProcess.g (events.js:199:16)
+  at ChildProcess.emit (events.js:110:17)
+  at Process.ChildProcess._handle.onexit (child_process.js:1074:12)
+  
+````
+There is a workaround function implemented in the kued server code
+```text
+function workAround(worker) {
+    var listeners = null;
+
+    listeners = worker.process.listeners('exit')[0];
+    var exit = listeners[Object.keys(listeners)[0]];
+
+    listeners = worker.process.listeners('disconnect')[0];
+    var disconnect = listeners[Object.keys(listeners)[0]];
+
+    worker.process.removeListener('exit', exit);
+    worker.process.once('exit', function(exitCode, signalCode) {
+      if (worker.state != 'disconnected')
+        disconnect();
+      exit(exitCode, signalCode);
+    });
+  }
+  
+```
+Even with the workaround, sometimes the work may die due to unknown reason, this is an unsolved issue:
+```text
+Worker 2 died :( - starting a new one
+```
