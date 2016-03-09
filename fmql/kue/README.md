@@ -53,9 +53,8 @@ nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 //send 10
 nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overloading around 6555 of the 10000 requests due to no kue
 ```
 
-The stress test oftentimes gets failed around 9000 out of the 10000 requests even for the successful URL in kued server version and even in NON KUED server version as well. 
-This is due to the old node version (v.0.12) that may cause the resource leak issue. 
-There is a workaround to alleviate the leak, otherwise, we need to upgrade to latest node 5.x to fix the issue:
+The stress test oftentimes gets failed around 9000 out of the 10000 requests even for the successful URL in kued server version and even in NON KUED server version as well. This is due to the old node version (v.0.12) that may cause the resource leak issue. 
+A simple 'hello world' express app with cluster was also tested in the same environment (200 concurrent requests for a total 10,000 requests, Vagrant single CPU under VDP user) and the same error message "Resource leak detected" also appeared. Therefore it is concluded that the virtual box is not geared to handle heavy requests because of the limited memory and single CPU. 
 
 ```text
 AssertionError: Resource leak detected.
@@ -66,7 +65,8 @@ AssertionError: Resource leak detected.
   at Process.ChildProcess._handle.onexit (child_process.js:1074:12)
   
 ````
-There is a workaround function implemented in the kued server code
+Nevertheless, there is a workaround to alleviate the leak, otherwise, we need to upgrade to latest node 5.x to fix the issue:
+This is a workaround function implemented in the kued server code:
 ```text
 function workAround(worker) {
     var listeners = null;
@@ -85,8 +85,10 @@ function workAround(worker) {
     });
   }
   
+(source: https://github.com/nodejs/node-v0.x-archive/issues/9409)
 ```
-Even with the workaround, sometimes the work may die due to unknown reason, this is an [unsolved issue] (https://github.com/vistadataproject/nodeVISTA/issues/33):
+Even with the workaround, sometimes the work may die due to unknown reason, this is an [issue] (https://github.com/vistadataproject/nodeVISTA/issues/33):
 ```text
 Worker 2 died :( - starting a new one
 ```
+worker died with code 'SIGKILL', and no exception. It was assumed that the worker was killed by cluster in a normal way. The reason is probably that we run out of memory/CPU resources and cluster needs to kill/recycle it. This is not surprising since we are load testing it in very heavy batches.
