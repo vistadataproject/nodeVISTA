@@ -15,6 +15,16 @@
  * npm install nperf
  * nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1D //send 10000 requests with 200 concurrent requests > succeed
  * nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overolading around 6555 of the 10000 requests due to no kue
+ * another load test with 200 concurrent requests of total 3000. The QPS/rate is 177, which means that it can handle 177 requests per second within the Vagrant virtual box.
+ * If we move to real cluster or bigger box, the QPS would be much better.
+ * { statuses: { '200': 3000 },
+ * min: 91,
+ * max: 2584,
+ * avg: 1092.525333333334,
+ * count: 3000,
+ * rate: 177.43080198722498,
+ * start: 1457451781999,
+ * total_time: 16908 }
  *
  * MONITOR/LOGGING TODO:
  * - more robust/tested restart/shutdown
