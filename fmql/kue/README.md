@@ -92,3 +92,15 @@ Even with the workaround, sometimes the worker may die due to unknown reason, th
 Worker 2 died :( - starting a new one
 ```
 worker died with code 'SIGKILL', and no exception. It was assumed that the worker was killed by cluster in a normal way. The reason is probably that we run out of memory/CPU resources and cluster needs to kill/recycle it. This is not surprising since we are load testing it in very heavy batches.
+
+With a lighter load test, it passed the load test with 200 concurrent requests of total 3000. And the QPS/rate is 177. That means it can handle 177 requests per second with the virtual box. If it's within a real cluster or bigger box, the QPS would be much better.
+```text
+{ statuses: { '200': 3000 },
+  min: 91,
+  max: 2584,
+  avg: 1092.525333333334,
+  count: 3000,
+  rate: 177.43080198722498,
+  start: 1457451781999,
+  total_time: 16908 }
+````
