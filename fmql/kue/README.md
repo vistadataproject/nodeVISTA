@@ -104,3 +104,15 @@ With a lighter load test, it passed the load test with 200 concurrent requests o
   start: 1457451781999,
   total_time: 16908 }
 ````
+
+Similar result 175.81 for 8000 requests
+````text
+stats:
+{ statuses: { '200': 8000 },
+  min: 129,
+  max: 1414,
+  avg: 1123.7987499999933,
+  count: 8000,
+  rate: 175.81258378568447,
+  start: 1457506696995,
+  total_time: 45503 }````
