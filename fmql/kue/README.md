@@ -87,7 +87,7 @@ function workAround(worker) {
   
 (source: https://github.com/nodejs/node-v0.x-archive/issues/9409)
 ```
-Even with the workaround, sometimes the work may die due to unknown reason, this is an [issue] (https://github.com/vistadataproject/nodeVISTA/issues/33):
+Even with the workaround, sometimes the worker may die due to unknown reason, this is an [issue] (https://github.com/vistadataproject/nodeVISTA/issues/33):
 ```text
 Worker 2 died :( - starting a new one
 ```
