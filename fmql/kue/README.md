@@ -1,4 +1,4 @@
-## FMQL web service with queuing  service
+## Node.js web service with queuing
 
 install the redis server required for kue: 
 
