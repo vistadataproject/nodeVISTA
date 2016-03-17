@@ -176,7 +176,7 @@ if (cluster.isMaster) {
     });
 
     // Not FMQL - try static - Express 4 respects order
-    app.use(express.static("../static")); //use static files in ROOT/public folder
+    app.use(express.static("./static")); //use static files in ROOT/public folder
 
     var server = app.listen(port, function() {
         console.log("FMQL worker %d, process %d, listening to port ", cluster.worker.id, process.pid, port);
