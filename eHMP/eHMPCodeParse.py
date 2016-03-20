@@ -14,13 +14,15 @@ Particulars:
 - who wrote (AGILEX etc)
 
 TODO: use KIDS parsers to do rawer parse
+... there was a fork of VPR (52 files), SLC did trigger and other files (gotta break down) and Agilex added some more
+... 
 """
 
 EHMP_MUMPS_DIR = "HMPMUMPS"
 VPR_MUMPS_DIR = "../VPRMUMPS"
 
 """
-HMP Files 148
+HMP MUMPS Files 148
 VPR copies 52
 Non HMP NS files 3
 HMP Non VPR Copies 96
@@ -46,7 +48,7 @@ def describeFiles():
         if fLessNS in vprFilesLessNS:
             hmpVPRCopies.add(f)
     
-    print "HMP Files", len(hmpFiles)
+    print "HMP MUMPS Files", len(hmpFiles)
     print "VPR copies", len(hmpVPRCopies)
     print "Non HMP NS files", len(hmpNonNSFiles)
     
