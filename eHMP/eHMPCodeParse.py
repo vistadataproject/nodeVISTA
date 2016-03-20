@@ -7,10 +7,11 @@ import re
 Parse eHMP MUMPS code for key information
 
 Particulars:
-- copy from VPR from original HMP
+- copy from VPR from original HMP KEY SPLIT
 - all RPCs (compare to static list)
-- ALL triggers
-- dates on files
+- ALL triggers KEY KEY
+- dates on files 
+- who wrote (AGILEX etc)
 
 TODO: use KIDS parsers to do rawer parse
 """
