@@ -61,6 +61,7 @@ var jobDelay = 0;
 var https = require('https');
 var fs = require('fs');
 
+//path of the ssl 
 var options = {
   key: fs.readFileSync('ssl/key.pem'),
   cert: fs.readFileSync('ssl/cert.pem')
@@ -188,6 +189,7 @@ if (cluster.isMaster) {
     app.use(express.static("./static")); //use static files in ROOT/public folder
 
 
+    //specify the port of the https server
     var server = https.createServer(options, app).listen(port, function() {
         console.log("FMQL worker %d, process %d, listening to port ", cluster.worker.id, process.pid, port);
     });
