@@ -12,6 +12,9 @@
         "kue": "0.10.x",
         "ewd-qoper8": "3.4.0",
         "body-parser": "1.15.0",
-        "ewd-qoper8-express": "3.0.0"
+        "ewd-qoper8-express": "3.0.0",
+        "ewd-qoper8-dbq": "1.0.0",
+        "ewd-qoper8-cache": "latest",
+        "ewd-qoper8-gtm": "latest"
     }
 }
