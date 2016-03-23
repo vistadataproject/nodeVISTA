@@ -6,9 +6,12 @@ app.use(bodyParser.json());
 
 var q = new qoper8.masterProcess();
 
-app.get('/qoper8', function (req, res) {
+app.get('/fmqlEP', function (req, res) {
     var request = {
-        hello: 'world'
+        hello: 'world',
+        query: {
+            fmql: req.query.fmql // 'DESCRIBE 2-1'
+        }
     };
   q.handleMessage(request, function(response) {
     res.send(response);
