@@ -1,4 +1,5 @@
-## Adding an FMQL web service to nodeVISTA (fmqlServer.js)
+## Adding an FMQL web service to nodeVISTA
+code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlServer.js
 
 _vagrant ssh_ into the VM and if you haven't already, perform an _npm install_: 
 
@@ -43,12 +44,12 @@ __Invoking a query directly__ ...
 ![Query Patient](/fmql/images/queryPatient.png?raw=true)
 
 We are going to add queue service to the FMQL server. There are three different approaches to do this, which are explained in details below.   
-1. using Kue  
-2. using EWD in memory cache  
-3. using EWD GTM database  
+1. using Kue 
+2. using EWD in memory queue   
+3. using EWD DBQ with GT.M database  
 
-## Adding queue to the FMQL server using Kue (fmqlServer-kue.js)
-
+## Adding queue to the FMQL server using Kue
+code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlServer-kue.js  
 install the redis server required for kue: 
 
 ```text
@@ -164,4 +165,41 @@ stats:
   count: 8000,
   rate: 175.81258378568447,
   start: 1457506696995,
-  total_time: 45503 }````
+  total_time: 45503 }
+  ````
+## Adding EWD (in memory) to the FMQL server
+https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/nonClusterApp.js
+https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/workerModule.js
+````text
+npm install  
+## "ewd-qoper8-express": "3.0.0" required in package.json
+````
+
+## Adding EWD (GTM database) to the FMQL server
+https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlServer-ewd-dbq.js
+https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlWorker-ewdq.js
+````text
+npm intall
+## "ewd-qoper8-gtm": "latest",
+## "ewd-qoper8-dbq": "1.0.0"  required in package.json
+````
+
+From Rob on Cluster/EWD
+````text
+ The master process adds incoming requests to a single queue 
+(either in-memory or to a global that acts as a queue). The master process then checks to find the first
+available worker and assigns the first member of the queue to that worker. When working with a 
+database queue, the master sends a signal to the worker, and, on receipt, the worker pulls its assigned 
+record from the database queue. All workers in the pool are fed from the one database queue.
+````
+
+## Stress Test Result
+
+|EWD in Database<br>(non-cluster) |EWD in memory Queue|KUE with Redis Queue
+|-------------------------|--------------------------------|-------------------------------|
+||command: nperf -c 200 -n 1000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 <br> { statuses: { '200': 1000 },<br>  min: 386,<br>  max: 4050,<br>  avg: 2645.90,<br>  count: 1000,<br>  rate: 68.88,<br>  start: 1458539944777,<br>  total_time: 14519ms }|command: nperf -c 200 -n 1000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1<br>{ statuses: { '200': 1000 },<br>  min: 142,<br>  max: 2355,<br>  avg: 1187.65,<br>  count: 1000,<br>  rate: 154.54,<br>  start: 1458540820125,<br>  total_time: 6471ms }
+|command: <br>nperf -c 200 -n 5000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1<br> { statuses: { '200': 5000 },<br>  min: 132,<br>  max: 4060,<br>  avg: 2827.94,<br>  count: 5000,<br>  rate:69.41,<br>  start: 1458970680772,<br>  total_time: 72040ms }|command: nperf -c 200 -n 3000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 <br>failed. socket hang up<br>processed the first 1600 only.| command: nperf -c 200 -n 3000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1<br>  { statuses: { '0': 1006, '200': 1994 },<br>  min: 97,<br>  max: 44021,<br>  avg: 4842.39,<br>  count: 3000,<br>  rate: 37.09,<br>  start: 1458540867355,<br>  total_time: 80895ms }|
+
+It seems to be the best so far ... it seems to be more stable than kue with Redis. It can handle all of the 5000 requests with 69.41 request/second. The Kue with Redis can't handle all of 5000 requests correctly. Kue only handles 4000 out of 5000 successfully.
+
+Caveat: our virtual box is not a real cluster environment so these tests do not tell us the performance difference in the real cluster server.
