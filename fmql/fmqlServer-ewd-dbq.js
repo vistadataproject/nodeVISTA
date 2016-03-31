@@ -13,6 +13,15 @@ q.on('start', function() {
     this.worker.poolSize = numCPUs;
 });
 
+var https = require('https');
+var fs = require('fs');
+var port = process.argv[2] || 9000;
+//path of the ssl 
+var options = {
+  key: fs.readFileSync('ssl/key.pem'),
+  cert: fs.readFileSync('ssl/cert.pem')
+};
+
 // gzip etc if accepted - must come before middleware for static handling
 app.use(compress());
 
@@ -61,6 +70,12 @@ app.use(express.static("./static")); //use static files in ROOT/public folder
 q.on('started', function() {
     this.worker.module = __dirname + '/fmqlWorker-ewdq.js';
     app.listen(9000);
+    //specify the port of the https server
+    var server = https.createServer(options, app).listen(port, function() {
+        console.log("FMQL worker %d, process %d, listening to port ", cluster.worker.id, process.pid, port);
+    });
+
 });
+
 
 q.start();
