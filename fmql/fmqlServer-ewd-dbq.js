@@ -13,6 +13,7 @@ q.on('start', function() {
     this.worker.poolSize = numCPUs;
 });
 
+//use htttps
 var https = require('https');
 var fs = require('fs');
 var port = process.argv[2] || 9000;
@@ -21,6 +22,29 @@ var options = {
   key: fs.readFileSync('ssl/key.pem'),
   cert: fs.readFileSync('ssl/cert.pem')
 };
+
+
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout            // log INFO and above to stdout
+    },
+    {
+      level: 'info',
+      path: 'log/myapp-info.log'      // log INFO and above to file
+    },
+    {
+      level: 'error',
+      path: 'log/myapp-error.log'  // log ERROR and above to a file
+    }
+  ]
+});
+log.info();     // Returns a boolean: is the "info" level enabled?
+                // This is equivalent to `log.isInfoEnabled()` or
+                // `log.isEnabledFor(INFO)` in log4j.
 
 // gzip etc if accepted - must come before middleware for static handling
 app.use(compress());
@@ -41,13 +65,13 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
     if (req.path.match(/rambler/)) {
         req.url = "/fmRambler.html";
-        console.log("Redirected /rambler to %s", req.url);
+        log.info("Redirected /rambler to %s", req.url);
     } else if (req.path.match(/schema/)) {
         req.url = "/fmSchema.html";
-        console.log("Redirected /schema to %s", req.url);
+        log.info("Redirected /schema to %s", req.url);
     } else if (req.path.match(/query/)) {
         req.url = "/fmQuery.html";
-        console.log("Redirected /query to %s", req.url);
+        log.info("Redirected /query to %s", req.url);
     }
     next();
 });
@@ -69,13 +93,12 @@ app.use(express.static("./static")); //use static files in ROOT/public folder
 
 q.on('started', function() {
     this.worker.module = __dirname + '/fmqlWorker-ewdq.js';
-    app.listen(9000);
+    //app.listen(9000);
     //specify the port of the https server
     var server = https.createServer(options, app).listen(port, function() {
-        console.log("FMQL worker %d, process %d, listening to port ", cluster.worker.id, process.pid, port);
+        log.info("listening to port ", port);
     });
 
 });
-
 
 q.start();
