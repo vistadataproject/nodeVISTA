@@ -1,10 +1,8 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var compress = require("compression");
 var qoper8 = require('ewd-qoper8');
 var fmqlWorker = require('./fmqlWorker-ewdq');
-var app = express();
-app.use(bodyParser.json());
+
 
 var q = new qoper8.masterProcess();
 
@@ -13,7 +11,7 @@ q.on('start', function() {
     this.worker.poolSize = numCPUs;
 });
 
-//use htttps
+//use https
 var https = require('https');
 var fs = require('fs');
 var port = process.argv[2] || 9000;
@@ -23,7 +21,7 @@ var options = {
   cert: fs.readFileSync('ssl/cert.pem')
 };
 
-
+//use bunyan as logging tool
 var bunyan = require('bunyan');
 var log = bunyan.createLogger({
   name: 'myapp',
@@ -34,7 +32,7 @@ var log = bunyan.createLogger({
     },
     {
       level: 'info',
-      path: 'log/myapp-info.log'      // log INFO and above to file
+      path: 'log/myapp-info.log'      // log INFO and above to the specified file
     },
     {
       level: 'error',
@@ -45,6 +43,29 @@ var log = bunyan.createLogger({
 log.info();     // Returns a boolean: is the "info" level enabled?
                 // This is equivalent to `log.isInfoEnabled()` or
                 // `log.isEnabledFor(INFO)` in log4j.
+
+var auth = require('basic-auth');
+
+var authCall = function (req, res, next) {
+  function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.send(401);
+  };
+
+  var user = auth(req);
+
+  if (!user || !user.name || !user.pass) {
+    return unauthorized(res);
+  };
+
+  if (user.name === 'foo' && user.pass === 'bar') {
+    return next();
+  } else {
+    return unauthorized(res);
+  };
+};
+
+var app = express();
 
 // gzip etc if accepted - must come before middleware for static handling
 app.use(compress());
@@ -77,7 +98,7 @@ app.use(function(req, res, next) {
 });
 
 
-app.get('/fmqlEP', function(req, res) {
+app.get('/fmqlEP', authCall, function(req, res) {
     var request = {
         query: {
             fmql: req.query.fmql // 'DESCRIBE 2-1'
