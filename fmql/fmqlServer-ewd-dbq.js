@@ -57,7 +57,7 @@ var authCall = function (req, res, next) {
   if (!user || !user.name || !user.pass) {
     return unauthorized(res);
   };
-
+  //username & password
   if (user.name === 'foo' && user.pass === 'bar') {
     return next();
   } else {
@@ -105,7 +105,8 @@ app.get('/fmqlEP', authCall, function(req, res) {
         }
     };
     q.handleMessage(request, function(response) {
-        res.send(response);
+        res.type('application/json');
+        res.send(response.message);
     });
 });
 

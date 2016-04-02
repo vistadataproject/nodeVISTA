@@ -23,7 +23,7 @@ module.exports = function() {
         if (isFirst) {
             var log = new this.documentStore.DocumentNode('ewdTestLog');
             log.delete();
-        }
+        } 
     });
 
     this.on('message', function(messageObj, send, finished) {
@@ -35,12 +35,14 @@ module.exports = function() {
             worker: 'processed from worker ' + process.pid,
             time: new Date().toString()
         };
-        finished(results);
+        finished(jsont);
     });
 
     this.on('stop', function() {
         console.log('Connection to GT.M closed');
         db.close();
     });
+
+     
 
 };
