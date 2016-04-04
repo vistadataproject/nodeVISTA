@@ -80,6 +80,34 @@ app.use(function(req, res, next) {
         next();
 });
 
+//print out error information for debugging purpose
+if (app.get('env') === 'development') {
+
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+        log.error(err);
+        if (req.path.match(/rambler/)) {
+            req.url = "/fmRambler.html";
+            log.info("Redirected /rambler to %s", req.url);
+        } else if (req.path.match(/schema/)) {
+            req.url = "/fmSchema.html";
+            log.info("Redirected /schema to %s", req.url);
+        } else if (req.path.match(/query/)) {
+            req.url = "/fmQuery.html";
+            log.info("Redirected /query to %s", req.url);
+        }
+        next();
+    });
+
+
+
+}
+
+
 /*
  * Silently rewrites /rambler, /query and /schema to respective htmls
  */
@@ -112,6 +140,23 @@ app.get('/fmqlEP', authCall, function(req, res) {
 
 // Not FMQL - try static - Express 4 respects order
 app.use(express.static("./static")); //use static files in ROOT/public folder
+
+//deal with the rest of nonexisting path
+app.get('*', function(req, res, next) {
+  var err = new Error();
+  err.status = 404;
+  next(err);
+});
+
+// handling 404 errors
+app.use(function(err, req, res, next) {
+  if(err.status !== 404) {
+    return next();
+  };   
+  log.error(err);
+  res.send(err.message || '** sorry, no such file. **');
+
+});
 
 q.on('started', function() {
     this.worker.module = __dirname + '/fmqlWorker-ewdq.js';
