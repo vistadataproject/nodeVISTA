@@ -1,5 +1,5 @@
 ## Adding an FMQL web service to nodeVISTA
-code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlServer.js
+code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlSimpleServer.js
 
 _vagrant ssh_ into the VM and if you haven't already, perform an _npm install_: 
 
