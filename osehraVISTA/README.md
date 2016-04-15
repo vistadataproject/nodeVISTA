@@ -62,10 +62,6 @@ Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(29852,\"FMQLJ
           type: 'literal' },
 ```
 
-FMQL also runs as a service. See [fmql](/fmql) on how to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
+FMQL also runs as a service. Follow [fmql](/fmql) to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
 
 __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
-
-## Developing Write-back
-
-See [Developing Writeback in osehraVISTA](https://github.com/vistadataproject/nodeVISTA/wiki/Developing-write-back-in-osehraVISTA) in the Wiki.
