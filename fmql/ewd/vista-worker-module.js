@@ -34,6 +34,7 @@ module.exports = function() {
             GTMCI: '/home/osehra/ewdjs/node_modules/nodem/resources/nodem.ci',
             namespace: 'VISTA'
         };
+        console.log('**env: ' + env['gtmver'] + '--' + env['gtmdir']);
     connectGTMTo(this, env);
 
   });
