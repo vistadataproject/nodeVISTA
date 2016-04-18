@@ -2,7 +2,7 @@
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/nonClusterApp.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/workerModule.js
 ````text 
-npm install (required in package.json)  
+npm install (the following dependency is required in package.json)  
 ## "ewd-qoper8-express": "3.0.0" 
 ````
 
@@ -10,9 +10,9 @@ npm install (required in package.json)
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/fmqlServer-ewd-dbq.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/fmqlWorker-ewdq.js
 ````text
-npm intall
+npm intall (the following dependencies are required in package.json)
 ## "ewd-qoper8-gtm": "latest",
-## "ewd-qoper8-dbq": "1.0.0"  required in package.json
+## "ewd-qoper8-dbq": "1.0.0"  
 ````
 
 From Rob on Cluster/EWD
