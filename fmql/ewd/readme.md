@@ -1,9 +1,9 @@
 ## Adding EWD (in memory) to the FMQL server
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/nonClusterApp.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/workerModule.js
-````text
-npm install  
-## "ewd-qoper8-express": "3.0.0" required in package.json
+````text 
+npm install (required in package.json)  
+## "ewd-qoper8-express": "3.0.0" 
 ````
 
 ## Adding EWD (GTM database) to the FMQL server
