@@ -57,6 +57,16 @@ var jobs = kue.createQueue();
 var jobType = 'fmql';
 var numParallel = 5;
 var jobDelay = 0;
+
+var https = require('https');
+var fs = require('fs');
+
+//path of the ssl 
+var options = {
+  key: fs.readFileSync('ssl/key.pem'),
+  cert: fs.readFileSync('ssl/cert.pem')
+};
+
 /* 
  * Typical 'cluster' setup
  */
@@ -178,8 +188,12 @@ if (cluster.isMaster) {
     // Not FMQL - try static - Express 4 respects order
     app.use(express.static("./static")); //use static files in ROOT/public folder
 
-    var server = app.listen(port, function() {
+
+    //specify the port of the https server
+    var server = https.createServer(options, app).listen(port, function() {
         console.log("FMQL worker %d, process %d, listening to port ", cluster.worker.id, process.pid, port);
     });
+
+
 
 }
