@@ -1,18 +1,18 @@
 ## Adding EWD (in memory) to the FMQL server
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/nonClusterApp.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/workerModule.js
-````text
-npm install  
-## "ewd-qoper8-express": "3.0.0" required in package.json
+````text 
+npm install (the following dependency is required in package.json)  
+## "ewd-qoper8-express": "3.0.0" 
 ````
 
 ## Adding EWD (GTM database) to the FMQL server
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/fmqlServer-ewd-dbq.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/fmqlWorker-ewdq.js
 ````text
-npm intall
+npm intall (the following dependencies are required in package.json)
 ## "ewd-qoper8-gtm": "latest",
-## "ewd-qoper8-dbq": "1.0.0"  required in package.json
+## "ewd-qoper8-dbq": "1.0.0"  
 ````
 
 From Rob on Cluster/EWD
@@ -53,6 +53,15 @@ var env = {
 connectGTMTo(this, env);
 
 4. run the program by 'node ewd/ewd-vista-express'
+
+5. Run the script to change password for 1st login:  
+https://github.com/vistadataproject/VDM/blob/master/prototypes/login/loginTest.js
+  
+- access: fakenurse1
+- verify: NEWVERIFY1!
+
+(see TRACE: https://github.com/vistadataproject/VDM/blob/master/prototypes/login/TRACE.txt)
+
 ```
 However, when logged in with a valid user, an error occurred:
 
@@ -71,4 +80,27 @@ SyntaxError: Need to supply a function property
     at emit (events.js:118:17)
     at messageHandler (/home/vdp/fmql/node_modules/ewd-qoper8/lib/worker/proto/messageHandler.js:86:17)
     at process.<anonymous> (/home/vdp/fmql/node_modules/ewd-qoper8/lib/worker/proto/init.js:52:20)
+```
+Troubleshooping https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/testCanLoadSymbolM.js
+```
+==== testCanLoadSymbolM.js =====
+
+var nodem = require('nodem');
+try {
+    var db = new nodem.Gtm();
+    db.open();
+    var res = db.function({function: "getSessionSymbolTable^ewdSymbolTable", arguments: ["1"]});
+    console.log(res);
+}
+catch(e) {
+   console.log("ERROR", e);
+}
+db.close();
+===================================
+
+vdp@vagrant-ubuntu-precise-64:~/fmql$ node testCanLoadSymbolM.js 
+{ ok: 0,
+  errorCode: 150373850,
+  errorMessage: 'function+19^v4wNode,%GTM-E-UNDEF, Undefined local variable: func' }
+
 ```
