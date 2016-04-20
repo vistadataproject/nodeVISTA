@@ -1,3 +1,5 @@
+Node.js-based Service Interfaces to VISTA.
+
 ## Adding an FMQL web service to nodeVISTA
 code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlSimpleServer.js
 
