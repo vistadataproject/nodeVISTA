@@ -28,7 +28,7 @@ record from the database queue. All workers in the pool are fed from the one dat
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/ewd-vista-express.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/vista-worker-module.js
 
-Steps have been conducted so far:
+StepS:
 ```text
 1. added dependencies in package.json and ran 'npm install'
 "ewd-qoper8-vistarpc": "latest"
