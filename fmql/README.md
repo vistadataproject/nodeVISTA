@@ -1,4 +1,6 @@
 Node.js-based Service Interfaces to VISTA.
+  * run inside a basic Express-based, Job-supporting Node.js server container
+  * required for (M)VDM end-to-end demos (Deliverable #23)
 
 ## Adding an FMQL web service to nodeVISTA
 code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlSimpleServer.js
