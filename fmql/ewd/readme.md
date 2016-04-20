@@ -104,3 +104,15 @@ vdp@vagrant-ubuntu-precise-64:~/fmql$ node testCanLoadSymbolM.js
   errorMessage: 'function+19^v4wNode,%GTM-E-UNDEF, Undefined local variable: func' }
 
 ```
+Solution from Conor 
+```
+In node_modules/ewd-session/lib/proto/symbolTable.js, change ...     
+      // return db.function(func, gloRef);
+      return db.function({function: func, arguments: [gloRef]});
+```
+Once the source code is changed, you should be able to login using the Chrome Advanced REST Client
+![Chrome Advanced REST Client Login](/fmql/images/ChromeAdvancedRESTClient.png?raw=true)   
+
+And the Server Side   
+
+![EWD Server Side](/fmql/images/EWDServerSide.png?raw=true)
