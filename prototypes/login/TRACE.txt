@@ -1,0 +1,112 @@
+============================= FIRST TIME THROUGH ================
+... if user logging in for first time and required to change password!
+
+Invoking XUS SIGNON SETUP
+
+RESULT:
+vagrant-ubuntu-precise-64
+	PLA
+	PLA
+	/dev/pts/0
+	5
+	0
+	DEMO.OSEHRA.ORG
+	0
+
+
+Invoking XUS AV CODE on fakenurse1INVALID;1Nur!@#$
+
+RESULT:
+0
+	0
+	0
+	Not a valid ACCESS CODE/VERIFY CODE pair.
+	0
+	0
+
+Login failed - invalid access/verify pair
+
+Invoking XUS SIGNON SETUP
+
+RESULT:
+vagrant-ubuntu-precise-64
+	PLA
+	PLA
+	/dev/pts/0
+	5
+	0
+	DEMO.OSEHRA.ORG
+	0
+
+
+Invoking XUS AV CODE on fakenurse1;1Nur!@#$INVALID
+
+RESULT:
+0
+	0
+	0
+	Not a valid ACCESS CODE/VERIFY CODE pair.
+	0
+	0
+
+Login failed - invalid access/verify pair
+
+Invoking XUS SIGNON SETUP
+
+RESULT:
+vagrant-ubuntu-precise-64
+	PLA
+	PLA
+	/dev/pts/0
+	5
+	0
+	DEMO.OSEHRA.ORG
+	0
+
+
+Invoking XUS AV CODE on fakenurse1;1Nur!@#$
+
+RESULT:
+0
+	0
+	1
+	VERIFY CODE must be changed before continued use.
+	0
+	0
+	
+	Good morning SMITH,MARY
+	     You last signed on Jan 12, 2016 at 02:12
+	There were 6 unsuccessful attempts since you last signed on.
+
+Login failed - must redo verify
+
+Invoking XUS CVC
+
+RESULT:
+2
+	VERIFY CODE must be a mix of alpha and numerics and punctuation.
+
+Change failed - must have a valid newVerify
+
+Trying proper new verify NEWVERIFY1!
+
+Now logged in - after changing verify (login is 'silent') - access fakenurse1, verify NEWVERIFY1!
+
+================== Second and Subsequent times through (using proper verify) would end with ======
+
+Invoking XUS AV CODE on fakenurse1;NEWVERIFY1!
+
+RESULT:
+56
+	0
+	0
+	
+	0
+	0
+	
+	Good morning SMITH,MARY
+	     You last signed on today at 02:55
+	There was 1 unsuccessful attempt since you last signed on.
+
+Successful login - returning DUZ 56
+Logged into user with DUZ (User (200) IEN) 56 using access fakenurse1 and verify NEWVERIFY1!
