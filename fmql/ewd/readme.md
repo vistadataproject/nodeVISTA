@@ -28,7 +28,7 @@ record from the database queue. All workers in the pool are fed from the one dat
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/ewd-vista-express.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/vista-worker-module.js
 
-Steps have been conducted so far:
+StepS:
 ```text
 1. added dependencies in package.json and ran 'npm install'
 "ewd-qoper8-vistarpc": "latest"
@@ -104,3 +104,15 @@ vdp@vagrant-ubuntu-precise-64:~/fmql$ node testCanLoadSymbolM.js
   errorMessage: 'function+19^v4wNode,%GTM-E-UNDEF, Undefined local variable: func' }
 
 ```
+Solution from Conor 
+```
+In node_modules/ewd-session/lib/proto/symbolTable.js, change ...     
+      // return db.function(func, gloRef);
+      return db.function({function: func, arguments: [gloRef]});
+```
+Once the source code is changed, you should be able to login using the Chrome Advanced REST Client
+![Chrome Advanced REST Client Login](/fmql/images/ChromeAdvancedRESTClient.png?raw=true)   
+
+And the Server Side   
+
+![EWD Server Side](/fmql/images/EWDServerSide.png?raw=true)
