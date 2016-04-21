@@ -112,8 +112,8 @@ In node_modules/ewd-session/lib/proto/symbolTable.js, change ...
       return db.function({function: func, arguments: [gloRef]});
 ```
 Once the source code is changed, you should be able to login using the Chrome Advanced REST Client
-![Chrome Advanced REST Client Login](/fmql/images/ChromeAdvancedRESTClient.png?raw=true)   
+![Chrome Advanced REST Client Login](/interfaces/images/ChromeAdvancedRESTClient.png?raw=true)   
 
 And the Server Side   
 
-![EWD Server Side](/fmql/images/EWDServerSide.png?raw=true)
+![EWD Server Side](/interfaces/images/EWDServerSide.png?raw=true)
