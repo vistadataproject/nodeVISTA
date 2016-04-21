@@ -2,7 +2,7 @@ Simple Cluster based FMQL service prototype - can't take heavy loads. Job queuei
 
 
 ## Adding an FMQL web service to nodeVISTA
-code: https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/fmqlSimpleServer.js
+code: https://github.com/vistadataproject/nodeVISTA/blob/master/interfaces/fmql/fmqlSimpleServer.js
 
 _vagrant ssh_ into the VM and if you haven't already, perform an _npm install_: 
 
@@ -36,12 +36,12 @@ FMQL comes with three one page clients, _Rambler_ for viewing data, _Schema_ for
 
 __List of populated files in the system and their sizes__ ...
 
-![Schema Opener](/fmql/images/schema.png?raw=true)
+![Schema Opener](/interfaces/images/schema.png?raw=true)
 
 __One Patient's 'Patient Record'__ ...
 
-![Rambler Patient](/fmql/images/ramblerPatient.png?raw=true)
+![Rambler Patient](/interfaces/images/ramblerPatient.png?raw=true)
 
 __Invoking a query directly__ ...
 
-![Query Patient](/fmql/images/queryPatient.png?raw=true)
+![Query Patient](/interfaces/images/queryPatient.png?raw=true)
