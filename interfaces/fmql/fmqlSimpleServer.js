@@ -38,7 +38,7 @@ var express = require("express"),
     compress = require("compression"),
     cluster = require('cluster'),
     nodem = require('nodem'),
-    fmql = require('./fmql'),
+    fmql = require('../fmql'),
     port = process.argv[2] || 9000;
 
 /* 
