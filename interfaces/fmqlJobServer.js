@@ -166,6 +166,11 @@ q.on('started', function() {
         log.info("listening to port ", port);
     });
 
+  this.userDefined = {
+    returnDUZ: true
+  };
+
+
 });
 
 q.start();

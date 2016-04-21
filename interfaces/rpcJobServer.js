@@ -19,15 +19,17 @@ qx.addTo(q);
 app.use('/vista', qx.router());
 
 q.on('started', function() {
-
   // Worker processes will load the vista1.js module:
-
   this.worker.module = __dirname + '/rpcWorker-ewdq';
   //this.worker.module = 'rpcWorker-ewdq';
   var port = process.argv[2] || 9001;
   app.listen(port);
-
   console.log('ewd-qoper8-vistarpc is now running and listening on port ' + port);
+
+ this.userDefined = {
+    returnDUZ: true
+  };
+
 });
 
 q.start();
