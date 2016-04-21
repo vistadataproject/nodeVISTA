@@ -24,6 +24,8 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 8081, host: 8081 # EWD VistA Term
   # New Forward VDP
   config.vm.network :forwarded_port, guest: 9000, host: 9000 # For FMQL Server
+  config.vm.network :forwarded_port, guest: 9000, host: 9001 # For RPC Server
+  config.vm.network :forwarded_port, guest: 9000, host: 9002 # For FMQL Server
   # New Forward Node Inspector
   config.vm.network :forwarded_port, guest: 5858, host: 5858 # for node-inspector (debug-port) 
   config.vm.network :forwarded_port, guest: 3001, host: 3001 # for node-inspector (web-port)    

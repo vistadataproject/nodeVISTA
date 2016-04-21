@@ -22,9 +22,9 @@ q.on('started', function() {
 
   // Worker processes will load the vista1.js module:
 
-  this.worker.module = __dirname + '/vista-worker-module';
-  //this.worker.module = 'vista-worker-module';
-  var port = 9000;
+  this.worker.module = __dirname + '/rpcWorker-ewdq';
+  //this.worker.module = 'rpcWorker-ewdq';
+  var port = process.argv[2] || 9001;
   app.listen(port);
 
   console.log('ewd-qoper8-vistarpc is now running and listening on port ' + port);
