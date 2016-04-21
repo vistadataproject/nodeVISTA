@@ -27,7 +27,6 @@ mvdmJobServer.js | MVDM service for VISTA <br> (coming soon)
   + log.info("information");       
 11. special steps for rpcJobServer:
   * copy *.m files from ewd folder into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
-  * replace node_modules/ewd-session/lib/proto/symbolTable.js with symbolTable.js from the ewd directory (we made a fix)
 12. Use Chrome Advanced REST Client POST content type "application/json" to the following http://localhost:9001/vista/login
   * accessCode: fakenurse1
   * verifyCode: NEWVERIFY1!
