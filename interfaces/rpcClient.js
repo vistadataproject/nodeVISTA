@@ -14,7 +14,7 @@ request.post({
         if (!error && response.statusCode == 200) {
             console.log(response)
             var token = response.body.token;
-            runRPC('DDR GETS ENTRY DATA', token);
+            runRPC('ORWU USERINFO', token);
         }
     }
 );
@@ -33,10 +33,9 @@ function runRPC(rpc, authToken) {
             return console.error(' failed:', error);
         }
         if (!error && response.statusCode == 200) {
-            console.log(response);
+            //console.log(response);
             console.log(body);
         }
-        console.log(body);
     }
 );
 }
