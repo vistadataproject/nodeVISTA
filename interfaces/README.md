@@ -22,9 +22,9 @@ mvdmJobServer.js | MVDM service for VISTA <br> (coming soon)
 10. User name is "foo" and password is "far"
 ![Schema Opener](/interfaces/images/sslDescribe.png?raw=true)
   * You may log error or information through the following syntax in fmqlJobServer.js  
-  * Output will be stored in the log folder (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/log)
   + log.error("an error occurred");  
   + log.info("information");       
+  * Output will be stored in the log folder (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/log)
 11. special steps for rpcJobServer:
   * copy *.m files from ewd folder into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
 12. Use Chrome Advanced REST Client POST content type "application/json" to the following http://localhost:9001/vista/login
