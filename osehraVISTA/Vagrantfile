@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "../", "/vagrant"
 
   #share VDM development directory
-  #config.vm.synced_folder "../../../../../../VDM", "/home/vdp/VDM", owner: "vdp", group: "vdp"
+  #config.vm.synced_folder "../../../../../../", "/home/vdp", owner: "vdp", group: "vdp"
 
   # Define primary box name for all VM providers
   # More VMs could be added here to build a multi-box install and provision
