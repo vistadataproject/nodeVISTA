@@ -9,7 +9,7 @@ fmqlJobServer.js | FMQL service for VISTA
 rpcJobServer.js | RPC service for VISTA
 mvdmJobServer.js | MVDM service for VISTA <br> (coming soon)
 
-## How To Run FMQL Job Server
+## How To Run the FMQL Job Server
 1. Go to Development/VistA/Scripts/Install/Ubuntu/  
 2. vagrant up
 3. vagrant ssh
@@ -27,7 +27,7 @@ mvdmJobServer.js | MVDM service for VISTA <br> (coming soon)
   * Output will be stored in the log folder (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/log)
 
 
-## How To Run PRC Job Server
+## How To Run the RPC Job Server
 1. copy *.m files from ewd folder listed below into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
 2. Follow the same steps from the FMQL job server above and cd to /home/vdp/interfaces
 3. node rpcJobServer.js
