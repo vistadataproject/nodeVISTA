@@ -5,9 +5,9 @@
 ## Three Servers
 File | Description
 --- | --- 
-fmqlJobServer.js | FMQL service for VISTA
-rpcJobServer.js | RPC service for VISTA
-mvdmJobServer.js | MVDM service for VISTA <br> (coming soon)
+fmqlJobServer.js | FMQL over HTTPS service for VISTA
+rpcJobServer.js | RPC over HTTPS service for VISTA
+mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 
 ## How To Run the FMQL Job Server
 1. Go to Development/VistA/Scripts/Install/Ubuntu/  
