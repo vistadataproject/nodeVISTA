@@ -88,7 +88,8 @@ function workAround(worker) {
   
 (source: https://github.com/nodejs/node-v0.x-archive/issues/9409)
 ```
-Even with the workaround, sometimes the worker may die due to unknown reason, this is an [issue] (https://github.com/vistadataproject/nodeVISTA/issues/33):
+Even with the workaround, sometimes the worker may die due to unknown reason.
+
 ```text
 Worker 2 died :( - starting a new one
 ```
@@ -237,14 +238,14 @@ stats:
   start: 1457506696995,
   total_time: 45503 }
   ````
-
+## Other Kueing Approaches
 There are three approaches to add queue service to the FMQL server and we evaluated their performance below:
 
 1. using Kue 
 2. using EWD in memory queue   
 3. using EWD DBQ with GT.M database  
 
-## Stress Test Results
+Stress Test Results
 
 |EWD in Database<br>(non-cluster) |EWD in memory Queue|KUE with Redis Queue
 |-------------------------|--------------------------------|-------------------------------|
@@ -254,3 +255,6 @@ There are three approaches to add queue service to the FMQL server and we evalua
 EWD in Database seems to be the best so far ... it seems to be more stable than kue with Redis. It can handle all of the 5000 requests with 69.41 request/second. The Kue with Redis can't handle all of 5000 requests correctly. Kue only handles 4000 out of 5000 successfully.
 
 Caveat: our virtual box is not a real cluster environment so these tests do not tell us the performance difference in the real cluster server.
+
+
+
