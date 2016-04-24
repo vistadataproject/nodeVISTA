@@ -173,6 +173,7 @@ npm install -g http-perf
 nperf -c 200 -n 10000 http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 //send 10000 requests with 200 concurrent requests > succeed
 nperf -c 200 -n 10000 http://localhost:9000/schema //failed after overloading around 6555 of the 10000 requests due to no kue
 ```
+## Problem with Older Node.js
 
 The stress test oftentimes gets failed around 9000 out of the 10000 requests even for the successful URL in kued server version and even in NON KUED server version as well. This is due to the old node version (v.0.12) that may cause the resource leak issue. 
 A simple 'hello world' express app with cluster was also tested in the same environment (200 concurrent requests for a total 10,000 requests, Vagrant single CPU under VDP user) and the same error message "Resource leak detected" also appeared. Therefore it is concluded that the virtual box is not geared to handle heavy requests because of the limited memory and single CPU. 
