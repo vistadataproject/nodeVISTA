@@ -25,12 +25,21 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
   + log.error("an error occurred");  
   + log.info("information");       
   * Output will be stored in the log folder (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/log)
+11. Install the self-signed SSL certificate at the local machine in order to run the RPC job server using Chrome Avanced REST Client (see below)
+  * Chrome: Click the red X and select "Certificate Information" from the "Connection" tab
+  * Drag the certificate icon to desktop (save to desktop) ![LOCALHOST SSL](/interfaces/images/localhostSSL.png?raw=true)
+  * Double click the saved file LOCALHOST.cer from the desktop
+  * Make sure "Keychain" is selected to "System" and then click "Add" ![ADD SSL](/interfaces/images/addSSL.png?raw=true)
+  * Enter your system password in roder to Modify Keychain (and re-enter again if prompted in the steps below)
+  * Double click the LOCALHOST.cer certificate once it is added to Keychain Access
+  * Click the Trust section to expand it
+  * Select "Always Trust" When using this certificate ![TRUST SSL](/interfaces/images/trustSSL.png?raw=true)
 
 ## How To Run the RPC Job Server
 1. copy *.m files from ewd folder listed below into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
 2. Follow the same steps from the FMQL job server above and cd to /home/vdp/interfaces
 3. node rpcJobServer.js (default port 9001)
-4. Use Chrome Advanced REST Client POST to the following http://localhost:9001/vista/login (content type "application/json")
+4. Use [Chrome Advanced REST Client] (https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) POST to the following https://localhost:9001/vista/login (content type "application/json")
   * accessCode: fakenurse1
   * verifyCode: NEWVERIFY1!
 ![RPC JOB](/interfaces/images/ChromeAdvancedRESTClient.png?raw=true)
