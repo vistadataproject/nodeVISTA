@@ -26,7 +26,7 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
   + log.info("information");       
   * Output will be stored in the log folder (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/log)
 11. (Mac version) Install the self-signed SSL certificate at the local machine in order to run the RPC job server using Chrome Avanced REST Client (see below)
-  * Chrome: Click the red X and select "Certificate Information" from the "Connection" tab
+  * Chrome: Click the red X from the browser and select "Certificate Information" from the "Connection" tab
   * Drag the certificate icon to desktop (save to desktop, there should display a question mark ) ![LOCALHOST SSL](/interfaces/images/localhostSSL.png?raw=true)
   * Double click the saved file LOCALHOST.cer from the desktop
   * Make sure "Keychain" is selected to "System" and then click "Add" ![ADD SSL](/interfaces/images/addSSL.png?raw=true)
