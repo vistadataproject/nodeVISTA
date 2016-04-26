@@ -25,9 +25,11 @@ function login(callback) {
         },
         function(error, response, body) {
             if (error) {
+                console.log("/n *********login client body log: "+ body);
                 return console.error(' failed:', error);
             }
             if (!error && response.statusCode == 200) {
+               console.log("/n **********login client response" + response);
                 // console.log(response)
                 var token = response.body.token;
                 if (callback) callback(rpc, token);
@@ -37,10 +39,11 @@ function login(callback) {
 }
 
 function runRPC(rpc, authToken) {
-    request.defaults({
-      strictSSL: false, // allow us to use our self-signed cert for testing
-      rejectUnauthorized: false
-    });
+    console.log("/n *********rpc function called: "+ rpc + "authToken: " + authToken);
+    // request.defaults({
+    //   strictSSL: false, // allow us to use our self-signed cert for testing
+    //   rejectUnauthorized: false
+    // });
     request.post({
             url: 'https://localhost:9001/vista/runRPC/' + rpc,
             //      strictSSL: false, // allow us to use our self-signed cert for testing
@@ -49,18 +52,21 @@ function runRPC(rpc, authToken) {
               //  'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': authToken,
             },
-            json: { "input" : "1", 
-                   "input" : "1" }
+            json: ["1", "1"]
+            /* json: { "input" : "1", 
+                    "input" : "1" }
+                    */
             //json: rpcArgs
             //formData: {rpcArgs: rpcArgs}
         },
         function(error, response, body) {
             if (error) {
                 return console.error(' failed:', error);
+                console.log("/n *********client body log: "+ body);
             }
             if (!error && response.statusCode == 200) {
-                //console.log(response);
-                console.log("/n *********client body log: "+ body);
+                console.log("/n **********client response" + response);
+                //console.log("/n *********client body log: "+ body);
             }
         }
     );
