@@ -51,7 +51,8 @@ function runRPC(rpcName, rpcArgs, callback) {
             headers: {
                 'Authorization': authToken,
             },
-            json: rpcArgs
+            json: rpcArgs,
+            returnGlobalArray: true // nothing happens Conor - same for 'raw'. Wrong place?
         },
         function(error, response, body) {
             if (error) {
@@ -96,6 +97,7 @@ function processEachPatient(patients) {
             }
         }
         funcs.push(tmp(patientStr));
+        // break; ... added so can just do first patient as debug
     }
     async.series(funcs, function(error, result) {
         console.log('all done.');
@@ -104,8 +106,16 @@ function processEachPatient(patients) {
 
 function getPatientInfo(id, cb) {
     async.series([
+            function rpc0(callback) {
+                var rpcName = 'ORWPT SELECT';
+                var rpcArgs = [{
+                    type: "LITERAL",
+                    value: id
+                }]
+                runRPC(rpcName, rpcArgs, callback);
+            },
             function rpc1(callback) {
-                var rpcName = 'ORWPT1 PRCARE'
+                var rpcName = 'ORWPT1 PRCARE';
                 var rpcArgs = [{
                     type: "LITERAL",
                     value: id
@@ -113,11 +123,19 @@ function getPatientInfo(id, cb) {
                 runRPC(rpcName, rpcArgs, callback);
             },
             function rpc2(callback) {
-                var rpcName = 'GMV V/M ALLDATA'
+                var rpcName = 'GMV V/M ALLDATA';
                 var rpcArgs = [{
                     type: "LITERAL",
                     value: id
                 }]
+                runRPC(rpcName, rpcArgs, callback);
+            },
+            function rpc3(callback) {
+                var rpcName = "VPR GET PATIENT DATA";
+                var rpcArgs = [{
+                    type: "LITERAL",
+                    value: id
+                }, {type: "LITERAL", value: "vital"}]
                 runRPC(rpcName, rpcArgs, callback);
             }
         ],
