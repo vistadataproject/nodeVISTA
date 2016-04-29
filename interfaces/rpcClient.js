@@ -15,12 +15,10 @@ function login(accessCode, verifyCode) {
     request.post({
             strictSSL: false, // allow us to use our self-signed cert for testing
             rejectUnauthorized: false,
-
             url: 'https://localhost:9001/vista/login',
-            rejectUnhauthorized: false,
             json: {
-                "accessCode": "fakenurse1", //"fakenurse1",
-                "verifyCode": "NEWVERIFY1!"
+                "accessCode": accessCode, //"fakenurse1",
+                "verifyCode": verifyCode
             }
         },
         function(error, response, body) {
@@ -39,6 +37,10 @@ function login(accessCode, verifyCode) {
             }
         }
     );
+}
+
+function run() {
+    getAllPatients(processEachPatient);
 }
 
 function runRPC(rpcName, rpcArgs, callback) {
@@ -81,7 +83,7 @@ function getAllPatients(callback) {
     }
     runRPC(rpc, rpcArgs, callback);
 }
-
+ 
 function processEachPatient(patients) {
     var funcs = [];
     for (var k in patients.value) {
@@ -128,15 +130,5 @@ function getPatientInfo(id, cb) {
             cb();
         });
 }
-
-function run() {
-    getAllPatients(processEachPatient);
-}
-
-// var rpcName = 'ORWPT1 SELECT'; //undefined RPC
-var rpcName = 'ORWPT PTINQ'; //error 
-//var rpcName = 'ORWPT1 PRCARE'; //success
-// var rpcName = 'GMV V/M ALLDATA'; //success
-
 
 login('fakenurse1', 'NEWVERIFY1!');
