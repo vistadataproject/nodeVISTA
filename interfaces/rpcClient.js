@@ -1,3 +1,5 @@
+var util = require('util');
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var request = require('request');
@@ -12,6 +14,7 @@ function login(callback) {
       rejectUnauthorized: false
     });
 
+    console.log("\nLogin called\n");
     request.post({
             strictSSL: false, // allow us to use our self-signed cert for testing
             rejectUnauthorized: false,
@@ -19,18 +22,18 @@ function login(callback) {
             url: 'https://localhost:9001/vista/login',
             rejectUnhauthorized : false,
             json: {
-                "accessCode": "fakedoc1", //"fakenurse1",
+                "accessCode": "fakenurse1", //"fakenurse1",
                 "verifyCode": "NEWVERIFY1!"
             }
         },
         function(error, response, body) {
             if (error) {
-                console.log("/n *********login client body log: "+ body);
+                console.log("\n *********login client body log: "+ body);
                 return console.error(' failed:', error);
             }
             if (!error && response.statusCode == 200) {
-               console.log("/n **********login client response" + response);
-                // console.log(response)
+                console.log("\nLogin response:");
+                console.dir(response.body, {depth: null, colors: true});
                 var token = response.body.token;
                 if (callback) callback(rpc, token);
             }
@@ -39,34 +42,28 @@ function login(callback) {
 }
 
 function runRPC(rpc, authToken) {
-    console.log("/n *********rpc function called: "+ rpc + "authToken: " + authToken);
+    console.log("\nRPC called: %s (authToken %s)", rpc, authToken);
     // request.defaults({
     //   strictSSL: false, // allow us to use our self-signed cert for testing
     //   rejectUnauthorized: false
     // });
+    var rpcArgs = [{"type": "LITERAL", "value": 1}, {"type": "LITERAL", "value": 1}];
     request.post({
             url: 'https://localhost:9001/vista/runRPC/' + rpc,
             //      strictSSL: false, // allow us to use our self-signed cert for testing
             //rejectUnhauthorized : false,
             headers: {
-              //  'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': authToken,
             },
-            json: ["1", "1"]
-            /* json: { "input" : "1", 
-                    "input" : "1" }
-                    */
-            //json: rpcArgs
-            //formData: {rpcArgs: rpcArgs}
+            json: rpcArgs
         },
         function(error, response, body) {
             if (error) {
                 return console.error(' failed:', error);
-                console.log("/n *********client body log: "+ body);
             }
             if (!error && response.statusCode == 200) {
-                console.log("/n **********client response" + response);
-                //console.log("/n *********client body log: "+ body);
+                console.log("\nRPC response:");
+                console.dir(response.body, {depth: null, colors: true});
             }
         }
     );
