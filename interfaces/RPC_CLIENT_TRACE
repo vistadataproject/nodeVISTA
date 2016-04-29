@@ -1,0 +1,45 @@
+vdp@vagrant-ubuntu-precise-64:~/nodeVISTA/interfaces$ node rpcClient.js 
+
+Login called
+
+
+Login response:
+{ token: 'af3d24a3-6ee1-4c1e-9862-0813966b7ffc',
+  displayName: 'SMITH,MARY',
+  greeting: 'Good morning SMITH,MARY',
+  lastSignon: '     You last signed on today at 00:34',
+  messages: [ '     You last signed on today at 00:34' ],
+  duz: 56 }
+
+RPC called: ORWPT LIST ALL (authToken af3d24a3-6ee1-4c1e-9862-0813966b7ffc)
+
+RPC response:
+{ type: 'ARRAY',
+  value: 
+   { '1': '1^CARTER,DAVID JR^^^^CARTER,DAVID JR',
+     '2': '26^CARTER,DAVID JR^^^^CARTER,DAVID JR',
+     '3': '27^CARTER,DAVID JR^^^^CARTER,DAVID JR',
+     '4': '18^EIGHT,PATIENT H^^^^EIGHT,PATIENT H',
+     '5': '23^EIGHTEEN,PATIENT R^^^^EIGHTEEN,PATIENT R',
+     '6': '6^ELEVEN,PATIENT K^^^^ELEVEN,PATIENT K',
+     '7': '19^FIFTEEN,PATIENT O^^^^FIFTEEN,PATIENT O',
+     '8': '21^FIVE,PATIENT E^^^^FIVE,PATIENT E',
+     '9': '25^FOUR,PATIENT D^^^^FOUR,PATIENT D',
+     '10': '2^FOURTEEN,PATIENT N^^^^FOURTEEN,PATIENT N',
+     '11': '5^NINE,PATIENT I^^^^NINE,PATIENT I',
+     '12': '9^NINETEEN,PATIENT S^^^^NINETEEN,PATIENT S',
+     '13': '4^ONE,PATIENT A^^^^ONE,PATIENT A',
+     '14': '3^SEVEN,PATIENT G^^^^SEVEN,PATIENT G',
+     '15': '16^SEVENTEEN,PATIENT Q^^^^SEVENTEEN,PATIENT Q',
+     '16': '7^SIX,PATIENT F^^^^SIX,PATIENT F',
+     '17': '17^SIXTEEN,PATIENT P^^^^SIXTEEN,PATIENT P',
+     '18': '15^TEN,PATIENT J^^^^TEN,PATIENT J',
+     '19': '24^THIRTEEN,PATIENT M^^^^THIRTEEN,PATIENT M',
+     '20': '10^THREE,PATIENT C^^^^THREE,PATIENT C',
+     '21': '20^TWELVE,PATIENT L^^^^TWELVE,PATIENT L',
+     '22': '12^TWENTY,PATIENT T^^^^TWENTY,PATIENT T',
+     '23': '13^TWENTYFOUR,PATIENT X^^^^TWENTYFOUR,PATIENT X',
+     '24': '22^TWENTYONE,PATIENT U^^^^TWENTYONE,PATIENT U',
+     '25': '14^TWENTYTHREE,PATIENT W^^^^TWENTYTHREE,PATIENT W',
+     '26': '8^TWENTYTWO,PATIENT V^^^^TWENTYTWO,PATIENT V',
+     '27': '11^TWO,PATIENT B^^^^TWO,PATIENT B' } }
