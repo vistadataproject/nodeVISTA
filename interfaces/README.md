@@ -39,8 +39,9 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 ## How To Run the RPC Job Server
 1. copy *.m files from ewd folder listed below into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
 2. Follow the same steps from the FMQL job server above and cd to /home/vdp/interfaces
-3. node rpcJobServer.js (default port 9001)
-4. Use [Chrome Advanced REST Client] (https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) POST to the following https://localhost:9001/vista/login (content type "application/json")
+3. If not exist, make a log folder and create the two empty files "myapp-rpcerr.log" and "myapp-rpcinfo.log" inside the log folder.
+4. node rpcJobServer.js (default port 9001)
+5. Use [Chrome Advanced REST Client] (https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) POST to the following https://localhost:9001/vista/login (content type "application/json")
   * accessCode: fakenurse1
   * verifyCode: NEWVERIFY1!
 ![RPC JOB](/interfaces/images/ChromeAdvancedRESTClient.png?raw=true)
@@ -57,7 +58,7 @@ To start the node.js server in cluster mode , run the following command:
 -i (number of workers) will tell PM2 that you want to launch your app in cluster_mode (as opposed to fork_mode).   
 If 'number of workers' argument is 0, PM2 will automatically spawn as many workers as you have CPU cores.
 ````text
-vdp@vagrant-ubuntu-precise-64:~/interfaces$ pm start fmqlJobServer.js -i 0 
+vdp@vagrant-ubuntu-precise-64:~/interfaces$ pm2 start fmqlJobServer.js -i 0 
 [PM2] Spawning PM2 daemon
 [PM2] PM2 Successfully daemonized
 [PM2] Starting fmqlJobServer.js in cluster_mode (0 instance)
