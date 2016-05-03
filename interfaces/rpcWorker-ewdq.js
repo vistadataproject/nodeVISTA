@@ -1,4 +1,26 @@
 // ewd-qoper8 Worker Module example which implements VistA RPC access on a Cache system
+//use bunyan as logging tool
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout            // log INFO and above to stdout
+    },
+    {
+      level: 'info',
+      path: 'log/myapp-rpcinfo.log'      // log INFO and above to the specified file
+    },
+    {
+      level: 'error',
+      path: 'log/myapp-rpcerror.log'  // log ERROR and above to a file
+    }
+  ]
+});
+log.info();     // Returns a boolean: is the "info" level enabled?
+                // This is equivalent to `log.isInfoEnabled()` or
+                // `log.isEnabledFor(INFO)` in log4j.
 
 
 module.exports = function() {
@@ -36,6 +58,7 @@ module.exports = function() {
             namespace: 'VISTA'
         };
         console.log('**env: ' + env['gtmver'] + '--' + env['gtmdir']);
+        log.info('**env: ' + env['gtmver'] + '--' + env['gtmdir']);
         connectGTMTo(this, env);
 
     });
@@ -50,6 +73,14 @@ module.exports = function() {
             console.log('rpcFlags:', messageObj.flags);
             console.log('rpcResult:', results);
             console.log('----------------------------');
+
+            log.info('----- RPC worker Call -----');
+            log.info('rpcName:', messageObj.params[0]);
+            log.info('rpcArgs:', messageObj.body);
+            log.info('rpcFlags:', messageObj.flags);
+            log.info('rpcResult:', results);
+            log.info('----------------------------');
+            
         };
         var expressMessage = handleExpressMessage.call(this, messageObj, send, cb);
     });
