@@ -23,7 +23,7 @@ function login(accessCode, verifyCode) {
         },
         function(error, response, body) {
             if (error) {
-                console.log("\n *********login client body log: " + body);
+                //console.log("\n *********login client body log: " + body);
                 return console.error(' failed:', error);
             }
             if (!error && response.statusCode == 200) {
@@ -47,7 +47,7 @@ function runRPC(rpcName, rpcArgs, callback) {
     console.log("\nRPC called: %s | rpcArgs: %s", rpcName, JSON.stringify(rpcArgs));
     //var rpcArgs = [{"type": "LITERAL", "value": 1}];
     request.post({
-            url: 'https://localhost:9001/vista/runRPC/' + rpcName,
+            url: 'https://localhost:9001/vista/runRPC/' + rpcName + '?format=raw&returnGlobalArray=true',
             headers: {
                 'Authorization': authToken,
             },
@@ -65,6 +65,10 @@ function runRPC(rpcName, rpcArgs, callback) {
                     colors: true
                 });
                 if (callback) callback(error, response.body);
+            }
+            else { 
+                errorMessage = JSON.stringify(response.body); //print out MUMPS error message. 
+                console.log('******* Error: '+ errorMessage.substring(10, errorMessage.length -2))   
             }
         }
     );
@@ -130,12 +134,20 @@ function getPatientInfo(id, cb) {
                 }]
                 runRPC(rpcName, rpcArgs, callback);
             },
-            function rpc3(callback) {
-                var rpcName = "VPR GET PATIENT DATA";
+            // function rpc3(callback) {
+            //     var rpcName = "VPR GET PATIENT DATA";
+            //     var rpcArgs = [{
+            //         type: "LITERAL",
+            //         value: id
+            //     }, {type: "LITERAL", value: "vital"}]
+            //     //runRPC(rpcName, rpcArgs, callback);
+            // }
+            function rpc4(callback) { //test type error 
+                var rpcName = 'ORWPT1 PRCARE';
                 var rpcArgs = [{
-                    type: "LITERAL",
+                    type: "INT",
                     value: id
-                }, {type: "LITERAL", value: "vital"}]
+                }]
                 runRPC(rpcName, rpcArgs, callback);
             }
         ],
