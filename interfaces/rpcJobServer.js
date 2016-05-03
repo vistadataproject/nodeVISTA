@@ -28,6 +28,30 @@ var options = {
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
+//use bunyan as logging tool
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout            // log INFO and above to stdout
+    },
+    {
+      level: 'info',
+      path: 'log/myapp-rpcinfo.log'      // log INFO and above to the specified file
+    },
+    {
+      level: 'error',
+      path: 'log/myapp-rpcerror.log'  // log ERROR and above to a file
+    }
+  ]
+});
+log.info();     // Returns a boolean: is the "info" level enabled?
+                // This is equivalent to `log.isInfoEnabled()` or
+                // `log.isEnabledFor(INFO)` in log4j.
+
+
 var q = new qoper8.masterProcess();
 qx.addTo(q);
 
@@ -45,6 +69,7 @@ q.on('started', function() {
     });
 
     console.log('ewd-qoper8-vistarpc is now running and listening on port ' + port);
+    log.info('ewd-qoper8-vistarpc is now running and listening on port ' + port);
 
     this.userDefined = {
         returnDUZ: true

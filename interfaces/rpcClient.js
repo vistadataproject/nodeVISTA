@@ -2,8 +2,29 @@ var util = require('util');
 var async = require('async');
 var request = require('request');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
 var authToken;
+
+
+//use bunyan as logging tool
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout            // log INFO and above to stdout
+    },
+    {
+      level: 'info',
+      path: 'log/myapp-rpcinfo.log'      // log INFO and above to the specified file
+    },
+    {
+      level: 'error',
+      path: 'log/myapp-rpcerror.log'  // log ERROR and above to a file
+    }
+  ]
+});
+
 
 function login(accessCode, verifyCode) {
     request.defaults({
@@ -23,6 +44,7 @@ function login(accessCode, verifyCode) {
         },
         function(error, response, body) {
             if (error) {
+                log.error(' client failed:', error);
                 //console.log("\n *********login client body log: " + body);
                 return console.error(' failed:', error);
             }
@@ -45,6 +67,7 @@ function run() {
 
 function runRPC(rpcName, rpcArgs, callback) {
     console.log("\nRPC called: %s | rpcArgs: %s", rpcName, JSON.stringify(rpcArgs));
+    log.info("\nRPC client called: %s | rpcArgs: %s", rpcName, JSON.stringify(rpcArgs));
     //var rpcArgs = [{"type": "LITERAL", "value": 1}];
     request.post({
             url: 'https://localhost:9001/vista/runRPC/' + rpcName + '?format=raw&returnGlobalArray=true',
@@ -56,7 +79,8 @@ function runRPC(rpcName, rpcArgs, callback) {
         },
         function(error, response, body) {
             if (error) {
-                return console.error(' failed:', error);
+                log.error(' client failed' + error);
+                return console.error(' client failed:', error);
             }
             if (!error && response.statusCode == 200) {
                 console.log("\nRPC response:");
@@ -68,7 +92,8 @@ function runRPC(rpcName, rpcArgs, callback) {
             }
             else { 
                 errorMessage = JSON.stringify(response.body); //print out MUMPS error message. 
-                console.log('******* Error: '+ errorMessage.substring(10, errorMessage.length -2))   
+                console.log('******* Error: '+ errorMessage.substring(10, errorMessage.length -2));   
+                log.error('******* Client Error: '+ errorMessage.substring(10, errorMessage.length -2));   
             }
         }
     );
@@ -104,7 +129,8 @@ function processEachPatient(patients) {
         // break; ... added so can just do first patient as debug
     }
     async.series(funcs, function(error, result) {
-        console.log('all done.');
+        console.log('client job done.');
+        log.info('client job done');
     })
 }
 
@@ -154,8 +180,10 @@ function getPatientInfo(id, cb) {
         function(error, result) {
             if (error) {
                 console.log(error);
+                log.err('Client Error: ' + error)
             } else {
                 console.log('finished processing one patient.');
+                log.info('finished processing one patient.');
             }
             cb();
         });
