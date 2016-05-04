@@ -1,5 +1,6 @@
 Note: these changes will hopefully become unnecessary once EWD components are patched.
 
+
 Two manual changes to EWD to make the client work:
 
 1. Comment out a line in node_modules/ewd-qoper8-gtm/lib/setEnvironment.js

@@ -1,4 +1,4 @@
-[vdp@vagrant-ubuntu-precise-64:~/nodeVISTA/interfaces$ node rpcJobSClient.js
+[vdp@vagrant-ubuntu-precise-64:~/nodeVISTA/interfaces$ node rpcJobServerClient.js
 
 
 === Login and call patient information RPCs over EWD-enabled RPC Job Server ===
