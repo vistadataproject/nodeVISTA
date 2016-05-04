@@ -1,0 +1,18 @@
+Two manual changes to EWD to make the client work:
+
+1. Comment out a line in node_modules/ewd-qoper8-gtm/lib/setEnvironment.js
+
+... delete the following line as '/usr/lob/fis-gtm' is NOT in our system
+
+```text
+    // var gtmver2 = fs.readdirSync('/usr/lib/fis-gtm')[0];
+```
+
+2. node_modules/ewd-qoper8-vistarpc/lib/proto/runRPC.js
+
+... remove $(rpcName)
+
+```text
+    // value: session.data.$('GLOBAL_ARRAY').$(rpcName).getDocument(true, 1)
+    value: session.data.$('GLOBAL_ARRAY').getDocument(true, 1)
+```

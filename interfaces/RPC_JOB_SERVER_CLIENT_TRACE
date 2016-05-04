@@ -1,0 +1,245 @@
+[vdp@vagrant-ubuntu-precise-64:~/nodeVISTA/interfaces$ node rpcJobSClient.js
+
+
+=== Login and call patient information RPCs over EWD-enabled RPC Job Server ===
+
+... note asking for GLOBAL ARRAYS to be parsed and SINGLE VALUES to be sent back 'raw'
+
+
+
+----------
+First Logging in ...
+
+
+Login response:
+{ token: '291df1d0-b887-48be-8162-2d725439d173',
+  displayName: 'SMITH,MARY',
+  greeting: 'Good morning SMITH,MARY',
+  lastSignon: '     You last signed on today at 01:55',
+  messages: [ '     You last signed on today at 01:55' ],
+  duz: 56 }
+
+
+----------
+First list Patients
+... note that return type is array and that is parsed automatically.
+
+
+RPC called: ORWPT LIST ALL | rpcArgs: [{"type":"LITERAL","value":1},{"type":"LITERAL","value":1}]
+
+RPC response:
+{ type: 'ARRAY',
+  value: 
+   { '1': '1^CARTER,DAVID JR^^^^CARTER,DAVID JR',
+     '2': '26^CARTER,DAVID JR^^^^CARTER,DAVID JR',
+     '3': '27^CARTER,DAVID JR^^^^CARTER,DAVID JR',
+     '4': '18^EIGHT,PATIENT H^^^^EIGHT,PATIENT H',
+     '5': '23^EIGHTEEN,PATIENT R^^^^EIGHTEEN,PATIENT R',
+     '6': '6^ELEVEN,PATIENT K^^^^ELEVEN,PATIENT K',
+     '7': '19^FIFTEEN,PATIENT O^^^^FIFTEEN,PATIENT O',
+     '8': '21^FIVE,PATIENT E^^^^FIVE,PATIENT E',
+     '9': '25^FOUR,PATIENT D^^^^FOUR,PATIENT D',
+     '10': '2^FOURTEEN,PATIENT N^^^^FOURTEEN,PATIENT N',
+     '11': '5^NINE,PATIENT I^^^^NINE,PATIENT I',
+     '12': '9^NINETEEN,PATIENT S^^^^NINETEEN,PATIENT S',
+     '13': '4^ONE,PATIENT A^^^^ONE,PATIENT A',
+     '14': '3^SEVEN,PATIENT G^^^^SEVEN,PATIENT G',
+     '15': '16^SEVENTEEN,PATIENT Q^^^^SEVENTEEN,PATIENT Q',
+     '16': '7^SIX,PATIENT F^^^^SIX,PATIENT F',
+     '17': '17^SIXTEEN,PATIENT P^^^^SIXTEEN,PATIENT P',
+     '18': '15^TEN,PATIENT J^^^^TEN,PATIENT J',
+     '19': '24^THIRTEEN,PATIENT M^^^^THIRTEEN,PATIENT M',
+     '20': '10^THREE,PATIENT C^^^^THREE,PATIENT C',
+     '21': '20^TWELVE,PATIENT L^^^^TWELVE,PATIENT L',
+     '22': '12^TWENTY,PATIENT T^^^^TWENTY,PATIENT T',
+     '23': '13^TWENTYFOUR,PATIENT X^^^^TWENTYFOUR,PATIENT X',
+     '24': '22^TWENTYONE,PATIENT U^^^^TWENTYONE,PATIENT U',
+     '25': '14^TWENTYTHREE,PATIENT W^^^^TWENTYTHREE,PATIENT W',
+     '26': '8^TWENTYTWO,PATIENT V^^^^TWENTYTWO,PATIENT V',
+     '27': '11^TWO,PATIENT B^^^^TWO,PATIENT B' } }
+
+
+Get details about first two patients ...
+
+
+----------
+Process Patient: 1^CARTER,DAVID JR^^^^CARTER,DAVID JR
+
+
+RPC called: ORWPT SELECT | rpcArgs: [{"type":"LITERAL","value":"1"}]
+
+RPC response:
+{ type: 'SINGLE VALUE',
+  value: 'CARTER,DAVID JR^M^3010302^000000113^^^^A^0^^0^0^^^15^0' }
+
+RPC called: ORWPT1 PRCARE | rpcArgs: [{"type":"LITERAL","value":"1"}]
+
+RPC response:
+{ type: 'SINGLE VALUE', value: '^^^^^' }
+
+RPC called: GMV V/M ALLDATA | rpcArgs: [{"type":"LITERAL","value":"1"}]
+
+RPC response:
+{ type: 'GLOBAL ARRAY',
+  value: 
+   { '1': 'CARTER,DAVID JR  0113  MAR 2,2001  15 (Yrs)  MALE',
+     '2': 'Unit:    Room: ',
+     '3': 'Division: ',
+     '4': ' - ',
+     '5': 'NO DATA',
+     result: { type: 'GLOBAL ARRAY', value: '^TMP(30234)' } } }
+
+RPC called: ORQQAL LIST | rpcArgs: [{"type":"LITERAL","value":"1"}]
+
+RPC response:
+{ type: 'ARRAY', value: { '1': '1^CHOCOLATE^MODERATE^HIVES' } }
+
+RPC called: VPR GET PATIENT DATA | rpcArgs: [{"type":"LITERAL","value":"1"},{"type":"LITERAL","value":"demographic;vital;allergy"}]
+
+RPC error:
+'-4 RPC [VPR GET PATIENT DATA] is not allowed to be run: The remote procedure VPR GET PATIENT DATA is not registered to the option OR CPRS GUI CHART.'
+
+OR
+
+RPC response:
+{ type: 'GLOBAL ARRAY',
+  value:
+   [ '<results version=\'1.05\' timeZone=\'-0500\' >',
+     '<demographics total=\'1\' >',
+     '<patient>',
+     '<bid value=\'C0113\' />',
+     '<dob value=\'3010302\' />',
+     '<facilities>',
+     '<facility code=\'050\' name=\'SOFTWARE SERVICE\' latestDate=\'3160218\' domain=\'FOIA.DOMAIN.EXT\' />',
+     '</facilities>',
+     '<familyName value=\'CARTER\' />',
+     '<fullName value=\'CARTER,DAVID JR\' />',
+     '<gender value=\'M\' />',
+     '<givenNames value=\'DAVID JR\' />',
+     '<id value=\'1\' />',
+     '<inpatient value=\'false\' />',
+     '<lrdfn value=\'0\' />',
+     '<sc value=\'0\' />',
+     '<ssn value=\'000000113\' />',
+     '<veteran value=\'0\' />',
+     '</patient>',
+     '</demographics>',
+     '<vitals total=\'1\' >',
+     '<vital>',
+     '<entered value=\'3160219.174627\' />',
+     '<facility code=\'050\' name=\'SOFTWARE SERVICE\' />',
+     '<location code=\'4\' name=\'Clinic1\' />',
+     '<measurements>',
+     '<measurement id=\'1\' vuid=\'4500634\' name=\'BLOOD PRESSURE\' value=\'120/80\' units=\'mm[Hg]\' high=\'210/110\' low=\'100/60\' />',
+     '</measurements>',
+     '<taken value=\'3160219.174627\' />',
+     '</vital>',
+     '</vitals>',
+     '<reactions total=\'1\' >',
+     '<allergy>',
+     '<comments>',
+     '<comment id=\'1\' entered=\'3160218.180029\' enteredBy=\'ALEXANDER,ROBERT\' commentType=\'O\' commentText=\'unfortunate fellow but mannerly!\' />',
+     '</comments>',
+     '<entered value=\'3160218.1759\' />',
+     '<facility code=\'050\' name=\'SOFTWARE SERVICE\' />',
+     '<id value=\'1\' />',
+     '<localCode value=\'3;GMRD(120.82,\' />',
+     '<mechanism value=\'ALLERGY\' />',
+     '<name value=\'CHOCOLATE\' />',
+     '<reactions>',
+     '<reaction name=\'HIVES\' vuid=\'4538560\' />',
+     '</reactions>',
+     '<severity value=\'MODERATE\' />',
+     '<source value=\'O\' />',
+     '<type code=\'DF\' name=\'DRUG, FOOD\' />',
+     '<verified value=\'3160218.175900\' />',
+     '<vuid value=\'4636681\' />',
+     '</allergy>',
+     '</reactions>',
+     '</results>' ] }
+
+... finished processing one (more) patient.
+
+
+
+
+----------
+Process Patient: 26^CARTER,DAVID JR^^^^CARTER,DAVID JR
+
+
+RPC called: ORWPT SELECT | rpcArgs: [{"type":"LITERAL","value":"26"}]
+
+RPC response:
+{ type: 'SINGLE VALUE',
+  value: 'CARTER,DAVID JR^M^3010302.000000^000000113^^^^^0^^0^0^^^15^0' }
+
+RPC called: ORWPT1 PRCARE | rpcArgs: [{"type":"LITERAL","value":"26"}]
+
+RPC response:
+{ type: 'SINGLE VALUE', value: '^^^^^' }
+
+RPC called: GMV V/M ALLDATA | rpcArgs: [{"type":"LITERAL","value":"26"}]
+
+RPC response:
+{ type: 'GLOBAL ARRAY',
+  value: 
+   { '1': 'CARTER,DAVID JR  0113  MAR 2,2001  15 (Yrs)  MALE',
+     '2': 'Unit:    Room: ',
+     '3': 'Division: ',
+     '4': ' - ',
+     '5': 'NO DATA',
+     result: { type: 'GLOBAL ARRAY', value: '^TMP(30234)' } } }
+
+RPC called: ORQQAL LIST | rpcArgs: [{"type":"LITERAL","value":"26"}]
+
+RPC response:
+{ type: 'ARRAY', value: { '1': '^No Allergy Assessment' } }
+
+RPC called: VPR GET PATIENT DATA | rpcArgs: [{"type":"LITERAL","value":"26"},{"type":"LITERAL","value":"demographic;vital;allergy"}]
+
+RPC error:
+'-4 RPC [VPR GET PATIENT DATA] is not allowed to be run: The remote procedure VPR GET PATIENT DATA is not registered to the option OR CPRS GUI CHART.'
+
+OR 
+
+RPC response:
+{ type: 'GLOBAL ARRAY',
+  value:
+   [ '<results version=\'1.05\' timeZone=\'-0500\' >',
+     '<demographics total=\'1\' >',
+     '<patient>',
+     '<bid value=\'C0113\' />',
+     '<dob value=\'3010302\' />',
+     '<facilities>',
+     '<facility code=\'050\' name=\'SOFTWARE SERVICE\' domain=\'FOIA.DOMAIN.EXT\' />',
+     '</facilities>',
+     '<familyName value=\'CARTER\' />',
+     '<fullName value=\'CARTER,DAVID JR\' />',
+     '<gender value=\'M\' />',
+     '<givenNames value=\'DAVID JR\' />',
+     '<id value=\'26\' />',
+     '<inpatient value=\'false\' />',
+     '<lrdfn value=\'0\' />',
+     '<sc value=\'0\' />',
+     '<ssn value=\'000000113\' />',
+     '<veteran value=\'0\' />',
+     '</patient>',
+     '</demographics>',
+     '<vitals total=\'0\' >',
+     '</vitals>',
+     '<reactions total=\'1\' >',
+     '<allergy>',
+     '<assessment value=\'not done\' />',
+     '<facility code=\'050\' name=\'SOFTWARE SERVICE\' />',
+     '</allergy>',
+     '</reactions>',
+     '</results>' ] }
+
+... finished processing one (more) patient.
+
+
+
+
+
+====== 
+all done.
