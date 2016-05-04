@@ -2,7 +2,7 @@
 //use bunyan as logging tool
 var bunyan = require('bunyan');
 var log = bunyan.createLogger({
-  name: 'myapp',
+  name: 'rpcJobServer',
   streams: [
     {
       level: 'info',
@@ -10,11 +10,11 @@ var log = bunyan.createLogger({
     },
     {
       level: 'info',
-      path: 'log/myapp-rpcinfo.log'      // log INFO and above to the specified file
+      path: 'log/rpcJobServerInfo.log'      // log INFO and above to the specified file
     },
     {
       level: 'error',
-      path: 'log/myapp-rpcerror.log'  // log ERROR and above to a file
+      path: 'log/rpcJobServerError.log'  // log ERROR and above to a file
     }
   ]
 });
