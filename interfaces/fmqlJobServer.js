@@ -32,11 +32,11 @@ var log = bunyan.createLogger({
     },
     {
       level: 'info',
-      path: 'log/myapp-info.log'      // log INFO and above to the specified file
+      path: 'log/fmqlJobServerInfo.log'      // log INFO and above to the specified file
     },
     {
       level: 'error',
-      path: 'log/myapp-error.log'  // log ERROR and above to a file
+      path: 'log/fmqlJobServerError.log'  // log ERROR and above to a file
     }
   ]
 });
