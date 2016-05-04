@@ -16,7 +16,7 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 4. su vdp  (password: vistaisdata) 
 5. cd /home/vdp/interfaces
 6. npm install   (now you are ready to use the fmqlJobServer or simpleJobServer under the fmql subfolder)
-7. If not exist, make a log folder and create the two empty files "myapp-err.log" and "myapp-info.log" inside the log folder.
+7. If not exist, make a log folder and create the two empty files "fmqlJobServerError.log" and "fmqlJobServerInfo.log" inside the log folder.
 8. Run the server: node fmqlJobServer.js (default port 9000)
 9. open a browser: https://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1  (accept the SSL warning as it's a self-signed certificate)
 10. User name is "foo" and password is "far"
@@ -39,7 +39,7 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 ## How To Run the RPC Job Server
 1. copy *.m files from ewd folder listed below into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
 2. Follow the same steps from the FMQL job server above and cd to /home/vdp/interfaces
-3. If not exist, make a log folder and create the two empty files "myapp-rpcerr.log" and "myapp-rpcinfo.log" inside the log folder.
+3. If not exist, make a log folder and create the two empty files "rpcJobServerError.log" and "rpcJobServerInfo.log" inside the log folder.
 4. node rpcJobServer.js (default port 9001)
 5. Use [Chrome Advanced REST Client] (https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) POST to the following https://localhost:9001/vista/login (content type "application/json")
   * accessCode: fakenurse1
