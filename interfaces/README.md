@@ -2,12 +2,13 @@
   * run inside a basic Express-based, Job-supporting Node.js server container
   * required for (M)VDM end-to-end demos (Deliverable #23)
 
-## Three Servers
+## Four Servers
 File | Description
 --- | --- 
 fmqlJobServer.js | FMQL over HTTPS service for VISTA
 rpcJobServer.js | RPC over HTTPS service for VISTA
 mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
+rpcBrokerServer.js | old style RPC Broker interface implemented in JS <br> (coming soon) 
 
 ## How To Run the FMQL Job Server
 1. Go to Development/VistA/Scripts/Install/Ubuntu/  
