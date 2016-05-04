@@ -111,6 +111,13 @@ function runRPC(authToken, rpcName, rpcArgs, callback) {
                     colors: true
                 });
             }
+            else { // other error - 403?
+                console.log("\nRPC error:");
+                console.dir(response.body.error, {
+                    depth: null,
+                    colors: true
+                });
+            }
             if (callback) callback(error, response.body);
 
         }

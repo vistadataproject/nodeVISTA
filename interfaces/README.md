@@ -37,7 +37,10 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 12. For installing self-signed SSL in Windows, please refer to https://blogs.technet.microsoft.com/sbs/2008/05/08/installing-a-self-signed-certificate-as-a-trusted-root-ca-in-windows-vista/ 
 
 ## How To Run the RPC Job Server
-1. copy *.m files from ewd folder listed below into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
+1. copy *.m files into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
+   * cp node_modules/ewd-session/mumps/ewdSymbolTable.m /home/osehra/p/.
+   * cp node_modules/ewd-qoper8-vistarpc/mumps/ewdVistARPC.m /home/osehra/p/.
+   * NOTE: line terminators may be wrong and have to be fixed.
 2. Follow the same steps from the FMQL job server above and cd to /home/vdp/interfaces
 3. If not exist, make a log folder and create the two empty files "myapp-rpcerr.log" and "myapp-rpcinfo.log" inside the log folder.
 4. node rpcJobServer.js (default port 9001)
