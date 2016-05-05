@@ -7,3 +7,7 @@ Note: __not node.js Vista.js__ - a separate project to provide a node.js module 
 TODO: get v1.3 version
 
 __Relevance__: no direct relevance to VDP. VDP calls are inside VISTA, relying on _cache.node_/_nodem_. Anything you can do over the broker using this Vista.js or its equivalents can be done directly inside VISTA.
+
+## CHANGES Made by VDP
+
+ VistAJsLibrary_ supports both the VA and OSEHRA Ciphers - the OSEHRA cipher is the default in our version.

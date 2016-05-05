@@ -18,7 +18,11 @@ var EOT = '\u0004';
 var ENQ = '\u0005';
 
 
-var CIPHER_PAD_old = [
+/*
+ * Change by VDP 5/2016 - need to support both the VA and OSEHRA Cyphers. OSEHRA VISTA uses a 
+ * different Cipher.
+ */
+var CIPHER_PAD_VA = [
     'wkEo-ZJt!dG)49K{nX1BS$vH<&:Myf*>Ae0jQW=;|#PsO`\'%+rmb[gpqN,l6/hFC@DcUa ]z~R}"V\\iIxu?872.(TYL5_3',
     'rKv`R;M/9BqAF%&tSs#Vh)dO1DZP> *fX\'u[.4lY=-mg_ci802N7LTG<]!CWo:3?{+,5Q}(@jaExn$~p\\IyHwzU"|k6Jeb',
     '\\pV(ZJk"WQmCn!Y,y@1d+~8s?[lNMxgHEt=uw|X:qSLjAI*}6zoF{T3#;ca)/h5%`P4$r]G\'9e2if_>UDKb7<v0&- RBO.',
@@ -41,7 +45,7 @@ var CIPHER_PAD_old = [
     '5:iar.{YU7mBZR@-K|2 "+~`M%8sq4JhPo<_X\\Sg3WC;Tuxz,fvEQ1p9=w}FAI&j/keD0c?)LN6OHV]lGy\'$*>nd[(tb!#'
 ];
 
-var CIPHER_PAD = [
+var CIPHER_PAD_OSEHRA = [
         "VEB_0|=f3Y}m<5i$`W>znGA7P:O%H69[2r)jKh@uo\\wMb*Da !+T?q4-JI#d;8ypUQ]g\"~'&Cc.LNt/kX,e{vl1FRZs(xS",
         "D/Jg><p]1W6Rtqr.QYo8TBEMK-aAIyO(xG7lPz;=d)N}2F!U ,e0~$fk\"j[m*3s5@XnZShv+`b'{u&_\\9%|wL4ic:V?H#C",
         "?lBUvZq\\fwk+u#:50`SOF9,dp&*G-M=;{8Ai6/N7]bQ1szC!(PxW_YV~)3Lm.EIXD2aT|hKj$rnR@[\"c g'<>t%4oJHy}e",
@@ -64,6 +68,7 @@ var CIPHER_PAD = [
         "\\Zr';/SMsG76Lj$aBc[#k>u=_O@2J&X{Aft xV4~vz8Q}q)0K.NIpRnYwDhg+<\"H-!(PF:m*]?,WCT|dE9o53%`liUey1b"
         ];
 
+var CIPHER_PAD = CIPHER_PAD_OSEHRA;
 
 
 function RpcClient(logger, configuration, rpcCommandList, callback) {
