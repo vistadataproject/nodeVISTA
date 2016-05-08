@@ -1,9 +1,7 @@
 'use strict';
 
 var util = require('util');
-var _ = require('underscore');
 var clc = require('cli-color');
-var moment = require('moment');
 var VistaJS = require('../VistaJS/VistaJS');
 var async = require('async');
 var logger = require('bunyan').createLogger({
@@ -51,20 +49,7 @@ var configuration = {
 // VistaJS.callRpc(logger, configuration, 'ORWU USERINFO', printResult);
 function runRPC(rpc, rpcArgs, callback) {
     var cb = function(error, result) {
-        if (error) {
-            console.log("\nRPC error:");
-            console.dir(error, {
-                depth: null,
-                colors: true
-            });
-        }
-        if (result) {
-            console.log("\nRPC response:");
-            console.dir(result, {
-                depth: null,
-                colors: true
-            });
-        }
+        printResult(error, result);
         if (callback) callback(error, result);
     };
     VistaJS.callRpc(logger, configuration, rpc, rpcArgs, cb);
@@ -153,9 +138,7 @@ function getPatientInfo(id, cb) {
             }
         ],
         function(error, result) {
-            if (error) {
-                console.log("Error: ", error);
-            } else {
+            if (!error) {
                 console.log('\n... finished processing one (more) patient.\n\n');
             }
             cb();
