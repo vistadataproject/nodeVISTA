@@ -19,6 +19,7 @@
         "ewd-session": "latest",
         "bunyan": "^1.4.0",
         "basic-auth": "1.0.3",
-        "request": "latest"
+        "request": "latest",
+        "async": "latest"
     }
 }

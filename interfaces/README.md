@@ -2,12 +2,13 @@
   * run inside a basic Express-based, Job-supporting Node.js server container
   * required for (M)VDM end-to-end demos (Deliverable #23)
 
-## Three Servers
+## Four Servers
 File | Description
 --- | --- 
 fmqlJobServer.js | FMQL over HTTPS service for VISTA
 rpcJobServer.js | RPC over HTTPS service for VISTA
 mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
+rpcBrokerServer.js | old style RPC Broker interface implemented in JS <br> (coming soon) 
 
 ## How To Run the FMQL Job Server
 1. Go to Development/VistA/Scripts/Install/Ubuntu/  
@@ -16,7 +17,7 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 4. su vdp  (password: vistaisdata) 
 5. cd /home/vdp/interfaces
 6. npm install   (now you are ready to use the fmqlJobServer or simpleJobServer under the fmql subfolder)
-7. If not exist, make a log folder and create the two empty files "myapp-err.log" and "myapp-info.log" inside the log folder.
+7. If not exist, make a log folder and create the two empty files "fmqlJobServerError.log" and "fmqlJobServerInfo.log" inside the log folder.
 8. Run the server: node fmqlJobServer.js (default port 9000)
 9. open a browser: https://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1  (accept the SSL warning as it's a self-signed certificate)
 10. User name is "foo" and password is "far"
@@ -37,10 +38,14 @@ mvdmJobServer.js | MVDM over HTTPS service for VISTA <br> (coming soon)
 12. For installing self-signed SSL in Windows, please refer to https://blogs.technet.microsoft.com/sbs/2008/05/08/installing-a-self-signed-certificate-as-a-trusted-root-ca-in-windows-vista/ 
 
 ## How To Run the RPC Job Server
-1. copy *.m files from ewd folder listed below into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
+1. copy *.m files into /home/osehra/p (https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/ewd)
+   * cp node_modules/ewd-session/mumps/ewdSymbolTable.m /home/osehra/p/.
+   * cp node_modules/ewd-qoper8-vistarpc/mumps/ewdVistARPC.m /home/osehra/p/.
+   * NOTE: line terminators may be wrong and have to be fixed.
 2. Follow the same steps from the FMQL job server above and cd to /home/vdp/interfaces
-3. node rpcJobServer.js (default port 9001)
-4. Use [Chrome Advanced REST Client] (https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) POST to the following https://localhost:9001/vista/login (content type "application/json")
+3. If not exist, make a log folder and create the two empty files "rpcJobServerError.log" and "rpcJobServerInfo.log" inside the log folder.
+4. node rpcJobServer.js (default port 9001)
+5. Use [Chrome Advanced REST Client] (https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo) POST to the following https://localhost:9001/vista/login (content type "application/json")
   * accessCode: fakenurse1
   * verifyCode: NEWVERIFY1!
 ![RPC JOB](/interfaces/images/ChromeAdvancedRESTClient.png?raw=true)
@@ -57,7 +62,7 @@ To start the node.js server in cluster mode , run the following command:
 -i (number of workers) will tell PM2 that you want to launch your app in cluster_mode (as opposed to fork_mode).   
 If 'number of workers' argument is 0, PM2 will automatically spawn as many workers as you have CPU cores.
 ````text
-vdp@vagrant-ubuntu-precise-64:~/interfaces$ pm start fmqlJobServer.js -i 0 
+vdp@vagrant-ubuntu-precise-64:~/interfaces$ pm2 start fmqlJobServer.js -i 0 
 [PM2] Spawning PM2 daemon
 [PM2] PM2 Successfully daemonized
 [PM2] Starting fmqlJobServer.js in cluster_mode (0 instance)
