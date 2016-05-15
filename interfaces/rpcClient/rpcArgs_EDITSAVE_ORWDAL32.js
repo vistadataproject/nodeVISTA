@@ -24,9 +24,29 @@
  */
 
 var _ = require('underscore');
-var fileman = require('../../prototypes/fileman');
-var vdmModel = require('../../prototypes/allergies/vdmAllergiesModel').vdmModel; // for initial dump of required properties
-var vdmUtils = require('../../prototypes/vdmUtils');
+var fileman = require('../../../prototypes/fileman');
+var vdmModel = require('../../../prototypes/allergies/vdmAllergiesModel').vdmModel; // for initial dump of required properties
+var vdmUtils = require('../../../prototypes/vdmUtils');
+
+/*
+ * This is weird but MUMPS LIST form needs it.
+ *
+ * ie/ can't send {"X": "Y"} ... must send {"\"X\"": "\"Y\""}
+ * 
+ * TODO: one other problem ... array/word processing with in rpcArgs doesn't work. Have to 
+ * look at RPC Broker prototype and see why.
+ */ 
+function escapeKeysAndValues(rpcArgs) {
+    var rpcArgsNew = {};
+    Object.keys(rpcArgs).forEach(function(key, i, list) {
+        if (key == "GMRACHT")
+            return; // can't do ARRAYS yet
+        // rpcArgsNew["\"" + key + "\""] = "\"" + rpcArgs[key] + "\"";
+        rpcArgsNew["\"" + key + "\""] = rpcArgs[key]
+    });
+    return rpcArgsNew;
+}
+
 function rpcArgs_EDITSAVE_ORWDAL32(vdmForm, ardt, serv) {
 
     var rpcArgs = {};
@@ -121,6 +141,8 @@ function rpcArgs_EDITSAVE_ORWDAL32(vdmForm, ardt, serv) {
     }
 
     // Full args are: IEN, DUZ, INPUT
+    rpcArgs = escapeKeysAndValues(rpcArgs);
+
     return ["", fmInput[".01"], rpcArgs];
 }
 
