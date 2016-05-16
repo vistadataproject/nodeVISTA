@@ -145,9 +145,26 @@ function runRPC(authToken, rpcName, rpcArgs, callback) {
 }
 
 function addAllergies(authToken) {
-    var rpcArgs = rpcArgsHelper.rpcArgs_EDITSAVE_ORWDAL32(
-        testAllergies.historicals.three.vdmCreateResult
-    );
+    // var rpcArgs = rpcArgsHelper.rpcArgs_EDITSAVE_ORWDAL32(
+    //     testAllergies.historicals.three.vdmCreateResult
+    // );
+    var rpcArgs = [{
+        "type": "LITERAL",
+        "value": ""
+    }, {
+        "type": "LITERAL",
+        "value": "1"
+    }, {
+        "type": "LIST",
+        "value": {
+            'GMRAGNT': 'PENICILLINS AND BETA-LACTAM ANTIMICROBIALS^11;PS(50.605,',
+            'GMRATYPE': 'D',
+            'GMRANATR': 'U',
+            'GMRAORIG': '55',
+            'GMRAORDT': '3160218.173200',
+            'GMRAOBHX': 'h'
+        }
+    }]
     var res = runRPC(authToken, "ORWDAL32 SAVE ALLERGY", rpcArgs, printResult);
 }
 
@@ -185,4 +202,3 @@ function run(authToken) {
     readAllergies2(authToken);
 }
 login('fakenurse1', 'NEWVERIFY1!', run);
-
