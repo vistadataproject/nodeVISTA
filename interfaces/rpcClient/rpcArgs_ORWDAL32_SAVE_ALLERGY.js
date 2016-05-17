@@ -46,12 +46,20 @@ function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
     function escapeListKeys(input) {
         var inputNew = {};
         Object.keys(input).forEach(function(key, i, list) {
+            /* 
+             * TODO: hack - skipping [] or list argument for now
+             * ... must find out how encoding works {"0": "x" ?
+             */
+            if (forBroker && (key === "GMRACHT"))
+                return;
             // doesn't arise for SAVE_ALLERGY list but will make this
             // routine generic later.
+            // ex/ Problem: GMPFLD(.01) doesn't need it.
             if (_.isNumber(key))
                 return; // no need to escape
             inputNew["\"" + key + "\""] = input[key]
         });
+        console.log(JSON.stringify(inputNew, null, 4));
         return inputNew;
     }
 
@@ -177,6 +185,7 @@ function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
 
     // If using for remote RPC Broker call then must escape keys of LIST argument 
     // note: VistA.js from eHMP knows how to put {} into {"type": "list" etc
+    // ... see: VistaJS1.1/RpcCall.js/ processParamList
     if (forBroker) {
         input = escapeListKeys(input);
     }
