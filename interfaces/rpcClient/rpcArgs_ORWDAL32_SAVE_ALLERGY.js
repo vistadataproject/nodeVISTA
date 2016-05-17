@@ -35,23 +35,32 @@ var vdmUtils = require('../../../prototypes/vdmUtils');
 function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
 
     /*
-     * For rpcBroker calls, remote MUMPS LIST form needs to escape string keys
+     * For rpcBroker calls, 
+     * - remote MUMPS LIST form needs to escape string keys
+     *   ie/ can't send {"X": "Y"} ... must send {"\"X\"": "\"Y\""}
+     *   as Broker MUMPS will try to interpret the "keys"
      *
-     * ie/ can't send {"X": "Y"} ... must send {"\"X\"": "\"Y\""}
-     * as Broker MUMPS will try to interpret the "keys"
+     * - and array values need to be formatted with appropriate subscripts. 
+     *   ... this may be specific to this RPC or more generic. If generic, then
+     *   like escaping keys, will move to generic handler.
      *
      * NOTE: not relevant for this local calling Jasmine but same routine is (copied)
      * in RPC Broker tests in nodeVISTA and want code to be consistent.
      */
-    function escapeListKeys(input) {
+    function inputToBrokerProtocolForm(input) {
         var inputNew = {};
         Object.keys(input).forEach(function(key, i, list) {
             /* 
-             * TODO: hack - skipping [] or list argument for now
-             * ... must find out how encoding works {"0": "x" ?
+             * Array form of {"KEY,0": LENGTH ARRAY, "KEY,1": first val ...
              */
-            if (forBroker && (key === "GMRACHT"))
+            if (forBroker && (key === "GMRACHT")) {
+                inputNew["\"GMRACHT\",0"] = input[key].length;
+                input[key].forEach(function(dt, i, l) {
+                    var k = "\"GMRACHT\"," + (i+1).toString();
+                    inputNew[k]=dt;
+                });
                 return;
+            }
             // doesn't arise for SAVE_ALLERGY list but will make this
             // routine generic later.
             // ex/ Problem: GMPFLD(.01) doesn't need it.
@@ -59,7 +68,6 @@ function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
                 return; // no need to escape
             inputNew["\"" + key + "\""] = input[key]
         });
-        console.log(JSON.stringify(inputNew, null, 4));
         return inputNew;
     }
 
@@ -186,8 +194,10 @@ function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
     // If using for remote RPC Broker call then must escape keys of LIST argument 
     // note: VistA.js from eHMP knows how to put {} into {"type": "list" etc
     // ... see: VistaJS1.1/RpcCall.js/ processParamList
+    // Also need to handle list values (often for multiples). Need to supply
+    // subscripts as part of keys.
     if (forBroker) {
-        input = escapeListKeys(input);
+        input = inputToBrokerProtocolForm(input);
     }
 
     // Full args are: IEN, PATIENT ID, INPUT
