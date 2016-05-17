@@ -39,12 +39,13 @@ function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
      *
      * ie/ can't send {"X": "Y"} ... must send {"\"X\"": "\"Y\""}
      * as Broker MUMPS will try to interpret the "keys"
+     *
+     * NOTE: not relevant for this local calling Jasmine but same routine is (copied)
+     * in RPC Broker tests in nodeVISTA and want code to be consistent.
      */
     function escapeListKeys(input) {
         var inputNew = {};
         Object.keys(input).forEach(function(key, i, list) {
-            if (key == "GMRACHT")
-                return; // can't do ARRAYS yet
             // doesn't arise for SAVE_ALLERGY list but will make this
             // routine generic later.
             if (_.isNumber(key))
