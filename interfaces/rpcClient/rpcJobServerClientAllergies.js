@@ -26,7 +26,8 @@ var rpcArgsHelper = require('./rpcArgs_EDITSAVE_ORWDAL32')
 var testAllergies = require('./vdmTestAllergies'); // want to use test allergies
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
+var d1 = new Date();
+var n1 = d1.getTime(); //milliseconds
 
 function inspect(obj) {
     return obj ? util.inspect(obj, {
@@ -168,7 +169,7 @@ function addAllergies(authToken) {
     var res = runRPC(authToken, "ORWDAL32 SAVE ALLERGY", rpcArgs, printResult);
 }
 
-function readAllergies(authToken) {
+function readAllergies(authToken, callback) {
     var rpc = "ORQQAL DETAIL";
     var rpcArgs = [{
         "type": "LITERAL",
@@ -177,7 +178,11 @@ function readAllergies(authToken) {
         "type": "LITERAL",
         "value": 1
     }];
-    runRPC(authToken, rpc, rpcArgs, printResult);
+    var cb = function(error, result) {
+        printResult(error, result);
+        callback();
+    }
+    runRPC(authToken, rpc, rpcArgs, cb);
 }
 
 function readAllergies2(authToken) {
@@ -197,8 +202,18 @@ console.log("\n\n=== Login and call patient information RPCs over EWD-enabled RP
 console.log("... note asking for GLOBAL ARRAYS to be parsed and SINGLE VALUES to be sent back 'raw'\n\n");
 
 function run(authToken) {
-    addAllergies(authToken);
-    readAllergies(authToken);
-    readAllergies2(authToken);
+    // addAllergies(authToken); 
+    funcs = [];
+    for(var i = 0; i < 100; i++)
+        funcs.push(function(callback) {
+            readAllergies(authToken, callback);
+        });
+    // readAllergies2(authToken);
+    async.series(funcs, function(error, result) {
+        var d2 = new Date();
+        var n2 = d2.getTime(); //milliseconds
+        console.log('time spent: ', n2 - n1);    
+    })
+    
 }
 login('fakenurse1', 'NEWVERIFY1!', run);
