@@ -10,10 +10,8 @@ var logger = require('bunyan').createLogger({
     path: 'bunyan.log',
     level: 'info'
 })
-var rpcArgsHelper = require('./rpcArgs_EDITSAVE_ORWDAL32')
-var testAllergies = require('./vdmTestAllergies'); // want to use test allergies
-
-console.log(rpcArgsHelper.rpcArgs_EDITSAVE_ORWDAL32);
+var rpcArgsHelper = require('./rpcArgs_ORWDAL32_SAVE_ALLERGY');
+var testAllergies = require('../../../prototypes/allergies/vdmTestAllergies'); // want to use test allergies
 
 function inspect(obj) {
     return obj ? util.inspect(obj, {
@@ -94,8 +92,8 @@ function closeClient() {
 }
 
 function addAllergies() {
-    var rpcArgs = rpcArgsHelper.rpcArgs_EDITSAVE_ORWDAL32(
-        testAllergies.historicals.three.vdmCreateResult
+    var rpcArgs = rpcArgsHelper.rpcArgs_ORWDAL32_SAVE_ALLERGY(
+        testAllergies.historicals.three.vdmCreateResult, "", "", true
     );
     var res = runRPC("ORWDAL32 SAVE ALLERGY", rpcArgs, printResult);
 }
@@ -121,5 +119,3 @@ addAllergies();
 readAllergies();
 readAllergies2();
 closeClient();
-
-
