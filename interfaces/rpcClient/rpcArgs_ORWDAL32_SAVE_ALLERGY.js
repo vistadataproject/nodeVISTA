@@ -61,6 +61,10 @@ function rpcArgs_ORWDAL32_SAVE_ALLERGY(vdmForm, ardt, serv, forBroker) {
                 });
                 return;
             }
+            // prepare for supporting other RPC Broker array args
+            if (_.isArray(input[key])) {
+                throw util.format("Array value not handled properly - add support %s", key);
+            }
             // doesn't arise for SAVE_ALLERGY list but will make this
             // routine generic later.
             // ex/ Problem: GMPFLD(.01) doesn't need it.
