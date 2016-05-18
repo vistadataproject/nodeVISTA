@@ -148,3 +148,9 @@ vdp@vagrant-ubuntu-precise-64:~/interfaces$ pm2 info 1
  Use `pm2 monit` to monitor CPU and Memory usage rpcJobServer
 
 ````
+
+## Performance
+I added the performance tests to both rpcJobServerClientAllergies.js and rpcBrokerAllergies.js. 
+I compared the difference by reading the allergies 100 times. The performance difference is huge:
+rpcBrokerAllergies takes 4444 milliseconds, but the jobServer takes 
+106512 milliseconds. It means job server is 24 times slower.
