@@ -1,29 +1,15 @@
 #!/usr/bin/env node
 
 /*
- * Simple cluster-based FMQL server that can also statically serve Rambler and
+ * Simple cluster-based VDM server that can also statically serve Rambler and
  * other one page apps and their CSS/JS.
  * 
- * For local test invoke with: nohup node fmqlServer.js > SEESERVERRUN &
+ * For local test invoke with: nohup node simpleVdmQueryServer.js > SEESERVERRUN &
  *
- * Context: replaces use of Apache/Python for Web access to FMQL.
  *
  * - SIGKILL (kill -9) - cluster will kill workers (once they are done)
- * - see: curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1 -v
+ * - see: curl http://localhost:9000/vdmService?query=DESCRIBE%202-1 -v
  *
- * QUEUE TODO:
- * kue or bull to queue incoming FMQL requests so available workers aren't
- * overwhelmed - see issue: https://github.com/vistadataproject/nodeVISTA/issues/30
- *
- * MONITOR/LOGGING TODO:
- * - more robust/tested restart/shutdown
- *   - more on SIGKILL, SIGINT, cluster vs worker (issues/misleading stuff)
- *     http://stackoverflow.com/questions/19796102/exit-event-in-worker-process-when-killed-from-master-within-a-node-js-cluster
- * - morgan: See https://github.com/expressjs/morgan, apache like access/error log
- *   - cluster sharing log? 
- *   - more logging with other modules
- *   - see: http://tostring.it/2014/06/23/advanced-logging-with-nodejs/ (gets into winston too)
- * - more on dev vs prod: var env = process.env.NODE_ENV || 'development';
  *
  * LICENSE:
  * This program is free software; you can redistribute it and/or modify it under the terms of 
@@ -113,36 +99,42 @@ else {
         next();
     });
 
-    // First try FMQL
-    app.get("/vdmEP", function(request, response) {
+    // First try VDM
+    app.get("/vdmService", function(request, response) {
 
-        // Enforce ?vdmql="SOME QUERY" (rem: query arguments don't get routes of their own in Express)
-        if (!(("vdmql" in request.query) && (request.query.vdmql !== ""))) {
+        // {"query": "DESCRIBE 2-9"}
+        var query = request.query.query;
+        //JSON, HTML, etc
+        var format = request.query.format;
+
+        // Enforce ?query="SOME QUERY" (rem: query arguments don't get routes of their own in Express)
+        if (!(("query" in request.query) && (query !== ""))) {
             response.status(404).json({"error": "No VDM Query Specified"});
             console.log("404'ing: %s", request.url);
             return;
         }
 
-        // {"query": "DESCRIBE 2-9"}
-        var query = request.query.vdmql;
-        //JSON, HTML, etc
-        var format = request.query.format;
 
         console.log("Worker %s: invoking VDM Query %s", cluster.worker.id, query);
 
         var jsont = vdmQS.query(query, format); // ask for text to preserve order 
-
+        console.log("Response: %s\n\n", JSON.stringify(jsont));
+        
         // could use response.json but will be changing to jsonld so making explicit
-        response.type('application/json');
+        if(format == 'HTML') {
+            response.type('text/html');
+        } else {
+            response.type('application/json');
+        }
         response.send(jsont);
-        console.log("Response (100): %s\n\n", jsont.substring(0, 99));
+        
     });
 
-    // Not FMQL - try static - Express 4 respects order
+    // Not VDM - try static - Express 4 respects order
     app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
 
     var server = app.listen(port, function() {
-        console.log("FMQL worker %d, process %d", cluster.worker.id, process.pid);
+        console.log("VDM worker %d, process %d", cluster.worker.id, process.pid);
     });
 
 }

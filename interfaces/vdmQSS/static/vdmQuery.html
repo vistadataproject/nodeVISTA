@@ -128,7 +128,7 @@ function sendQueryInURLBar()
         var argname = pairs[i].substring(0, pos);
         var value = pairs[i].substring(pos+1);
         value = decodeURIComponent(value);
-        if (argname == "fmql")
+        if (argname == "query")
             query = value;
         else if (argname == "format")
             format = value;
@@ -170,8 +170,8 @@ function sendQueryInURLBar()
          }
     }; 
 
-    EPURL = "http://" + location.host + "/vdmEP";
-    queryURL = EPURL + "?vdmql=" + encodeURIComponent(query);
+    EPURL = "http://" + location.host + "/vdmService";
+    queryURL = EPURL + "?query=" + encodeURIComponent(query);
     queryURL += "&format=" + format;
     xhr.open('GET', queryURL,  true); 
     xhr.send(null);   
@@ -187,12 +187,16 @@ function boxQuery(query, format)
     document.getElementById('query').value = query;
     if (!format)
         return; // leave at selected index
-    if (format == "JSON")
+    if (format == "HTML")
+    	document.getElementById('format').selectedIndex = 0;
+    else if (format == "JSON")
         document.getElementById('format').selectedIndex = 1;
-    else if (format == "RDF")
-        document.getElementById('format').selectedIndex = 2; // RDF
-    else
-        document.getElementById("format").selectedIndex = 0; // HTML
+    else if (format == "JSONLD")
+        document.getElementById('format').selectedIndex = 2; 
+    else if (format == "EXCEL")
+    	document.getElementById('format').selectedIndex = 3;
+    else if (format == "XML")
+    	document.getElementById('format').selectedIndex = 4;
 }
 
 function handleSendQuery()
@@ -202,7 +206,7 @@ function handleSendQuery()
         return;
     var formatIndex = document.getElementById("format").selectedIndex;
     var format =  document.getElementById("format")[formatIndex].text;
-    var queryArgs = "fmql=" + encodeURIComponent(query);
+    var queryArgs = "query=" + encodeURIComponent(query);
     if (format != "JSON")
         queryArgs += "&format=" + format;
     location.search = queryArgs;
