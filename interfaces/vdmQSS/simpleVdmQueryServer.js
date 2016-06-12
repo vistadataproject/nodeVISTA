@@ -123,6 +123,7 @@ else {
         // could use response.json but will be changing to jsonld so making explicit
         if(format == 'HTML') {
             response.type('text/html');
+            jsont = jsont.html;
         } else {
             response.type('application/json');
         }

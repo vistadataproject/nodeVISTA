@@ -158,7 +158,7 @@ function sendQueryInURLBar()
                   if (format == "JSONLD")
                       html("results", "<pre>" + makeJSONPretty(xhr.responseText) + "</pre>"); 
                   else if (format == "HTML") {
-                  	  html("results", xhr.responseText);
+                  	  html("results", xhr.responseText.replace("id='results'", ''));
                   }
                   else if (xhr.responseXML) // application/xml
                       html("results", "<pre>" +  ConvChar(xhr.responseText) + "</pre>");
@@ -270,10 +270,6 @@ function makeHTMLFromJSON(jsonReply, query)
 <div style="color: red">Warning: You are running a version of Internet Explorer (IE) that is over ten years old. Caregraf web applications are tested on IE version 7 and later and their behavior on earlier versions is unpredictable. May we suggest you browse Caregraf using a newer version of IE (now at version 9) or a different browser such as Mozilla Firefox or Google Chrome.</div>
 <![endif]-->
 </div> 
-<div id="intro">
-<p>Query a live VistA!</p>
-<p>Help? <a href="mailto:contact@caregraf.com">Caregraf Support</a></p>
-</div>
 </div> 
 
 <form id="fmql-form" name="fmql-form" action="?" enctype="application/x-www-form-urlencoded" method="get">
