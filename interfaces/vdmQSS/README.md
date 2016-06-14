@@ -22,7 +22,7 @@ $ npm install <--- installs dependencies
 and bring up the _fmqlServer_ ...
 
 ```text
-$ nohup node vdmQSS/fmqlServer.js >> SEESERVERRUN &
+$ nohup node vdmQSS/simpleVdmQueryServer.js >> SEESERVERRUN &
 ```
 
 and try a query ...
