@@ -28,7 +28,7 @@ $ nohup node vdmQSS/simpleVdmQueryServer.js >> SEESERVERRUN &
 and try a query ...
 
 ```text
-$ curl http://localhost:9000/vdmService?query=DESCRIBE%20120_82-1
+$ curl https://localhost:9000/vdmService?query=DESCRIBE%20120_82-1
 
 {"results" ...
 ```
