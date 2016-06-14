@@ -9,7 +9,7 @@ _vagrant ssh_ into the VM and if you haven't already, perform an _npm install_:
 ```text
 $ su vdp
 password: vistaisdata
-$ cd /home/vdp/fmql
+$ cd /home/vdp/interfaces/fmql
 $ npm install <--- installs dependencies
 ```
 
