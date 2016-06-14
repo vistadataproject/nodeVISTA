@@ -170,7 +170,7 @@ function sendQueryInURLBar()
          }
     }; 
 
-    EPURL = "http://" + location.host + "/vdmService";
+    EPURL = "https://" + location.host + "/vdmService";
     queryURL = EPURL + "?query=" + encodeURIComponent(query);
     queryURL += "&format=" + format;
     xhr.open('GET', queryURL,  true); 

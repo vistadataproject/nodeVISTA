@@ -30,6 +30,39 @@ var express = require("express"),
     vdmQS = require('../../prototypes/vdmRead/vdmQS'),
     port = process.argv[2] || 9000;
 
+//use https
+var https = require('https');
+var fs = require('fs');
+var port = process.argv[2] || 9000;
+//path of the ssl 
+var options = {
+  key: fs.readFileSync('../ssl/key.pem'),
+  cert: fs.readFileSync('../ssl/cert.pem')
+};
+
+//use bunyan as logging tool
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+  name: 'myapp',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout            // log INFO and above to stdout
+    },
+    {
+      level: 'info',
+      path: '../log/vdmJobServerInfo.log'      // log INFO and above to the specified file
+    },
+    {
+      level: 'error',
+      path: '../log/vdmJobServerError.log'  // log ERROR and above to a file
+    }
+  ]
+});
+log.info();     // Returns a boolean: is the "info" level enabled?
+                // This is equivalent to `log.isInfoEnabled()` or
+                // `log.isEnabledFor(INFO)` in log4j.
+
 /* 
  * Typical 'cluster' setup
  */
@@ -134,8 +167,10 @@ else {
     // Not VDM - try static - Express 4 respects order
     app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
 
-    var server = app.listen(port, function() {
-        console.log("VDM worker %d, process %d", cluster.worker.id, process.pid);
+    var server = https.createServer(options, app).listen(port, function() {
+        //log.info("listening to port ", port);
+        log.info("VDM worker %d, process %d", cluster.worker.id, process.pid);
     });
+
 
 }
