@@ -28,33 +28,27 @@ $ nohup node vdmQSS/fmqlServer.js >> SEESERVERRUN &
 and try a query ...
 
 ```text
-$ curl http://localhost:9000/fmqlEP?fmql=DESCRIBE%202-1
+$ curl http://localhost:9000/vdmService?query=DESCRIBE%20120_82-1
 
 {"results" ...
 ```
 
-You can now exit the VM (exit/exit) and in the host system's browser, use FMQL and its clients to view
+You can now exit the VM (exit/exit) and in the host system's browser, use vdmQSS and its clients to view
 all the data and schema of the osehraVISTA system. 
 
 ## Some one page client screens
 
-FMQL comes with three one page clients, _Rambler_ for viewing data, _Schema_ for viewing a VISTA's schema and _Query_ for invoking FMQL queries directly.
 
-__List of populated files in the system and their sizes__ ...
+__JSON raw Output__ ...
 
-![Schema Opener](/interfaces/images/schema.png?raw=true)
+![vdm QSS JSON](/interfaces/images/vdmQSSjson.png?raw=true)
 
-__One Patient's 'Patient Record'__ ...
+__HTML Output__ ...
 
-![Rambler Patient](/interfaces/images/ramblerPatient.png?raw=true)
+![vdm QSS HTML](/interfaces/images/vdmQSShtml.png?raw=true)
 
-__Invoking a query directly__ ...
+__JSONLD web Output__ ...
 
-![Query Patient](/interfaces/images/queryPatient.png?raw=true)
+![vdm QSS JSONLD](/interfaces/images/vdmQSSjsonld.png?raw=true)
 
 
-Steps to execute the server  
-1. login to the VISTA server and change path to the home directory of nodeVISTA  
-2. under nodeVISTA and cd to interfaces / vdmQSS   
-3. launch the server by executing node simpleVdmQueryServer.js  
-4. Go to the link to test http://localhost:9000/vdmQuery.html?query=DESCRIBE%20120_82-1&format=HTML
