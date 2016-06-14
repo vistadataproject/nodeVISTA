@@ -9,14 +9,14 @@ _vagrant ssh_ into the VM and if you haven't already, perform an _npm install_:
 ```text
 $ su vdp
 password: vistaisdata
-$ cd /home/vdp/interfaces/fmql
+$ cd /home/vdp/interfaces/
 $ npm install <--- installs dependencies
 ```
 
 and bring up the _fmqlServer_ ...
 
 ```text
-$ nohup node fmqlServer.js >> SEESERVERRUN &
+$ nohup node fmql/fmqlServer.js >> SEESERVERRUN &
 ```
 
 and try a query ...
