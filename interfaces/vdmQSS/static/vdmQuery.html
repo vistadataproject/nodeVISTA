@@ -155,15 +155,22 @@ function sendQueryInURLBar()
          {
               if(xhr.status == 200) 
               {
-                  if (format == "JSONLD")
+                  if (format == "JSONLD" || format == "JSON")
                       html("results", "<pre>" + makeJSONPretty(xhr.responseText) + "</pre>"); 
                   else if (format == "HTML") {
                   	  html("results", xhr.responseText.replace("id='results'", ''));
                   }
+                  else if (format == "XML") {
+                  	html("results", '<textarea rows="20" cols="100" style="border:none;">' + JSON.parse(xhr.responseText).xml + "</textarea>");
+                  }
+                  else if (format == "CSV") {
+                  	console.log(xhr.responseText);
+                  	html("results", "<pre>" + JSON.parse(xhr.responseText).csv + "<pre>");
+                  }
                   else if (xhr.responseXML) // application/xml
                       html("results", "<pre>" +  ConvChar(xhr.responseText) + "</pre>");
                   else
-                      html("results", makeHTMLFromJSON(xhr.responseText, query));
+                      html("results", xhr.responseText);
               }
               else 
                   html("results", "<pre>" + xhr.status + "</pre>");
@@ -193,7 +200,7 @@ function boxQuery(query, format)
         document.getElementById('format').selectedIndex = 1;
     else if (format == "JSONLD")
         document.getElementById('format').selectedIndex = 2; 
-    else if (format == "EXCEL")
+    else if (format == "CSV")
     	document.getElementById('format').selectedIndex = 3;
     else if (format == "XML")
     	document.getElementById('format').selectedIndex = 4;
@@ -285,10 +292,10 @@ function makeHTMLFromJSON(jsonReply, query)
 <span class="option-title">Format: </span> 
 <select id="format" name="format">
 <option value="HTML" selected="selected">HTML</option> 
-<option value="JSONLD">JSON</option> 
+<option value="JSON">JSON</option> 
 <option value="JSONLD">JSONLD</option> 
-<option value="JSONLD">EXCEL</option>
-<option value="JSONLD">XML</option>
+<option value="CSV">CSV</option>
+<option value="XML">XML</option>
 </select> 
 </div> 
 <input type="button" value="Send Query" onclick="handleSendQuery()" /> 
