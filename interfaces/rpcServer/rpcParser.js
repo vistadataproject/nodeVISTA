@@ -20,7 +20,7 @@ function parseRawRPC (rpcString) {
         //     then for no parameter of type LIST buildApi(rpcName, parameters, "0")
         //       of buildApi(rpcName, parameters, "1") then the list of key value pairs each strPack with count_width 3 and terminated by 000
         // e.g. rpc "MY DOG" parameter: LITERAL abcde = "{XWB}007XWB;;;;000170MY DOG^000090060abcde"
-        //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "{XWB}007XWB;;;;1YOUR DOG^00019001a0011001b0012000"
+        //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "{XWB}007XWB;;;;000341YOUR DOG^00019001a0011001b0012000"
 
     } else if (rpcString.startsWith("[XWB]")) {
         // this is national query
