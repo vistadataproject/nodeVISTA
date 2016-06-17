@@ -59,7 +59,7 @@ module.exports.parseRawRPC = parseRawRPC();
 module.exports.rpcParametersToString = rpcParametersToString();
 
 
-/* LPACK
+/* LPACK === STRPACK === VistaJSLibrary.strPack()
   public static String LPack(String str, int ndigits) {
     int lth = str.length();                                     // length if the string to be packed
     String sLth = Integer.toString(lth);                        // the string length as a String type
@@ -76,7 +76,7 @@ module.exports.rpcParametersToString = rpcParametersToString();
   }
 */
 
-/* SPACK
+/* SPACK === VistaJSLibrary.prependCount()
   public static String SPack(String str) {
   int lth = str.length();                                               // length of the string to pack
   if (lth > 255) {                                                      // cannot be longer than 255 chars
@@ -91,7 +91,7 @@ module.exports.rpcParametersToString = rpcParametersToString();
 
 */
 
-/* LIST2STRING
+/* LIST2STRING, see VistaJSLibrary.buildListParamString() --- not equal since it prepends the 2 for list type.
   protected String list2string(DictionaryHashList lst) {
     String rtc;
     if (lst == null || lst.size() == 0) {                // for null lists or 0 length lists
@@ -120,7 +120,7 @@ module.exports.rpcParametersToString = rpcParametersToString();
  }
 */
 
-/* STRPACK
+/* STRPACK === LPACK === VistaJSLibrary.strPack()
   public static String strPack(String sre, int len) {
     StringBuilder resultSB = new StringBuilder();
     resultSB.append(sre.length());                       // start with the length of the input string
