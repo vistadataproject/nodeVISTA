@@ -1,5 +1,7 @@
 'use strict';
 
+// var vistajs = require('../VistaJS/VistaJS'); TODO: Refactor to use VistaJS and VistaJSLibrary
+
 var parameterTypeMap = {
     LITERAL: 0,
     REFERENCE: 1,
@@ -12,14 +14,23 @@ function parseRawRPC (rpcString) {
 
     if (rpcString.startsWith("{XWB}")) {
         // this is direct query
+        // {XWB}<MESSAGE> where <> is strPack with count_width 5
+        //   MESSAGE is
+        //     HDR = "007XWB;;;;"  or strPack(('XWB;;;;', 3)
+        //     then for no parameter of type LIST buildApi(rpcName, parameters, "0")
+        //       of buildApi(rpcName, parameters, "1") then the list of key value pairs each strPack with count_width 3 and terminated by 000
+        // e.g. rpc "MY DOG" parameter: LITERAL abcde = "{XWB}007XWB;;;;000170MY DOG^000090060abcde"
+        //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "{XWB}007XWB;;;;1YOUR DOG^00019001a0011001b0012000"
 
-    } else if (rpcString.startsWith("[XWB}")) {
+    } else if (rpcString.startsWith("[XWB]")) {
         // this is national query
         // [XWB]11302<1.108><~RPCNAME~>~parameters~\u0004 where <> is an SPack
         // by parts: PREFIX="[XWB]" then "11" then COUNT_WIDTH="3" then "02" then SPack RPC_VERSION="1.108" then SPack RPC_NAME
         //    then the parameters where parameters = "5" then '0' for LITERAL, '1' for REFERENCE, '2' for LIST
         //        then for literals and reference the string is 'LPacked' for using COUNT_WIDTH of 3 and end with an 'f'
         //        for lists see list2string
+        // e.g. rpc "MY DOG" parameter: LITERAL abcde = "[XWB]11301251.1086MY DOG50005abcdef"
+        //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "[XWB]11301251.1088YOUR DOG52001a0011t001b0012f"
 
     }
     return rpcObject;
@@ -103,10 +114,33 @@ module.exports.rpcParametersToString = rpcParametersToString();
                 .append('t');                            // append 't'
       }
       resultSB.setCharAt(resultSB.length() - 1, 'f');    // replace last 't' with 'f'
-      rtc = resultSB.toString();                         // example { (a,1), (b,""), (c,3) } becomes "001at006\u0001t0013f"
+      rtc = resultSB.toString();                         // example { (a,1), (b,""), (c,3) } becomes "001a0011t001b006\u0001t001c0013f"
     }
     return rtc;
  }
 */
 
+/* STRPACK
+  public static String strPack(String sre, int len) {
+    StringBuilder resultSB = new StringBuilder();
+    resultSB.append(sre.length());                       // start with the length of the input string
+    while (resultSB.length() < len) {                    // pad the length (prepend 0's) until the width is the specified len
+      resultSB.insert(0, '0');
+    }
+    resultSB.append(sre);                                // append the input string
+    return resultSB.toString();                          // eg. strPack ('abcde', 3) = "005abcde"
+  }
+*/
 
+/* BUILDAPI
+  protected String buildApi(String rpcName, String parameters, String fText) {
+    String sParams = StringUtils.strPack(parameters, 5);       // strPack parameters with count_width 5
+    StringBuilder packStr = new StringBuilder();
+    packStr.append(fText);                                     // start with the fText
+    packStr.append(rpcName);                                   // add the rpcName
+    packStr.append('^');                                       // separate with '^'
+    packStr.append(sParams);                                   // add the strPack'd parameters
+    return StringUtils.strPack(packStr.toString(), 5);         // strPack the whole thing e.g. buildApi('MY DOG', '0060abcde', '0') = "000170MY DOG^0060abcde"
+ }
+
+*/
