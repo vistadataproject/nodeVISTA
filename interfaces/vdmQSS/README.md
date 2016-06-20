@@ -41,14 +41,22 @@ all the data and schema of the osehraVISTA system.
 
 __JSON raw Output__ ...
 
-![vdm QSS JSON](/interfaces/images/vdmQSSjson.png?raw=true)
+![vdm QSS JSON](/interfaces/vdmQSS/screenshots/vdmQSSjson.png?raw=true)
 
 __HTML Output__ ...
 
-![vdm QSS HTML](/interfaces/images/vdmQSShtml.png?raw=true)
+![vdm QSS HTML](/interfaces/vdmQSS/screenshots/vdmQSShtml.png?raw=true)
 
 __JSONLD web Output__ ...
 
-![vdm QSS JSONLD](/interfaces/images/vdmQSSjsonld.png?raw=true)
+![vdm QSS JSONLD](/interfaces/vdmQSS/screenshots/vdmQSSjsonld.png?raw=true)
+
+__CSV Output__ ...
+
+![vdm QSS JSONLD](/interfaces/vdmQSS/screenshots/vdmQSScsv.png?raw=true)
+
+__XML Output__ ...
+
+![vdm QSS JSONLD](/interfaces/vdmQSS/screenshots/vdmQSSxml.png?raw=true)
 
 
