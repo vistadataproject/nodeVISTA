@@ -1,0 +1,15 @@
+{
+    "name": "rpcServer",
+    "description": "nodeVISTA RPC Broker",
+    "version": "0.0.1",
+    "license": "Apache-2.0",
+    "private": true,
+    "dependencies": {
+        "underscore": "latest",
+        "mathjs": "latest",
+        "net": "latest",
+        "util": "latest",
+        "async": "latest",
+        "underscore.string": "latest"
+    }
+}
