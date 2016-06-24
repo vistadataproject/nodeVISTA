@@ -7,8 +7,6 @@
 var rpcUtils = require('../rpcUtils.js');
 var VistaJSLibrary = require('../../VistaJS/VistaJSLibrary');
 
-console.log("uugh");
-
 describe ("unSPack", function () {
     it ("should correctly un-SPack '"+ SPACK_LENGTH_1_STRING_ALPHA +"' to payload '" + LENGTH_1_STRING_ALPHA + "'", function () {
         var payload = rpcUtils.unSPack(SPACK_LENGTH_1_STRING_ALPHA);

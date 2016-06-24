@@ -83,7 +83,7 @@ module.exports.rpcParametersToString = rpcParametersToString();
     throw new IllegalArgumentException("Parameter exceeds 255 chars");
   }
   StringBuilder sbld = new StringBuilder();
-  sbld.append((char) lth);                                              // start with the length of the string
+  sbld.append((char) lth);                                              // start with the length of the string (the length is the first char not a number as a string, thus the 255 limit)
   sbld.append(str);                                                     // append the string
   return sbld.toString();                                               // return the length and string, e.g., "abcde" becomes "5abcde"
  }

@@ -10,6 +10,7 @@
         "underscore.string": "latest",
         "cli-color": "latest",
         "moment": "latest",
-        "node-cache": "latest"
+        "node-cache": "latest",
+        "async": "latest"
     }
 }
