@@ -58,14 +58,51 @@ var spackArray = [
     {"spack": SPACK_LENGTH_10_STRING_NUM_1, "payload": LENGTH_10_STRING_NUM_1}
 ]
 
+var lpackArray = [
+    {"lpack": LPACK_1_LENGTH_1_STRING_ALPHA, "payload": LENGTH_1_STRING_ALPHA, "width": 1},
+    {"lpack": LPACK_1_LENGTH_8_STRING_ALPHA, "payload": LENGTH_8_STRING_ALPHA, "width": 1},
+    {"lpack": LPACK_1_LENGTH_10_STRING_ALPHA, "payload": LENGTH_10_STRING_ALPHA, "width": 1},
+
+    {"lpack": LPACK_1_LENGTH_1_STRING_NUM_0, "payload": LENGTH_1_STRING_NUM_0, "width": 1},
+    {"lpack": LPACK_1_LENGTH_8_STRING_NUM_0, "payload": LENGTH_8_STRING_NUM_0, "width": 1},
+    {"lpack": LPACK_1_LENGTH_10_STRING_NUM_0, "payload": LENGTH_10_STRING_NUM_0, "width": 1},
+
+    {"lpack": LPACK_1_LENGTH_1_STRING_NUM_1, "payload": LENGTH_1_STRING_NUM_1, "width": 1},
+    {"lpack": LPACK_1_LENGTH_8_STRING_NUM_1, "payload": LENGTH_8_STRING_NUM_1, "width": 1},
+    {"lpack": LPACK_1_LENGTH_10_STRING_NUM_1, "payload": LENGTH_10_STRING_NUM_1, "width": 1},
+
+    {"lpack": LPACK_3_LENGTH_1_STRING_ALPHA, "payload": LENGTH_1_STRING_ALPHA, "width": 3},
+    {"lpack": LPACK_3_LENGTH_8_STRING_ALPHA, "payload": LENGTH_8_STRING_ALPHA, "width": 3},
+    {"lpack": LPACK_3_LENGTH_10_STRING_ALPHA, "payload": LENGTH_10_STRING_ALPHA, "width": 3},
+
+    {"lpack": LPACK_3_LENGTH_1_STRING_NUM_0, "payload": LENGTH_1_STRING_NUM_0, "width": 3},
+    {"lpack": LPACK_3_LENGTH_8_STRING_NUM_0, "payload": LENGTH_8_STRING_NUM_0, "width": 3},
+    {"lpack": LPACK_3_LENGTH_10_STRING_NUM_0, "payload": LENGTH_10_STRING_NUM_0, "width": 3},
+
+    {"lpack": LPACK_3_LENGTH_1_STRING_NUM_1, "payload": LENGTH_1_STRING_NUM_1, "width": 3},
+    {"lpack": LPACK_3_LENGTH_8_STRING_NUM_1, "payload": LENGTH_8_STRING_NUM_1, "width": 3},
+    {"lpack": LPACK_3_LENGTH_10_STRING_NUM_1, "payload": LENGTH_10_STRING_NUM_1, "width": 3}
+
+]
+
 
 
 for (var i = 0; i < spackArray.length; i++) {
-    console.log("Unpacking " + spackArray[i]);
+    console.log("Unpacking " + spackArray[i].spack);
     var unspack = rpcUtils.unSPack(spackArray[i]["spack"]);
     console.log("  unpacked: " + unspack);
     if (spackArray[i]["payload"] !== unspack) {
-        console.log("Error, quitting");
-        break;
+        console.log("    ERROR!");
+    }
+}
+
+for (var i = 0; i < lpackArray.length; i++) {
+    console.log("Unpacking " + lpackArray[i].lpack);
+    var unlpack = rpcUtils.unLPack(lpackArray[i]["lpack"]);
+    if (unlpack) {
+        console.log("  unpacked: " + unlpack.string, ", width: " + unlpack.width);
+        if (lpackArray[i]["payload"] !== unlpack.string || lpackArray[i]["width"] != unlpack.width) {
+            console.log("    ERROR!");
+        }
     }
 }

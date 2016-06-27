@@ -58,94 +58,115 @@ describe ("unSPack", function () {
 });
 
 describe ("unLPack", function () {
+
     it ("should correctly un-LPack '" + LPACK_1_LENGTH_1_STRING_ALPHA + "' to payload '" + LENGTH_1_STRING_ALPHA + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_1_STRING_ALPHA);
-        expect(payload).toBe(LENGTH_1_STRING_ALPHA);
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_1_STRING_ALPHA);
+        expect(unpacked.string).toBe(LENGTH_1_STRING_ALPHA);
+        expect(unpacked.width).toBe(1);
     });
 
     it ("should correctly un-LPack '" + LPACK_1_LENGTH_8_STRING_ALPHA + "' to payload '" + LENGTH_8_STRING_ALPHA + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_8_STRING_ALPHA);
-        expect(payload).toBe(LENGTH_8_STRING_ALPHA);
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_8_STRING_ALPHA);
+        expect(unpacked.string).toBe(LENGTH_8_STRING_ALPHA);
+        expect(unpacked.width).toBe(1);
     });
 
-    it ("should correctly un-LPack '" + LPACK_1_LENGTH_10_STRING_ALPHA + "' to payload '" + LENGTH_10_STRING_ALPHA + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_10_STRING_ALPHA);
-        expect(payload).toBe(LENGTH_10_STRING_ALPHA);
+    it ("should correctly un-LPack '" + LPACK_1_LENGTH_10_STRING_ALPHA + "' to payload '" + LENGTH_10_STRING_ALPHA + "', width not 1", function () {
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_10_STRING_ALPHA);
+        expect(unpacked.string).toBe(LENGTH_10_STRING_ALPHA);
+        // a te
+        expect(unpacked.width).not.toBe(1);
     });
 
     it ("should correctly un-LPack '" + LPACK_1_LENGTH_1_STRING_NUM_0 + "' to payload '" + LENGTH_1_STRING_NUM_0 + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_1_STRING_NUM_0);
-        expect(payload).toBe(LENGTH_1_STRING_NUM_0);
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_1_STRING_NUM_0);
+        expect(unpacked.string).toBe(LENGTH_1_STRING_NUM_0);
+        expect(unpacked.width).toBe(1);
     });
 
     it ("should correctly un-LPack '" + LPACK_1_LENGTH_8_STRING_NUM_0 + "' to payload '" + LENGTH_8_STRING_NUM_0 + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_8_STRING_NUM_0);
-        expect(payload).toBe(LENGTH_8_STRING_NUM_0);
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_8_STRING_NUM_0);
+        expect(unpacked.string).toBe(LENGTH_8_STRING_NUM_0);
+        expect(unpacked.width).toBe(1);
     });
 
-    it ("should correctly un-LPack '" + LPACK_1_LENGTH_10_STRING_NUM_0 + "' to payload '" + LENGTH_10_STRING_NUM_0 + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_10_STRING_NUM_0);
-        expect(payload).toBe(LENGTH_10_STRING_NUM_0);
+    it ("should correctly un-LPack '" + LPACK_1_LENGTH_10_STRING_NUM_0 + "' to payload '" + LENGTH_10_STRING_NUM_0 + "', width not 1", function () {
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_10_STRING_NUM_0);
+        expect(unpacked.string).toBe(LENGTH_10_STRING_NUM_0);
+        expect(unpacked.width).not.toBe(1);
     });
 
     it ("should correctly un-LPack '" + LPACK_1_LENGTH_1_STRING_NUM_1 + "' to payload '" + LENGTH_1_STRING_NUM_1 + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_1_STRING_NUM_1);
-        expect(payload).toBe(LENGTH_1_STRING_NUM_1);
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_1_STRING_NUM_1);
+        expect(unpacked.string).toBe(LENGTH_1_STRING_NUM_1);
+        expect(unpacked.width).toBe(1);
     });
 
     it ("should correctly un-LPack '" + LPACK_1_LENGTH_8_STRING_NUM_1 + "' to payload '" + LENGTH_8_STRING_NUM_1 + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_8_STRING_NUM_1);
-        expect(payload).toBe(LENGTH_8_STRING_NUM_1);
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_8_STRING_NUM_1);
+        expect(unpacked.string).toBe(LENGTH_8_STRING_NUM_1);
+        expect(unpacked.width).toBe(1);
     });
 
-    it ("should correctly un-LPack '" + LPACK_1_LENGTH_10_STRING_NUM_1 + "' to payload '" + LENGTH_10_STRING_NUM_1 + "', width 1", function () {
-        var payload = rpcUtils.unLPack(LPACK_1_LENGTH_10_STRING_NUM_1);
-        expect(payload).toBe(LENGTH_10_STRING_NUM_1);
+    it ("should correctly un-LPack '" + LPACK_1_LENGTH_10_STRING_NUM_1 + "' to payload '" + LENGTH_10_STRING_NUM_1 + "', width not 1", function () {
+        var unpacked = rpcUtils.unLPack(LPACK_1_LENGTH_10_STRING_NUM_1);
+        expect(unpacked.string).toBe(LENGTH_10_STRING_NUM_1);
+        expect(unpacked.width).not.toBe(1);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_1_STRING_ALPHA + "' to payload '" + LENGTH_1_STRING_ALPHA + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_1_STRING_ALPHA);
-        expect(payload).toBe(LENGTH_1_STRING_ALPHA);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_1_STRING_ALPHA);
+        expect(unpacked.string).toBe(LENGTH_1_STRING_ALPHA);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_8_STRING_ALPHA + "' to payload '" + LENGTH_8_STRING_ALPHA + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_8_STRING_ALPHA);
-        expect(payload).toBe(LENGTH_8_STRING_ALPHA);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_8_STRING_ALPHA);
+        expect(unpacked.string).toBe(LENGTH_8_STRING_ALPHA);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_10_STRING_ALPHA + "' to payload '" + LENGTH_10_STRING_ALPHA + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_10_STRING_ALPHA);
-        expect(payload).toBe(LENGTH_10_STRING_ALPHA);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_10_STRING_ALPHA);
+        expect(unpacked.string).toBe(LENGTH_10_STRING_ALPHA);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_1_STRING_NUM_0 + "' to payload '" + LENGTH_1_STRING_NUM_0 + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_1_STRING_NUM_0);
-        expect(payload).toBe(LENGTH_1_STRING_NUM_0);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_1_STRING_NUM_0);
+        expect(unpacked.string).toBe(LENGTH_1_STRING_NUM_0);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_8_STRING_NUM_0 + "' to payload '" + LENGTH_8_STRING_NUM_0 + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_8_STRING_NUM_0);
-        expect(payload).toBe(LENGTH_8_STRING_NUM_0);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_8_STRING_NUM_0);
+        expect(unpacked.string).toBe(LENGTH_8_STRING_NUM_0);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_10_STRING_NUM_0 + "' to payload '" + LENGTH_10_STRING_NUM_0 + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_10_STRING_NUM_0);
-        expect(payload).toBe(LENGTH_10_STRING_NUM_0);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_10_STRING_NUM_0);
+        expect(unpacked.string).toBe(LENGTH_10_STRING_NUM_0);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_1_STRING_NUM_1 + "' to payload '" + LENGTH_1_STRING_NUM_1 + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_1_STRING_NUM_1);
-        expect(payload).toBe(LENGTH_1_STRING_NUM_1);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_1_STRING_NUM_1);
+        expect(unpacked.string).toBe(LENGTH_1_STRING_NUM_1);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_8_STRING_NUM_1 + "' to payload '" + LENGTH_8_STRING_NUM_1 + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_8_STRING_NUM_1);
-        expect(payload).toBe(LENGTH_8_STRING_NUM_1);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_8_STRING_NUM_1);
+        expect(unpacked.string).toBe(LENGTH_8_STRING_NUM_1);
+        expect(unpacked.width).toBe(3);
     });
 
     it ("should correctly un-LPack '" + LPACK_3_LENGTH_10_STRING_NUM_1 + "' to payload '" + LENGTH_10_STRING_NUM_1 + "', width 3", function () {
-        var payload = rpcUtils.unLPack(LPACK_3_LENGTH_10_STRING_NUM_1);
-        expect(payload).toBe(LENGTH_10_STRING_NUM_1);
+        var unpacked = rpcUtils.unLPack(LPACK_3_LENGTH_10_STRING_NUM_1);
+        expect(unpacked.string).toBe(LENGTH_10_STRING_NUM_1);
+        expect(unpacked.width).toBe(3);
+
     });
 
 });

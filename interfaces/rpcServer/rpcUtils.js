@@ -8,7 +8,7 @@ var _ = require("underscore");
  *
  * @param lPack the package in the form dd...ddSSS...SSS where dd...dd is the length nDigits long and SSS...SSS is the payload of length dd...dd
  * @param digits number of digits of the length to unpack (needs to be an integer)
- * @returns an object with the "string" payload and the "width" ndigits, or null if not a proper lpack.
+ * @returns an object with the "string" payload and the "width" ndigits, or null if not a proper lpack. ("string" and "width" property names come from VistaJSLibrary parameter names for strPack())
  */
 function unLPack(lPack, nDigits) {
     var payload = "";
@@ -69,10 +69,12 @@ function unSPack(sPack) {
 }
 
 function removeLeftPad(lPaddedNum) {
-    while (lPaddedNum.startsWith("0")) {
-        lPaddedNum = lPaddedNum.substring(1);
+    if (lPaddedNum && typeof lPaddedNum === "string") {
+        while (lPaddedNum.indexOf("0") === 0) {
+            lPaddedNum = lPaddedNum.substring(1);
+        }
+        return lPaddedNum;
     }
-    return lPaddedNum;
 }
 
 module.exports.unLPack = unLPack;
