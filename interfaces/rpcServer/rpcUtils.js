@@ -68,6 +68,31 @@ function unSPack(sPack) {
     }
 }
 
+/**
+ * Takes a string that has an SPack on the front, removes the SPack and returns the SPack payload and the remainder of the
+ * string.
+ *
+ * @param sPackPlusTrailer
+ * @returns object containing spack payload, and the remaining string
+ */
+function popSPack(sPackPlusRemainder) {
+    if (sPackPlusRemainder && typeof sPackPlusRemainder === 'string') {
+        var length = sPackPlusRemainder.charCodeAt(0);
+
+        var payload = sPackPlusRemainder.substring(1, length + 1);
+
+        var trailer = "";
+
+        if (sPackPlusRemainder.length > length + 1) {
+            trailer = sPackPlusRemainder.substring(length + 1);
+        }
+
+        return {"string": payload, "remainder": trailer};
+
+    }
+
+}
+
 function removeLeftPad(lPaddedNum) {
     if (lPaddedNum && typeof lPaddedNum === "string") {
         while (lPaddedNum.indexOf("0") === 0) {
@@ -79,3 +104,4 @@ function removeLeftPad(lPaddedNum) {
 
 module.exports.unLPack = unLPack;
 module.exports.unSPack = unSPack;
+module.exports.popSPack = popSPack;

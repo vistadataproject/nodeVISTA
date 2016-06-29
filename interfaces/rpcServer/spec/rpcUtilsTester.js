@@ -85,6 +85,9 @@ var lpackArray = [
 
 ]
 
+var spackArrayPlus = [];
+var remainder = "POIUYT";
+
 
 
 for (var i = 0; i < spackArray.length; i++) {
@@ -104,5 +107,18 @@ for (var i = 0; i < lpackArray.length; i++) {
         if (lpackArray[i]["payload"] !== unlpack.string || lpackArray[i]["width"] != unlpack.width) {
             console.log("    ERROR!");
         }
+    }
+}
+
+console.log("creating spacks plus other stuff Array");
+for (var i = 0; i < spackArray.length; i++) {
+    spackArrayPlus.push({"spack": spackArray[i].spack + remainder, "payload": spackArray[i], "remainder": remainder});
+}
+for (var i = 0; i < spackArrayPlus.length; i++) {
+    console.log("Popping " + spackArrayPlus[i].spack);
+    var popspack = rpcUtils.popSPack(spackArrayPlus[i]["spack"]);
+    console.log("  popped string: " + popspack.string + ", remainder: " + popspack.remainder);
+    if (spackArrayPlus[i]["string"] !== popspack.payload || spackArrayPlus[i]["remainder"] != popspack.remainder) {
+        console.log("    ERROR!");
     }
 }
