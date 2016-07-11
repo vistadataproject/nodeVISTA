@@ -138,11 +138,11 @@ function buildParamStringList (rpcParamList) {
 
 // Building a test string:
 // first build the param list
-var rpcParam1 = VistaJSLibrary.buildLiteralParamString(rpcParametersArray[0]);
-var paramList = [rpcParam1];
+//var rpcParam1 = VistaJSLibrary.buildLiteralParamString(rpcParametersArray[0]);
+var paramList = [rpcParametersArray[0]];
 var rpcParamList = processParamList(paramList);
 var paramStringList = buildParamStringList(rpcParamList);
-var rpcCommand = buildCommand(null, "TEST RPC NAME", paramStringList);
+var rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
 
 console.log("RPC Command: " + rpcCommand.rpc);
 
