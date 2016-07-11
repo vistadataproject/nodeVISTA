@@ -104,11 +104,9 @@ var rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
 
 console.log("RPC Command: " + rpcCommand.rpc);
 
-//var paramList1 = processParamList(rpcParametersArray);
-//var paramListString1 = VistaJSLibrary.buildParamRpcString(paramList1);
-//var rpc1 = VistaJSLibrary.buildRpcString(rpcNamesArray[0], paramListString1);
-//var rpcName = parser.parseRawRPC(rpc1).rpcName;
 
-//console.log ("rpcName = " + rpcName);
+var rpcObject = parser.parseRawRPC(rpcCommand.rpc);
+
+console.log ("rpcName = " + rpcObject.rpcName);
 
 

@@ -1,6 +1,8 @@
 'use strict';
 
 // var vistajs = require('../VistaJS/VistaJS'); TODO: Refactor to use VistaJS and VistaJSLibrary
+var rpcUtils = require('./rpcUtils.js');
+
 
 var parameterTypeMap = {
     LITERAL: 0,
@@ -9,10 +11,13 @@ var parameterTypeMap = {
 }
 
 function parseRawRPC (rpcString) {
+    if (!rpcString) {
+        return null;
+    }
 
     var rpcObject = {};
 
-    if (rpcString.startsWith("{XWB}")) {
+    if (rpcString.indexOf("{XWB}") === 0) {
         // this is direct query
         // {XWB}<MESSAGE> where <> is strPack with count_width 5
         //   MESSAGE is
@@ -22,7 +27,7 @@ function parseRawRPC (rpcString) {
         // e.g. rpc "MY DOG" parameter: LITERAL abcde = "{XWB}007XWB;;;;000170MY DOG^000090060abcde"
         //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "{XWB}007XWB;;;;000341YOUR DOG^00019001a0011001b0012000"
 
-    } else if (rpcString.startsWith("[XWB]")) {
+    } else if (rpcString.indexOf("[XWB]") === 0) {
         // this is national query
         // [XWB]11302<1.108><~RPCNAME~>~parameters~\u0004 where <> is an SPack
         // by parts: PREFIX="[XWB]" then "11" then COUNT_WIDTH="3" then "02" then SPack RPC_VERSION="1.108" then SPack RPC_NAME
@@ -32,6 +37,16 @@ function parseRawRPC (rpcString) {
         // e.g. rpc "MY DOG" parameter: LITERAL abcde = "[XWB]11301251.1086MY DOG50005abcdef"
         //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "[XWB]11301251.1088YOUR DOG52001a0011t001b0012f"
 
+        // strip [XWB] and "11302" rpcString.substring(10);
+        // get the version
+        var poppedObject = rpcUtils.popSPack(rpcString.substring(10));
+        var version = poppedObject.string;
+        // get the rpcName
+        poppedObject = rpcUtils.popSPack(poppedObject.remainder);
+        var rpcName = poppedObject.string;
+        rpcObject.rpcName = rpcName;
+        rpcObject.version = version;
+
     }
     return rpcObject;
 
@@ -39,6 +54,10 @@ function parseRawRPC (rpcString) {
 
 
 function rpcParametersToString (rpcParametersArray) {
+    if (!rpcParametersArray) {
+        return "";
+    }
+
     var parameterString = "";
     for (var i = 0; i < rpcParametersArray.length; i++ ) {
         if (rpcParametersArray[i].type === parameterTypeMap.LITERAL) {
@@ -55,8 +74,8 @@ function rpcParametersToString (rpcParametersArray) {
 
 }
 
-module.exports.parseRawRPC = parseRawRPC();
-module.exports.rpcParametersToString = rpcParametersToString();
+module.exports.parseRawRPC = parseRawRPC;
+module.exports.rpcParametersToString = rpcParametersToString;
 
 
 /* LPACK === STRPACK === VistaJSLibrary.strPack()
