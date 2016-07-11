@@ -2,7 +2,7 @@
 
 // var vistajs = require('../VistaJS/VistaJS'); TODO: Refactor to use VistaJS and VistaJSLibrary
 var rpcUtils = require('./rpcUtils.js');
-
+var COUNT_WIDTH = 3;
 
 var parameterTypeMap = {
     LITERAL: 0,
@@ -44,12 +44,47 @@ function parseRawRPC (rpcString) {
         // get the rpcName
         poppedObject = rpcUtils.popSPack(poppedObject.remainder);
         var rpcName = poppedObject.string;
+        var parametersArray = parseParameters(poppedObject.remainder);
+
         rpcObject.rpcName = rpcName;
         rpcObject.version = version;
+        rpcObject.parameters = parametersArray;
 
     }
     return rpcObject;
 
+}
+
+function parseParameters(paramRpcString) {
+    if (!paramRpcString || paramRpcString.indexOf('5') !== 0) {
+        return null;
+    }
+
+    if (paramRpcString === '54f') {
+        return {};
+    }
+
+
+    // remove the '5' paramRpcString.substring(1);
+    var remainderString = paramRpcString.substring(1);
+    var parameters = [];
+    var parameterNum = 1;
+    while (remainderString.length > 5) {
+        // get the parameter type
+        var paramtype = remainderString.substring (0, 1);
+        if (paramtype === '0') {
+            var poppedObject = rpcUtils.popLPack(remainderString.substring(1), COUNT_WIDTH);
+            remainderString = poppedObject.remainder;
+            if (remainderString && remainderString.length > 0) {
+                // remove the 'f' marking the end of the parameter.
+                remainderString = remainderString.substring(1);
+            }
+
+            parameters.push({"type": 0, "parameter": poppedObject.string, "num": parameterNum++});
+        }
+    }
+
+    return parameters;
 }
 
 

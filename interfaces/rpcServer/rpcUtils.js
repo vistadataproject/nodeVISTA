@@ -93,6 +93,32 @@ function popSPack(sPackPlusRemainder) {
 
 }
 
+/**
+ * Takes a string that has an LPack on the front, removes the LPack, and returns the LPack payload and the remainder of the
+ * string
+ *
+ * @param lPackPlusRemainder
+ * @returns object containing lpack payload and the remaining string
+ */
+function popLPack(lPackPlusRemainder, lwidth) {
+    if (lPackPlusRemainder && typeof  lPackPlusRemainder === 'string') {
+        if (!lwidth && typeof lwidth === 'number') {
+            // the width is necessary.
+            return null;
+        }
+
+        var length = lPackPlusRemainder.substring(0, lwidth);
+        length = parseInt(removeLeftPad(length));
+        var payload = lPackPlusRemainder.substring(lwidth, lwidth + length);
+        var remainder = lPackPlusRemainder.substring(lwidth + length);
+
+        return {
+            "string": payload,
+            "remainder": remainder
+        }
+    }
+}
+
 function removeLeftPad(lPaddedNum) {
     if (lPaddedNum && typeof lPaddedNum === "string") {
         while (lPaddedNum.indexOf("0") === 0) {
@@ -105,3 +131,4 @@ function removeLeftPad(lPaddedNum) {
 module.exports.unLPack = unLPack;
 module.exports.unSPack = unSPack;
 module.exports.popSPack = popSPack;
+module.exports.popLPack = popLPack;
