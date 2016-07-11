@@ -3,6 +3,7 @@
 var parser = require('../rpcParser.js');
 var rpcUtils = require('../rpcUtils.js');
 var VistaJS = require('../../VistaJS/VistaJS.js');
+var VistaJSLibrary = require('../../VistaJS/VistaJSLibrary.js');
 var util = require('util');
 var _ = require('underscore');
 
@@ -53,11 +54,11 @@ function processParamList(paramList) {
 }
 
 /** VistaJSLibrary buildRpcString **/
-function buildRPCStringForTest () {
+function buildRpcString(rpcName, paramStringList) {
     return util.format('%s11302%s%s%s%s',
         PREFIX,
-        prependCount(RPC_VERSION),
-        prependCount(rpcName),
+        VistaJSLibrary.prependCount(RPC_VERSION),
+        VistaJSLibrary.prependCount(rpcName),
         buildParamRpcString(paramStringList),
         EOT);
 }
@@ -81,8 +82,8 @@ function buildParamRpcString(paramStringList) {
  *
  * */
 function buildCommand(logger, rpcName, parameterStringList) {
-    logger.debug('RpcClient.buildCommand()');
-    logger.debug('RpcClient param: %s', parameterStringList);
+    //logger.debug('RpcClient.buildCommand()');
+    //logger.debug('RpcClient param: %s', parameterStringList);
 
     var params = parameterStringList || [];
     if (!_.isArray(parameterStringList)) {
@@ -91,16 +92,16 @@ function buildCommand(logger, rpcName, parameterStringList) {
 
     var rpc = VistaJSLibrary.buildRpcString(rpcName, params);
 
-    logger.debug('RpcClient rpc: %s', rpc);
+    //logger.debug('RpcClient rpc: %s', rpc);
     return {
         rpc: rpc,
 
-        process: function(data) {
-            logger.trace('Response: ');
-            logger.trace(data);
-
-            return data;
-        }
+        //process: function(data) {
+        //    logger.trace('Response: ');
+        //    logger.trace(data);
+        //
+        //    return data;
+        //}
     };
 }
 
@@ -111,7 +112,7 @@ function processParamList(paramList) {
     }
 
     return _.map(paramList, function(param) {
-        if (RpcParameter.isRpcParameter(param)) {
+        if (VistaJS.RpcParameter.isRpcParameter(param)) {
             return param;
         }
 
@@ -121,19 +122,38 @@ function processParamList(paramList) {
         }
 
         if (_.isString(stringParam)) {
-            return RpcParameter.literal(stringParam);
+            return VistaJS.RpcParameter.literal(stringParam);
         }
 
         return RpcParameter.list(param);
     });
 }
 
+function buildParamStringList (rpcParamList) {
+    return _.map(rpcParamList, function(param) {
+        return param.value;
+    });
+}
 
-var paramList1 = processParamList(rpcParametersArray);
-var paramListString1 = VistaJSLibrary.buildParamRpcString(paramList1);
-var rpc1 = VistaJSLibrary.buildRpcString(rpcNamesArray[0], paramListString1);
-var rpcName = parser.parseRawRPC(rpc1).rpcName;
 
-console.log ("rpcName = " + rpcName);
+// Building a test string:
+// first build the param list
+var rpcParam1 = VistaJSLibrary.buildLiteralParamString(rpcParametersArray[0]);
+var paramList = [rpcParam1];
+var rpcParamList = processParamList(paramList);
+var paramStringList = buildParamStringList(rpcParamList);
+var rpcCommand = buildCommand(null, "TEST RPC NAME", paramStringList);
+
+console.log("RPC Command: " + rpcCommand.rpc);
+
+
+
+
+//var paramList1 = processParamList(rpcParametersArray);
+//var paramListString1 = VistaJSLibrary.buildParamRpcString(paramList1);
+//var rpc1 = VistaJSLibrary.buildRpcString(rpcNamesArray[0], paramListString1);
+//var rpcName = parser.parseRawRPC(rpc1).rpcName;
+
+//console.log ("rpcName = " + rpcName);
 
 
