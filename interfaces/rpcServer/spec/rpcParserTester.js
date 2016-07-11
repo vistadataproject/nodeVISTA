@@ -7,17 +7,6 @@ var VistaJSLibrary = require('../../VistaJS/VistaJSLibrary.js');
 var util = require('util');
 var _ = require('underscore');
 
-
-/** From VistaJSLibrary */
-var PREFIX = '[XWB]';
-var RPC_VERSION = '1.108';
-var COUNT_WIDTH = 3;
-var NUL = '\u0000';
-var SOH = '\u0001';
-var EOT = '\u0004';
-var ENQ = '\u0005';
-
-
 var rpcNamesArray = [
     "RPC 1",
     "RPC 2",
@@ -30,54 +19,16 @@ var rpcParametersArray = [
     "Parameter3"
 ];
 
-function processParamList(paramList) {
-    if (paramList === null || paramList === undefined) {
-        return [];
-    }
-
-    return _.map(paramList, function(param) {
-        if (VistaJS.RpcParameter.isRpcParameter(param)) {
-            return param;
-        }
-
-        var stringParam = param;
-        if (_.isNumber(param)) {
-            stringParam = String(param);
-        }
-
-        if (_.isString(stringParam)) {
-            return VistaJS.RpcParameter.literal(stringParam);
-        }
-
-        return VistaJS.RpcParameter.list(param);
-    });
-}
-
-/** VistaJSLibrary buildRpcString **/
-function buildRpcString(rpcName, paramStringList) {
-    return util.format('%s11302%s%s%s%s',
-        PREFIX,
-        VistaJSLibrary.prependCount(RPC_VERSION),
-        VistaJSLibrary.prependCount(rpcName),
-        buildParamRpcString(paramStringList),
-        EOT);
-}
-
-/** VistaJSLibrary buildParamRpcString */
-function buildParamRpcString(paramStringList) {
-    if (paramStringList === null || paramStringList === undefined || paramStringList.length === 0) {
-        return '54f';
-    }
-
-    return '5' + paramStringList.join('');
-}
-
 /** VistaJS buildCommand
+ *
+ * need tp copy here since this is not exported from VistaJS
+ *
  * buildCommand(logger, rpc, _.map(rpcParamList, function(param) {
-        return param.value;
-    })
-
- where     var rpcParamList = processParamList(params);
+ *       return param.value;
+ *   })
+ *
+ *   where
+ *   var rpcParamList = processParamList(params);
  *
  *
  * */
@@ -105,7 +56,12 @@ function buildCommand(logger, rpcName, parameterStringList) {
     };
 }
 
-/** VistaJS processParamList */
+/**
+ * VistaJS processParamList
+ *
+ * need to copy here since it is not exported from VistaJS
+ *
+ * */
 function processParamList(paramList) {
     if (paramList === null || paramList === undefined) {
         return [];
@@ -138,16 +94,15 @@ function buildParamStringList (rpcParamList) {
 
 // Building a test string:
 // first build the param list
-//var rpcParam1 = VistaJSLibrary.buildLiteralParamString(rpcParametersArray[0]);
-var paramList = [rpcParametersArray[0]];
+var paramList = [rpcParametersArray[0], rpcParametersArray[1]];
+// make an array of VistaJS.RpcParameters
 var rpcParamList = processParamList(paramList);
+// get the parameter strings from the VistaJS.RpcParameters and make an array
 var paramStringList = buildParamStringList(rpcParamList);
+// pass the rpcName and the parameters as strings list to build the rpcCommand
 var rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
 
 console.log("RPC Command: " + rpcCommand.rpc);
-
-
-
 
 //var paramList1 = processParamList(rpcParametersArray);
 //var paramListString1 = VistaJSLibrary.buildParamRpcString(paramList1);
