@@ -73,7 +73,7 @@ function parseParameters(paramRpcString) {
         // get the parameter type
         var paramtype = remainderString.substring (0, 1);
         if (paramtype === '0' || paramtype === '1') {
-            // literal and reference params are treated the same way
+            // LITERAL and REFERENCE type params are treated the same way
             var poppedObject = rpcUtils.popLPack(remainderString.substring(1), COUNT_WIDTH);
             remainderString = poppedObject.remainder;
             if (remainderString && remainderString.length > 0) {
@@ -83,7 +83,7 @@ function parseParameters(paramRpcString) {
 
             parameters.push({"type": paramtype, "parameter": poppedObject.string, "num": parameterNum++});
         } else if (paramtype === '2') {
-            // these are list type parameters, need to remove LPacks two at a time for key value pairs.
+            // LIST type parameters need to remove LPacks two at a time for key/value pairs.
             // remove the paramtype
             remainderString = remainderString.substring(1);
             // pop two LPacks until it ends with a 'f'
