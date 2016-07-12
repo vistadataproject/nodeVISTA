@@ -68,11 +68,12 @@ function parseParameters(paramRpcString) {
     // remove the '5' paramRpcString.substring(1);
     var remainderString = paramRpcString.substring(1);
     var parameters = [];
-    var parameterNum = 1;
+    var parameterNum = 0;
     while (remainderString.length > 5) {
         // get the parameter type
         var paramtype = remainderString.substring (0, 1);
-        if (paramtype === '0') {
+        if (paramtype === '0' || paramtype === '1') {
+            // literal and reference params are treated the same way
             var poppedObject = rpcUtils.popLPack(remainderString.substring(1), COUNT_WIDTH);
             remainderString = poppedObject.remainder;
             if (remainderString && remainderString.length > 0) {
@@ -80,7 +81,30 @@ function parseParameters(paramRpcString) {
                 remainderString = remainderString.substring(1);
             }
 
-            parameters.push({"type": 0, "parameter": poppedObject.string, "num": parameterNum++});
+            parameters.push({"type": paramtype, "parameter": poppedObject.string, "num": parameterNum++});
+        } else if (paramtype === '2') {
+            // these are list type parameters, need to remove LPacks two at a time for key value pairs.
+            // remove the paramtype
+            remainderString = remainderString.substring(1);
+            // pop two LPacks until it ends with a 'f'
+            var listParams = [];
+            var endoflist = false;
+            while (!endoflist) {
+                var poppedKeyObject = rpcUtils.popLPack(remainderString, COUNT_WIDTH);
+                remainderString = poppedKeyObject.remainder;
+                var poppedValueObject = rpcUtils.popLPack(remainderString, COUNT_WIDTH);
+                remainderString = poppedValueObject.remainder;
+                // push a key/value pair onto the list parameter array
+                listParams.push({"key": poppedKeyObject.string, "value": poppedValueObject.string});
+                // remove the 't' or 'f'
+                if (remainderString.substring(0, 1) === 'f') {
+                    endoflist = true;
+                }
+                remainderString = remainderString.substring(1);
+            }
+            if (listParams.length > 0) {
+                parameters.push({"type": paramtype, "parameter": listParams, "num": parameterNum++});
+            }
         }
     }
 

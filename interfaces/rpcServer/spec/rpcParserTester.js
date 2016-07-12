@@ -81,7 +81,7 @@ function processParamList(paramList) {
             return VistaJS.RpcParameter.literal(stringParam);
         }
 
-        return RpcParameter.list(param);
+        return VistaJS.RpcParameter.list(param);
     });
 }
 
@@ -91,22 +91,35 @@ function buildParamStringList (rpcParamList) {
     });
 }
 
+var paramList, rpcParamList,paramStringList,rpcCommand, rpcObject;
 
 // Building a test string:
 // first build the param list
-var paramList = [rpcParametersArray[0], rpcParametersArray[1]];
-// make an array of VistaJS.RpcParameters
-var rpcParamList = processParamList(paramList);
-// get the parameter strings from the VistaJS.RpcParameters and make an array
-var paramStringList = buildParamStringList(rpcParamList);
-// pass the rpcName and the parameters as strings list to build the rpcCommand
-var rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
+paramList = [rpcParametersArray[0], rpcParametersArray[1]];
+//// make an array of VistaJS.RpcParameters
+//rpcParamList = processParamList(paramList;
+//// get the parameter strings from the VistaJS.RpcParameters and make an array
+//paramStringList = buildParamStringList(rpcParamList);
+//// pass the rpcName and the parameters as strings list to build the rpcCommand
+//rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
+//
+//console.log("RPC Command: " + rpcCommand.rpc);
+//rpcObject = parser.parseRawRPC(rpcCommand.rpc);
+//console.log ("  parsed rpcName = " + rpcObject.rpcName);
 
+
+// build a list type param
+var listParam = {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+};
+
+paramList.push(listParam);
+rpcParamList = processParamList(paramList);
+paramStringList = buildParamStringList(rpcParamList);
+rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
 console.log("RPC Command: " + rpcCommand.rpc);
-
-
-var rpcObject = parser.parseRawRPC(rpcCommand.rpc);
-
-console.log ("rpcName = " + rpcObject.rpcName);
-
+rpcObject = parser.parseRawRPC(rpcCommand.rpc);
+console.log ("  parsed rpcName = " + rpcObject.rpcName);
 
