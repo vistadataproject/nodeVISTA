@@ -47,15 +47,16 @@ vprE.setVprMappings(vprAllergyEmulator);
 module.exports = function() {
 
     this.on('message', function(messageObj, send, finished) {
-        var results = {
-            youSent: messageObj,
-            workerSent: 'hello from worker ' + process.pid,
-            time: new Date().toString()
-        };
-        //var rpcArgs = allergyUtils.rpcArgs_ORWDAL32_SAVE_ALLERGY(testAllergies.historicals.three.vdmCreateResult);
-        //var res = localRPCRunner.run(db, DUZ, "ORWDAL32 SAVE ALLERGY", rpcArgs);
-        var res2 = vprE.queryXML(db, "1", "allergy");
-        finished(res2);
+        console.log(messageObj);
+        var application = messageObj.application;
+        var domain = messageObj.expressType;
+        var patient = messageObj.query.patient;
+        var ien = messageObj.query.ien;
+        if (application === 'vpr') {
+            var res = vprE.queryXML(db, patient, domain, ien);
+        }
+        res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
+        finished(res);
     });
 
 };
