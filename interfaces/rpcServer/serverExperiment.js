@@ -1,5 +1,7 @@
 var net = require('net');
 var parser = require('./rpcParser');
+var LOGGER = require('./logger.js');
+var CONFIG = require('./config.js');
 
 var server = net.createServer();
 server.on('connection', handleConnection);
@@ -17,22 +19,32 @@ function handleConnection(conn) {
     conn.on('error', onConnectedError);
 
     function onConnectedData(data) {
-        console.log('connection data from %s: %j', remoteAddress, d);
+        LOGGER.info('connection data from %s: %j', remoteAddress, data);
 
-        var rpcObject = parser.parseRawRPC(data);
 
-        conn.write("The RPC name is " + rpcObject.name);
-        if (rpcObject.parameters) {
-            var parameterString = parser.rpcParametersToString(rpcObject.parameters);
-            conn.write(" and the parameters are: " + parameterString);
-        }
+        conn.write('Echo: ' + data);
+        //conn.pipe(conn);
+
+        //var rpcObject = parser.parseRawRPC(data);
+        //
+        //conn.write("The RPC name is " + rpcObject.name);
+        //if (rpcObject.parameters) {
+        //    var parameterString = parser.rpcParametersToString(rpcObject.parameters);
+        //    conn.write(" and the parameters are: " + parameterString);
+        //}
     }
 
     function onConnectedClose() {
-        console.log('connection from %s closed', remoteAddress);
+        LOGGER.info('connection from %s closed', remoteAddress);
     }
 
     function onConnectedError(err) {
-        console.log('Connection %s error: %s', remoteAddress, err.message);
+        LOGGER.info('Connection %s error: %s', remoteAddress, err.message);
     }
 }
+
+
+
+
+//var rpcClient = new net.Socket();
+//client.connect()

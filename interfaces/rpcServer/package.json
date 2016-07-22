@@ -10,6 +10,7 @@
         "net": "latest",
         "util": "latest",
         "async": "latest",
-        "underscore.string": "latest"
+        "underscore.string": "latest",
+        "bunyan": "latest"
     }
 }
