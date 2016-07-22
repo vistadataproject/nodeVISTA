@@ -16,6 +16,10 @@ var LOGGER = bunyan.createLogger({
         {
             level: 'error',
             path: CONFIG.LOGGER.errorFile
+        },
+        {
+            level: 'error',
+            path: process.stderr
         }
     ]
 });
