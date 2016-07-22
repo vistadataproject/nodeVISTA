@@ -1,4 +1,3 @@
-
 var _ = require('underscore');
 var util = require('util');
 var nodem = require('nodem');
@@ -36,19 +35,31 @@ var vdmModelVitals = require('../../prototypes/vitals/vdmVitalsModel').vdmModel;
 var testVitals = require('../../prototypes/vitals/vdmTestVitals')(db);
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
 
+
+var rpcE = require('../../prototypes/rpcE');
+var rpcEAllergyMappings = require('../../prototypes/allergies/rpcAllergiesEmulate');
+var rpcProblemEmulate = require('../../prototypes/problems/rpcProblemEmulate');
+var rpcVitalEmulate = require('../../prototypes/vitals/rpcVitalEmulate');
+
 function setModels(domain) {
     if (domain === 'allergy') {
         VDM.setDBAndModel(db, vdmModelAllergy);
         MVDM.setModel(mvdmModelAllergy);
         vprE.setVprMappings(vprAllergyEmulator);
+        // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
+        VDM.setUserAndFacility("200-" + parseInt(DUZ));
+        rpcE.setRpcMappings(rpcEAllergyMappings);
+
     } else if (domain === 'problem') {
         VDM.setDBAndModel(db, vdmModelProblem);
         MVDM.setModel(mvdmModelProblem);
         vprE.setVprMappings(vprProblemEmulator);
+        rpcE.setRpcMappings(rpcProblemEmulate.rpcMappings(db));
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);
         MVDM.setModel(mvdmModelVitals);
         vprE.setVprMappings(vprVitalsEmulator);
+        rpcE.setRpcMappings(rpcVitalEmulate.rpcMappings);
     }
 }
 
@@ -60,11 +71,25 @@ module.exports = function() {
         var domain = messageObj.expressType;
         var patient = messageObj.query.patient;
         var ien = messageObj.query.ien;
+        setModels(domain);
         if (application === 'vpr') {
-            setModels(domain);
             var res = vprE.queryXML(db, patient, domain, ien);
+            res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
+        } else if (application === 'rpc') {
+            var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
+            var params;
+            if (domain === 'allergy') {
+                params = {
+                    patientIEN: '',
+                    allergyIEN: ien
+                };
+            } else if (domain === 'problem') {
+                params = [patient, ien, ien];
+            }
+            var res = rpcE.run(rpc, params);
+            res = '<pre>' + res + '</pre>';
         }
-        res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
+
         finished(res);
     });
 

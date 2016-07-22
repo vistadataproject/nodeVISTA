@@ -17,6 +17,7 @@ var q = new qoper8.masterProcess();
 qx.addTo(q);
 
 app.use('/vpr', qx.router());
+app.use('/rpc', qx.router());
 
 q.on('started', function() {
   this.worker.module = __dirname + '/vprEWorker';
