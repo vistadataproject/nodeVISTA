@@ -77,17 +77,31 @@ module.exports = function() {
             res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
         } else if (application === 'rpc') {
             var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
-            var params;
-            if (domain === 'allergy') {
-                params = {
-                    patientIEN: '',
-                    allergyIEN: ien
-                };
-            } else if (domain === 'problem') {
-                params = [patient, ien, ien];
+            if (!rpcE.isRPCSupported(rpc)) {
+                //run local rpc
+                var rpcArgs = messageObj.query.rpcArgs.split(',');
+                try {
+                    var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
+                    res = res.result.join('\n');
+                } catch (exception) {
+                    res = 'RPC not supported.';
+                }
+
+                res = '<pre>' + res + '</pre>';
+            } else {
+                var params;
+                if (domain === 'allergy') {
+                    params = {
+                        patientIEN: '',
+                        allergyIEN: ien
+                    };
+                } else if (domain === 'problem') {
+                    params = [patient, ien, ien];
+                }
+                var res = rpcE.run(rpc, params);
+                res = '<pre>' + res + '</pre>';
             }
-            var res = rpcE.run(rpc, params);
-            res = '<pre>' + res + '</pre>';
+
         }
 
         finished(res);
