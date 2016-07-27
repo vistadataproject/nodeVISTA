@@ -19,8 +19,8 @@ var LOGGER = bunyan.createLogger({
         },
         {
             level: 'error',
-            path: process.stderr
-        }
+            stream: process.stdout
+        },
     ]
 });
 

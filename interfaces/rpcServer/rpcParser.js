@@ -10,6 +10,12 @@ var parameterTypeMap = {
     LIST: 2
 }
 
+var NUL = '\u0000';
+var SOH = '\u0001';
+var EOT = '\u0004';
+var ENQ = '\u0005';
+
+
 function parseRawRPC (rpcString) {
     if (!rpcString) {
         return null;
@@ -27,6 +33,13 @@ function parseRawRPC (rpcString) {
         // e.g. rpc "MY DOG" parameter: LITERAL abcde = "{XWB}007XWB;;;;000170MY DOG^000090060abcde"
         //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "{XWB}007XWB;;;;000341YOUR DOG^00019001a0011001b0012000"
 
+    } else if (rpcString.indexOf("[XWB]10304\nTCPConnect") === 0) {
+        rpcObject.rpcName = "TCPConnect";
+
+        // parse the originating IP and hostname
+
+    } else if (rpcString.indexOf("[XWB]\u0005#BYE#\u0004") === 0) {
+        rpcObject.rpcName = "#BYE#";
     } else if (rpcString.indexOf("[XWB]") === 0) {
         // this is national query
         // [XWB]11302<1.108><~RPCNAME~>~parameters~\u0004 where <> is an SPack
