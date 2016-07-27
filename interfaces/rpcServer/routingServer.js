@@ -1,4 +1,5 @@
 var net = require('net');
+var async = require('async');
 var parser = require('./rpcParser');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
@@ -20,8 +21,6 @@ var configuration = {
 };
 
 
-
-
 server = net.createServer();
 
 server.on('connection', handleConnection);
@@ -35,11 +34,15 @@ function handleConnection(conn) {
     console.log('new client connection from %s', remoteAddress);
     var chunk = '';
 
-
     conn.on('data', onConnectedData);
     conn.on('close', onConnectedClose);
     conn.on('error', onConnectedError);
 
+    var brokerSocket = new net.Socket();
+    brokerSocket.on('error', onBrokerConnectionError);
+    brokerSocket.on('close', onBrokerConnectionClose);
+    brokerSocket.setEncoding('utf8');
+    brokerSocket.connect(configuration.port, configuration.host);
 
     function onConnectedData(data) {
         chunk += data;
@@ -48,10 +51,16 @@ function handleConnection(conn) {
 
         var commandList = VistaJSLibrary.buildConnectionCommandList(LOGGER, configuration);
 
+
+
         // loop for each packet in the data chunk
         while (eotIndex > -1) {
             // get a packet from the chunk (without the EOT)
             var rpcPacket = chunk.substr(0, eotIndex);
+            // remove the RPC packet from the chunk
+            chunk = chunk.substring(eotIndex + 1)
+            // find the end of the next RPC packet
+            eotIndex = chunk.indexOf(EOT);
 
             // process the packet
             LOGGER.info('connection data from %s: %s', remoteAddress, data);
@@ -61,53 +70,102 @@ function handleConnection(conn) {
                 LOGGER.info("RPC parameters: %j", rpcObject.parameters);
             }
 
-            // if it is the connect pass to broker
-            //if (rpcObject.rpcName === "TCPConnect") {
-            //    //passToBroker(rpcPacket)
-            //    conn.write('accept' + EOT);
-            //
-            //}
-
-
             // check if RPC is supported to pass to MVDM
 
             // pass the unsupported RPC to the legacy broker
-            var client = new VistaJSLibrary.RpcClient(LOGGER, configuration, commandList, function(error, result) {
-                LOGGER.debug('callRpc("%s") via Vista-RPC', rpcPacket);
-
-                if (error) {
-                    return callback(error);
+            async.series([
+                function(callback) {
+                    brokerSocket.on('data', onBrokerConnectionData); // RpcTask receive
+                    brokerSocket.write(rpcPacket);
+                    callback();
                 }
-
-                if (result.length && result.length > 4) {
-                    var rpcResult = result[4];
-                    //save(logger, key, rpcResult);
-                    //return callback(null, rpcResult);
-
-                    conn.write(rpcResult);
+            ], function (err) {
+                if (err) {
+                    LOGGER.error("Error in writing to broker %s", err);
                 }
-
-                callback(new Error('results were incomplete or undefined'));
             });
 
-            client.start();
 
-            // remove the RPC packet from the chunk
-            chunk = chunk.substring(eotIndex + 1)
-            // find the end of the next RPC packet
-            eotIndex = chunk.indexOf(EOT);
+            //var rpcCommand = {
+            //    rpc: rpcPacket,
+            //    process: function(data) {
+            //        return data;
+            //    }
+            //};
+            //var rpcTask = new VistaJSLibrary.RpcTask(LOGGER, rpcCommand, brokerSocket);
+            //var execList = [];
+            //execList.push(rpcTask.execute.bind(rpcCommand));
+            //async.series(execList, function(error, result) {
+            //    if (!error) {
+            //        conn.write(result);
+            //    }
+            //});
+
         }
 
     }
 
     function onConnectedClose() {
         LOGGER.info('connection from %s closed', remoteAddress);
+        brokerSocket.close();
     }
 
     function onConnectedError(err) {
         LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
         LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
     }
+
+    var buffer = '';
+
+    function onBrokerConnectionData(data) {
+        LOGGER.debug('RpcClient.receive()');
+        var result;
+        var error;
+
+        buffer += data;
+
+        if (buffer.indexOf(EOT) !== -1) {
+            //if (buffer[0] !== NUL) {
+            //    LOGGER.trace(data);
+            //    error = new Error('VistA SECURITY error: ' + extractSecurityErrorMessage(buffer));
+            //} else if (buffer[1] !== NUL) {
+            //    LOGGER.trace(data);
+            //    error = new Error('VistA APPLICATION error: ' + buffer);
+            //}
+
+            //buffer = buffer.substring(2);
+
+            //if (buffer.indexOf('M  ERROR') !== -1) {
+            //    LOGGER.trace(buffer);
+            //    error = new Error(buffer);
+            //}
+
+            result = buffer.substring(0, buffer.indexOf(EOT));
+            brokerSocket.removeAllListeners('data');
+            buffer = '';
+            if (!error) {
+                conn.write(result);
+            }
+
+            //LOGGER.trace(error);
+            //LOGGER.trace('RpcClient result: ' + util.inspect(result, {
+            //        depth: null
+            //    }));
+
+            //this.callback(error, result);
+        }
+
+    }
+
+    function onBrokerConnectionClose() {
+        LOGGER.info('connection from %s closed', remoteAddress);
+    }
+
+    function onBrokerConnectionError(err) {
+        LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
+        LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
+    }
+
 
     function buildRPCArgs(parameters) {
         var rpcArgs = [];

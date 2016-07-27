@@ -19,8 +19,12 @@ var LOGGER = bunyan.createLogger({
         },
         {
             level: 'error',
-            stream: process.stdout
+            stream: process.stderr
         },
+        {
+            level: 'debug',
+            path: CONFIG.LOGGER.debugFile
+        }
     ]
 });
 
