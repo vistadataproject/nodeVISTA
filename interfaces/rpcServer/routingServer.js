@@ -6,6 +6,8 @@ var CONFIG = require('./config.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 
+var DEFAULT_TIMEOUT = 10000;
+var DEFAULT_INTERVAL = 100;
 var EOT = '\u0004';
 
 var context = 'OR CPRS GUI CHART';
@@ -38,15 +40,20 @@ function handleConnection(conn) {
     conn.on('close', onConnectedClose);
     conn.on('error', onConnectedError);
 
-    var brokerSocket = new net.Socket();
-    brokerSocket.isConnected = false;
-    var self = this;
-    brokerSocket.on('error', onBrokerConnectionError);
-    brokerSocket.on('close', onBrokerConnectionClose);
-    brokerSocket.setEncoding('utf8');
-    brokerSocket.connect(configuration.port, configuration.host, function() {
-        brokerSocket.isConnected = true;
-    });
+    var brokerSocket;
+    connectBrokerSocket();
+
+
+    function connectBrokerSocket() {
+        brokerSocket = new net.Socket();
+        brokerSocket.isConnected = false;
+        brokerSocket.on('error', onBrokerConnectionError);
+        brokerSocket.on('close', onBrokerConnectionClose);
+        brokerSocket.setEncoding('utf8');
+        brokerSocket.connect(configuration.port, configuration.host, function() {
+            brokerSocket.isConnected = true;
+        });
+    }
 
     function onConnectedData(data) {
         chunk += data;
@@ -54,8 +61,6 @@ function handleConnection(conn) {
         var eotIndex = chunk.indexOf(EOT);
 
         var commandList = VistaJSLibrary.buildConnectionCommandList(LOGGER, configuration);
-
-
 
         // loop for each packet in the data chunk
         while (eotIndex > -1) {
@@ -77,11 +82,25 @@ function handleConnection(conn) {
             // check if RPC is supported to pass to MVDM
 
             // pass the unsupported RPC to the legacy broker
-            if (brokerSocket.isConnected) {
-                brokerSocket.on('data', onBrokerConnectionData);
-                LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
-                brokerSocket.write(rpcPacket);
-            }
+            //if (brokerSocket.isConnected) {
+            //    brokerSocket.on('data', onBrokerConnectionData);
+            //    LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
+            //    brokerSocket.write(rpcPacket);
+            //}
+
+            poll(
+                function() {
+                    return (brokerSocket && brokerSocket.isConnected);
+                },
+                function() {
+                    brokerSocket.on('data', onBrokerConnectionData);
+                    LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
+                    brokerSocket.write(rpcPacket);
+                },
+                function() {
+
+                }
+            )
 
         }
 
@@ -178,9 +197,27 @@ function handleConnection(conn) {
 
     }
 
-    function passToBroker(rpcCommand) {
+    // polling function from https://davidwalsh.name/javascript-polling
+    function poll(fn, callback, errback, timeout, interval) {
+        var endTime = Number(new Date()) + (timeout || DEFAULT_TIMEOUT);
+        interval = interval || DEFAULT_INTERVAL;
 
+        (function p() {
+            // If the condition is met, we're done!
+            if(fn()) {
+                callback();
+            }
+            // If the condition isn't met but the timeout hasn't elapsed, go again
+            else if (Number(new Date()) < endTime) {
+                setTimeout(p, interval);
+            }
+            // Didn't match and too much time, reject!
+            else {
+                errback(new Error('timed out for ' + fn + ': ' + arguments));
+            }
+        })();
     }
+
 
 }
 
