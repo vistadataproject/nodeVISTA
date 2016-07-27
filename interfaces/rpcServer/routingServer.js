@@ -88,12 +88,20 @@ function handleConnection(conn) {
     }
 
     function onConnectedClose() {
+        onBrokerConnectionClose();
         LOGGER.info('connection from %s closed', remoteAddress);
-        brokerSocket.close();
+        conn.removeAllListeners();
+        conn.end();
+        conn.destroy();
+        onBrokerConnectionClose();
     }
 
     function onConnectedError(err) {
+        onBrokerConnectionClose();
         LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
+        conn.removeAllListeners();
+        conn.end();
+        conn.destroy();
     }
 
     var buffer = '';
@@ -125,6 +133,7 @@ function handleConnection(conn) {
             brokerSocket.removeAllListeners('data');
             buffer = '';
             if (!error) {
+                LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
                 conn.write(result);
             }
 
@@ -140,10 +149,18 @@ function handleConnection(conn) {
 
     function onBrokerConnectionClose() {
         LOGGER.info('BrokerConnection closed');
+        brokerSocket.isConnected = false;
+        brokerSocket.removeAllListeners();
+        brokerSocket.end();
+        brokerSocket.destroy();
     }
 
     function onBrokerConnectionError(err) {
         LOGGER.error('BrokerConnection error: %s', err.message);
+        brokerSocket.isConnected = false;
+        brokerSocket.removeAllListeners();
+        brokerSocket.end();
+        brokerSocket.destroy();
     }
 
 
