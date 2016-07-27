@@ -121,7 +121,7 @@ function handleConnection(conn) {
             //    error = new Error(buffer);
             //}
 
-            result = buffer.substring(0, buffer.indexOf(EOT));
+            result = buffer.substring(0, buffer.indexOf(EOT) + 1);
             brokerSocket.removeAllListeners('data');
             buffer = '';
             if (!error) {
