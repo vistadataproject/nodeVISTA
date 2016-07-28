@@ -1,27 +1,19 @@
 var net = require('net');
 var async = require('async');
+var fs = require('fs');
 var parser = require('./rpcParser');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 
-var DEFAULT_TIMEOUT = 10000;
-var DEFAULT_INTERVAL = 100;
+var DEFAULT_TIMEOUT = CONFIG.brokerClient.connectPollTimeout;
+var DEFAULT_INTERVAL = CONFIG.brokerClient.connectPollInterval;
 var EOT = '\u0004';
 
-var context = 'OR CPRS GUI CHART';
+var configuration = CONFIG.brokerClient.configuration;
 
-var configuration = {
-    context: context,
-    host: '10.2.100.101',
-    port: 9210,
-    accessCode: 'pu1234',
-    verifyCode: 'pu1234!!',
-    localIP: '127.0.0.1',
-    localAddress: 'localhost'
-};
-
+var captureFile = fs.createWriteStream(CONFIG.FILE.defaultCaptureFile, CONFIG.FILE.options);
 
 server = net.createServer();
 
@@ -60,8 +52,6 @@ function handleConnection(conn) {
         // find the end of a RPC packet
         var eotIndex = chunk.indexOf(EOT);
 
-        var commandList = VistaJSLibrary.buildConnectionCommandList(LOGGER, configuration);
-
         // loop for each packet in the data chunk
         while (eotIndex > -1) {
             // get a packet from the chunk (without the EOT)
@@ -74,10 +64,12 @@ function handleConnection(conn) {
             // process the packet
             LOGGER.info('connection data from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
+            if (!rp)
             LOGGER.info("RPC name: %s", rpcObject.rpcName);
             if (rpcObject.parameters) {
                 LOGGER.info("RPC parameters: %j", rpcObject.parameters);
             }
+
 
             // check if RPC is supported to pass to MVDM
 
@@ -93,7 +85,9 @@ function handleConnection(conn) {
                     return (brokerSocket && brokerSocket.isConnected);
                 },
                 function() {
-                    brokerSocket.on('data', onBrokerConnectionData);
+                    brokerSocket.on('data', function(data) {
+                        onBrokerConnectionData(data, rpcObject)
+                    });
                     LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
                     brokerSocket.write(rpcPacket);
                 },
@@ -125,7 +119,7 @@ function handleConnection(conn) {
 
     var buffer = '';
 
-    function onBrokerConnectionData(data) {
+    function onBrokerConnectionData(data, rpcObject) {
         LOGGER.debug('RpcClient.receive()');
         var result;
         var error;
@@ -156,6 +150,17 @@ function handleConnection(conn) {
                 conn.write(result);
             }
 
+
+            if (rpcObject) {
+                rpcObject.response = result;
+                rpcObject.from = CONFIG.client.defaultName;
+                rpcObject.to = CONFIG.brokerClient.configuration.host;
+                rpcObject.timeStamp = new Date().toString();
+            }
+
+
+            captureFile.write(JSON.stringify(rpcObject, null, 2));
+
             //LOGGER.trace(error);
             //LOGGER.trace('RpcClient result: ' + util.inspect(result, {
             //        depth: null
@@ -182,21 +187,6 @@ function handleConnection(conn) {
         brokerSocket.destroy();
     }
 
-
-    function buildRPCArgs(parameters) {
-        var rpcArgs = [];
-        for (var i = 0; i < parameters.length; i++) {
-            if (parameters[i].type === '0') {
-                rpcArgs.push(VistaJS.RpcParameter.literal(parameters[i].parameter));
-            } else if (parameters[i].type === '1') {
-                rpcArgs.push(VistaJS.RpcParameter.reference(parameters[i].parameter));
-            } else if (parameters[i].type === '2') {
-                rpcArgs.push(VistaJS.RpcParameter.list(parameters[i].parameter));
-            }
-        }
-
-    }
-
     // polling function from https://davidwalsh.name/javascript-polling
     function poll(fn, callback, errback, timeout, interval) {
         var endTime = Number(new Date()) + (timeout || DEFAULT_TIMEOUT);
@@ -221,162 +211,3 @@ function handleConnection(conn) {
 
 }
 
-
-
-
-
-/***************** STUFF COPIED FROM VISTAJSLIBRARY *************************/
-function RpcClient(logger, configuration, rpcCommandList, callback) {
-    if (!(this instanceof RpcClient)) {
-        return new RpcClient(logger, configuration, rpcCommandList, callback);
-    }
-
-    this.logger = logger || require('bunyan').createLogger({
-            name: 'RpcClient',
-            level: 'info'
-        });
-    this.configuration = configuration;
-    this.rpcTaskList = [];
-    this.execList = [];
-    this.callback = callback;
-    this.socket = new net.Socket();
-
-    if (!rpcCommandList || !_.isArray(rpcCommandList)) {
-        throw new Error('RpcCommandList must be an array of RpcCommand objects');
-    }
-
-    var self = this;
-    rpcCommandList.forEach(function(rpcCommand) {
-        var rpcTask = new RpcTask(self.logger, rpcCommand, self.socket);
-        self.rpcTaskList.push(rpcTask);
-        self.execList.push(rpcTask.execute.bind(rpcCommand));
-    });
-
-}
-
-RpcClient.prototype = {
-    constructor: RpcClient,
-
-    complete: function(error, results) {
-        this.logger.debug('RpcClient.complete()');
-        this.close();
-        this.callback(error, results);
-        // if !error, get last - 1 result and callback
-    },
-
-    onError: function(error) {
-        this.logger.debug('RpcClient.onError()');
-        this.close();
-        this.callback(error, null);
-    },
-
-    onClose: function() {
-        this.logger.debug('RpcClient.onClose()');
-        this.close();
-    },
-
-    close: function() {
-        this.logger.debug('RpcClient.close()');
-        this.socket.removeAllListeners();
-        this.socket.end();
-        this.socket.destroy();
-    },
-
-    start: function() {
-        this.logger.debug('RpcClient.start()');
-        var self = this;
-
-        this.socket.on('error', this.onError.bind(this));
-        this.socket.on('close', this.onClose.bind(this));
-
-        this.socket.setEncoding('utf8');
-        this.socket.connect(this.configuration.port, this.configuration.host, function() {
-            async.series(self.execList, self.complete.bind(self));
-        });
-    },
-};
-
-
-function RpcTask(logger, rpcCommand, socket) {
-    if (!(this instanceof RpcTask)) {
-        return new RpcTask(logger, rpcCommand, socket);
-    }
-
-    this.logger = logger || require('bunyan').createLogger({
-            name: 'RpcClient',
-            level: 'info'
-        });
-    this.buffer = '';
-    this.socket = socket;
-    this.rpcCommand = rpcCommand;
-
-    this.execute = this.execute.bind(this);
-    this.receive = this.receive.bind(this);
-}
-
-RpcTask.prototype = {
-    constructor: RpcTask,
-
-    execute: function(callback) {
-        this.logger.debug('RpcClient.execute()');
-        this.callback = callback;
-        this.socket.on('data', this.receive.bind(this));
-        this.logger.debug(this.rpcCommand.rpc.replace(/[^ -~]+/, '')); // /[\cA-\cZ]+/  /[\x00-\x1F]+/
-        this.socket.write(this.rpcCommand.rpc);
-    },
-
-    receive: function(data) {
-        this.logger.debug('RpcClient.receive()');
-        var result;
-        var error;
-
-        this.buffer += data;
-
-        if (this.buffer.indexOf(EOT) !== -1) {
-            if (this.buffer[0] !== NUL) {
-                this.logger.trace(data);
-                error = new Error('VistA SECURITY error: ' + extractSecurityErrorMessage(this.buffer));
-            } else if (this.buffer[1] !== NUL) {
-                this.logger.trace(data);
-                error = new Error('VistA APPLICATION error: ' + this.buffer);
-            }
-
-            this.buffer = this.buffer.substring(2);
-
-            if (this.buffer.indexOf('M  ERROR') !== -1) {
-                this.logger.trace(this.buffer);
-                error = new Error(this.buffer);
-            }
-
-            result = this.buffer.substring(0, this.buffer.indexOf(EOT));
-            this.socket.removeAllListeners('data');
-            this.buffer = '';
-            if (!error) {
-                try {
-                    result = this.rpcCommand.process(result);
-                } catch (err) {
-                    error = err;
-                }
-            }
-
-            this.logger.trace(error);
-            this.logger.trace('RpcClient result: ' + util.inspect(result, {
-                    depth: null
-                }));
-
-            this.callback(error, result);
-        }
-    }
-};
-
-
-
-
-
-
-
-
-
-
-//var rpcClient = new net.Socket();
-//client.connect()
