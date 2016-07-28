@@ -141,6 +141,8 @@ function sendQueryInURLBar()
         	rpcType = value;
         else if (argname == "domain")
         	domain = value;
+        else if (argname == "format")
+        	format = value;
     }
     if (!rpcName || !rpcArgs)
     {
@@ -198,9 +200,10 @@ function handleSendQuery()
     var rpcType = $('input[name=rpcType]:checked').val();
     var rpcName = $('#rpc').val();
     var domain = $('#domain').val();
+    var format = $('#format').val();
     if (!args || ! rpcName)
         return;
-    var queryArgs = "rpcType=" + encodeURIComponent(rpcType) + "&rpcName=" + encodeURIComponent(rpcName) + "&rpcArgs=" + encodeURIComponent(args) + "&domain=" + encodeURIComponent(domain) ;
+    var queryArgs = "rpcType=" + encodeURIComponent(rpcType) + "&rpcName=" + encodeURIComponent(rpcName) + "&rpcArgs=" + encodeURIComponent(args) + "&domain=" + encodeURIComponent(domain) + "&format=" + format;
     console.log(queryArgs);
 	location.search = queryArgs;
 }
@@ -253,12 +256,15 @@ function makeHTMLFromJSON(jsonReply, query)
 
 $(document).ready(function() {
 	$('#domainDiv').hide();
+	$('#format').hide();
     $('input[type=radio][name=rpcType]').change(function() {
         if (this.value == 'rpc') {
             $('#domainDiv').hide();
+            $('#format').hide();
         }
         else {
             $('#domainDiv').show();
+            $('#format').show();
         }
     });
 });
@@ -306,6 +312,13 @@ Arguments: <br/>
 <option>Pick a Canned Query</option>
 </select>
 </div>
+<div class="option" id="format"> 
+<span class="option-title">Format: </span> 
+<select id="format" name="format">
+<option value="JSON">JSON</option> 
+<option value="XML">XML</option>
+</select> 
+</div> 
 <input type="button" value="Send Query" onclick="handleSendQuery()" /> 
 </div>
 </form> 
