@@ -48,7 +48,7 @@ function parseRawRPC (rpcString) {
         var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
         rpcObject.args = parametersArray;
 
-    } else if (rpcString.indexOf("[XWB]\u0005#BYE#\u0004") === 0) {
+    } else if (rpcString.indexOf("[XWB]10304\u0005#BYE#\u0004") === 0) {
         rpcObject.name = "#BYE#";
     } else if (rpcString.indexOf("[XWB]") === 0) {
         // this is national query
