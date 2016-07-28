@@ -76,7 +76,7 @@ function handleConnection(conn) {
                 },
                 function() {
                     brokerSocket.on('data', function(data) {
-                        onBrokerConnectionData(data, rpcObject)
+                        onBrokerConnectionData(data, rpcPacket, rpcObject)
                     });
                     LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
                     brokerSocket.write(rpcPacket);
@@ -110,9 +110,10 @@ function handleConnection(conn) {
     var buffer = '';
 
     // Handle the response from the RPC Broker
-    function onBrokerConnectionData(data, rpcObject) {
+    function onBrokerConnectionData(data, rpc, rpcObject) {
         LOGGER.debug('RpcClient.receive()');
         var result;
+        var error;
 
         buffer += data;
 
@@ -128,6 +129,7 @@ function handleConnection(conn) {
 
             // log the RPC and the response to a file
             if (rpcObject) {
+                rpcObject.rpc = rpc;
                 rpcObject.response = result;
                 rpcObject.from = CONFIG.client.defaultName;
                 rpcObject.to = CONFIG.brokerClient.configuration.host;
