@@ -18,9 +18,11 @@ qx.addTo(q);
 
 app.use('/vpr', qx.router());
 app.use('/rpc', qx.router());
+// try static - Express 4 respects order
+app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
 
 q.on('started', function() {
-  this.worker.module = __dirname + '/vprEWorker';
+  this.worker.module = __dirname + '/rpcEWorker';
   var port = process.argv[2] || 9001;
   app.listen(port);
 
