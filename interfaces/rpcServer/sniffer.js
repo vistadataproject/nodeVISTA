@@ -12,17 +12,16 @@ var DEFAULT_INTERVAL = CONFIG.brokerClient.connectPollInterval;
 var EOT = '\u0004';
 
 var configuration = CONFIG.brokerClient.configuration;
-
 var captureFile = fs.createWriteStream(CONFIG.FILE.defaultCaptureFile, CONFIG.FILE.options);
 
+// Start up the server
 server = net.createServer();
-
 server.on('connection', handleConnection);
-
 server.listen(9000, function() {
     console.log('server listening to %j', server.address());
 });
 
+// main function to handle the connection from the client
 function handleConnection(conn) {
     var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
     console.log('new client connection from %s', remoteAddress);
@@ -35,7 +34,7 @@ function handleConnection(conn) {
     var brokerSocket;
     connectBrokerSocket();
 
-
+    // first set up a connection to VistA's RPC Broker
     function connectBrokerSocket() {
         brokerSocket = new net.Socket();
         brokerSocket.isConnected = false;
@@ -47,6 +46,7 @@ function handleConnection(conn) {
         });
     }
 
+    // handle data coming from the client
     function onConnectedData(data) {
         chunk += data;
         // find the end of a RPC packet
@@ -64,22 +64,12 @@ function handleConnection(conn) {
             // process the packet
             LOGGER.info('connection data from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
-            if (!rp)
             LOGGER.info("RPC name: %s", rpcObject.rpcName);
             if (rpcObject.parameters) {
                 LOGGER.info("RPC parameters: %j", rpcObject.parameters);
             }
 
-
-            // check if RPC is supported to pass to MVDM
-
-            // pass the unsupported RPC to the legacy broker
-            //if (brokerSocket.isConnected) {
-            //    brokerSocket.on('data', onBrokerConnectionData);
-            //    LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
-            //    brokerSocket.write(rpcPacket);
-            //}
-
+            // Need to check that the connection to the RPC Broker is available before we can send the RPC to it
             poll(
                 function() {
                     return (brokerSocket && brokerSocket.isConnected);
@@ -119,56 +109,33 @@ function handleConnection(conn) {
 
     var buffer = '';
 
+    // Handle the response from the RPC Broker
     function onBrokerConnectionData(data, rpcObject) {
         LOGGER.debug('RpcClient.receive()');
         var result;
-        var error;
 
         buffer += data;
 
         if (buffer.indexOf(EOT) !== -1) {
-            //if (buffer[0] !== NUL) {
-            //    LOGGER.trace(data);
-            //    error = new Error('VistA SECURITY error: ' + extractSecurityErrorMessage(buffer));
-            //} else if (buffer[1] !== NUL) {
-            //    LOGGER.trace(data);
-            //    error = new Error('VistA APPLICATION error: ' + buffer);
-            //}
-
-            //buffer = buffer.substring(2);
-
-            //if (buffer.indexOf('M  ERROR') !== -1) {
-            //    LOGGER.trace(buffer);
-            //    error = new Error(buffer);
-            //}
 
             result = buffer.substring(0, buffer.indexOf(EOT) + 1);
             brokerSocket.removeAllListeners('data');
             buffer = '';
-            if (!error) {
-                LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
-                conn.write(result);
-            }
 
+            // send the data back to the client
+            LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
+            conn.write(result);
 
+            // log the RPC and the response to a file
             if (rpcObject) {
                 rpcObject.response = result;
                 rpcObject.from = CONFIG.client.defaultName;
                 rpcObject.to = CONFIG.brokerClient.configuration.host;
                 rpcObject.timeStamp = new Date().toString();
             }
+            captureFile.write(JSON.stringify(rpcObject, null, 2) + "\n");
 
-
-            captureFile.write(JSON.stringify(rpcObject, null, 2));
-
-            //LOGGER.trace(error);
-            //LOGGER.trace('RpcClient result: ' + util.inspect(result, {
-            //        depth: null
-            //    }));
-
-            //this.callback(error, result);
         }
-
     }
 
     function onBrokerConnectionClose() {
@@ -207,7 +174,6 @@ function handleConnection(conn) {
             }
         })();
     }
-
-
 }
+
 

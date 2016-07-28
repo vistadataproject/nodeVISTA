@@ -5,10 +5,10 @@ config.vistaRpcBroker.ip = "10.2.100.101";
 config.vistaRpcBroker.port = "9210";
 
 config.LOGGER = {};
-config.LOGGER.name = 'serverExperiment';
-config.LOGGER.infoFile = './log/serverExperimentInfo.log';
-config.LOGGER.debugFile = './log/serverExperimentDebug.log';
-config.LOGGER.errorFile = './log/serverExperimentError.log';
+config.LOGGER.name = 'sniffer';
+config.LOGGER.infoFile = './log/snifferInfo.log';
+config.LOGGER.debugFile = './log/snifferDebug.log';
+config.LOGGER.errorFile = './log/snifferError.log';
 
 config.FILE = {};
 config.FILE.options = {
