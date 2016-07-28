@@ -37,6 +37,16 @@ function parseRawRPC (rpcString) {
         rpcObject.name = "TCPConnect";
 
         // parse the originating IP and hostname
+        // form [XWB]10<COUNT_WIDTH>04\nTCPConnect + "5" + "0" + LPack(Address, COUNT_WIDTH) + "f"
+        //                                               + "0" + LPack("0", COUNT_WIDTH) + "f"
+        //                                               + "0" + LPack(Name, COUNT_WIDTH + 1) + "f\u0004"
+        //rpcString = rpcString.substring("[XWB]10304\nTCPConnect50".length);
+        //rpcObject.ipaddress = rpcUtils.popLPack(rpcString, COUNT_WIDTH).string;
+        //rpcString = rpcString.substring(2 + COUNT_WIDTH + 3);
+        //rpcObject.hostName = rpcUtils.popLPack(rpcString, COUNT_WIDTH).string;
+
+        var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
+        rpcObject.args = parametersArray;
 
     } else if (rpcString.indexOf("[XWB]\u0005#BYE#\u0004") === 0) {
         rpcObject.name = "#BYE#";
