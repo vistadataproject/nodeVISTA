@@ -68,7 +68,7 @@ var CIPHER_PAD_OSEHRA = [
         "\\Zr';/SMsG76Lj$aBc[#k>u=_O@2J&X{Aft xV4~vz8Q}q)0K.NIpRnYwDhg+<\"H-!(PF:m*]?,WCT|dE9o53%`liUey1b"
         ];
 
-var CIPHER_PAD = CIPHER_PAD_VA;
+var CIPHER_PAD = CIPHER_PAD_OSEHRA;
 
 
 function RpcClient(logger, configuration, rpcCommandList, callback) {

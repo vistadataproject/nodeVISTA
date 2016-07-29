@@ -1,4 +1,7 @@
 # Prototype Code Testing EWD components
+
+See [__EWD vs Kue__](https://github.com/vistadataproject/nodeVISTA/tree/master/interfaces/kue#other-kueing-approaches) tests.
+
 ## Adding EWD (in memory) to the FMQL server
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/nonClusterApp.js
 https://github.com/vistadataproject/nodeVISTA/blob/master/fmql/ewd/workerModule.js

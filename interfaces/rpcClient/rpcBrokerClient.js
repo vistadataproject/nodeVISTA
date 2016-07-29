@@ -36,22 +36,12 @@ function printJsonResult(error, result) {
 
 var context = 'OR CPRS GUI CHART';
 
-//var configuration = {
-//    context: context,
-//    host: '10.2.100.101',
-//    port: 9210,
-//    accessCode: 'pu1234',
-//    verifyCode: 'pu1234!!',
-//    localIP: '127.0.0.1',
-//    localAddress: 'localhost'
-//};
-
 var configuration = {
     context: context,
-    host: '127.0.0.1',
-    port: 9000,
-    accessCode: 'pu1234',
-    verifyCode: 'pu1234!!',
+    host: '10.0.2.15',
+    port: 9430,
+    accessCode: 'fakenurse1',
+    verifyCode: 'NEWVERIFY1!',
     localIP: '127.0.0.1',
     localAddress: 'localhost'
 };
