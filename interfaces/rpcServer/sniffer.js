@@ -16,7 +16,25 @@ var EOT = '\u0004';
 var ENQ = '\u0005';
 
 var configuration = CONFIG.brokerClient.configuration;
-var captureFile = fs.createWriteStream(CONFIG.FILE.defaultCaptureFile, CONFIG.FILE.options);
+var fromName = CONFIG.client.defaultName;
+var capturePath = CONFIG.FILE.defaultCaptureFile;
+
+// check for command line overrides
+if (process.argv.length > 2) {
+    for (var argnum = 2; argnum < process.argv.length; argnum++) {
+        if (process.argv[argnum].indexOf("from=")  > -1) {
+            // from=something
+            fromName = process.argv[argnum].substring(5);
+            console.log("Using '%s' as the from in the capture", fromName);
+        } else if (process.argv[argnum].indexOf("captureFile=")  > -1){
+            // captureFile=path
+            capturePath = process.argv[argnum].substring(12);
+            console.log("Capture file being written to %s", capturePath);
+        }
+    }
+}
+
+var captureFile = fs.createWriteStream(capturePath, CONFIG.FILE.options);
 
 // Start up the server
 server = net.createServer();
@@ -150,7 +168,7 @@ function handleConnection(conn) {
                 if (rpcObject) {
                     rpcObject.rpc = rpc;
                     rpcObject.response = result;
-                    rpcObject.from = CONFIG.client.defaultName;
+                    rpcObject.from = fromName;
                     rpcObject.to = CONFIG.brokerClient.configuration.host;
                     rpcObject.timeStamp = new Date().toString();
                 }
