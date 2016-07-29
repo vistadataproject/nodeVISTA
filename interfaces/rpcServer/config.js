@@ -21,8 +21,8 @@ config.FILE.options = {
 config.FILE.defaultCaptureFile = './log/capture.txt';
 
 // serverSocket
-config.server = {}
-config.server.port = 9000;
+config.sniffer = {}
+config.sniffer.port = 9000;
 
 config.client = {};
 config.client.defaultName = "CPRS";
@@ -32,8 +32,6 @@ config.brokerClient = {}
 config.brokerClient.configuration = {
     host: '10.2.100.101',
     port: 9210,
-    accessCode: 'pu1234',
-    verifyCode: 'pu1234!!',
     localIP: '127.0.0.1',
     localAddress: 'localhost'
 }
