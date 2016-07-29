@@ -92,7 +92,7 @@ th, td {
 function processLoad()
 {
     // Always fill in options
-    fillInCannedQueries();
+//     fillInCannedQueries();
     // Process url bar for query
     sendQueryInURLBar();
 }
@@ -200,6 +200,7 @@ function boxQuery(rpc, rpcArgs, format, rpcType, domain, emulation)
     if(rpcType === 'vpr') {
     	$('#domainDiv').show();
 		$('#formatDiv').show();
+		$('#rpcNameDiv').hide();
 		$('#format').val(format);
 		$('#domain').val(domain);
 	}
@@ -275,14 +276,17 @@ function makeHTMLFromJSON(jsonReply, query)
 $(document).ready(function() {
 	$('#domainDiv').hide();
 	$('#formatDiv').hide();
+	$('#rpcNameDiv').show();
     $('input[type=radio][name=rpcType]').change(function() {
         if (this.value == 'rpc') {
             $('#domainDiv').hide();
             $('#formatDiv').hide();
+            $('#rpcNameDiv').show();
         }
         else {
             $('#domainDiv').show();
             $('#formatDiv').show();
+            $('#rpcNameDiv').hide();
         }
     });
 });
@@ -317,19 +321,23 @@ Domain:
 </select> 
 </div>
 </section>
-<div style="clear:both; padding-top:10px;">
+<div style="clear:both; padding-top:10px;" id="rpcNameDiv">
 Name: <br/>
-<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a> <br/><br/>
+<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a>
 </div>
+<div style="clear:both; padding-top:10px;">
 Arguments: <br/>
-<textarea id="args" name="args" rows="5" cols="80"></textarea>        
+<textarea id="args" name="args" rows="5" cols="80"></textarea>   
+</div>     
 <div class="options">     
+<!-- 
 <div class="option">
 <span class="option-title">Query: </span> 
 <select id="query_choice" name="query_choice" onchange="if (this.selectedIndex == 0) return; boxQuery(this.options[this.selectedIndex].getAttribute('value1'));">
 <option>Pick a Canned Query</option>
 </select>
 </div>
+ -->
 <div class="option" id="formatDiv"> 
 <span class="option-title">Format: </span> 
 <select id="format" name="format">

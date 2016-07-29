@@ -117,11 +117,17 @@ function callRpc(messageObj) {
             var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
             res = res.result.join('\n');
         } catch (exception) {
-            res = 'RPC not supported.';
+            console.log(exception);
+            res = 'Exception: ' + exception;
         }
         res = '<pre>' + res + '</pre>';
     } else {
-        var res = rpcE.run(rpc, rpcArgs);
+        try {
+            var res = rpcE.run(rpc, rpcArgs);
+        } catch (exception) {
+            console.log(exception);
+            res = 'Exception: ' + exception;
+        }
         res = '<pre>' + res + '</pre>';
     }
     return res;
