@@ -35,12 +35,17 @@ if (process.argv.length > 2) {
 }
 
 var captureFile = fs.createWriteStream(capturePath, CONFIG.FILE.options);
+// wait until the captureFile is open before continuing
+captureFile.on("open", function(fd) {
+    LOGGER.info("Capture file %s opened for writing", capturePath);
+    captureFile.write("[\n");
 
-// Start up the server
-server = net.createServer();
-server.on('connection', handleConnection);
-server.listen(9000, function() {
-    console.log('server listening to %j', server.address());
+    // Start up the server
+    server = net.createServer();
+    server.on('connection', handleConnection);
+    server.listen(9000, function() {
+        console.log('server listening to %j', server.address());
+    });
 });
 
 // main function to handle the connection from the client
@@ -172,7 +177,7 @@ function handleConnection(conn) {
                     rpcObject.to = CONFIG.brokerClient.configuration.host;
                     rpcObject.timeStamp = new Date().toString();
                 }
-                captureFile.write(JSON.stringify(rpcObject, null, 2) + "\n");
+                captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
             //}
 
             if (error) {
