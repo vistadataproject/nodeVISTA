@@ -77,20 +77,30 @@ function callVpr(messageObj) {
     setModels(domain);
     var rpcArgs = messageObj.query.rpcArgs.split(',');
     var patient = rpcArgs[0];
-    var ien = rpcArgs[1];
+    if (rpcArgs.length > 1)
+        var ien = rpcArgs[1];
     var format = messageObj.query.format;
     var emulation = messageObj.query.emulation;
     if (format === 'XML') {
         if (emulation === 'on') {
             // call vpr emulator
-            var res = vprE.queryXML(db, patient, domain, ien);
+            if (ien)
+                var res = vprE.queryXML(db, patient, domain, ien);
+            else
+                var res = vprE.queryXML(db, patient, domain);
         } else {
-            var res = vpr.queryXML(db, patient, domain, ien);
+            if (ien)
+                var res = vpr.queryXML(db, patient, domain, ien);
+            else
+                var res = vpr.queryXML(db, patient, domain);
         }
         res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
     } else if (format === 'JSON') {
         // call vpr
-        var res = vpr.query(db, patient, domain, ien);
+        if (ien)
+            var res = vpr.query(db, patient, domain, ien);
+        else
+            var res = vpr.query(db, patient, domain);
     }
     return res;
 }
