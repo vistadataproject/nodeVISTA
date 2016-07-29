@@ -18,6 +18,7 @@ var ENQ = '\u0005';
 var configuration = CONFIG.brokerClient.configuration;
 var fromName = CONFIG.client.defaultName;
 var capturePath = CONFIG.FILE.defaultCaptureFile;
+var port = CONFIG.sniffer.port;
 
 // check for command line overrides
 if (process.argv.length > 2) {
@@ -26,10 +27,17 @@ if (process.argv.length > 2) {
             // from=something
             fromName = process.argv[argnum].substring(5);
             console.log("Using '%s' as the from in the capture", fromName);
-        } else if (process.argv[argnum].indexOf("captureFile=")  > -1){
+        } else if (process.argv[argnum].indexOf("captureFile=")  > -1) {
             // captureFile=path
             capturePath = process.argv[argnum].substring(12);
             console.log("Capture file being written to %s", capturePath);
+        } else if (process.argv[argnum].indexOf("snifferPort=")  > -1) {
+            // snifferPort=port
+            port = parseInt(process.argv[argnum].substring(12));
+            if (isNaN(port)) {
+                port = CONFIG.sniffer.port;
+            }
+            console.log("Setting sniffer port to %s", port);
         }
     }
 }
@@ -43,15 +51,15 @@ captureFile.on("open", function(fd) {
     // Start up the server
     server = net.createServer();
     server.on('connection', handleConnection);
-    server.listen(9000, function() {
-        console.log('server listening to %j', server.address());
+    server.listen(port, function() {
+        console.log('Sniffer listening to %j', server.address());
     });
 });
 
 // main function to handle the connection from the client
 function handleConnection(conn) {
     var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
-    console.log('new client connection from %s', remoteAddress);
+    console.log('New client connection from %s', remoteAddress);
     var chunk = '';
 
     conn.on('data', onConnectedData);
@@ -89,7 +97,7 @@ function handleConnection(conn) {
             eotIndex = chunk.indexOf(EOT);
 
             // process the packet
-            LOGGER.info('connection data from %s: %s', remoteAddress, data);
+            LOGGER.info('Connection data from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
             LOGGER.info("RPC name: %s", rpcObject.name);
             if (rpcObject.args) {
@@ -119,7 +127,7 @@ function handleConnection(conn) {
 
     function onConnectedClose() {
         onBrokerConnectionClose();
-        LOGGER.info('connection from %s closed', remoteAddress);
+        LOGGER.info('Connection from %s closed', remoteAddress);
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
