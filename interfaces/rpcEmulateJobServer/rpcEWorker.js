@@ -79,9 +79,14 @@ function callVpr(messageObj) {
     var patient = rpcArgs[0];
     var ien = rpcArgs[1];
     var format = messageObj.query.format;
+    var emulation = messageObj.query.emulation;
     if (format === 'XML') {
-        // call vpr emulator
-        var res = vprE.queryXML(db, patient, domain, ien);
+        if (emulation === 'on') {
+            // call vpr emulator
+            var res = vprE.queryXML(db, patient, domain, ien);
+        } else {
+            var res = vpr.queryXML(db, patient, domain, ien);
+        }
         res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
     } else if (format === 'JSON') {
         // call vpr
@@ -95,7 +100,8 @@ function callRpc(messageObj) {
     var domain = getDomain(messageObj.query.rpc);
     setModels(domain);
     var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
-    if (!rpcE.isRPCSupported(rpc)) {
+    var emulation = messageObj.query.emulation;
+    if (emulation === 'off' || !rpcE.isRPCSupported(rpc)) {
         //run local rpc
         try {
             var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);

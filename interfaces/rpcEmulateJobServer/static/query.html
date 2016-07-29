@@ -125,6 +125,7 @@ function sendQueryInURLBar()
     var rpcType = "";
     var rpcName = "";
     var domain = "";
+    var emulation = "";
     for(var i=0; i < pairs.length; i++)
     {
         var pos = pairs[i].indexOf("=");
@@ -143,6 +144,8 @@ function sendQueryInURLBar()
         	domain = value;
         else if (argname == "format")
         	format = value;
+        else if (argname == "emulation")
+        	emulation = value;
     }
     if (!rpcName || !rpcArgs)
     {
@@ -152,7 +155,7 @@ function sendQueryInURLBar()
     if (!format)
          format = "HTML";
 
-    boxQuery(rpcName, rpcArgs, format, rpcType, domain);
+    boxQuery(rpcName, rpcArgs, format, rpcType, domain, emulation);
 
     var xhr = getXMLHttpRequest();
     xhr.onreadystatechange = function()
@@ -179,6 +182,7 @@ function sendQueryInURLBar()
     queryURL += "&rpcArgs=" + encodeURIComponent(rpcArgs);
     queryURL += "&domain=" + domain;
     queryURL += "&format=" + format;
+    queryURL += "&emulation=" + emulation;
     xhr.open('GET', queryURL,  true);
     xhr.send(null);   
 }
@@ -188,7 +192,7 @@ function sendQueryInURLBar()
  * in the query box and hitting send and updating the query
  * box from the location bar.
  */
-function boxQuery(rpc, rpcArgs, format, rpcType, domain)
+function boxQuery(rpc, rpcArgs, format, rpcType, domain, emulation)
 {
     document.getElementById('args').value = rpcArgs;
     document.getElementById('rpc').value = rpc;
@@ -199,6 +203,7 @@ function boxQuery(rpc, rpcArgs, format, rpcType, domain)
 		$('#format').val(format);
 		$('#domain').val(domain);
 	}
+	$('#emulation').val(emulation);
 }
 
 function handleSendQuery()
@@ -208,9 +213,15 @@ function handleSendQuery()
     var rpcName = $('#rpc').val();
     var domain = $('#domain').val();
     var format = $('#format').val();
+    var emulation = $('#emulation').val();
     if (!args || ! rpcName)
         return;
-    var queryArgs = "rpcType=" + encodeURIComponent(rpcType) + "&rpcName=" + encodeURIComponent(rpcName) + "&rpcArgs=" + encodeURIComponent(args) + "&domain=" + encodeURIComponent(domain) + "&format=" + format;
+    var queryArgs = "rpcType=" + encodeURIComponent(rpcType);
+    queryArgs += "&rpcName=" + encodeURIComponent(rpcName);
+    queryArgs += "&rpcArgs=" + encodeURIComponent(args);
+    queryArgs += "&domain=" + encodeURIComponent(domain);
+    queryArgs += "&format=" + format;
+    queryArgs += "&emulation=" + emulation;
     console.log(queryArgs);
 	location.search = queryArgs;
 }
@@ -326,6 +337,12 @@ Arguments: <br/>
 <option value="JSON">JSON</option> 
 </select> 
 </div> 
+<div class="option">
+<span class="option-title">Emulation: </span>
+<select id="emulation" name="emulation">
+<option value="on">On</option>
+<option value="off">Off</option>
+</select>
 <input type="button" value="Send Query" onclick="handleSendQuery()" /> 
 </div>
 </form> 
