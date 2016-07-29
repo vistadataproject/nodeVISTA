@@ -92,7 +92,7 @@ function parseParameters(paramRpcString) {
     var remainderString = paramRpcString.substring(1);
     var parameters = [];
     var parameterNum = 0;
-    while (remainderString.length > 5) {
+    while (remainderString.length > COUNT_WIDTH) {
         // get the parameter type
         var paramtype = remainderString.substring (0, 1);
         if (paramtype === '0' || paramtype === '1') {

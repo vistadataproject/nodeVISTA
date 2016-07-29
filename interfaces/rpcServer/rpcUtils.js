@@ -108,7 +108,11 @@ function popLPack(lPackPlusRemainder, lwidth) {
         }
 
         var length = lPackPlusRemainder.substring(0, lwidth);
-        length = parseInt(removeLeftPad(length));
+        if (length === '000') {
+            length = 0;
+        } else {
+            length = parseInt(removeLeftPad(length));
+        }
         var payload = lPackPlusRemainder.substring(lwidth, lwidth + length);
         var remainder = lPackPlusRemainder.substring(lwidth + length);
 

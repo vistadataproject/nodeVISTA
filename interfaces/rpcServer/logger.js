@@ -6,7 +6,7 @@ var LOGGER = bunyan.createLogger({
     name: CONFIG.LOGGER.name,
     streams: [
         {
-            level: 'info',
+            level: 'trace',
             stream: process.stdout
         },
         {
@@ -22,7 +22,7 @@ var LOGGER = bunyan.createLogger({
             stream: process.stderr
         },
         {
-            level: 'debug',
+            level: 'trace',
             path: CONFIG.LOGGER.debugFile
         }
     ]

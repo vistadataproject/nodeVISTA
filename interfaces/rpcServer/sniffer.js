@@ -1,6 +1,7 @@
 var net = require('net');
 var async = require('async');
 var fs = require('fs');
+var util = require('util');
 var parser = require('./rpcParser');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
@@ -9,7 +10,10 @@ var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 
 var DEFAULT_TIMEOUT = CONFIG.brokerClient.connectPollTimeout;
 var DEFAULT_INTERVAL = CONFIG.brokerClient.connectPollInterval;
+var NUL = '\u0000';
+var SOH = '\u0001';
 var EOT = '\u0004';
+var ENQ = '\u0005';
 
 var configuration = CONFIG.brokerClient.configuration;
 var captureFile = fs.createWriteStream(CONFIG.FILE.defaultCaptureFile, CONFIG.FILE.options);
@@ -64,9 +68,9 @@ function handleConnection(conn) {
             // process the packet
             LOGGER.info('connection data from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
-            LOGGER.info("RPC name: %s", rpcObject.rpcName);
-            if (rpcObject.parameters) {
-                LOGGER.info("RPC parameters: %j", rpcObject.parameters);
+            LOGGER.info("RPC name: %s", rpcObject.name);
+            if (rpcObject.args) {
+                LOGGER.info("RPC parameters: %j", rpcObject.args);
             }
 
             // Need to check that the connection to the RPC Broker is available before we can send the RPC to it
@@ -111,7 +115,7 @@ function handleConnection(conn) {
 
     // Handle the response from the RPC Broker
     function onBrokerConnectionData(data, rpc, rpcObject) {
-        LOGGER.debug('RpcClient.receive()');
+        LOGGER.debug('sniffer.onBrokerConnection():%s', data);
         var result;
         var error;
 
@@ -119,24 +123,49 @@ function handleConnection(conn) {
 
         if (buffer.indexOf(EOT) !== -1) {
 
+            if (buffer[0] !== NUL) {
+                LOGGER.trace(data);
+                error = new Error('VistA SECURITY error: ' + VistaJSLibrary.extractSecurityErrorMessage(buffer));
+            } else if (buffer[1] !== NUL) {
+                LOGGER.trace(data);
+                error = new Error('VistA APPLICATION error: ' + buffer);
+            }
+
+            var buffer2 = buffer.substring(2);
+
+            if (buffer2.indexOf('M  ERROR') !== -1) {
+                LOGGER.trace(buffer2);
+                error = new Error(buffer2);
+            }
+
             result = buffer.substring(0, buffer.indexOf(EOT) + 1);
             brokerSocket.removeAllListeners('data');
             buffer = '';
 
-            // send the data back to the client
-            LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
-            conn.write(result);
+            //if (!error) {
+                // send the data back to the client
+                LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
+                conn.write(result);
+                // log the RPC and the response to a file
+                if (rpcObject) {
+                    rpcObject.rpc = rpc;
+                    rpcObject.response = result;
+                    rpcObject.from = CONFIG.client.defaultName;
+                    rpcObject.to = CONFIG.brokerClient.configuration.host;
+                    rpcObject.timeStamp = new Date().toString();
+                }
+                captureFile.write(JSON.stringify(rpcObject, null, 2) + "\n");
+            //}
 
-            // log the RPC and the response to a file
-            if (rpcObject) {
-                rpcObject.rpc = rpc;
-                rpcObject.response = result;
-                rpcObject.from = CONFIG.client.defaultName;
-                rpcObject.to = CONFIG.brokerClient.configuration.host;
-                rpcObject.timeStamp = new Date().toString();
+            if (error) {
+                LOGGER.trace("RpcClient error: " + error);
+            } else {
+                LOGGER.trace('RpcClient result: ' + util.inspect(result, {
+                        depth: null
+                    }));
             }
-            captureFile.write(JSON.stringify(rpcObject, null, 2) + "\n");
 
+            //this.callback(error, result);
         }
     }
 
