@@ -11,6 +11,6 @@
         "cli-color": "latest",
         "moment": "latest",
         "node-cache": "latest",
-        "async": "lastest"
+        "async": "latest"
     }
 }
