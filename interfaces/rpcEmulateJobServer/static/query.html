@@ -152,7 +152,7 @@ function sendQueryInURLBar()
     if (!format)
          format = "HTML";
 
-    boxQuery(rpcName, rpcArgs, format);
+    boxQuery(rpcName, rpcArgs, format, rpcType, domain);
 
     var xhr = getXMLHttpRequest();
     xhr.onreadystatechange = function()
@@ -188,10 +188,17 @@ function sendQueryInURLBar()
  * in the query box and hitting send and updating the query
  * box from the location bar.
  */
-function boxQuery(rpc, rpcArgs, format)
+function boxQuery(rpc, rpcArgs, format, rpcType, domain)
 {
     document.getElementById('args').value = rpcArgs;
     document.getElementById('rpc').value = rpc;
+    $('input:radio[name="rpcType"]').filter('[value="' + rpcType + '"]').attr('checked', true);
+    if(rpcType === 'vpr') {
+    	$('#domainDiv').show();
+		$('#formatDiv').show();
+		$('#format').val(format);
+		$('#domain').val(domain);
+	}
 }
 
 function handleSendQuery()
@@ -256,15 +263,15 @@ function makeHTMLFromJSON(jsonReply, query)
 
 $(document).ready(function() {
 	$('#domainDiv').hide();
-	$('#format').hide();
+	$('#formatDiv').hide();
     $('input[type=radio][name=rpcType]').change(function() {
         if (this.value == 'rpc') {
             $('#domainDiv').hide();
-            $('#format').hide();
+            $('#formatDiv').hide();
         }
         else {
             $('#domainDiv').show();
-            $('#format').show();
+            $('#formatDiv').show();
         }
     });
 });
@@ -301,7 +308,7 @@ Domain:
 </section>
 <div style="clear:both; padding-top:10px;">
 Name: <br/>
-<textarea id="rpc" name="rpc" rows="1" cols="80"> </textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a> <br/><br/>
+<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a> <br/><br/>
 </div>
 Arguments: <br/>
 <textarea id="args" name="args" rows="5" cols="80"></textarea>        
@@ -312,11 +319,11 @@ Arguments: <br/>
 <option>Pick a Canned Query</option>
 </select>
 </div>
-<div class="option" id="format"> 
+<div class="option" id="formatDiv"> 
 <span class="option-title">Format: </span> 
 <select id="format" name="format">
-<option value="JSON">JSON</option> 
 <option value="XML">XML</option>
+<option value="JSON">JSON</option> 
 </select> 
 </div> 
 <input type="button" value="Send Query" onclick="handleSendQuery()" /> 

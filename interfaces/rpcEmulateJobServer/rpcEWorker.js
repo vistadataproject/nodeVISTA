@@ -8,6 +8,7 @@ var testAllergies = require('../../prototypes/allergies/vdmTestAllergies'); // w
 var allergyUtils = require("../../prototypes/allergies/allergyUtils");
 var localRPCRunner = require('../../prototypes/localRPCRunner');
 var vprE = require('../../prototypes/vprEmulate/vprE');
+var vpr = require('../../prototypes/vpr');
 var vprAllergyEmulator = require('../../prototypes/vprEmulate/vprAllergyEmulator');
 var problemUtils = require('../../prototypes/problems/problemUtils');
 var mvdmModelProblem = require('../../prototypes/problems/mvdmProblemsModel').mvdmModel;
@@ -64,44 +65,62 @@ function setModels(domain) {
 }
 
 function getDomain(rpcName) {
-    if (rpcName === 'ORQQAL DETAIL') {
-        return 'allergy';
+    var maps = {
+        ORQQAL_DETAIL: 'allergy',
+        ORQQPL_DETAIL: 'problem'
     }
+    return maps[rpcName.replace(' ', '_')];
+}
+
+function callVpr(messageObj) {
+    var domain = messageObj.query.domain;
+    setModels(domain);
+    var rpcArgs = messageObj.query.rpcArgs.split(',');
+    var patient = rpcArgs[0];
+    var ien = rpcArgs[1];
+    var format = messageObj.query.format;
+    if (format === 'XML') {
+        // call vpr emulator
+        var res = vprE.queryXML(db, patient, domain, ien);
+        res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
+    } else if (format === 'JSON') {
+        // call vpr
+        var res = vpr.query(db, patient, domain, ien);
+    }
+    return res;
+}
+
+function callRpc(messageObj) {
+    var rpcArgs = messageObj.query.rpcArgs.split(',');
+    var domain = getDomain(messageObj.query.rpc);
+    setModels(domain);
+    var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
+    if (!rpcE.isRPCSupported(rpc)) {
+        //run local rpc
+        try {
+            var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
+            res = res.result.join('\n');
+        } catch (exception) {
+            res = 'RPC not supported.';
+        }
+        res = '<pre>' + res + '</pre>';
+    } else {
+        var res = rpcE.run(rpc, rpcArgs);
+        res = '<pre>' + res + '</pre>';
+    }
+    return res;
 }
 
 module.exports = function() {
-
     this.on('message', function(messageObj, send, finished) {
         console.log(messageObj);
         var application = messageObj.application;
-        var domain = getDomain(messageObj.query.rpc);
-        var patient = messageObj.query.patient;
-        var ien = messageObj.query.ien;
-        setModels(domain);
+        var res;
         if (application === 'vpr') {
-            var res = vprE.queryXML(db, patient, domain, ien);
-            res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
+            res = callVpr(messageObj);
         } else if (application === 'rpc') {
-            var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
-            if (!rpcE.isRPCSupported(rpc)) {
-                //run local rpc
-                var rpcArgs = messageObj.query.rpcArgs.split(',');
-                try {
-                    var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
-                    res = res.result.join('\n');
-                } catch (exception) {
-                    res = 'RPC not supported.';
-                }
-
-                res = '<pre>' + res + '</pre>';
-            } else {
-                var rpcArgs = messageObj.query.rpcArgs.split(',');
-                var res = rpcE.run(rpc, rpcArgs);
-                res = '<pre>' + res + '</pre>';
-            }
-
+            res = callRpc(messageObj);
         }
-
         finished(res);
     });
 
