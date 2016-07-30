@@ -488,10 +488,10 @@ function buildListParamString(valueList) {
 
 
 function buildRpcGreetingString(ipAddress, hostname) {
-    return util.format('[XWB]10304\nTCPConnect50%sf0%sf0%sf%s',
-        strPack(buildLiteralParamString(ipAddress), COUNT_WIDTH),
+    return util.format('[XWB]10304\nTCPConnect5%s0%sf%s%s',
+        buildLiteralParamString(ipAddress),
         strPack('0', COUNT_WIDTH),
-        strPack(buildLiteralParamString(hostname), COUNT_WIDTH),
+        buildLiteralParamString(hostname),
         EOT);
 }
 

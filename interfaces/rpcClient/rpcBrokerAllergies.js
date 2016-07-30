@@ -10,10 +10,11 @@ var logger = require('bunyan').createLogger({
     path: 'bunyan.log',
     level: 'info'
 })
-var rpcArgsHelper = require('./rpcArgs_EDITSAVE_ORWDAL32')
-var testAllergies = require('./vdmTestAllergies'); // want to use test allergies
+var rpcArgsHelper = require('./rpcArgs_ORWDAL32_SAVE_ALLERGY');
+var testAllergies = require('../../../prototypes/allergies/vdmTestAllergies'); // want to use test allergies
 
-console.log(rpcArgsHelper.rpcArgs_EDITSAVE_ORWDAL32);
+var d1 = new Date();
+var n1 = d1.getTime(); //milliseconds
 
 function inspect(obj) {
     return obj ? util.inspect(obj, {
@@ -94,19 +95,23 @@ function closeClient() {
 }
 
 function addAllergies() {
-    var rpcArgs = rpcArgsHelper.rpcArgs_EDITSAVE_ORWDAL32(
-        testAllergies.historicals.three.vdmCreateResult
+    var rpcArgs = rpcArgsHelper.rpcArgs_ORWDAL32_SAVE_ALLERGY(
+        testAllergies.historicals.three.vdmCreateResult, "", "", true
     );
     var res = runRPC("ORWDAL32 SAVE ALLERGY", rpcArgs, printResult);
 }
 
-function readAllergies() {
+function readAllergies(callback) {
     var rpc = "ORQQAL DETAIL";
     var rpcArgs = [
         RpcParameter.literal('1'),
         RpcParameter.literal('1')
     ];
-    runRPC(rpc, rpcArgs, printResult);
+    var cb = function(error, result) {
+        printResult(error, result);
+        callback();
+    }
+    runRPC(rpc, rpcArgs, cb);
 }
 
 function readAllergies2() {
@@ -117,9 +122,24 @@ function readAllergies2() {
     runRPC(rpc, rpcArgs, printResult);
 }
 
-addAllergies();
-readAllergies();
-readAllergies2();
-closeClient();
+// addAllergies();
+// readAllergies();
+// readAllergies2();
+// closeClient();
 
+function testPerformance() {
+    var funcs = [];
+    for(var i = 0; i < 100; i++)
+        funcs.push(function(callback){
+            readAllergies(callback);
+        });
+    async.series(funcs, function(error, result){
+        closeClient();
+        var d2 = new Date();
+        var n2 = d2.getTime();
+        console.log('time spent: ', n2 - n1);
+    });
+    
+}
 
+testPerformance();
