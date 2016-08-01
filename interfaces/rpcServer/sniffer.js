@@ -8,14 +8,14 @@ var CONFIG = require('./config.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 
-var DEFAULT_TIMEOUT = CONFIG.brokerClient.connectPollTimeout;
-var DEFAULT_INTERVAL = CONFIG.brokerClient.connectPollInterval;
+var DEFAULT_TIMEOUT = CONFIG.vistaRpcBroker.connectPollTimeout;
+var DEFAULT_INTERVAL = CONFIG.vistaRpcBroker.connectPollInterval;
 var NUL = '\u0000';
 var SOH = '\u0001';
 var EOT = '\u0004';
 var ENQ = '\u0005';
 
-var configuration = CONFIG.brokerClient.configuration;
+var configuration = CONFIG.vistaRpcBroker.configuration;
 var fromName = CONFIG.client.defaultName;
 var capturePath = CONFIG.FILE.defaultCaptureFile;
 var port = CONFIG.sniffer.port;
@@ -182,7 +182,7 @@ function handleConnection(conn) {
                     rpcObject.rpc = rpc;
                     rpcObject.response = result;
                     rpcObject.from = fromName;
-                    rpcObject.to = CONFIG.brokerClient.configuration.host;
+                    rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
                     rpcObject.timeStamp = new Date().toString();
                 }
                 captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");

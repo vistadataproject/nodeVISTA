@@ -1,9 +1,5 @@
 var config = {};
 
-config.vistaRpcBroker = {};
-config.vistaRpcBroker.ip = "10.2.100.101";
-config.vistaRpcBroker.port = "9210";
-
 config.LOGGER = {};
 config.LOGGER.name = 'sniffer';
 config.LOGGER.infoFile = './log/snifferInfo.log';
@@ -28,15 +24,13 @@ config.client = {};
 config.client.defaultName = "CPRS";
 
 // connection to legacy broker
-config.brokerClient = {}
-config.brokerClient.configuration = {
+config.vistaRpcBroker = {}
+config.vistaRpcBroker.configuration = {
     host: '10.2.100.101',
-    port: 9210,
-    localIP: '127.0.0.1',
-    localAddress: 'localhost'
+    port: 9210
 }
-config.brokerClient.connectPollInterval = 100;
-config.brokerClient.connectPollTimeout = 10000;
+config.vistaRpcBroker.connectPollInterval = 100;
+config.vistaRpcBroker.connectPollTimeout = 10000;
 
 
 
