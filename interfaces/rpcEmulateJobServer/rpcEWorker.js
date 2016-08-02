@@ -64,6 +64,8 @@ function setModels(domain) {
     }
 }
 
+//for emulator only
+//we need to know the domain in order to populate the domain specific mappings
 function getDomain(rpcName) {
     var maps = {
         ORQQAL_DETAIL: 'allergy',
@@ -71,6 +73,8 @@ function getDomain(rpcName) {
     }
     return maps[rpcName.replace(' ', '_')];
 }
+
+
 
 function callVpr(messageObj) {
     var domain = messageObj.query.domain;

@@ -20,6 +20,9 @@
         "bunyan": "^1.4.0",
         "basic-auth": "1.0.3",
         "request": "latest",
-        "async": "latest"
+        "async": "latest",
+        "underscore": "latest",
+        "underscore.string": "latest",
+        "socket.io": "1.4.8"
     }
 }

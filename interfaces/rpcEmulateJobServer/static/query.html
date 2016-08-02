@@ -63,6 +63,7 @@ th, td {
 <script type="text/javascript" src="fmQMCannedQueries.js"></script>
 <script type="text/javascript" src="fmUtils.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 <script type="text/javascript">
 
 /* 
@@ -292,6 +293,15 @@ $(document).ready(function() {
 });
 
 </script>
+
+<script>
+      var socket = io.connect();
+
+      socket.on('message', function(data){
+        console.log('data from server socket', data);
+      });
+</script>
+    
 </head>
 
 <body onload="processLoad()">
