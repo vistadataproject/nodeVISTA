@@ -10,6 +10,12 @@ var parameterTypeMap = {
     LIST: 2
 }
 
+var parameterTypeReverseMap = {
+    0: "LITERAL",
+    1: "REFERENCE",
+    2: "LIST"
+}
+
 var NUL = '\u0000';
 var SOH = '\u0001';
 var EOT = '\u0004';
@@ -91,10 +97,11 @@ function parseParameters(paramRpcString) {
     // remove the '5' paramRpcString.substring(1);
     var remainderString = paramRpcString.substring(1);
     var parameters = [];
-    var parameterNum = 0;
+    var parameterNum = 1;
     while (remainderString.length > COUNT_WIDTH) {
         // get the parameter type
         var paramtype = remainderString.substring (0, 1);
+        var paramtypeName = parameterTypeReverseMap[paramtype];
         if (paramtype === '0' || paramtype === '1') {
             // LITERAL and REFERENCE type params are treated the same way
             var poppedObject = rpcUtils.popLPack(remainderString.substring(1), COUNT_WIDTH);
@@ -104,7 +111,7 @@ function parseParameters(paramRpcString) {
                 remainderString = remainderString.substring(1);
             }
 
-            parameters.push({"type": paramtype, "parameter": poppedObject.string, "num": parameterNum++});
+            parameters.push({"type": paramtypeName, "parameter": poppedObject.string, "num": parameterNum++});
         } else if (paramtype === '2') {
             // LIST type parameters need to remove LPacks two at a time for key/value pairs.
             // remove the paramtype
@@ -126,7 +133,7 @@ function parseParameters(paramRpcString) {
                 remainderString = remainderString.substring(1);
             }
             if (listParams.length > 0) {
-                parameters.push({"type": paramtype, "parameter": listParams, "num": parameterNum++});
+                parameters.push({"type": paramtypeName, "parameter": listParams, "num": parameterNum++});
             }
         }
     }
@@ -155,6 +162,8 @@ function rpcParametersToString (rpcParametersArray) {
     return parameterString;
 
 }
+
+
 
 module.exports.parseRawRPC = parseRawRPC;
 module.exports.rpcParametersToString = rpcParametersToString;
