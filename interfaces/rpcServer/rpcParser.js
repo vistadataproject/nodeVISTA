@@ -52,7 +52,7 @@ function parseRawRPC (rpcString) {
         //rpcObject.hostName = rpcUtils.popLPack(rpcString, COUNT_WIDTH).string;
 
         var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
-        rpcObject.args = parametersArray;
+        rpcObject.inputParameters = parametersArray;
 
     } else if (rpcString.indexOf("[XWB]10304\u0005#BYE#\u0004") === 0) {
         rpcObject.name = "#BYE#";
@@ -77,7 +77,7 @@ function parseRawRPC (rpcString) {
 
         rpcObject.name = rpcName;
         rpcObject.version = version;
-        rpcObject.args = parametersArray;
+        rpcObject.inputParameters = parametersArray;
 
     }
     return rpcObject;
@@ -111,7 +111,7 @@ function parseParameters(paramRpcString) {
                 remainderString = remainderString.substring(1);
             }
 
-            parameters.push({"type": paramtypeName, "parameter": poppedObject.string, "num": parameterNum++});
+            parameters.push({"parameterType": paramtypeName, "parameter": poppedObject.string, "num": parameterNum++});
         } else if (paramtype === '2') {
             // LIST type parameters need to remove LPacks two at a time for key/value pairs.
             // remove the paramtype
@@ -133,7 +133,7 @@ function parseParameters(paramRpcString) {
                 remainderString = remainderString.substring(1);
             }
             if (listParams.length > 0) {
-                parameters.push({"type": paramtypeName, "parameter": listParams, "num": parameterNum++});
+                parameters.push({"parameterType": paramtypeName, "parameter": listParams, "num": parameterNum++});
             }
         }
     }
@@ -142,31 +142,7 @@ function parseParameters(paramRpcString) {
 }
 
 
-function rpcParametersToString (rpcParametersArray) {
-    if (!rpcParametersArray) {
-        return "";
-    }
-
-    var parameterString = "";
-    for (var i = 0; i < rpcParametersArray.length; i++ ) {
-        if (rpcParametersArray[i].type === parameterTypeMap.LITERAL) {
-            parameterString += i + " (LITERAL): " + rpcParametersArray[i].value + "\n";
-        } else if (rpcParametersArray[i].type === parameterTypeMap.REFERENCE) {
-            parameterString += i + " (REFERENCE): " + rpcParametersArray[i].value + "\n";
-        } else if (rpcParametersArray[i].type === parameterTypeMap.LIST) {
-
-        }
-
-    }
-
-    return parameterString;
-
-}
-
-
-
 module.exports.parseRawRPC = parseRawRPC;
-module.exports.rpcParametersToString = rpcParametersToString;
 
 
 /* LPACK === STRPACK === VistaJSLibrary.strPack()
