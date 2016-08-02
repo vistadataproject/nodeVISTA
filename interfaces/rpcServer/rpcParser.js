@@ -97,7 +97,7 @@ function parseParameters(paramRpcString) {
     // remove the '5' paramRpcString.substring(1);
     var remainderString = paramRpcString.substring(1);
     var parameters = [];
-    var parameterNum = 0;
+    var parameterNum = 1;
     while (remainderString.length > COUNT_WIDTH) {
         // get the parameter type
         var paramtype = remainderString.substring (0, 1);
