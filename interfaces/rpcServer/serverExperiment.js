@@ -1,5 +1,5 @@
 var net = require('net');
-var parser = require('./rpcParser');
+var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
 

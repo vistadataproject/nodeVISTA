@@ -1,0 +1,12 @@
+{
+    "name": "rpcParser",
+    "description": "nodeVISTA RPC Parsing module",
+    "version": "0.0.1",
+    "license": "Apache-2.0",
+    "private": true,
+    "dependencies": {
+        "underscore": "latest",
+        "mathjs": "latest",
+        "util": "latest"
+    }
+}
