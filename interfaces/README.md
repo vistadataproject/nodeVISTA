@@ -154,3 +154,76 @@ I added the performance tests to both rpcJobServerClientAllergies.js and rpcBrok
 I compared the difference by reading the allergies 100 times. The performance difference is huge:
 rpcBrokerAllergies takes 4444 milliseconds, but the jobServer takes 
 106512 milliseconds. It means job server is 24 times slower.
+
+
+
+<br/>
+<br/>
+# RPC Client Sniffer
+
+## Sniffer Directory
+
+In interfaces/rpcServer there is a file called sniffer.js. `npm install` needs to be run in interfaces/rpcServer to get the dependent node_modules.
+
+## Configuration file
+
+There is a file call config.js that contains the VistA RPC Broker connection information and other configuration items. The _config.sniffer.port_ is where the client that is being sniffed will point to. This is where the default port is set. It can also be set at the command line. The _config.vistaRpcBroker.configuration.host_ and _config.vistaRpcBroker.configuration.port_ are where the VistA has it's RPC Broker.
+
+There is also a file called logger.js, that manages the bunyan paths and streams. Some file names are in config.js
+
+## Starting the Sniffer
+
+Usage (parameters are optional):
+ 
+    node sniffer.js [snifferPort=PORT(default 9000)] [capturePath=CAPTURE_FILE_PATH(default ./log/capture.txt)] [from=NAME_OF_CLIENT(default CPRS] 
+
+For example: 
+
+    node sniffer.js capturePath=./log/VISTA1CPRSCapture.txt from=CPRSVISTA1 snifferPort=9001
+
+The default port is 9000. The RPC client should be set to this port. The VistA RPC Broker endpoint is specified in the configuration file.
+
+The capture.txt file will start writing an array of JSON objects for each RPC. At the end of the file there will be no closing ']' and it will contain a superfluous ','. This will need to be edited for the file to contain a valid JSON array. The capture.txt file is overwritten each time the sniffer is started.
+
+    
+    [
+        {
+            "inputParameters": [
+                {
+                    "num": 1,
+                    "parameter": "127.0.0.1",
+                    "parameterType": "LITERAL"
+                },
+                {
+                    "num": 2,
+                    "parameter": "0",
+                    "parameterType": "LITERAL"
+                },
+                {
+                    "num": 3,
+                    "parameter": "localhost",
+                    "parameterType": "LITERAL"
+                }
+            ],
+            "from": "CPRS",
+            "name": "TCPConnect",
+            "response": "\u0000\u0000accept\u0004",
+            "rpc": "[XWB]10304\nTCPConnect50009127.0.0.1f00010f0009localhostf\u0004",
+            "timeStamp": "Fri Jul 29 2016 08:03:29 GMT-1000 (HST)",
+            "to": "10.2.100.101"
+        },
+        {
+            "inputParameters": [],
+            "from": "CPRS",
+            "name": "XUS SIGNON SETUP",
+            "response": "\u0000\u0000vista-aina\r\nROU\r\nVISTA\r\n/dev/null:6858\r\n5\r\n0\r\nGOLD.VAINNOVATION.US\r\n0\r\n\u0004",
+            "rpc": "[XWB]11302\u00051.108\u0010XUS SIGNON SETUP54f\u0004",
+            "timeStamp": "Fri Jul 29 2016 08:03:32 GMT-1000 (HST)",
+            "to": "10.2.100.101",
+            "version": "1.108"
+        },
+
+
+## VistaJS.js and VistaJSLibrary.js
+
+The sniffer uses instances/VistaJS/VistaJSLibrary.js. Thus `npm install` needs to be run in the instances/VistaJS directory as well.
