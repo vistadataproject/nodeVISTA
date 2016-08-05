@@ -138,8 +138,8 @@ function callRpc(messageObj) {
 }
 
 module.exports = function() {
-    this.on('message', function(messageObj, send, finished) {
-        console.log(messageObj);
+    var handleExpressMessage = require('ewd-qoper8-express').workerMessage;
+    this.on('expressMessage', function(messageObj, send, finished) {
         var application = messageObj.application;
         var res;
         if (application === 'vpr') {
@@ -147,6 +147,40 @@ module.exports = function() {
         } else if (application === 'rpc') {
             res = callRpc(messageObj);
         }
+        finished(res);
+    });
+
+    this.on('message', function(messageObj, send, finished) {
+        send({
+            type: 'socketMessage',
+            status: 'start processing',
+            data: messageObj
+        });
+        var expressMessage = handleExpressMessage.call(this, messageObj, send,
+            finished);
+        if (expressMessage) return;
+        MVDM.on('describe', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'describe',
+                data: mvdmData
+            }
+            send(resObj);
+        });
+
+        var application = messageObj.application;
+        var res;
+        if (application === 'vpr') {
+            res = callVpr(messageObj);
+        } else if (application === 'rpc') {
+            res = callRpc(messageObj);
+        }
+
+        send({
+            type: 'socketMessage',
+            status: 'finish processing',
+            data: res
+        });
         finished(res);
     });
 
