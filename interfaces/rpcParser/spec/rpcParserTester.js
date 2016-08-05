@@ -1,7 +1,6 @@
 'use strict'
 
 var parser = require('../rpcParser.js');
-var rpcUtils = require('../rpcUtils.js');
 var VistaJS = require('../../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../../VistaJS/VistaJSLibrary.js');
 var util = require('util');
