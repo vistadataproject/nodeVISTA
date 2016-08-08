@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var qoper8 = require('ewd-qoper8');
 var qx = require('ewd-qoper8-express');
-var MVDM = require('../../prototypes/mvdm');
+var MVDM = require('../../../VDM/prototypes/mvdm');
 
 var app = express();
 
@@ -40,7 +40,23 @@ app.use(function(err, req, res, next) {
 var q = new qoper8.masterProcess();
 qx.addTo(q);
 
-app.use('/vpr', qx.router());
+// app.use('/vpr', qx.router());
+
+app.get('/vpr/call', function(req, res) {
+    req.type = 'vprMessage';
+    var reqObj = {
+        type: 'vprCall',
+        application: 'vpr',
+        query: req.query
+    }
+    q.handleMessage(reqObj, function(response) {
+        if (response.message.type == 'socketMessage') {
+            socketGlobal.emit('message', response);
+        } else {
+            res.send(response.message);
+        }
+    });
+});
 
 app.get('/rpc/call', function(req, res) {
     req.type = 'rpcMessage';

@@ -1,46 +1,46 @@
 var _ = require('underscore');
 var util = require('util');
 var nodem = require('nodem');
-var VDM = require('../../prototypes/vdm');
-var mvdmModelAllergy = require('../../prototypes/allergies/mvdmAllergiesModel').mvdmModel;
-var MVDM = require('../../prototypes/mvdm');
-var testAllergies = require('../../prototypes/allergies/vdmTestAllergies'); // want to use test allergies
-var allergyUtils = require("../../prototypes/allergies/allergyUtils");
-var localRPCRunner = require('../../prototypes/localRPCRunner');
-var vprE = require('../../prototypes/vprEmulate/vprE');
-var vpr = require('../../prototypes/vpr');
-var vprAllergyEmulator = require('../../prototypes/vprEmulate/vprAllergyEmulator');
-var problemUtils = require('../../prototypes/problems/problemUtils');
-var mvdmModelProblem = require('../../prototypes/problems/mvdmProblemsModel').mvdmModel;
-var vprProblemEmulator = require('../../prototypes/vprEmulate/vprProblemEmulator');
-var vitalUtils = require('../../prototypes/vitals/vitalUtils');
-var mvdmModelVitals = require('../../prototypes/vitals/mvdmVitalsModel').mvdmModel;
-var vprVitalsEmulator = require('../../prototypes/vprEmulate/vprVitalsEmulator');
+var VDM = require('../../../VDM/prototypes/vdm');
+var mvdmModelAllergy = require('../../../VDM/prototypes/allergies/mvdmAllergiesModel').mvdmModel;
+var MVDM = require('../../../VDM/prototypes/mvdm');
+var testAllergies = require('../../../VDM/prototypes/allergies/vdmTestAllergies'); // want to use test allergies
+var allergyUtils = require("../../../VDM/prototypes/allergies/allergyUtils");
+var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
+var vprE = require('../../../VDM/prototypes/vprEmulate/vprE');
+var vpr = require('../../../VDM/prototypes/vpr');
+var vprAllergyEmulator = require('../../../VDM/prototypes/vprEmulate/vprAllergyEmulator');
+var problemUtils = require('../../../VDM/prototypes/problems/problemUtils');
+var mvdmModelProblem = require('../../../VDM/prototypes/problems/mvdmProblemsModel').mvdmModel;
+var vprProblemEmulator = require('../../../VDM/prototypes/vprEmulate/vprProblemEmulator');
+var vitalUtils = require('../../../VDM/prototypes/vitals/vitalUtils');
+var mvdmModelVitals = require('../../../VDM/prototypes/vitals/mvdmVitalsModel').mvdmModel;
+var vprVitalsEmulator = require('../../../VDM/prototypes/vprEmulate/vprVitalsEmulator');
 
 var fs = require('fs');
 var os = require("os");
-var fileman = require('../../prototypes/fileman');
-var vdmUtils = require("../../prototypes/vdmUtils");
-process.env.gtmroutines = process.env.gtmroutines + '../../prototypes'; // make VDP MUMPS available
+var fileman = require('../../../VDM/prototypes/fileman');
+var vdmUtils = require("../../../VDM/prototypes/vdmUtils");
+process.env.gtmroutines = process.env.gtmroutines + '../../../VDM/prototypes'; // make VDP MUMPS available
 var db; // for afterAll
 db = new nodem.Gtm();
 db.open();
 var vprDataVersion; // for XML vs JSON
-var allergyModel = require('../../prototypes/allergies/vdmAllergiesModel').vdmModel;
-var documentModel = require('../../prototypes/documents/vdmDocumentsModel').vdmModel;
-var visitModel = require('../../prototypes/visits/vdmVisitsModel').vdmModel;
+var allergyModel = require('../../../VDM/prototypes/allergies/vdmAllergiesModel').vdmModel;
+var documentModel = require('../../../VDM/prototypes/documents/vdmDocumentsModel').vdmModel;
+var visitModel = require('../../../VDM/prototypes/visits/vdmVisitsModel').vdmModel;
 var vdmModelAllergy = allergyModel.concat(documentModel, visitModel);
-var testProblems = require('../../prototypes/problems/vdmTestProblems')(db);
-var vdmModelProblem = require('../../prototypes/problems/vdmProblemsModel').vdmModel;
-var vdmModelVitals = require('../../prototypes/vitals/vdmVitalsModel').vdmModel;
-var testVitals = require('../../prototypes/vitals/vdmTestVitals')(db);
+var testProblems = require('../../../VDM/prototypes/problems/vdmTestProblems')(db);
+var vdmModelProblem = require('../../../VDM/prototypes/problems/vdmProblemsModel').vdmModel;
+var vdmModelVitals = require('../../../VDM/prototypes/vitals/vdmVitalsModel').vdmModel;
+var testVitals = require('../../../VDM/prototypes/vitals/vdmTestVitals')(db);
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
 
 
-var rpcE = require('../../prototypes/rpcE');
-var rpcEAllergyMappings = require('../../prototypes/allergies/rpcAllergiesEmulate');
-var rpcProblemEmulate = require('../../prototypes/problems/rpcProblemEmulate');
-var rpcVitalEmulate = require('../../prototypes/vitals/rpcVitalEmulate');
+var rpcE = require('../../../VDM/prototypes/rpcE');
+var rpcEAllergyMappings = require('../../../VDM/prototypes/allergies/rpcAllergiesEmulate');
+var rpcProblemEmulate = require('../../../VDM/prototypes/problems/rpcProblemEmulate');
+var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalEmulate');
 
 function setModels(domain) {
     if (domain === 'allergy') {
