@@ -74,12 +74,13 @@ function getDomain(rpcName) {
     return maps[rpcName.replace(' ', '_')];
 }
 
-
-
 function callVpr(messageObj) {
     var domain = messageObj.query.domain;
     setModels(domain);
     var rpcArgs = messageObj.query.rpcArgs.split(',');
+    if (!validateArgs(rpcArgs)) {
+        return 'Error: invalid args';
+    }
     var patient = rpcArgs[0];
     if (rpcArgs.length > 1)
         var ien = rpcArgs[1];
@@ -111,6 +112,9 @@ function callVpr(messageObj) {
 
 function callRpc(messageObj) {
     var rpcArgs = messageObj.query.rpcArgs.split(',');
+    if (!validateArgs(rpcArgs)) {
+        return 'Error: invalid args';
+    }
     var domain = getDomain(messageObj.query.rpc);
     setModels(domain);
     var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
@@ -134,6 +138,22 @@ function callRpc(messageObj) {
         }
         res = '<pre>' + res + '</pre>';
     }
+    return res;
+}
+
+function isInt(value) {
+  return !isNaN(value) && 
+         parseInt(Number(value)) == value && 
+         !isNaN(parseInt(value, 10));
+}
+
+function validateArgs(args) {
+    var res = true;
+    args.forEach(function(item) {
+        if(!isInt(item)) {
+            res = false;
+        }
+    });
     return res;
 }
 
