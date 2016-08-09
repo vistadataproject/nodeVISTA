@@ -10,7 +10,6 @@ var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
 var vprE = require('../../../VDM/prototypes/vprEmulate/vprE');
 var vpr = require('../../../VDM/prototypes/vpr');
 var vprAllergyEmulator = require('../../../VDM/prototypes/vprEmulate/vprAllergyEmulator');
-var problemUtils = require('../../../VDM/prototypes/problems/problemUtils');
 var mvdmModelProblem = require('../../../VDM/prototypes/problems/mvdmProblemsModel').mvdmModel;
 var vprProblemEmulator = require('../../../VDM/prototypes/vprEmulate/vprProblemEmulator');
 var vitalUtils = require('../../../VDM/prototypes/vitals/vitalUtils');
@@ -30,16 +29,14 @@ var allergyModel = require('../../../VDM/prototypes/allergies/vdmAllergiesModel'
 var documentModel = require('../../../VDM/prototypes/documents/vdmDocumentsModel').vdmModel;
 var visitModel = require('../../../VDM/prototypes/visits/vdmVisitsModel').vdmModel;
 var vdmModelAllergy = allergyModel.concat(documentModel, visitModel);
-var testProblems = require('../../../VDM/prototypes/problems/vdmTestProblems')(db);
 var vdmModelProblem = require('../../../VDM/prototypes/problems/vdmProblemsModel').vdmModel;
 var vdmModelVitals = require('../../../VDM/prototypes/vitals/vdmVitalsModel').vdmModel;
-var testVitals = require('../../../VDM/prototypes/vitals/vdmTestVitals')(db);
+var rpcEProblemModel = require('../../../VDM/prototypes/problems/rpcEProblemModel').rpcEModel;
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
 
 
 var rpcE = require('../../../VDM/prototypes/rpcE');
 var rpcEAllergyMappings = require('../../../VDM/prototypes/allergies/rpcAllergiesEmulate');
-var rpcProblemEmulate = require('../../../VDM/prototypes/problems/rpcProblemEmulate');
 var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalEmulate');
 
 function setModels(domain) {
@@ -52,10 +49,9 @@ function setModels(domain) {
         rpcE.setRpcMappings(rpcEAllergyMappings);
 
     } else if (domain === 'problem') {
-        VDM.setDBAndModel(db, vdmModelProblem);
-        MVDM.setModel(mvdmModelProblem);
-        vprE.setVprMappings(vprProblemEmulator);
-        rpcE.setRpcMappings(rpcProblemEmulate.rpcMappings(db));
+        rpcE.setDBAndModels(db, {rpcEModel: rpcEProblemModel, vdmModel: vdmModelProblem, mvdmModel: mvdmModelProblem});
+        rpcE.setUserAndFacility("200-" + DUZ, "4-2957"); // note that 4-2957 would come from 200-55 if left out
+
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);
         MVDM.setModel(mvdmModelVitals);
@@ -131,6 +127,22 @@ function callRpc(messageObj) {
         res = '<pre>' + res + '</pre>';
     } else {
         try {
+
+            if (domain === 'problem') {
+                var args = {
+                    name: rpc,
+                    inputParameters: []
+                };
+
+                _.forEach(rpcArgs, function(arg) {
+                    args.inputParameters.push({
+                        parameter: arg
+                    })
+                });
+
+                rpcArgs = args;
+            }
+
             var res = rpcE.run(rpc, rpcArgs);
         } catch (exception) {
             console.log(exception);
