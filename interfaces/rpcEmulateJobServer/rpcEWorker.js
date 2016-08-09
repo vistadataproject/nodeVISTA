@@ -171,11 +171,6 @@ module.exports = function() {
     });
 
     this.on('message', function(messageObj, send, finished) {
-        send({
-            type: 'socketMessage',
-            status: 'start processing',
-            data: messageObj
-        });
         var expressMessage = handleExpressMessage.call(this, messageObj, send,
             finished);
         if (expressMessage) return;
@@ -195,12 +190,6 @@ module.exports = function() {
         } else if (application === 'rpc') {
             res = callRpc(messageObj);
         }
-
-        send({
-            type: 'socketMessage',
-            status: 'finish processing',
-            data: res
-        });
         finished(res);
     });
 

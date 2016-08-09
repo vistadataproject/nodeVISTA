@@ -58,6 +58,8 @@ th, td {
     margin: 0px;
     padding: 10px;
     background-color: #fcfcfc;
+    height: 300px;
+    overflow: auto;
 }
 </style> 
 <script type="text/javascript" src="fmQMCannedQueries.js"></script>
@@ -90,13 +92,18 @@ th, td {
  *   - get query and form from forms and reset url bar
  *   - this will kick in the above
  */
-function processLoad()
-{
-    // Always fill in options
-//     fillInCannedQueries();
-    // Process url bar for query
-    sendQueryInURLBar();
-}
+ 
+window.socketEvents = {};
+window.socket = io.connect();
+
+window.socket.on('message', function(data){
+    console.log('data from server socket------', data);
+    var timeStamp = data.message.data.eventTimestamp;
+    if(!window.socketEvents[timeStamp]) {
+     	window.socketEvents[timeStamp] = data.message.data;
+	 	$('#eventTbl').append('<tr><td>' + timeStamp + '</td><td>' + data.message.MVDM + '</td><td>' + data.message.data.userId + '</td><td>' + data.message.data.facilityId + '</td></tr>');
+	 }
+});
 
 // Pull CANNED QUERIES from a static definition
 function fillInCannedQueries()
@@ -115,11 +122,11 @@ function fillInCannedQueries()
 // From URL bar: it is the master. Form fills on page just set this
 function sendQueryInURLBar()
 {
-	console.log(location.search);
-    if (!location.search)
+	console.log(window.search);
+    if (!window.search)
         return;
     var args = new Object();
-    var srch = location.search.substring(1);
+    var srch = window.search.substring(0);
     var pairs = srch.split("&");
     var rpcArgs = "";
     var format = "";
@@ -129,6 +136,7 @@ function sendQueryInURLBar()
     var emulation = "";
     for(var i=0; i < pairs.length; i++)
     {
+    	console.log(pairs[i]);
         var pos = pairs[i].indexOf("=");
         if (pos == -1)
             continue;
@@ -148,9 +156,9 @@ function sendQueryInURLBar()
         else if (argname == "emulation")
         	emulation = value;
     }
-    if (!rpcName || !rpcArgs)
+    if (!rpcArgs)
     {
-         location.search = "";
+         window.search = "";
          return;
     }
     if (!format)
@@ -216,8 +224,6 @@ function handleSendQuery()
     var domain = $('#domain').val();
     var format = $('#format').val();
     var emulation = $('#emulation').val();
-    if (!args || ! rpcName)
-        return;
     var queryArgs = "rpcType=" + encodeURIComponent(rpcType);
     queryArgs += "&rpcName=" + encodeURIComponent(rpcName);
     queryArgs += "&rpcArgs=" + encodeURIComponent(args);
@@ -225,7 +231,8 @@ function handleSendQuery()
     queryArgs += "&format=" + format;
     queryArgs += "&emulation=" + emulation;
     console.log(queryArgs);
-	location.search = queryArgs;
+	window.search = queryArgs;
+	sendQueryInURLBar();
 }
 
 /*
@@ -290,21 +297,21 @@ $(document).ready(function() {
             $('#rpcNameDiv').hide();
         }
     });
+    $('#eventTbl').on('click', 'tr', function(){
+    	var key = $(this).children().first().text();
+    	var data = window.socketEvents[key];
+    	console.log(data.data.result);
+    	$('#eventDetail').html('<pre>' + JSON.stringify(data.data.result, null, 1) + '</pre>');
+    });
 });
 
 </script>
 
-<script>
-      var socket = io.connect();
 
-      socket.on('message', function(data){
-        console.log('data from server socket', data);
-      });
-</script>
     
 </head>
 
-<body onload="processLoad()">
+<body>
 
 <div id="header"> 
 <div id="heading">
@@ -365,9 +372,17 @@ Arguments: <br/>
 </div>
 </form> 
 
+</div>
 <div id="results">
 </div>
-
+<div style="width:100%;">
+	<div id="events" style="width:40%; float:left; margin-right:10%">
+		<table id="eventTbl">
+			<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>
+		</table>
+	</div>
+	<div id="eventDetail" style="width:45%; float:left"></div>
+</div>
 </body>
 </html>
 
