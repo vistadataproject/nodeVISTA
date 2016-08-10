@@ -155,7 +155,7 @@ function handleConnection(conn) {
         var tempDataBuffer = Buffer.concat([dataBuffer, data]);
         dataBuffer = tempDataBuffer;
 
-        buffer = dataBuffer.toString();
+        buffer = dataBuffer.toString('binary');
 
 
         if (buffer.indexOf(EOT) !== -1) {
