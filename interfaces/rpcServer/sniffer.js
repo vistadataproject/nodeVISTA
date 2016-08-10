@@ -2,7 +2,6 @@ var net = require('net');
 var async = require('async');
 var fs = require('fs');
 var util = require('util');
-var Buffer = require('buffer').Buffer;
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
@@ -179,22 +178,20 @@ function handleConnection(conn) {
             result = buffer.substring(0, buffer.indexOf(EOT) + 1);
             brokerSocket.removeAllListeners('data');
 
-            //if (!error) {
-                // send the data back to the client
-                LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
-                //conn.write(result);
-                conn.write(dataBuffer);
-                dataBuffer = new Buffer(0);
-                // log the RPC and the response to a file
-                if (rpcObject) {
-                    rpcObject.rpc = rpc;
-                    rpcObject.response = result;
-                    rpcObject.from = fromName;
-                    rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
-                    rpcObject.timeStamp = new Date().toString();
-                }
-                captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
-            //}
+            // send the data back to the client
+            LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
+            //conn.write(result);
+            conn.write(dataBuffer);
+            dataBuffer = new Buffer(0);
+            // log the RPC and the response to a file
+            if (rpcObject) {
+                rpcObject.rpc = rpc;
+                rpcObject.response = result;
+                rpcObject.from = fromName;
+                rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
+                rpcObject.timeStamp = new Date().toString();
+            }
+            captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
             if (error) {
                 LOGGER.trace("RpcClient error: " + error);
@@ -203,8 +200,6 @@ function handleConnection(conn) {
                         depth: null
                     }));
             }
-
-            //this.callback(error, result);
         }
     }
 
@@ -243,19 +238,6 @@ function handleConnection(conn) {
                 errback(new Error('timed out for ' + fn + ': ' + arguments));
             }
         })();
-    }
-
-
-    String.prototype.hexEncode = function(){
-        var hex, i;
-
-        var result = "";
-        for (i=0; i<this.length; i++) {
-            hex = this.charCodeAt(i).toString(16);
-            result += ("000"+hex).slice(-4);
-        }
-
-        return result
     }
 }
 
