@@ -2,6 +2,7 @@ var net = require('net');
 var async = require('async');
 var fs = require('fs');
 var util = require('util');
+var Buffer = require('buffer').Buffer;
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
@@ -75,7 +76,8 @@ function handleConnection(conn) {
         brokerSocket.isConnected = false;
         brokerSocket.on('error', onBrokerConnectionError);
         brokerSocket.on('close', onBrokerConnectionClose);
-        brokerSocket.setEncoding('utf8');
+        //brokerSocket.setEncoding('utf-8');
+        //brokerSocket.setEncoding('binary');
         brokerSocket.connect(configuration.port, configuration.host, function() {
             brokerSocket.isConnected = true;
         });
@@ -143,6 +145,7 @@ function handleConnection(conn) {
     }
 
     var buffer = '';
+    var dataBuffer = new Buffer(0);
 
     // Handle the response from the RPC Broker
     function onBrokerConnectionData(data, rpc, rpcObject) {
@@ -150,7 +153,11 @@ function handleConnection(conn) {
         var result;
         var error;
 
-        buffer += data;
+        var tempDataBuffer = Buffer.concat([dataBuffer, data]);
+        dataBuffer = tempDataBuffer;
+
+        buffer = dataBuffer.toString();
+
 
         if (buffer.indexOf(EOT) !== -1) {
 
@@ -171,12 +178,13 @@ function handleConnection(conn) {
 
             result = buffer.substring(0, buffer.indexOf(EOT) + 1);
             brokerSocket.removeAllListeners('data');
-            buffer = '';
 
             //if (!error) {
                 // send the data back to the client
                 LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
-                conn.write(result);
+                //conn.write(result);
+                conn.write(dataBuffer);
+                dataBuffer = new Buffer(0);
                 // log the RPC and the response to a file
                 if (rpcObject) {
                     rpcObject.rpc = rpc;
@@ -235,6 +243,19 @@ function handleConnection(conn) {
                 errback(new Error('timed out for ' + fn + ': ' + arguments));
             }
         })();
+    }
+
+
+    String.prototype.hexEncode = function(){
+        var hex, i;
+
+        var result = "";
+        for (i=0; i<this.length; i++) {
+            hex = this.charCodeAt(i).toString(16);
+            result += ("000"+hex).slice(-4);
+        }
+
+        return result
     }
 }
 
