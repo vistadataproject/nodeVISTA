@@ -189,11 +189,74 @@ module.exports = function() {
         MVDM.on('describe', function(mvdmData) {
             var resObj = {
                 type: 'socketMessage',
-                MVDM: 'describe',
+                MVDM: 'DESCRIBE',
                 data: mvdmData
             }
             send(resObj);
         });
+
+        MVDM.on('list', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'LIST',
+                data: mvdmData
+            }
+            send(resObj);
+        });
+
+        MVDM.on('create', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'CREATE',
+                data: mvdmData
+            }
+            send(resObj);
+        });
+
+        MVDM.on('remove', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'REMOVE',
+                data: mvdmData
+            }
+            send(resObj);
+        });
+
+        MVDM.on('unremoved', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'UNREMOVED',
+                data: mvdmData
+            }
+            send(resObj);
+        });
+
+        MVDM.on('delete', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'DELETE',
+                data: mvdmData
+            }
+            send(resObj);
+        });        
+
+        MVDM.on('update', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'UPDATE',
+                data: mvdmData
+            }
+            send(resObj);
+        });  
+
+        MVDM.on('error', function(mvdmData) {
+            var resObj = {
+                type: 'socketMessage',
+                MVDM: 'ERROR',
+                data: mvdmData
+            }
+            send(resObj);
+        });  
 
         var application = messageObj.application;
         var res;

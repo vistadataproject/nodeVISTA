@@ -122,7 +122,6 @@ function fillInCannedQueries()
 // From URL bar: it is the master. Form fills on page just set this
 function sendQueryInURLBar()
 {
-	console.log(window.search);
     if (!window.search)
         return;
     var args = new Object();
@@ -136,7 +135,6 @@ function sendQueryInURLBar()
     var emulation = "";
     for(var i=0; i < pairs.length; i++)
     {
-    	console.log(pairs[i]);
         var pos = pairs[i].indexOf("=");
         if (pos == -1)
             continue;
@@ -230,7 +228,6 @@ function handleSendQuery()
     queryArgs += "&domain=" + encodeURIComponent(domain);
     queryArgs += "&format=" + format;
     queryArgs += "&emulation=" + emulation;
-    console.log(queryArgs);
 	window.search = queryArgs;
 	sendQueryInURLBar();
 }
@@ -300,7 +297,6 @@ $(document).ready(function() {
     $('#eventTbl').on('click', 'tr', function(){
     	var key = $(this).children().first().text();
     	var data = window.socketEvents[key];
-    	console.log(data.data.result);
     	$('#eventDetail').html('<pre>' + JSON.stringify(data.data.result, null, 1) + '</pre>');
     });
 });
