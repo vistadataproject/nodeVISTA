@@ -12,10 +12,13 @@ body {
     font-family: Trebuchet MS, Verdana, Geneva, sans-serif;
     background: #fff;
     padding: 20px 20px 20px 20px;
+    padding-top: 0px;
+    margin-top: 0px !important;
     color: #666;
 }
 h1 { font-size: 1.6em; font-weight: normal; }
-a { color: #c00000; }
+a { color: #c00000; cursor: pointer;}
+a.active {color: #ff9933 !important;}
 th, td {
     border: 1px dotted #eee;
     padding: 2px 4px; 
@@ -27,8 +30,10 @@ th, td {
     margin-bottom: 30px;
     width: 60%;
 }
-#header { float: right; width: 35%;}
-#heading { text-align: right;}
+#header { float: right; width: 100%; background-color: black; margin-bottom: 20px;}
+#tabs {width: 55%; text-align: left; float: left; margin-top: 20px;}
+#tabs a {color: white; padding: 15px;}
+#heading { text-align: right; padding-right: 10px; color: white; width: 40%; float: right;}
 #intro { text-align: right;}
 #footer { clear: both; margin-top: 20px; text-align: center;}
 #query { 
@@ -279,6 +284,8 @@ function makeHTMLFromJSON(jsonReply, query)
 }
 
 $(document).ready(function() {
+	$('#eventsTab').hide();
+	$('#adminTab').hide();
 	$('#domainDiv').hide();
 	$('#formatDiv').hide();
 	$('#rpcNameDiv').show();
@@ -299,6 +306,33 @@ $(document).ready(function() {
     	var data = window.socketEvents[key];
     	$('#eventDetail').html('<pre>' + JSON.stringify(data.data.result, null, 1) + '</pre>');
     });
+    
+    $('#events').click(function() {
+    	$('#eventsTab').show();
+    	$('#rpcFormTab').hide();
+    	$('#adminTab').hide();
+    	$('#events').addClass('active');
+    	$('#rpcForm').removeClass('active');
+    	$('#admin').removeClass('active');
+    });
+    
+    $('#rpcForm').click(function() {
+    	$('#eventsTab').hide();
+    	$('#rpcFormTab').show();
+    	$('#adminTab').hide();
+    	$('#events').removeClass('active');
+    	$('#rpcForm').addClass('active');
+    	$('#admin').removeClass('active');
+    });
+    
+    $('#admin').click(function() {
+    	$('#eventsTab').hide();
+    	$('#rpcFormTab').hide();
+    	$('#adminTab').show();
+    	$('#events').removeClass('active');
+    	$('#rpcForm').removeClass('active');
+    	$('#admin').addClass('active');
+    });
 });
 
 </script>
@@ -310,6 +344,11 @@ $(document).ready(function() {
 <body>
 
 <div id="header"> 
+<div id="tabs">
+<a id="rpcForm" class="active">RPC Invoke</a>
+<a id="events">MVDM Events</a>
+<a id="admin">Management</a>
+</div>
 <div id="heading">
 <h1>RPC/VPR Query Maker</h1>
 <!--[if lt IE 7]>
@@ -318,66 +357,70 @@ $(document).ready(function() {
 </div> 
 </div> 
 
-<form id="fmql-form" name="fmql-form" action="?" enctype="application/x-www-form-urlencoded" method="get">
-<section>
-<div style="float:left; with:200px;">
-RPC/VPR:
-<input type="radio" name="rpcType" value="rpc" checked>RPC</input>
-<input type="radio" name="rpcType" value="vpr">VPR</input>
+<div id="rpcFormTab">
+	<form id="fmql-form" name="fmql-form" action="?" enctype="application/x-www-form-urlencoded" method="get">
+	<section>
+	<div style="float:left; with:200px;">
+	RPC/VPR:
+	<input type="radio" name="rpcType" value="rpc" checked>RPC</input>
+	<input type="radio" name="rpcType" value="vpr">VPR</input>
+	</div>
+	<div id="domainDiv" style="margin-left: 200px;">
+	Domain:
+	<select id="domain" name="domain">
+	<option value="allergy">Allergy</option>
+	<option value="problem">Problem</option>
+	<option value="vitals">Vitals</option>
+	</select> 
+	</div>
+	</section>
+	<div style="clear:both; padding-top:10px;" id="rpcNameDiv">
+	Name: <br/>
+	<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a>
+	</div>
+	<div style="clear:both; padding-top:10px;">
+	Arguments: <br/>
+	<textarea id="args" name="args" rows="5" cols="80"></textarea>   
+	</div>     
+	<div class="options">     
+	<!-- 
+	<div class="option">
+	<span class="option-title">Query: </span> 
+	<select id="query_choice" name="query_choice" onchange="if (this.selectedIndex == 0) return; boxQuery(this.options[this.selectedIndex].getAttribute('value1'));">
+	<option>Pick a Canned Query</option>
+	</select>
+	</div>
+	 -->
+	<div class="option" id="formatDiv"> 
+	<span class="option-title">Format: </span> 
+	<select id="format" name="format">
+	<option value="XML">XML</option>
+	<option value="JSON">JSON</option> 
+	</select> 
+	</div> 
+	
+	<input type="button" value="Send Query" onclick="handleSendQuery()" /> 
+	</div>
+	</form> 
+	<div id="results">
+	</div>
 </div>
-<div id="domainDiv" style="margin-left: 200px;">
-Domain:
-<select id="domain" name="domain">
-<option value="allergy">Allergy</option>
-<option value="problem">Problem</option>
-<option value="vitals">Vitals</option>
-</select> 
-</div>
-</section>
-<div style="clear:both; padding-top:10px;" id="rpcNameDiv">
-Name: <br/>
-<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a>
-</div>
-<div style="clear:both; padding-top:10px;">
-Arguments: <br/>
-<textarea id="args" name="args" rows="5" cols="80"></textarea>   
-</div>     
-<div class="options">     
-<!-- 
-<div class="option">
-<span class="option-title">Query: </span> 
-<select id="query_choice" name="query_choice" onchange="if (this.selectedIndex == 0) return; boxQuery(this.options[this.selectedIndex].getAttribute('value1'));">
-<option>Pick a Canned Query</option>
-</select>
-</div>
- -->
-<div class="option" id="formatDiv"> 
-<span class="option-title">Format: </span> 
-<select id="format" name="format">
-<option value="XML">XML</option>
-<option value="JSON">JSON</option> 
-</select> 
-</div> 
-<div class="option">
-<span class="option-title">Emulation: </span>
-<select id="emulation" name="emulation">
-<option value="on">On</option>
-<option value="off">Off</option>
-</select>
-<input type="button" value="Send Query" onclick="handleSendQuery()" /> 
-</div>
-</form> 
-
-</div>
-<div id="results">
-</div>
-<div style="width:100%;">
-	<div id="events" style="width:40%; float:left; margin-right:10%">
+<div style="width:100%;" id="eventsTab">
+	<div style="width:40%; float:left; margin-right:10%">
 		<table id="eventTbl">
 			<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>
 		</table>
 	</div>
 	<div id="eventDetail" style="width:45%; float:left"></div>
+</div>
+<div id="adminTab">
+	<div class="option">
+		<span class="option-title">Emulation: </span>
+		<select id="emulation" name="emulation">
+		<option value="on">On</option>
+		<option value="off">Off</option>
+		</select>
+	</div>
 </div>
 </body>
 </html>
