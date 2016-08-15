@@ -189,7 +189,7 @@ function handleConnection(conn) {
                 rpcObject.response = result;
                 rpcObject.from = fromName;
                 rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
-                rpcObject.timeStamp = new Date().toString();
+                rpcObject.timeStamp = new Date().toISOString();
             }
             captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
