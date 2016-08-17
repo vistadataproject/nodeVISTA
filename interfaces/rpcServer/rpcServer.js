@@ -1,12 +1,19 @@
 var net = require('net');
-var async = require('async');
 var fs = require('fs');
 var util = require('util');
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
+var authRpcs = require('./authRpcs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
+
+// imports for localRpcRunner
+var nodem = require('nodem');
+var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
+var DUZ = CONFIG.USER.DUZ;
+//var facilityCode = CONFIG.FACILITY.ID;
+var emulated;
 
 var DEFAULT_TIMEOUT = CONFIG.vistaRpcBroker.connectPollTimeout;
 var DEFAULT_INTERVAL = CONFIG.vistaRpcBroker.connectPollInterval;
@@ -38,6 +45,13 @@ if (process.argv.length > 2) {
                 port = CONFIG.sniffer.port;
             }
             console.log("Setting sniffer port to %s", port);
+        } else if (process.argv[argnum].toLowerCase().indexOf("duz=")  > -1) {
+            // DUZ=DUZ
+            DUZ = parseInt(process.argv[argnum].substring(4));
+            if (isNaN(DUZ)) {
+                port = CONFIG.USER.DUZ;
+            }
+            console.log("Setting DUZ to %s", DUZ);
         }
     }
 }
@@ -66,20 +80,28 @@ function handleConnection(conn) {
     conn.on('close', onConnectedClose);
     conn.on('error', onConnectedError);
 
-    var brokerSocket;
-    connectBrokerSocket();
+    var db;
+    connectVistaDatabase();
+
+
 
     // first set up a connection to VistA's RPC Broker
-    function connectBrokerSocket() {
-        brokerSocket = new net.Socket();
-        brokerSocket.isConnected = false;
-        brokerSocket.on('error', onBrokerConnectionError);
-        brokerSocket.on('close', onBrokerConnectionClose);
-        //brokerSocket.setEncoding('utf-8');
-        //brokerSocket.setEncoding('binary');
-        brokerSocket.connect(configuration.port, configuration.host, function() {
-            brokerSocket.isConnected = true;
-        });
+    function connectVistaDatabase() {
+        //process.env.gtmroutines = process.env.gtmroutines + '../../../VDM/prototypes'; // make VDP MUMPS available
+        db = new nodem.Gtm();
+        db.open();
+
+        console.log("db.about: " + db.about);
+
+        //brokerSocket = new net.Socket();
+        //brokerSocket.isConnected = false;
+        //brokerSocket.on('error', onBrokerConnectionError);
+        //brokerSocket.on('close', onBrokerConnectionClose);
+        ////brokerSocket.setEncoding('utf-8');
+        ////brokerSocket.setEncoding('binary');
+        //brokerSocket.connect(configuration.port, configuration.host, function() {
+        //    brokerSocket.isConnected = true;
+        //});
     }
 
     // handle data coming from the client
@@ -103,44 +125,59 @@ function handleConnection(conn) {
             LOGGER.info("RPC name: %s", rpcObject.name);
             if (rpcObject.args) {
                 LOGGER.info("RPC parameters: %j", rpcObject.args);
+            } else {
+                rpcObject.args = [];
             }
 
-            // Need to check that the connection to the RPC Broker is available before we can send the RPC to it
-            poll(
-                function() {
-                    return (brokerSocket && brokerSocket.isConnected);
-                },
-                function() {
-                    brokerSocket.on('data', function(data) {
-                        onBrokerConnectionData(data, rpcPacket, rpcObject)
-                    });
-                    LOGGER.info("Writing from sniffer to broker message: %s, length %s", rpcPacket, rpcPacket.length);
-                    brokerSocket.write(rpcPacket);
-                },
-                function() {
+            //
 
+            var response = '';
+
+            if (authRpcs.has(rpcObject.name)) {
+                // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
+                response = authRpcs.get(rpcObject.name);
+            } else {
+                // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
+                if (emulated) {
+
+                } else {
+                    response = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args);
                 }
-            )
+            }
+
+            // log to capture file the RPC and the response to a file
+            if (rpcObject) {
+                // add more info to captured object
+                rpcObject.rpc = rpcPacket;
+                rpcObject.response = response;
+                rpcObject.from = fromName;
+                rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
+                rpcObject.timeStamp = new Date().toISOString();
+            }
+            captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
+
+
+            // write the response back to the client
+            conn.write(response);
 
         }
 
     }
 
     function onConnectedClose() {
-        onBrokerConnectionClose();
         LOGGER.info('Connection from %s closed', remoteAddress);
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
-        onBrokerConnectionClose();
+        db.close();
     }
 
     function onConnectedError(err) {
-        onBrokerConnectionClose();
         LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
+        db.close();
     }
 
     var buffer = '';
@@ -181,7 +218,16 @@ function handleConnection(conn) {
             // send the data back to the client
             LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
             //conn.write(result);
-            conn.write(dataBuffer);
+
+            // if it's in the authRpcs don't return it
+            if (!authRpcs.has(rpcObject.name)) {
+                conn.write(dataBuffer);
+            } else {
+                if (rpcObject) {
+                    rpcObject.hardcodedResponse = authRpcs.get(rpcObject.name);
+                }
+            }
+
             dataBuffer = new Buffer(0);
             // log the RPC and the response to a file
             if (rpcObject) {
@@ -203,21 +249,6 @@ function handleConnection(conn) {
         }
     }
 
-    function onBrokerConnectionClose() {
-        LOGGER.info('BrokerConnection closed');
-        brokerSocket.isConnected = false;
-        brokerSocket.removeAllListeners();
-        brokerSocket.end();
-        brokerSocket.destroy();
-    }
-
-    function onBrokerConnectionError(err) {
-        LOGGER.error('BrokerConnection error: %s', err.message);
-        brokerSocket.isConnected = false;
-        brokerSocket.removeAllListeners();
-        brokerSocket.end();
-        brokerSocket.destroy();
-    }
 
     // polling function from https://davidwalsh.name/javascript-polling
     function poll(fn, callback, errback, timeout, interval) {
