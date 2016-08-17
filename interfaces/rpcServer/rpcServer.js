@@ -12,7 +12,8 @@ var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 var nodem = require('nodem');
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
 var DUZ = CONFIG.USER.DUZ;
-//var facilityCode = CONFIG.FACILITY.ID;
+var facilityCode = CONFIG.FACILITY.ID;
+var db;
 var emulated;
 
 var DEFAULT_TIMEOUT = CONFIG.vistaRpcBroker.connectPollTimeout;
@@ -56,6 +57,16 @@ if (process.argv.length > 2) {
     }
 }
 
+connectVistaDatabase();
+
+// first set up a connection to VistA's RPC Broker
+function connectVistaDatabase() {
+    process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
+    db = new nodem.Gtm();
+    db.open();
+}
+
+
 var captureFile = fs.createWriteStream(capturePath, CONFIG.FILE.options);
 // wait until the captureFile is open before continuing
 captureFile.on("open", function(fd) {
@@ -79,30 +90,6 @@ function handleConnection(conn) {
     conn.on('data', onConnectedData);
     conn.on('close', onConnectedClose);
     conn.on('error', onConnectedError);
-
-    var db;
-    connectVistaDatabase();
-
-
-
-    // first set up a connection to VistA's RPC Broker
-    function connectVistaDatabase() {
-        //process.env.gtmroutines = process.env.gtmroutines + '../../../VDM/prototypes'; // make VDP MUMPS available
-        db = new nodem.Gtm();
-        db.open();
-
-        console.log("db.about: " + db.about);
-
-        //brokerSocket = new net.Socket();
-        //brokerSocket.isConnected = false;
-        //brokerSocket.on('error', onBrokerConnectionError);
-        //brokerSocket.on('close', onBrokerConnectionClose);
-        ////brokerSocket.setEncoding('utf-8');
-        ////brokerSocket.setEncoding('binary');
-        //brokerSocket.connect(configuration.port, configuration.host, function() {
-        //    brokerSocket.isConnected = true;
-        //});
-    }
 
     // handle data coming from the client
     function onConnectedData(data) {
@@ -141,7 +128,7 @@ function handleConnection(conn) {
                 if (emulated) {
 
                 } else {
-                    response = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args);
+                    response = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
                 }
             }
 

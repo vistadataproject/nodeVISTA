@@ -17,7 +17,7 @@ config.FILE.options = {
 config.FILE.defaultCaptureFile = './log/capture.txt';
 
 config.USER = {};
-config.USER.DUZ = 58;
+config.USER.DUZ = 57;
 
 config.FACILITY = {};
 config.FACILITY.ID = 2957;
@@ -32,7 +32,7 @@ config.client.defaultName = "CPRS";
 // connection to legacy broker
 config.vistaRpcBroker = {}
 config.vistaRpcBroker.configuration = {
-    host: '192.168.1.152',
+    host: '192.168.0.102',
     port: 9430
 }
 //config.vistaRpcBroker.configuration = {
