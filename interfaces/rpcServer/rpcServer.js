@@ -110,13 +110,16 @@ function handleConnection(conn) {
             LOGGER.info('Connection data from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
             LOGGER.info("RPC name: %s", rpcObject.name);
-            if (rpcObject.args) {
+            rpcObject.args = [];
+            if (rpcObject.inputParameters && rpcObject.inputParameters.length > 0) {
+                for (var paramnum = 0; paramnum < rpcObject.inputParameters.length; paramnum++) {
+                    rpcObject.args.push(rpcObject.inputParameters[paramnum].parameter);
+                }
                 LOGGER.info("RPC parameters: %j", rpcObject.args);
-            } else {
-                rpcObject.args = [];
             }
 
-            //
+
+            console.log("Rpc name and args: %s %s", JSON.stringify(rpcObject.name), JSON.stringify(rpcObject.args));
 
             var response = '';
 
@@ -128,7 +131,16 @@ function handleConnection(conn) {
                 if (emulated) {
 
                 } else {
-                    response = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
+                    var rpcRunnerResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
+
+                    response = '\u0000\u0000';
+                    if (rpcRunnerResult && rpcRunnerResult.result) {
+                        for (var i = 0; i < rpcRunnerResult.result.length; i++) {
+                            response += rpcRunnerResult.result[i] +'\r\n';
+                        }
+                    }
+                    response += '\u0004'
+                    console.log("response from localRPCRunner: " + JSON.stringify(response));
                 }
             }
 
