@@ -98,15 +98,17 @@ th, td {
  *   - this will kick in the above
  */
  
-window.socketEvents = {};
+window.socketEventsObj = {};
+window.socketEvents = [];
 window.socket = io.connect();
 
 window.socket.on('message', function(data){
     console.log('data from server socket------', data);
     var timeStamp = data.message.data.eventTimestamp;
-    if(!window.socketEvents[timeStamp]) {
-     	window.socketEvents[timeStamp] = data.message.data;
-	 	$('#eventTbl').append('<tr><td>' + timeStamp + '</td><td>' + data.message.MVDM + '</td><td>' + data.message.data.userId + '</td><td>' + data.message.data.facilityId + '</td></tr>');
+    if(!window.socketEventsObj[timeStamp]) {
+     	window.socketEventsObj[timeStamp] = data.message;
+     	window.socketEvents.push(data.message);
+	 	filterEvents();
 	 }
 });
 
@@ -303,8 +305,10 @@ $(document).ready(function() {
     });
     $('#eventTbl').on('click', 'tr', function(){
     	var key = $(this).children().first().text();
-    	var data = window.socketEvents[key];
-    	$('#eventDetail').html('<pre>' + JSON.stringify(data.data.result, null, 1) + '</pre>');
+    	var data = window.socketEventsObj[key];
+    	console.log(key);
+    	console.log(data);
+    	$('#eventDetail').html('<pre>' + JSON.stringify(data.data.data.result, null, 1) + '</pre>');
     });
     
     $('#events').click(function() {
@@ -333,7 +337,34 @@ $(document).ready(function() {
     	$('#rpcForm').removeClass('active');
     	$('#admin').addClass('active');
     });
+    
+    $('#eventFilter').on('change', filterEvents);
+    
+    
 });
+
+function filterEvents() {
+	var filter = $('#eventFilter').val();
+	if (filter == 'ALL') {
+		displayEventTable(window.socketEvents);
+	} else {
+		var events = [];
+		window.socketEvents.forEach(function(event) {
+			if (event.MVDM === filter) {
+				events.push(event);
+			}
+		});
+		displayEventTable(events);
+	}
+}
+    
+function displayEventTable(events) {
+	var html = '<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>';
+	events.forEach(function(event) {
+		html += '<tr><td>' + event.data.eventTimestamp + '</td><td>' + event.MVDM + '</td><td>' + event.data.userId + '</td><td>' + event.data.facilityId + '</td></tr>'
+	});
+	$('#eventTbl').html(html);
+}
 
 </script>
 
@@ -406,6 +437,15 @@ $(document).ready(function() {
 	</div>
 </div>
 <div style="width:100%;" id="eventsTab">
+	<div class="option" id="formatDiv" style="margin-left: 10px;"> 
+		<span class="option-title">Filter: </span> 
+		<select id="eventFilter" name="eventFilter">
+		<option value="ALL">All</option>
+		<option value="DESCRIBE">DESCRIBE</option>
+		<option value="LIST">LIST</option> 
+		</select> 
+	</div> 
+	<div style="clear: both; margin: 10px;"></div>
 	<div style="width:40%; float:left; margin-right:10%">
 		<table id="eventTbl">
 			<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>
