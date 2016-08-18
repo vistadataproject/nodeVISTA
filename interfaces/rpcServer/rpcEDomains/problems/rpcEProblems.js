@@ -12,12 +12,18 @@ var mvdmProblemModel = require('../../../../../VDM/prototypes/problems/mvdmProbl
 // model objects for map
 var problemModels = {rpcEModel: rpcEProblemModel, vdmModel: vdmProblemModel, mvdmModel: mvdmProblemModel};
 
-function setup(db, DUZ, facilityId) {
-    var user = '200-' + DUZ;
-    var facility = '4-' + facilityId;
+var isSetup = false;
 
-    rpcE.setDBAndModels(db, problemModels);
-    rpcE.setUserAndFacility(user, facility); // note that 4-2957 would come from 200-55 if left out
+function setup(db, DUZ, facilityId) {
+    if (!isSetup) {
+        var user = '200-' + DUZ;
+        var facility = '4-' + facilityId;
+
+        rpcE.setDBAndModels(db, problemModels);
+        rpcE.setUserAndFacility(user, facility); // note that 4-2957 would come from 200-55 if left out
+
+        isSetup = true;
+    }
 }
 
 module.exports.setup = setup;

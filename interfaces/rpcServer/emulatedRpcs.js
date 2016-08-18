@@ -3,9 +3,6 @@ var HashMap = require('hashmap');
 // RpcEDomain helper
 var rpcEProblems = require('./rpcEDomains/problems/rpcEProblems.js');
 
-
-
-
 // Add Supported emulated RPCs to a map
 var emulatedRPCs = new HashMap();
 
