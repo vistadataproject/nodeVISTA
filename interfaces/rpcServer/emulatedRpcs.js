@@ -9,9 +9,9 @@ var emulatedRPCs = new HashMap();
 emulatedRPCs.set('ORQQPL ADD SAVE', rpcEProblems);
 emulatedRPCs.set('ORQQPL DETAIL', rpcEProblems);
 //emulatedRPCs.set('ORQQPL PROBLEM LIST', rpcEProblems);
-//emulatedRPCs.set('ORQQPL EDIT SAVE', rpcEProblems);
-//emulatedRPCs.set('ORQQPL UPDATE', rpcEProblems);
-//emulatedRPCs.set('ORQQPL DELETE', rpcEProblems);
-//emulatedRPCs.set('ORQQPL REPLACE', rpcEProblems);
+emulatedRPCs.set('ORQQPL EDIT SAVE', rpcEProblems);
+emulatedRPCs.set('ORQQPL UPDATE', rpcEProblems);
+emulatedRPCs.set('ORQQPL DELETE', rpcEProblems);
+emulatedRPCs.set('ORQQPL REPLACE', rpcEProblems);
 
 module.exports = emulatedRPCs;
