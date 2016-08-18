@@ -12,10 +12,14 @@ var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 // imports for localRpcRunner
 var nodem = require('nodem');
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
-var DUZ = CONFIG.USER.DUZ;
-var facilityCode = CONFIG.FACILITY.ID;
+
+// imports for emulated
+var emulatedRPCs = require('./emulatedRPCs.js');
+
 var db;
 var emulated;
+var DUZ = CONFIG.USER.DUZ;
+var facilityCode = CONFIG.FACILITY.ID;
 
 var DEFAULT_TIMEOUT = CONFIG.vistaRpcBroker.connectPollTimeout;
 var DEFAULT_INTERVAL = CONFIG.vistaRpcBroker.connectPollInterval;
@@ -120,8 +124,11 @@ function handleConnection(conn) {
             } else {
                 var rpcResult;
                 // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
-                if (emulated) {
-
+                if (emulatedRPCs.has(rpcObject.name)) {
+                    var domainRpcE = emulatedRPCs.get(rpcObject.name);
+                    domainRpcE.setup(db, DUZ, facilityCode);
+                    rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
+                    LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
                 } else {
 
                     rpcObject.args = [];
@@ -140,7 +147,6 @@ function handleConnection(conn) {
                         LOGGER.info("RPC parameters: %j", rpcObject.args);
                     }
 
-
                     rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
 
                 }
@@ -158,8 +164,7 @@ function handleConnection(conn) {
                     }
                 }
                 response += '\u0004'
-                console.log("response from localRPCRunner: " + JSON.stringify(response));
-
+                console.log("response to client: " + JSON.stringify(response));
 
             }
 
