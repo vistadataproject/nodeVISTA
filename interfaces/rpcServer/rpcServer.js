@@ -111,16 +111,6 @@ function handleConnection(conn) {
             LOGGER.info('Connection data from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
             LOGGER.info("RPC name: %s", rpcObject.name);
-            rpcObject.args = [];
-            if (rpcObject.inputParameters && rpcObject.inputParameters.length > 0) {
-                for (var paramnum = 0; paramnum < rpcObject.inputParameters.length; paramnum++) {
-                    rpcObject.args.push(rpcObject.inputParameters[paramnum].parameter);
-                }
-                LOGGER.info("RPC parameters: %j", rpcObject.args);
-            }
-
-
-            console.log("Rpc name and args: %s %s", JSON.stringify(rpcObject.name), JSON.stringify(rpcObject.args));
 
             var response = '';
 
@@ -128,27 +118,49 @@ function handleConnection(conn) {
                 // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
                 response = unsupportedRPCs.get(rpcObject.name);
             } else {
+                var rpcResult;
                 // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
                 if (emulated) {
 
                 } else {
-                    var rpcRunnerResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
 
-                    response = '\u0000\u0000';
-                    if (rpcRunnerResult && rpcRunnerResult.result !== undefined) {
-                        if (_.isArray(rpcRunnerResult.result)) {
-                            // in localRpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
-                            for (var i = 0; i < rpcRunnerResult.result.length; i++) {
-                                response += rpcRunnerResult.result[i] +'\r\n';
+                    rpcObject.args = [];
+                    if (rpcObject.inputParameters && rpcObject.inputParameters.length > 0) {
+                        for (var paramnum = 0; paramnum < rpcObject.inputParameters.length; paramnum++) {
+                            if (rpcObject.inputParameters[paramnum].parameterType === 'LIST') {
+                                var listArray = [];
+                                for (var item = 0; item < rpcObject.inputParameters[paramnum].parameter.length; item++) {
+                                    listArray.push(rpcObject.inputParameters[paramnum].parameter[item].value);
+                                }
+                                rpcObject.args.push(listArray);
+                            } else {
+                                rpcObject.args.push(rpcObject.inputParameters[paramnum].parameter);
                             }
-                        } else {
-                            // the SINGLE VALUE replyType is not an array
-                            response += rpcRunnerResult.result;
                         }
+                        LOGGER.info("RPC parameters: %j", rpcObject.args);
                     }
-                    response += '\u0004'
-                    console.log("response from localRPCRunner: " + JSON.stringify(response));
+
+
+                    rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
+
                 }
+
+                response = '\u0000\u0000';
+                if (rpcResult && rpcResult.result !== undefined) {
+                    if (_.isArray(rpcResult.result)) {
+                        // in localRpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
+                        for (var i = 0; i < rpcResult.result.length; i++) {
+                            response += rpcResult.result[i] +'\r\n';
+                        }
+                    } else {
+                        // the SINGLE VALUE replyType is not an array
+                        response += rpcResult.result;
+                    }
+                }
+                response += '\u0004'
+                console.log("response from localRPCRunner: " + JSON.stringify(response));
+
+
             }
 
             // log to capture file the RPC and the response to a file
