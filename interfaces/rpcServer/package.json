@@ -10,6 +10,7 @@
         "fs": "latest",
         "util": "latest",
         "bunyan": "latest",
-        "nodem": "latest"
+        "nodem": "latest",
+        "underscore": "latest"
     }
 }

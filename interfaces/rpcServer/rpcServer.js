@@ -1,6 +1,7 @@
 var net = require('net');
 var fs = require('fs');
 var util = require('util');
+var _ = require('underscore');
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
@@ -135,8 +136,12 @@ function handleConnection(conn) {
 
                     response = '\u0000\u0000';
                     if (rpcRunnerResult && rpcRunnerResult.result) {
-                        for (var i = 0; i < rpcRunnerResult.result.length; i++) {
-                            response += rpcRunnerResult.result[i] +'\r\n';
+                        if (_.isArray(rpcRunnerResult.result)) {
+                            for (var i = 0; i < rpcRunnerResult.result.length; i++) {
+                                response += rpcRunnerResult.result[i] +'\r\n';
+                            }
+                        } else {
+                            response += rpcRunnerResult.result;
                         }
                     }
                     response += '\u0004'
