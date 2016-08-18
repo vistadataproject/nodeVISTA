@@ -176,7 +176,9 @@ function handleConnection(conn) {
 
 
             // write the response back to the client
-            conn.write(response);
+            var responseBuffer = new Buffer(response, 'binary');
+
+            conn.write(responseBuffer);
 
         }
 
