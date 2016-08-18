@@ -5,7 +5,7 @@ var _ = require('underscore');
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
-var authRpcs = require('./authRpcs.js');
+var unsupportedRPCs = require('./unsupportedRPCs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 
@@ -124,9 +124,9 @@ function handleConnection(conn) {
 
             var response = '';
 
-            if (authRpcs.has(rpcObject.name)) {
+            if (unsupportedRPCs.has(rpcObject.name)) {
                 // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
-                response = authRpcs.get(rpcObject.name);
+                response = unsupportedRPCs.get(rpcObject.name);
             } else {
                 // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
                 if (emulated) {
@@ -135,12 +135,14 @@ function handleConnection(conn) {
                     var rpcRunnerResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
 
                     response = '\u0000\u0000';
-                    if (rpcRunnerResult && rpcRunnerResult.result) {
+                    if (rpcRunnerResult && rpcRunnerResult.result !== undefined) {
                         if (_.isArray(rpcRunnerResult.result)) {
+                            // in localRpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
                             for (var i = 0; i < rpcRunnerResult.result.length; i++) {
                                 response += rpcRunnerResult.result[i] +'\r\n';
                             }
                         } else {
+                            // the SINGLE VALUE replyType is not an array
                             response += rpcRunnerResult.result;
                         }
                     }
@@ -223,12 +225,12 @@ function handleConnection(conn) {
             LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
             //conn.write(result);
 
-            // if it's in the authRpcs don't return it
-            if (!authRpcs.has(rpcObject.name)) {
+            // if it's in the unsupportedRPCs don't return it
+            if (!unsupportedRPCs.has(rpcObject.name)) {
                 conn.write(dataBuffer);
             } else {
                 if (rpcObject) {
-                    rpcObject.hardcodedResponse = authRpcs.get(rpcObject.name);
+                    rpcObject.hardcodedResponse = unsupportedRPCs.get(rpcObject.name);
                 }
             }
 
