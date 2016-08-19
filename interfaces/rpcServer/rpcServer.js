@@ -12,9 +12,9 @@ var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 // imports for localRpcRunner
 var nodem = require('nodem');
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
-
 // imports for emulated
 var emulatedRPCs = require('./emulatedRPCs.js');
+var adminServer = require('./adminServer');
 
 var db;
 var emulated;
@@ -61,6 +61,8 @@ if (process.argv.length > 2) {
         }
     }
 }
+
+adminServer.init();
 
 connectVistaDatabase();
 
