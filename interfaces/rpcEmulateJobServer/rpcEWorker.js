@@ -33,6 +33,7 @@ var vdmModelProblem = require('../../../VDM/prototypes/problems/vdmProblemsModel
 var vdmModelVitals = require('../../../VDM/prototypes/vitals/vdmVitalsModel').vdmModel;
 var rpcEProblemModel = require('../../../VDM/prototypes/problems/rpcEProblemModel').rpcEModel;
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
+var facilityCode = 2957;
 
 
 var rpcE = require('../../../VDM/prototypes/rpcE');
@@ -45,12 +46,12 @@ function setModels(domain) {
         MVDM.setModel(mvdmModelAllergy);
         vprE.setVprMappings(vprAllergyEmulator);
         // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
-        VDM.setUserAndFacility("200-" + parseInt(DUZ));
+        VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
         rpcE.setRpcMappings(rpcEAllergyMappings);
 
     } else if (domain === 'problem') {
         rpcE.setDBAndModels(db, {rpcEModel: rpcEProblemModel, vdmModel: vdmModelProblem, mvdmModel: mvdmModelProblem});
-        rpcE.setUserAndFacility("200-" + DUZ, "4-2957"); // note that 4-2957 would come from 200-55 if left out
+        rpcE.setUserAndFacility("200-" + DUZ, "4-" + facilityCode); // note that 4-2957 would come from 200-55 if left out
 
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);
@@ -144,6 +145,9 @@ function callRpc(messageObj) {
             }
 
             var res = rpcE.run(rpc, rpcArgs);
+            if (res.result) {
+                res = res.result.join('\n');
+            }
         } catch (exception) {
             console.log(exception);
             res = 'Exception: ' + exception;
