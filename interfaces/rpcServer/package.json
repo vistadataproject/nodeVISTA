@@ -5,7 +5,6 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "body-parser": "latest",
     "bunyan": "latest",
     "express": "^4.14.0",
     "express-ws": "^2.0.0",
