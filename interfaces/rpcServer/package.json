@@ -1,0 +1,16 @@
+{
+    "name": "rpcServer",
+    "description": "nodeVISTA RPC Broker replacement Server",
+    "version": "0.0.1",
+    "license": "Apache-2.0",
+    "private": true,
+    "dependencies": {
+        "hashmap": "latest",
+        "net": "latest",
+        "fs": "latest",
+        "util": "latest",
+        "bunyan": "latest",
+        "nodem": "latest",
+        "underscore": "latest"
+    }
+}
