@@ -1,16 +1,20 @@
 {
-    "name": "rpcServer",
-    "description": "nodeVISTA RPC Broker replacement Server",
-    "version": "0.0.1",
-    "license": "Apache-2.0",
-    "private": true,
-    "dependencies": {
-        "hashmap": "latest",
-        "net": "latest",
-        "fs": "latest",
-        "util": "latest",
-        "bunyan": "latest",
-        "nodem": "latest",
-        "underscore": "latest"
-    }
+  "name": "rpcServer",
+  "description": "nodeVISTA RPC Broker replacement Server",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bunyan": "latest",
+    "express": "^4.14.0",
+    "express-ws": "^2.0.0",
+    "fs": "latest",
+    "hashmap": "latest",
+    "jquery": "^3.1.0",
+    "net": "latest",
+    "nodem": "latest",
+    "underscore": "latest",
+    "util": "latest"
+  }
 }
