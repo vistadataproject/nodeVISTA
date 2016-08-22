@@ -170,37 +170,26 @@ function inputParametersToArgs (rpcObjectInputParameters) {
             if (rpcObjectInputParameters[paramnum].parameterType === 'LIST') {
                 var parameterList = rpcObjectInputParameters[paramnum].parameter;
                 var listObject = {};
-                //if (parameterList && parameterList.length > 0 && parameterList[0].key === "1") {
-                //    // if the first item in list has a key that is "1" assume the keys are ordinals and can be dropped
-                //    for (var item = 0; item < parameterList.length; item++) {
-                //        listObject.push(parameterList[item].value);
-                //    }
-                //} else {
-                //    // we need to build the list array using the keys
-                    for (var item = 0; item < parameterList.length; item++) {
-                        //var listObject = {};
+                for (var item = 0; item < parameterList.length; item++) {
+                    // first check if the value will be an array. that is the key ends with '0'
+                    if (parameterList[item].key.slice(-2) === ',0') {
+                        // take the first part of the key as the name of the array
+                        var name = parameterList[item].key.substring(0, parameterList[item].key.length - 2).replace(/\"/g, '');
+                        var subarrayLength = parseInt(parameterList[item].value);
 
-                        // first check if the value will be an array. that is the key ends with '0'
-                        if (parameterList[item].key.slice(-2) === ',0') {
-                            // take the first part of the key as the name of the array
-                            var name = parameterList[item].key.substring(0, parameterList[item].key.length - 2).replace(/\"/g, '');
-                            var subarrayLength = parseInt(parameterList[item].value);
-
-                            var subarray = [];
-                            for (var subitem = item + 1; subitem <= item + subarrayLength; subitem++) {
-                                subarray.push(parameterList[subitem].value);
-                            }
-                            listObject[name] = subarray;
-
-                            // skip forward in the parameterList the subarrayLength
-                            item += subarrayLength;
-                        } else {
-                            // just make an object that the key is the property name, and the value is the value.
-                            listObject[parameterList[item].key.replace(/\"/g, '')] = parameterList[item].value;
+                        var subarray = [];
+                        for (var subitem = item + 1; subitem <= item + subarrayLength; subitem++) {
+                            subarray.push(parameterList[subitem].value);
                         }
-                        //listObject.push(listObject);
+                        listObject[name] = subarray;
+
+                        // skip forward in the parameterList the subarrayLength
+                        item += subarrayLength;
+                    } else {
+                        // just add to list object that the key is the property name, and the value is the value.
+                        listObject[parameterList[item].key.replace(/\"/g, '')] = parameterList[item].value;
                     }
-                //}
+                }
                 args.push(listObject);
             } else {
                 args.push(rpcObjectInputParameters[paramnum].parameter);
