@@ -17,7 +17,6 @@ var emulatedRPCs = require('./emulatedRPCs.js');
 var adminServer = require('./adminServer');
 
 var db;
-var emulated;
 var DUZ = CONFIG.USER.DUZ;
 var facilityCode = CONFIG.FACILITY.ID;
 
@@ -132,25 +131,10 @@ function handleConnection(conn) {
                     rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
                     LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
                 } else {
-
-                    rpcObject.args = [];
-                    if (rpcObject.inputParameters && rpcObject.inputParameters.length > 0) {
-                        for (var paramnum = 0; paramnum < rpcObject.inputParameters.length; paramnum++) {
-                            if (rpcObject.inputParameters[paramnum].parameterType === 'LIST') {
-                                var listArray = [];
-                                for (var item = 0; item < rpcObject.inputParameters[paramnum].parameter.length; item++) {
-                                    listArray.push(rpcObject.inputParameters[paramnum].parameter[item].value);
-                                }
-                                rpcObject.args.push(listArray);
-                            } else {
-                                rpcObject.args.push(rpcObject.inputParameters[paramnum].parameter);
-                            }
-                        }
-                        LOGGER.info("RPC parameters: %j", rpcObject.args);
-                    }
+                    rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
+                    LOGGER.info("RPC parameters: %j", rpcObject.args);
 
                     rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
-
                 }
 
                 response = '\u0000\u0000';

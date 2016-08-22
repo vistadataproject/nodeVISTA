@@ -1,7 +1,7 @@
 'use strict';
 
 // var vistajs = require('../VistaJS/VistaJS'); TODO: Refactor to use VistaJS and VistaJSLibrary
-var rpcUtils = require('./rpcUtils.js');
+var rpcParserUtils = require('./rpcParserUtils.js');
 var COUNT_WIDTH = 3;
 
 var parameterTypeMap = {
@@ -47,9 +47,9 @@ function parseRawRPC (rpcString) {
         //                                               + "0" + LPack("0", COUNT_WIDTH) + "f"
         //                                               + "0" + LPack(Name, COUNT_WIDTH + 1) + "f\u0004"
         //rpcString = rpcString.substring("[XWB]10304\nTCPConnect50".length);
-        //rpcObject.ipaddress = rpcUtils.popLPack(rpcString, COUNT_WIDTH).string;
+        //rpcObject.ipaddress = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
         //rpcString = rpcString.substring(2 + COUNT_WIDTH + 3);
-        //rpcObject.hostName = rpcUtils.popLPack(rpcString, COUNT_WIDTH).string;
+        //rpcObject.hostName = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
 
         var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
         rpcObject.inputParameters = parametersArray;
@@ -68,10 +68,10 @@ function parseRawRPC (rpcString) {
 
         // strip [XWB] and "11302" rpcString.substring(10);
         // get the version
-        var poppedObject = rpcUtils.popSPack(rpcString.substring(10));
+        var poppedObject = rpcParserUtils.popSPack(rpcString.substring(10));
         var version = poppedObject.string;
         // get the rpcName
-        poppedObject = rpcUtils.popSPack(poppedObject.remainder);
+        poppedObject = rpcParserUtils.popSPack(poppedObject.remainder);
         var rpcName = poppedObject.string;
         var parametersArray = parseParameters(poppedObject.remainder);
 
@@ -104,7 +104,7 @@ function parseParameters(paramRpcString) {
         var paramtypeName = parameterTypeReverseMap[paramtype];
         if (paramtype === '0' || paramtype === '1') {
             // LITERAL and REFERENCE type params are treated the same way
-            var poppedObject = rpcUtils.popLPack(remainderString.substring(1), COUNT_WIDTH);
+            var poppedObject = rpcParserUtils.popLPack(remainderString.substring(1), COUNT_WIDTH);
             remainderString = poppedObject.remainder;
             if (remainderString && remainderString.length > 0) {
                 // remove the 'f' marking the end of the parameter.
@@ -120,9 +120,9 @@ function parseParameters(paramRpcString) {
             var listParams = [];
             var endoflist = false;
             while (!endoflist) {
-                var poppedKeyObject = rpcUtils.popLPack(remainderString, COUNT_WIDTH);
+                var poppedKeyObject = rpcParserUtils.popLPack(remainderString, COUNT_WIDTH);
                 remainderString = poppedKeyObject.remainder;
-                var poppedValueObject = rpcUtils.popLPack(remainderString, COUNT_WIDTH);
+                var poppedValueObject = rpcParserUtils.popLPack(remainderString, COUNT_WIDTH);
                 remainderString = poppedValueObject.remainder;
                 // push a key/value pair onto the list parameter array
                 listParams.push({"key": poppedKeyObject.string, "value": poppedValueObject.string});
@@ -141,8 +141,67 @@ function parseParameters(paramRpcString) {
     return parameters;
 }
 
+/**
+ *  rpcObject.inputParameters is an array of objects {"parameterType": "LITERAL|REFERENCE|LIST", "parameter": value|Array, "num": ordinal}.
+ *
+ *  args is an array that is accepted by the localRPCRunner.
+ *
+ *  This function modifies the inputParameters into an array where LITERALs and REFERENCEs are each element of the array. The LISTs stay as an
+ *  sub-array as the element of the array of parameters. But these sub-arrays are modified to be either a list of only the values
+ *
+ *  initial LIST parameter: "parameter": [{"key":"1", "value":"ABC"}, {"key":"2", "value":"DEF"}, {"key":"3", "value":"GHI"}]
+ *  becomes: {"1": "ABC", "2": "DEF", "3": "GHI"} as the args object.
+ *
+ *  or
+ *
+ *  initial LIST parameter: "parameter": [{"key": "\"ABC\"", "value": "123"}, {"key": "\"DEF\"", "value": "345",
+ *                                           {"key": "\"GHI\",0", "value": "1"}, {"key": "\"GHI\",1", "value": "678"}]
+ *  becomes: {"ABC": "123", "DEF": "345", "GHI": ["678"]}
+ *
+ * @param rpcObjectInputParameters The rpcObject.inputParameters array.
+ * @returns the input parameters as array of the "parameter" values or arrays without the types and ordinals.
+ *
+ */
+function inputParametersToArgs (rpcObjectInputParameters) {
+    var args = [];
+
+    if (rpcObjectInputParameters && rpcObjectInputParameters.length > 0) {
+        for (var paramnum = 0; paramnum < rpcObjectInputParameters.length; paramnum++) {
+            if (rpcObjectInputParameters[paramnum].parameterType === 'LIST') {
+                var parameterList = rpcObjectInputParameters[paramnum].parameter;
+                var listObject = {};
+                for (var item = 0; item < parameterList.length; item++) {
+                    // first check if the value will be an array. that is the key ends with '0'
+                    if (parameterList[item].key.slice(-2) === ',0') {
+                        // take the first part of the key as the name of the array
+                        var name = parameterList[item].key.substring(0, parameterList[item].key.length - 2).replace(/\"/g, '');
+                        var subarrayLength = parseInt(parameterList[item].value);
+
+                        var subarray = [];
+                        for (var subitem = item + 1; subitem <= item + subarrayLength; subitem++) {
+                            subarray.push(parameterList[subitem].value);
+                        }
+                        listObject[name] = subarray;
+
+                        // skip forward in the parameterList the subarrayLength
+                        item += subarrayLength;
+                    } else {
+                        // just add to list object that the key is the property name, and the value is the value.
+                        listObject[parameterList[item].key.replace(/\"/g, '')] = parameterList[item].value;
+                    }
+                }
+                args.push(listObject);
+            } else {
+                args.push(rpcObjectInputParameters[paramnum].parameter);
+            }
+        }
+    }
+
+    return args;
+}
 
 module.exports.parseRawRPC = parseRawRPC;
+module.exports.inputParametersToArgs = inputParametersToArgs;
 
 
 /* LPACK === STRPACK === VistaJSLibrary.strPack()
