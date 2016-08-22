@@ -24,7 +24,7 @@ function init() {
          MVDM: 'DESCRIBE',
          data: {
             timestamp: moment(mvdmData.eventTimestamp).format('MM/DD/YYYY hh:mm:ss a'),
-            domain: mvdmData.data.result.type,
+            domain: mvdmData.domain,
             type: 'DESCRIBE',
             userId: mvdmData.userId,
             facilityId: mvdmData.facilityId
