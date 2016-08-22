@@ -1,7 +1,7 @@
 (function(exports) {
    function initWebSocketClient() {
       // Let's open a web socket
-      var ws = new WebSocket("ws://localhost:9001");
+      var ws = new WebSocket("ws://" + config.host + ":" + config.admin.port);
 
       ws.onopen = function()
       {
@@ -23,8 +23,6 @@
 
    function displayMvdmEvent(eventStr) {
       var event = JSON.parse(eventStr);
-
-      console.log("Received MVDM event: " + event.MVDM);
 
       var eventData = event.data;
 

@@ -3,6 +3,7 @@ var app = express();
 var expressWs = require('express-ws')(app);
 var path = require('path');
 var MVDM = require('../../../VDM/prototypes/mvdm');
+var CONFIG = require('./cfg/config.js');
 
 function init() {
    app.use(function (req, res, next) {
@@ -37,13 +38,15 @@ function init() {
       //console.log("handle socket request");
    });
 
-   app.listen(9001, function () {
-      console.log('RPC Server Admin listening on port 9001!');
+   var port = CONFIG.admin.port;
+   app.listen(port, function () {
+      console.log('RPC Server Admin listening on port ' + port);
    });
 
    //static files
    app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
    app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
+   app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }
 
 module.exports.init = init;
