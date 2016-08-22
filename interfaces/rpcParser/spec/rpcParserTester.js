@@ -18,6 +18,212 @@ var rpcParametersArray = [
     "Parameter3"
 ];
 
+var inputParameters = [
+    {
+        "parameterType": "LITERAL",
+        "parameter": "0",
+        "num": 1
+    },
+    {
+        "parameterType": "LITERAL",
+        "parameter": "$PATIENTID",
+        "num": 2
+    },
+    {
+        "parameterType": "LIST",
+        "parameter": [
+            {
+                "key": "\"GMRAGNT\"",
+                "value": "CHOCOLATE^3;GMRD(120.82,"
+            },
+            {
+                "key": "\"GMRATYPE\"",
+                "value": "DF^Drug,Food"
+            },
+            {
+                "key": "\"GMRANATR\"",
+                "value": "A^Allergy"
+            },
+            {
+                "key": "\"GMRAORIG\"",
+                "value": "$USERID",
+                "exampleValue": "55"
+            },
+            {
+                "key": "\"GMRAORDT\"",
+                "value": "$NOWNOSECS",
+                "exampleValue": "3160804.2157"
+            },
+            {
+                "key": "\"GMRASYMP\",0",
+                "value": "1"
+            },
+            {
+                "key": "\"GMRASYMP\",1",
+                "value": "15^CONFUSION^^^"
+            },
+            {
+                "key": "\"GMRACHT\",0",
+                "value": "1"
+            },
+            {
+                "key": "\"GMRACHT\",1",
+                "value": "$NOW",
+                "exampleValue": "3160804.215746"
+            },
+            {
+                "key": "\"GMRAOBHX\"",
+                "value": "h^HISTORICAL"
+            },
+            {
+                "key": "\"GMRACMTS\",0",
+                "value": "1"
+            },
+            {
+                "key": "\"GMRACMTS\",1",
+                "value": "adding hist choc"
+            }
+        ],
+        "num": 3
+    },
+    {
+        "parameterType": "LIST",
+        "parameter": [
+            {
+                "key": "1",
+                "value": "GMPFLD(.01)=\"521774^R69.\""
+            },
+            {
+                "key": "2",
+                "value": "GMPFLD(.03)=\"0^\""
+            },
+            {
+                "key": "3",
+                "value": "GMPFLD(.05)=\"^Hypertension\""
+            },
+            {
+                "key": "4",
+                "value": "GMPFLD(.08)=\"3160811^Aug 11 2016\""
+            },
+            {
+                "key": "5",
+                "value": "GMPFLD(.12)=\"A^ACTIVE\""
+            },
+            {
+                "key": "6",
+                "value": "GMPFLD(.13)=\"3160303^Mar 03 2016\""
+            },
+            {
+                "key": "7",
+                "value": "GMPFLD(1.01)=\"7647488^Hypertension\""
+            },
+            {
+                "key": "8",
+                "value": "GMPFLD(1.02)=\"P\""
+            },
+            {
+                "key": "9",
+                "value": "GMPFLD(1.03)=\"57^ALEXANDER,ROBERT\""
+            },
+            {
+                "key": "10",
+                "value": "GMPFLD(1.04)=\"57^ALEXANDER,ROBERT\""
+            },
+            {
+                "key": "11",
+                "value": "GMPFLD(1.05)=\"57^Alexander,Robert\""
+            },
+            {
+                "key": "12",
+                "value": "GMPFLD(1.06)=\"^\""
+            },
+            {
+                "key": "13",
+                "value": "GMPFLD(1.07)=\"^\""
+            },
+            {
+                "key": "14",
+                "value": "GMPFLD(1.08)=\"10^Clinicd\""
+            },
+            {
+                "key": "15",
+                "value": "GMPFLD(1.09)=\"3160811^Aug 11 2016\""
+            },
+            {
+                "key": "16",
+                "value": "GMPFLD(1.1)=\"^Unknown\""
+            },
+            {
+                "key": "17",
+                "value": "GMPFLD(1.11)=\"0^NO\""
+            },
+            {
+                "key": "18",
+                "value": "GMPFLD(1.12)=\"0^NO\""
+            },
+            {
+                "key": "19",
+                "value": "GMPFLD(1.13)=\"0^NO\""
+            },
+            {
+                "key": "20",
+                "value": "GMPFLD(1.14)=\"A^ACUTE\""
+            },
+            {
+                "key": "21",
+                "value": "GMPFLD(1.15)=\"0^NO\""
+            },
+            {
+                "key": "22",
+                "value": "GMPFLD(1.16)=\"0^NO\""
+            },
+            {
+                "key": "23",
+                "value": "GMPFLD(1.17)=\"0^NO\""
+            },
+            {
+                "key": "24",
+                "value": "GMPFLD(1.18)=\"0^NO\""
+            },
+            {
+                "key": "25",
+                "value": "GMPFLD(80001)=\"38341003^38341003\""
+            },
+            {
+                "key": "26",
+                "value": "GMPFLD(80002)=\"64176011^64176011\""
+            },
+            {
+                "key": "27",
+                "value": "GMPFLD(80101)=\"^\""
+            },
+            {
+                "key": "28",
+                "value": "GMPFLD(80102)=\"^\""
+            },
+            {
+                "key": "29",
+                "value": "GMPFLD(80201)=\"3160725^Jul 25 2016\""
+            },
+            {
+                "key": "30",
+                "value": "GMPFLD(80202)=\"10D^ICD-10-CM\""
+            },
+            {
+                "key": "31",
+                "value": "GMPFLD(10,\"NEW\",1)=\"a problem comment\""
+            },
+            {
+                "key": "32",
+                "value": "GMPFLD(10,0)=\"1\""
+            }
+        ],
+        "num": 4
+    }
+]
+
+
+
 /** VistaJS buildCommand
  *
  * need tp copy here since this is not exported from VistaJS
@@ -114,11 +320,13 @@ var listParam = {
     "key3": "value3"
 };
 
-paramList.push(listParam);
-rpcParamList = processParamList(paramList);
-paramStringList = buildParamStringList(rpcParamList);
-rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
-console.log("RPC Command: " + rpcCommand.rpc);
-rpcObject = parser.parseRawRPC(rpcCommand.rpc);
-console.log ("  parsed rpcName = " + rpcObject.rpcName);
+//paramList.push(listParam);
+//rpcParamList = processParamList(paramList);
+//paramStringList = buildParamStringList(rpcParamList);
+//rpcCommand = buildCommand(null, rpcNamesArray[0], paramStringList);
+//console.log("RPC Command: " + rpcCommand.rpc);
+//rpcObject = parser.parseRawRPC(rpcCommand.rpc);
+//console.log ("  parsed rpcName = " + rpcObject.rpcName);
 
+var args = parser.inputParametersToArgs(inputParameters);
+console.log("inputParametersToArgs %j", args);

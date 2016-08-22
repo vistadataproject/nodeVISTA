@@ -1,6 +1,6 @@
 {
-    "name": "rpcServer",
-    "description": "nodeVISTA RPC Broker",
+    "name": "rpcSniffer",
+    "description": "nodeVISTA RPC Broker Sniffer",
     "version": "0.0.1",
     "license": "Apache-2.0",
     "private": true,
