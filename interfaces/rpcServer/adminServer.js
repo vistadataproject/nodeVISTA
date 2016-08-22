@@ -6,11 +6,10 @@ var MVDM = require('../../../VDM/prototypes/mvdm');
 
 function init() {
    app.use(function (req, res, next) {
-      console.log('middleware');
-      req.testing = 'testing';
       return next();
    });
 
+   //default path goes to index.html
    app.get('/', function(req, res, next){
       res.sendFile(path.join(__dirname + '/static/index.html'));
    });
@@ -19,9 +18,15 @@ function init() {
       var resObj = {
          type: 'socketMessage',
          MVDM: 'DESCRIBE',
-         data: mvdmData
+         data: {
+            time: new Date(),
+            type: 'DESCRIBE',
+            userId: mvdmData.userId,
+            facilityId: mvdmData.facilityId
+         }
       };
-      console.log("\n\n MVDM DESCRIBE EVENT: " + JSON.stringify(resObj) + "\n\n");
+
+      //send MVDM events to connected websocket clients
       expressWs.getWss('/').clients.forEach(function (client) {
          client.send(JSON.stringify(resObj));
       });
@@ -29,15 +34,16 @@ function init() {
 
    app.ws('/', function(ws, req) {
 
-      console.log('socket', req.testing);
+      //console.log("handle socket request");
    });
 
    app.listen(9001, function () {
-      console.log('Example app listening on port 9001!');
+      console.log('RPC Server Admin listening on port 9001!');
    });
 
-// try static - Express 4 respects order
+   //static files
    app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
+   app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
 }
 
 module.exports.init = init;
