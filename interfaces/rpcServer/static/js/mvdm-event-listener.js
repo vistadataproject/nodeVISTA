@@ -1,5 +1,5 @@
 (function(exports) {
-   function initWebSocketClient() {
+   function init() {
       // Let's open a web socket
       var ws = new WebSocket("ws://" + config.host + ":" + config.admin.port);
 
@@ -27,7 +27,8 @@
       var eventData = event.data;
 
       var tableRow = '<tr>';
-      tableRow += '<td>'+ eventData.time + '</td>';
+      tableRow += '<td>'+ eventData.timestamp + '</td>';
+      tableRow += '<td>'+ eventData.domain + '</td>';
       tableRow += '<td>'+ eventData.type + '</td>';
       tableRow += '<td>'+ eventData.userId + '</td>';
       tableRow += '<td>'+ eventData.facilityId + '</td>';
@@ -36,7 +37,7 @@
       $('#mvdm-event-table tbody').append(tableRow);
    }
 
-   exports.initWebSocketClient = initWebSocketClient;
-})(this.mvdmEvents = {});
+   exports.init = init;
+})(this.mvdmEventListner = {});
 
 

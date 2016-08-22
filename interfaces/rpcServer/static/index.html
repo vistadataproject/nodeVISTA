@@ -38,6 +38,7 @@
             <thead>
                 <tr>
                     <th>Time</th>
+                    <th>Domain</th>
                     <th>Type</th>
                     <th>User ID</th>
                     <th>Facility ID</th>
@@ -53,12 +54,12 @@
 <script src="jquery/dist/jquery.min.js"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="config.js"></script>
-<script src="js/mvdm-events.js"></script>
+<script src="js/mvdm-event-listener.js"></script>
 
 <script type="application/javascript">
     $(document).ready(function() {
-        //start up web socket client
-        mvdmEvents.initWebSocketClient();
+        //start up MVDM event listener
+        mvdmEventListner.init();
     });
 </script>
 

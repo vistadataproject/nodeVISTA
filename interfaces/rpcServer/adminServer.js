@@ -1,9 +1,12 @@
 var express = require('express');
 var app = express();
 var expressWs = require('express-ws')(app);
+var moment = require('moment');
 var path = require('path');
 var MVDM = require('../../../VDM/prototypes/mvdm');
 var CONFIG = require('./cfg/config.js');
+var LOGGER = require('./logger.js');
+
 
 function init() {
    app.use(function (req, res, next) {
@@ -20,7 +23,8 @@ function init() {
          type: 'socketMessage',
          MVDM: 'DESCRIBE',
          data: {
-            time: new Date(),
+            timestamp: moment(mvdmData.eventTimestamp).format('MM/DD/YYYY hh:mm:ss a'),
+            domain: mvdmData.data.result.type,
             type: 'DESCRIBE',
             userId: mvdmData.userId,
             facilityId: mvdmData.facilityId
@@ -34,13 +38,12 @@ function init() {
    });
 
    app.ws('/', function(ws, req) {
-
-      //console.log("handle socket request");
+      //handle socket request
    });
 
    var port = CONFIG.admin.port;
    app.listen(port, function () {
-      console.log('RPC Server Admin listening on port ' + port);
+      LOGGER.info('RPC Server Admin listening on port ' + port);
    });
 
    //static files
