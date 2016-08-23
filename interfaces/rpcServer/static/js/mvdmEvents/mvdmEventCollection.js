@@ -3,7 +3,7 @@ define([
    'jquery',
    'underscore',
    'backbone',
-   'mvdmEvents/mvdmEventModel'
+   'mvdmEvents/eventModel'
 ], function ($, _, Backbone, MVDMEventModel) {
    'use strict';
 

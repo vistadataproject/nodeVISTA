@@ -4,7 +4,7 @@ define([
    'underscore',
    'backbone',
    'handlebars',
-   'mvdmEvents/mvdmEventModel',
+   'mvdmEvents/eventModel',
    'mvdmEvents/mvdmEventCollection',
    'text!mvdmEvents/mvdmEvents.hbs',
    'config'
