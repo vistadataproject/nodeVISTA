@@ -4,7 +4,7 @@ var util = require('util');
 var _ = require('underscore');
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
-var CONFIG = require('./config.js');
+var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
@@ -61,8 +61,6 @@ if (process.argv.length > 2) {
     }
 }
 
-adminServer.init();
-
 connectVistaDatabase();
 
 // first set up a connection to VistA's RPC Broker
@@ -84,6 +82,9 @@ captureFile.on("open", function(fd) {
     server.on('connection', handleConnection);
     server.listen(port, function() {
         console.log('Sniffer listening to %j', server.address());
+
+        //start up rpc server admin server
+        adminServer.init();
     });
 });
 

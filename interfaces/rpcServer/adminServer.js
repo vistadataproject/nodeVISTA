@@ -1,8 +1,12 @@
 var express = require('express');
 var app = express();
 var expressWs = require('express-ws')(app);
+var moment = require('moment');
 var path = require('path');
 var MVDM = require('../../../VDM/prototypes/mvdm');
+var CONFIG = require('./cfg/config.js');
+var LOGGER = require('./logger.js');
+
 
 function init() {
    app.use(function (req, res, next) {
@@ -19,10 +23,12 @@ function init() {
          type: 'socketMessage',
          MVDM: 'DESCRIBE',
          data: {
-            time: new Date(),
+            timestamp: mvdmData.eventTimestamp,
+            domain: mvdmData.domain,
             type: 'DESCRIBE',
             userId: mvdmData.userId,
-            facilityId: mvdmData.facilityId
+            facilityId: mvdmData.facilityId,
+            mvdmObj: mvdmData.data.result
          }
       };
 
@@ -33,17 +39,18 @@ function init() {
    });
 
    app.ws('/', function(ws, req) {
-
-      //console.log("handle socket request");
+      //handle socket request
    });
 
-   app.listen(9001, function () {
-      console.log('RPC Server Admin listening on port 9001!');
+   var port = CONFIG.admin.port;
+   app.listen(port, function () {
+      LOGGER.info('RPC Server Admin listening on port ' + port);
    });
 
    //static files
    app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
    app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
+   app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }
 
 module.exports.init = init;
