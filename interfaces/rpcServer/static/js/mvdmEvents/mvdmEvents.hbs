@@ -1,0 +1,24 @@
+<div class="mvdm-events">
+    <table id="mvdm-event-table" class="table table-condensed table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Time</th>
+            <th>Domain</th>
+            <th>Type</th>
+            <th>User ID</th>
+            <th>Facility ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each mvdmEvents as |mvdmEvent|}}
+            <tr>
+                <td>{{mvdmEvent.timestamp}}</td>
+                <td>{{mvdmEvent.domain}}</td>
+                <td>{{mvdmEvent.type}}</td>
+                <td>{{mvdmEvent.userId}}</td>
+                <td>{{mvdmEvent.facilityId}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
