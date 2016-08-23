@@ -132,7 +132,7 @@ function handleConnection(conn) {
                     rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
                     LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
                 } else {
-                    rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
+                    //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
                     LOGGER.info("RPC parameters: %j", rpcObject.args);
 
                     rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
