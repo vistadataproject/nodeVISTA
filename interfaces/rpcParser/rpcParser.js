@@ -52,7 +52,8 @@ function parseRawRPC (rpcString) {
         //rpcObject.hostName = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
 
         var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
-        rpcObject.inputParameters = parametersArray;
+        //rpcObject.inputParameters = parametersArray;
+        rpcObject.args = inputParametersToArgs(parametersArray);
 
     } else if (rpcString.indexOf("[XWB]10304\u0005#BYE#\u0004") === 0) {
         rpcObject.name = "#BYE#";
@@ -77,7 +78,9 @@ function parseRawRPC (rpcString) {
 
         rpcObject.name = rpcName;
         rpcObject.version = version;
-        rpcObject.inputParameters = parametersArray;
+        //rpcObject.inputParameters = parametersArray;
+
+        rpcObject.args = inputParametersToArgs(parametersArray);
 
     }
     return rpcObject;
