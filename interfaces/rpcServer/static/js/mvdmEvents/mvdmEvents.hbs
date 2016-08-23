@@ -2,6 +2,7 @@
     <table id="mvdm-event-table" class="table table-condensed table-striped table-bordered">
         <thead>
         <tr>
+            <th>Date</th>
             <th>Time</th>
             <th>Domain</th>
             <th>Type</th>
@@ -12,7 +13,8 @@
         <tbody>
         {{#each mvdmEvents as |mvdmEvent|}}
             <tr>
-                <td>{{mvdmEvent.timestamp}}</td>
+                <td>{{mvdmEvent.date}}</td>
+                <td>{{mvdmEvent.time}}</td>
                 <td>{{mvdmEvent.domain}}</td>
                 <td>{{mvdmEvent.type}}</td>
                 <td>{{mvdmEvent.userId}}</td>

@@ -23,11 +23,12 @@ function init() {
          type: 'socketMessage',
          MVDM: 'DESCRIBE',
          data: {
-            timestamp: moment(mvdmData.eventTimestamp).format('MM/DD/YYYY hh:mm:ss a'),
+            timestamp: mvdmData.eventTimestamp,
             domain: mvdmData.domain,
             type: 'DESCRIBE',
             userId: mvdmData.userId,
-            facilityId: mvdmData.facilityId
+            facilityId: mvdmData.facilityId,
+            mvdmObj: mvdmData.data.result
          }
       };
 

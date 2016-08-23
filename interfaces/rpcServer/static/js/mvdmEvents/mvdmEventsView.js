@@ -50,7 +50,7 @@ define([
       },
 
       onClose: function () {
-
+         this.mvdmEventsSocket.close();
       }
    });
 
