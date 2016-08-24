@@ -7,7 +7,8 @@ define([
    'mvdmEvents/eventModel',
    'mvdmEvents/mvdmEventCollection',
    'text!mvdmEvents/mvdmEvents.hbs',
-   'config'
+   'config',
+   'mvdmEvents/filterHelper'
 ], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, mvdmEventsTemplate) {
    'use strict';
 
@@ -34,10 +35,35 @@ define([
             // websocket is closed.
             console.log("WebSocket: MVDM Event Handler connection is closed...");
          };
+
+         this.eventFilter = '';
+      },
+
+      events: {
+         "change .filter-select": "onFilterChange"
+      },
+
+      onFilterChange: function(event) {
+         var filterVal = event.currentTarget.value;
+         if (filterVal.toLowerCase() === 'all') {
+            this.eventFilter = '';
+         }
+         else {
+            this.eventFilter = event.currentTarget.value;
+         }
+
+         this.render();
       },
 
       render: function () {
-         this.$el.html(this.template({mvdmEvents: MVDMEventCollection.toJSON()}));
+
+         var collection = MVDMEventCollection;
+
+         if (this.eventFilter) {
+            collection = MVDMEventCollection.filterByType(this.eventFilter);
+         }
+
+         this.$el.html(this.template({mvdmEvents: collection.toJSON(), eventFilter: this.eventFilter}));
          return this;
       },
 

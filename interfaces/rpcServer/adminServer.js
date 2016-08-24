@@ -18,24 +18,32 @@ function init() {
       res.sendFile(path.join(__dirname + '/static/index.html'));
    });
 
-   MVDM.on('describe', function(mvdmData) {
-      var resObj = {
-         type: 'socketMessage',
-         MVDM: 'DESCRIBE',
-         data: {
-            timestamp: mvdmData.eventTimestamp,
-            domain: mvdmData.domain,
-            type: 'DESCRIBE',
-            userId: mvdmData.userId,
-            facilityId: mvdmData.facilityId,
-            mvdmObj: mvdmData.data.result
-         }
-      };
+   MVDM.on('create', function(mvdmData) {
+      processMVDMEvent('CREATE', mvdmData);
+   });
 
-      //send MVDM events to connected websocket clients
-      expressWs.getWss('/').clients.forEach(function (client) {
-         client.send(JSON.stringify(resObj));
-      });
+   MVDM.on('describe', function(mvdmData) {
+      processMVDMEvent('DESCRIBE', mvdmData);
+   });
+
+   MVDM.on('list', function(mvdmData) {
+      processMVDMEvent('LIST', mvdmData);
+   });
+
+   MVDM.on('update', function(mvdmData) {
+      processMVDMEvent('UPDATE', mvdmData);
+   });
+
+   MVDM.on('remove', function(mvdmData) {
+      processMVDMEvent('REMOVE', mvdmData);
+   });
+
+   MVDM.on('unremoved', function(mvdmData) {
+      processMVDMEvent('UNREMOVED', mvdmData);
+   });
+
+   MVDM.on('delete', function(mvdmData) {
+      processMVDMEvent('DELETE', mvdmData);
    });
 
    app.ws('/', function(ws, req) {
@@ -44,13 +52,33 @@ function init() {
 
    var port = CONFIG.admin.port;
    app.listen(port, function () {
-      LOGGER.info('RPC Server Admin listening on port ' + port);
+      LOGGER.info('MVDM Admin listening on port ' + port);
    });
 
    //static files
    app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
    app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
    app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
+}
+
+function processMVDMEvent(eventName, mvdmData) {
+   var resObj = {
+      type: 'socketMessage',
+      MVDM: eventName,
+      data: {
+         timestamp: mvdmData.eventTimestamp,
+         domain: mvdmData.domain,
+         type: eventName,
+         userId: mvdmData.userId,
+         facilityId: mvdmData.facilityId,
+         mvdmObj: mvdmData.data.result
+      }
+   };
+
+   //send MVDM events to connected websocket clients
+   expressWs.getWss('/').clients.forEach(function (client) {
+      client.send(JSON.stringify(resObj));
+   });
 }
 
 module.exports.init = init;
