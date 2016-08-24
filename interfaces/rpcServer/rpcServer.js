@@ -181,7 +181,6 @@ function handleConnection(conn) {
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
-        db.close();
     }
 
     function onConnectedError(err) {
@@ -189,7 +188,6 @@ function handleConnection(conn) {
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
-        db.close();
     }
 
     var buffer = '';
