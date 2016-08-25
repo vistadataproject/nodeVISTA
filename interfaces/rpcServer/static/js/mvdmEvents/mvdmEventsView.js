@@ -49,19 +49,8 @@ define([
       },
 
       events: {
-         "change .filter-select": "onFilterChange"
-      },
-
-      onFilterChange: function(event) {
-         var filterVal = event.currentTarget.value;
-         if (filterVal.toLowerCase() === 'all') {
-            this.eventFilter = '';
-         }
-         else {
-            this.eventFilter = event.currentTarget.value;
-         }
-
-         this.render();
+         "change .filter-select": 'onFilterChange',
+         'click .clear-events-list': 'onClearEventsList'
       },
 
       render: function () {
@@ -80,6 +69,27 @@ define([
          var event = JSON.parse(eventMsg.data);
 
          MVDMEventCollection.push(new MVDMEventModel(event.data));
+
+         this.render();
+      },
+
+      onFilterChange: function(e) {
+         var filterVal = e.currentTarget.value;
+         if (filterVal.toLowerCase() === 'all') {
+            this.eventFilter = '';
+         }
+         else {
+            this.eventFilter = e.currentTarget.value;
+         }
+
+         this.render();
+      },
+
+      onClearEventsList: function(e) {
+         e.preventDefault();
+
+         //clear events
+         MVDMEventCollection.reset();
 
          this.render();
       },

@@ -23,9 +23,18 @@ nav {
     display: inline-block;
 }
 
+.mvdm-events .emulation-status {
+    float:right;
+    margin: 15px 15px 0 0;
+}
+
 .mvdm-events .submenu .glyphicon {
-    font-size: 125%;
-    top: 3px;
+    font-size: 150%;
+    top: 5px;
+}
+
+.mvdm-events .submenu .glyphicon-filter {
+    color: #6495ed;
 }
 
 .mvdm-events .submenu .glyphicon-ok-sign {
@@ -34,4 +43,8 @@ nav {
 
 .mvdm-events .submenu .glyphicon-remove-sign {
     color:#ff0000;
+}
+
+.mvdm-events .submenu .glyphicon-ban-circle {
+    color:#808080;
 }
