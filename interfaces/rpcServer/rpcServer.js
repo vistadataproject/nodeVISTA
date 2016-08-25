@@ -149,7 +149,7 @@ function handleConnection(conn) {
                     } else {
                         // could not find a matching response, try calling the emulator or localRunner anyway
                         LOGGER.info("no unsupported RPC/arg pair");
-                        callEmulatorOrLocalRunner(rpcObject)
+                        response = callEmulatorOrLocalRunner(rpcObject);
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
