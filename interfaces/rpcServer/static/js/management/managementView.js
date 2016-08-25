@@ -16,6 +16,10 @@ define([
       initialize: function () {
          this.management = new ManagementModel();
          this.management.fetch();
+
+         this.management.on('change', _.bind(function() {
+           this.render();
+         }, this));
       },
 
       events: {
@@ -24,11 +28,7 @@ define([
 
       render: function() {
 
-         this.management.on('change', _.bind(function() {
-            console.log("on change");
-            console.log("this management: " + JSON.stringify(this.management));
-            this.$el.html(this.template({management:this.management}));
-         }, this));
+         this.$el.html(this.template({management:this.management.toJSON()}));
 
          return this;
       },

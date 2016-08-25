@@ -1,7 +1,15 @@
 <div class="mvdm-events">
+    <div class="submenu">
+        <h4 class="submenu-label">Filter: </h4>
+        {{filter-select eventFilter}}
+        <h4 class="submenu-label">Emulation: </h4>
+        {{#if management.isEmulation}}
+            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+        {{else}}
+            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+        {{/if}}
 
-    <h4 class="filter">Filter: </h4>
-    {{filter-select eventFilter}}
+    </div>
 
     <table id="mvdm-event-table" class="table table-condensed table-striped table-bordered table-hover">
         <thead>

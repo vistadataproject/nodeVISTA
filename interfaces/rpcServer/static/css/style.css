@@ -12,11 +12,26 @@ nav {
     display: inline-block;
 }
 
-.mvdm-events .filter {
+.mvdm-events .submenu .submenu-label {
+    display: inline-block;
+    margin:10px;
+}
+
+.mvdm-events .submenu select.filter {
+    width: 10%;
+    margin: 10px;
     display: inline-block;
 }
 
-.mvdm-events select.filter {
-    width: 10%;
-    margin: 10px;
+.mvdm-events .submenu .glyphicon {
+    font-size: 125%;
+    top: 3px;
+}
+
+.mvdm-events .submenu .glyphicon-ok-sign {
+    color: #008000;
+}
+
+.mvdm-events .submenu .glyphicon-remove-sign {
+    color:#ff0000;
 }
