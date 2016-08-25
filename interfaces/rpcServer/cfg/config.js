@@ -22,14 +22,13 @@ config.USER.DUZ = 57;
 config.FACILITY = {};
 config.FACILITY.ID = 2957;
 
-config.host = 'localhost';
-
 // serverSocket
 config.sniffer = {};
 config.sniffer.port = 9010;
 
 //admin socket
 config.admin = {};
+config.admin.host = 'localhost';
 config.admin.port = 9020;
 
 config.client = {};

@@ -15,6 +15,7 @@ var nodem = require('nodem');
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
 // imports for emulated
 var emulatedRPCs = require('./emulatedRPCs.js');
+var mvdmManagement = require('./mvdmManagement');
 var adminServer = require('./adminServer');
 
 var db;
@@ -148,7 +149,7 @@ function handleConnection(conn) {
                     } else {
                         // could not find a matching response, try calling the emulator or localRunner anyway
                         LOGGER.info("no unsupported RPC/arg pair");
-                        callEmulatorOrLocalRunner(rpcObject)
+                        response = callEmulatorOrLocalRunner(rpcObject);
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
@@ -184,7 +185,7 @@ function handleConnection(conn) {
     function callEmulatorOrLocalRunner(rpcObject) {
         var rpcResult;
         // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
-        if (emulatedRPCs.has(rpcObject.name)) {
+        if (mvdmManagement.isEmulation && emulatedRPCs.has(rpcObject.name)) {
             var domainRpcE = emulatedRPCs.get(rpcObject.name);
             domainRpcE.setup(db, DUZ, facilityCode);
             rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);

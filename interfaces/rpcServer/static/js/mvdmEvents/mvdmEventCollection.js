@@ -8,7 +8,12 @@ define([
    'use strict';
 
    var MVDMEventCollection = Backbone.Collection.extend({
-      model: MVDMEventModel
+      model: MVDMEventModel,
+      filterByType: function(type) {
+         return new MVDMEventCollection(this.filter(function(data){
+            return data.get('type').toLowerCase() === type.toLowerCase();
+         }));
+      }
    });
 
    return new MVDMEventCollection();
