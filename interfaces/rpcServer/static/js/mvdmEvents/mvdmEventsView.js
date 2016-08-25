@@ -113,7 +113,7 @@ define([
          var mvdmEvent = MVDMEventCollection.get(e.currentTarget.dataset.cid);
 
          var modalHtml = this.eventModalTemplate({
-            eventJSONStr: jsBeautify.js_beautify(
+            eventData: jsBeautify.js_beautify(
                JSON.stringify(
                   _.omit(mvdmEvent.toJSON(), 'cid')
                ))
