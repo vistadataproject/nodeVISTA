@@ -33,6 +33,7 @@ require.config({
       handlebars: '../handlebars/dist/handlebars.amd.min',
       bootstrap: '../bootstrap/dist/js/bootstrap.min',
       moment: '../moment/min/moment.min',
+      jsBeautify: '../js-beautify/js/lib/beautify',
       config: '../config'
    }
 });

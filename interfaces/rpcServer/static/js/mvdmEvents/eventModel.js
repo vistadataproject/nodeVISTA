@@ -18,6 +18,11 @@ define([
          args.time = time;
 
          Backbone.Model.apply(this, arguments);
+      },
+      toJSON: function() {
+         var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
+         json.cid = this.cid;
+         return json;
       }
    });
 

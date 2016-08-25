@@ -31,7 +31,7 @@
         </thead>
         <tbody>
         {{#each mvdmEvents as |mvdmEvent|}}
-            <tr>
+            <tr class="mvdm-event-row" data-cid="{{mvdmEvent.cid}}"> <!-- cid is internal backbone model client id -->
                 <td>{{mvdmEvent.date}}</td>
                 <td>{{mvdmEvent.time}}</td>
                 <td>{{mvdmEvent.domain}}</td>
@@ -42,4 +42,6 @@
         {{/each}}
         </tbody>
     </table>
+
+    <div id="mvdm-event-modal-container"></div>
 </div>

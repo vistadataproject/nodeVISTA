@@ -7,15 +7,18 @@ define([
    'mvdmEvents/eventModel',
    'mvdmEvents/mvdmEventCollection',
    'management/managementModel',
+   'jsBeautify',
    'text!mvdmEvents/mvdmEvents.hbs',
+   'text!mvdmEvents/eventModal.hbs',
    'config',
+   'bootstrap',
    'mvdmEvents/templateHelpers'
-], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, ManagementModel, mvdmEventsTemplate) {
+], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, ManagementModel, jsBeautify, MVDMEventsTemplate, EventModalTemplate) {
    'use strict';
 
    var MVDMEventsView = Backbone.View.extend({
 
-      template: Handlebars.compile(mvdmEventsTemplate),
+      template: Handlebars.compile(MVDMEventsTemplate),
 
       initialize: function () {
 
@@ -46,11 +49,14 @@ define([
          }, this));
 
          this.management.fetch();
+
+         this.eventModalTemplate = Handlebars.compile(EventModalTemplate);
       },
 
       events: {
          "change .filter-select": 'onFilterChange',
-         'click .clear-events-list': 'onClearEventsList'
+         'click .clear-events-list': 'onClearEventsList',
+         'click .mvdm-event-row': 'onEventShow'
       },
 
       render: function () {
@@ -61,7 +67,11 @@ define([
             collection = MVDMEventCollection.filterByType(this.eventFilter);
          }
 
-         this.$el.html(this.template({mvdmEvents: collection.toJSON(), eventFilter: this.eventFilter, management:this.management.toJSON()}));
+         this.$el.html(this.template({
+            mvdmEvents: collection.toJSON(),
+            eventFilter: this.eventFilter,
+            management:this.management.toJSON()
+         }));
          return this;
       },
 
@@ -92,6 +102,30 @@ define([
          MVDMEventCollection.reset();
 
          this.render();
+      },
+
+      //display event details modal
+      onEventShow: function(e) {
+         if (!e.currentTarget.dataset.cid) {
+            return;
+         }
+
+         var mvdmEvent = MVDMEventCollection.get(e.currentTarget.dataset.cid);
+
+         var modalHtml = this.eventModalTemplate({
+            eventJSONStr: jsBeautify.js_beautify(
+               JSON.stringify(
+                  _.omit(mvdmEvent.toJSON(), 'cid')
+               ))
+         });
+
+         this.$el.find('#mvdm-event-modal-container').html(modalHtml);
+
+         var modelEl = this.$el.find('#mvdm-event-modal');
+
+         modelEl.find('.modal-title').html('MVDM Event: ' + mvdmEvent.get('type'));
+
+         modelEl.modal('show');
       },
 
       onClose: function () {

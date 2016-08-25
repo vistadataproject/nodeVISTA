@@ -48,3 +48,11 @@ nav {
 .mvdm-events .submenu .glyphicon-ban-circle {
     color:#808080;
 }
+
+.mvdm-events .table-hover tr {
+    cursor: pointer;
+}
+
+.mvdm-events pre {
+    height: 600px;
+}
