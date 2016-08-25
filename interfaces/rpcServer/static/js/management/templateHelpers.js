@@ -6,9 +6,13 @@ define([
 
    Handlebars.registerHelper('emulation-select', function(management) {
 
+      if (!management) {
+         return;
+      }
+
       function setSelected(management, optionValue) {
-         if ((management.get('isEmulation') && optionValue === 'on') ||
-            (!management.get('isEmulation') && optionValue === 'off')) {
+         if ((management.isEmulation && optionValue === 'on') ||
+            (!management.isEmulation && optionValue === 'off')) {
             return ' selected';
          }
 

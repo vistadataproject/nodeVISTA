@@ -22,14 +22,11 @@ var db;
 var DUZ = CONFIG.USER.DUZ;
 var facilityCode = CONFIG.FACILITY.ID;
 
-var DEFAULT_TIMEOUT = CONFIG.vistaRpcBroker.connectPollTimeout;
-var DEFAULT_INTERVAL = CONFIG.vistaRpcBroker.connectPollInterval;
 var NUL = '\u0000';
 var SOH = '\u0001';
 var EOT = '\u0004';
 var ENQ = '\u0005';
 
-var configuration = CONFIG.vistaRpcBroker.configuration;
 var fromName = CONFIG.client.defaultName;
 var capturePath = CONFIG.FILE.defaultCaptureFile;
 var port = CONFIG.sniffer.port;
@@ -121,6 +118,8 @@ function handleConnection(conn) {
             LOGGER.info("RPC name: %s", rpcObject.name);
 
             var response = '';
+            var runnerReturn, runner;
+
 
             if (unsupportedRPCs.has(rpcObject.name)) {
                 // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
@@ -149,16 +148,21 @@ function handleConnection(conn) {
                     } else {
                         // could not find a matching response, try calling the emulator or localRunner anyway
                         LOGGER.info("no unsupported RPC/arg pair");
-                        response = callEmulatorOrLocalRunner(rpcObject);
+                        runnerReturn = callEmulatorOrLocalRunner(rpcObject);
+                        response = runnerReturn.response;
+                        runner = runnerReturn.runner;
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
                     LOGGER.info("unsupported RPC not dependent on parameter");
                     response = unsupportedRPCs.get(rpcObject.name);
+                    runner = "hardcode";
                 }
             } else {
                 LOGGER.info("calling emulator or local runner");
-                response = callEmulatorOrLocalRunner(rpcObject);
+                runnerReturn = callEmulatorOrLocalRunner(rpcObject);
+                response = runnerReturn.response;
+                runner = runnerReturn.runner;
             }
 
             // log to capture file the RPC and the response to a file
@@ -167,7 +171,7 @@ function handleConnection(conn) {
                 rpcObject.rpc = rpcPacket;
                 rpcObject.response = response;
                 rpcObject.from = fromName;
-                rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
+                rpcObject.to = runner;
                 rpcObject.timeStamp = new Date().toISOString();
             }
             captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
@@ -184,16 +188,18 @@ function handleConnection(conn) {
 
     function callEmulatorOrLocalRunner(rpcObject) {
         var rpcResult;
+        var runner;
         // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
         if (mvdmManagement.isEmulation && emulatedRPCs.has(rpcObject.name)) {
             var domainRpcE = emulatedRPCs.get(rpcObject.name);
             domainRpcE.setup(db, DUZ, facilityCode);
+            runner = "rpcE";
             rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
             LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
             LOGGER.info("RPC parameters: %j", rpcObject.args);
-
+            runner = "localRPCRunner";
             rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
         }
 
@@ -212,7 +218,7 @@ function handleConnection(conn) {
         response += '\u0004'
         console.log("response to client: " + JSON.stringify(response));
 
-        return response;
+        return {"response": response, "runner": runner};
     }
 
     function onConnectedClose() {
@@ -229,96 +235,6 @@ function handleConnection(conn) {
         conn.destroy();
     }
 
-    var buffer = '';
-    var dataBuffer = new Buffer(0);
-
-    // Handle the response from the RPC Broker
-    function onBrokerConnectionData(data, rpc, rpcObject) {
-        LOGGER.debug('sniffer.onBrokerConnection():%s', data);
-        var result;
-        var error;
-
-        var tempDataBuffer = Buffer.concat([dataBuffer, data]);
-        dataBuffer = tempDataBuffer;
-
-        buffer = dataBuffer.toString('binary');
-
-
-        if (buffer.indexOf(EOT) !== -1) {
-
-            if (buffer[0] !== NUL) {
-                LOGGER.trace(data);
-                error = new Error('VistA SECURITY error: ' + VistaJSLibrary.extractSecurityErrorMessage(buffer));
-            } else if (buffer[1] !== NUL) {
-                LOGGER.trace(data);
-                error = new Error('VistA APPLICATION error: ' + buffer);
-            }
-
-            var buffer2 = buffer.substring(2);
-
-            if (buffer2.indexOf('M  ERROR') !== -1) {
-                LOGGER.trace(buffer2);
-                error = new Error(buffer2);
-            }
-
-            result = buffer.substring(0, buffer.indexOf(EOT) + 1);
-            brokerSocket.removeAllListeners('data');
-
-            // send the data back to the client
-            LOGGER.info("Read from BrokerConnection result: %s, length: %s", result, result.length);
-            //conn.write(result);
-
-            // if it's in the unsupportedRPCs don't return it
-            if (!unsupportedRPCs.has(rpcObject.name)) {
-                conn.write(dataBuffer);
-            } else {
-                if (rpcObject) {
-                    rpcObject.hardcodedResponse = unsupportedRPCs.get(rpcObject.name);
-                }
-            }
-
-            dataBuffer = new Buffer(0);
-            // log the RPC and the response to a file
-            if (rpcObject) {
-                rpcObject.rpc = rpc;
-                rpcObject.response = result;
-                rpcObject.from = fromName;
-                rpcObject.to = CONFIG.vistaRpcBroker.configuration.host;
-                rpcObject.timeStamp = new Date().toISOString();
-            }
-            captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
-
-            if (error) {
-                LOGGER.trace("RpcClient error: " + error);
-            } else {
-                LOGGER.trace('RpcClient result: ' + util.inspect(result, {
-                        depth: null
-                    }));
-            }
-        }
-    }
-
-
-    // polling function from https://davidwalsh.name/javascript-polling
-    function poll(fn, callback, errback, timeout, interval) {
-        var endTime = Number(new Date()) + (timeout || DEFAULT_TIMEOUT);
-        interval = interval || DEFAULT_INTERVAL;
-
-        (function p() {
-            // If the condition is met, we're done!
-            if(fn()) {
-                callback();
-            }
-            // If the condition isn't met but the timeout hasn't elapsed, go again
-            else if (Number(new Date()) < endTime) {
-                setTimeout(p, interval);
-            }
-            // Didn't match and too much time, reject!
-            else {
-                errback(new Error('timed out for ' + fn + ': ' + arguments));
-            }
-        })();
-    }
 }
 
 
