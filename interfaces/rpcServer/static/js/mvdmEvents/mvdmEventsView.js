@@ -19,7 +19,7 @@ define([
       initialize: function () {
 
          // Open MVDM event web sockets
-         this.mvdmEventsSocket = new WebSocket("ws://" + config.host + ":" + config.admin.port);
+         this.mvdmEventsSocket = new WebSocket("ws://" + config.admin.host + ":" + config.admin.port);
 
          this.mvdmEventsSocket.onopen = function () {
             // Web Socket is connected, send data using send()
