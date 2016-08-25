@@ -6,10 +6,11 @@ define([
    'handlebars',
    'mvdmEvents/eventModel',
    'mvdmEvents/mvdmEventCollection',
+   'management/managementModel',
    'text!mvdmEvents/mvdmEvents.hbs',
    'config',
    'mvdmEvents/templateHelpers'
-], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, mvdmEventsTemplate) {
+], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, ManagementModel, mvdmEventsTemplate) {
    'use strict';
 
    var MVDMEventsView = Backbone.View.extend({
@@ -37,6 +38,14 @@ define([
          };
 
          this.eventFilter = '';
+
+         this.management = new ManagementModel();
+
+         this.management.on('change', _.bind(function() {
+            this.render();
+         }, this));
+
+         this.management.fetch();
       },
 
       events: {
@@ -63,7 +72,7 @@ define([
             collection = MVDMEventCollection.filterByType(this.eventFilter);
          }
 
-         this.$el.html(this.template({mvdmEvents: collection.toJSON(), eventFilter: this.eventFilter}));
+         this.$el.html(this.template({mvdmEvents: collection.toJSON(), eventFilter: this.eventFilter, management:this.management.toJSON()}));
          return this;
       },
 
