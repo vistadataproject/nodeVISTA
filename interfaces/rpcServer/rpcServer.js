@@ -235,9 +235,6 @@ function handleConnection(conn) {
         conn.destroy();
     }
 
-    var buffer = '';
-    var dataBuffer = new Buffer(0);
-
 }
 
 
