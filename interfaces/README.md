@@ -224,6 +224,6 @@ The capture.txt file will start writing an array of JSON objects for each RPC. A
         },
 
 
-## VistaJS.js and VistaJSLibrary.js
+## External modules
 
-The sniffer uses instances/VistaJS/VistaJSLibrary.js. Thus `npm install` needs to be run in the instances/VistaJS directory as well.
+The sniffer uses interfaces/VistaJS/VistaJSLibrary.js. It also relies on interfaces/rpcParser/rpcParser.js. Thus `npm install` needs to be run in the interfaces/VistaJS and insterfaces/rpcParser directories as well.

@@ -1,7 +1,7 @@
 'use strict'
 
 var bunyan = require('bunyan');
-var CONFIG = require('./cfg/config.js');
+var CONFIG = require('./config.js');
 var LOGGER = bunyan.createLogger({
     name: CONFIG.LOGGER.name,
     streams: [

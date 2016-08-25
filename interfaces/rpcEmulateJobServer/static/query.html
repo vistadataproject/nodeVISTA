@@ -12,10 +12,13 @@ body {
     font-family: Trebuchet MS, Verdana, Geneva, sans-serif;
     background: #fff;
     padding: 20px 20px 20px 20px;
+    padding-top: 0px;
+    margin-top: 0px !important;
     color: #666;
 }
 h1 { font-size: 1.6em; font-weight: normal; }
-a { color: #c00000; }
+a { color: #c00000; cursor: pointer;}
+a.active {color: #ff9933 !important;}
 th, td {
     border: 1px dotted #eee;
     padding: 2px 4px; 
@@ -27,8 +30,10 @@ th, td {
     margin-bottom: 30px;
     width: 60%;
 }
-#header { float: right; width: 35%;}
-#heading { text-align: right;}
+#header { float: right; width: 100%; background-color: black; margin-bottom: 20px;}
+#tabs {width: 55%; text-align: left; float: left; margin-top: 20px;}
+#tabs a {color: white; padding: 15px;}
+#heading { text-align: right; padding-right: 10px; color: white; width: 40%; float: right;}
 #intro { text-align: right;}
 #footer { clear: both; margin-top: 20px; text-align: center;}
 #query { 
@@ -58,6 +63,8 @@ th, td {
     margin: 0px;
     padding: 10px;
     background-color: #fcfcfc;
+    height: 300px;
+    overflow: auto;
 }
 </style> 
 <script type="text/javascript" src="fmQMCannedQueries.js"></script>
@@ -90,13 +97,20 @@ th, td {
  *   - get query and form from forms and reset url bar
  *   - this will kick in the above
  */
-function processLoad()
-{
-    // Always fill in options
-//     fillInCannedQueries();
-    // Process url bar for query
-    sendQueryInURLBar();
-}
+ 
+window.socketEventsObj = {};
+window.socketEvents = [];
+window.socket = io.connect();
+
+window.socket.on('message', function(data){
+    console.log('data from server socket------', data);
+    var timeStamp = data.message.data.eventTimestamp;
+    if(!window.socketEventsObj[timeStamp]) {
+     	window.socketEventsObj[timeStamp] = data.message;
+     	window.socketEvents.push(data.message);
+	 	filterEvents();
+	 }
+});
 
 // Pull CANNED QUERIES from a static definition
 function fillInCannedQueries()
@@ -115,11 +129,10 @@ function fillInCannedQueries()
 // From URL bar: it is the master. Form fills on page just set this
 function sendQueryInURLBar()
 {
-	console.log(location.search);
-    if (!location.search)
+    if (!window.search)
         return;
     var args = new Object();
-    var srch = location.search.substring(1);
+    var srch = window.search.substring(0);
     var pairs = srch.split("&");
     var rpcArgs = "";
     var format = "";
@@ -148,9 +161,9 @@ function sendQueryInURLBar()
         else if (argname == "emulation")
         	emulation = value;
     }
-    if (!rpcName || !rpcArgs)
+    if (!rpcArgs)
     {
-         location.search = "";
+         window.search = "";
          return;
     }
     if (!format)
@@ -216,16 +229,14 @@ function handleSendQuery()
     var domain = $('#domain').val();
     var format = $('#format').val();
     var emulation = $('#emulation').val();
-    if (!args || ! rpcName)
-        return;
     var queryArgs = "rpcType=" + encodeURIComponent(rpcType);
     queryArgs += "&rpcName=" + encodeURIComponent(rpcName);
     queryArgs += "&rpcArgs=" + encodeURIComponent(args);
     queryArgs += "&domain=" + encodeURIComponent(domain);
     queryArgs += "&format=" + format;
     queryArgs += "&emulation=" + emulation;
-    console.log(queryArgs);
-	location.search = queryArgs;
+	window.search = queryArgs;
+	sendQueryInURLBar();
 }
 
 /*
@@ -275,6 +286,8 @@ function makeHTMLFromJSON(jsonReply, query)
 }
 
 $(document).ready(function() {
+	$('#eventsTab').hide();
+	$('#adminTab').hide();
 	$('#domainDiv').hide();
 	$('#formatDiv').hide();
 	$('#rpcNameDiv').show();
@@ -290,84 +303,165 @@ $(document).ready(function() {
             $('#rpcNameDiv').hide();
         }
     });
+    $('#eventTbl').on('click', 'tr', function(){
+    	var key = $(this).children().first().text();
+    	var data = window.socketEventsObj[key];
+    	console.log(key);
+    	console.log(data);
+    	$('#eventDetail').html('<pre>' + JSON.stringify(data.data.data.result, null, 1) + '</pre>');
+    });
+    
+    $('#events').click(function() {
+    	$('#eventsTab').show();
+    	$('#rpcFormTab').hide();
+    	$('#adminTab').hide();
+    	$('#events').addClass('active');
+    	$('#rpcForm').removeClass('active');
+    	$('#admin').removeClass('active');
+    });
+    
+    $('#rpcForm').click(function() {
+    	$('#eventsTab').hide();
+    	$('#rpcFormTab').show();
+    	$('#adminTab').hide();
+    	$('#events').removeClass('active');
+    	$('#rpcForm').addClass('active');
+    	$('#admin').removeClass('active');
+    });
+    
+    $('#admin').click(function() {
+    	$('#eventsTab').hide();
+    	$('#rpcFormTab').hide();
+    	$('#adminTab').show();
+    	$('#events').removeClass('active');
+    	$('#rpcForm').removeClass('active');
+    	$('#admin').addClass('active');
+    });
+    
+    $('#eventFilter').on('change', filterEvents);
+    
+    
 });
 
+function filterEvents() {
+	var filter = $('#eventFilter').val();
+	if (filter == 'ALL') {
+		displayEventTable(window.socketEvents);
+	} else {
+		var events = [];
+		window.socketEvents.forEach(function(event) {
+			if (event.MVDM === filter) {
+				events.push(event);
+			}
+		});
+		displayEventTable(events);
+	}
+}
+    
+function displayEventTable(events) {
+	var html = '<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>';
+	events.forEach(function(event) {
+		html += '<tr><td>' + event.data.eventTimestamp + '</td><td>' + event.MVDM + '</td><td>' + event.data.userId + '</td><td>' + event.data.facilityId + '</td></tr>'
+	});
+	$('#eventTbl').html(html);
+}
+
 </script>
 
-<script>
-      var socket = io.connect();
 
-      socket.on('message', function(data){
-        console.log('data from server socket', data);
-      });
-</script>
     
 </head>
 
-<body onload="processLoad()">
+<body>
 
 <div id="header"> 
+<div id="tabs">
+<a id="rpcForm" class="active">RPC Invoke</a>
+<a id="events">MVDM Events</a>
+<a id="admin">Management</a>
+</div>
 <div id="heading">
-<h1>RPC/VPR Query Maker</h1>
+<h1>MVDM Client</h1>
 <!--[if lt IE 7]>
 <div style="color: red">Warning: You are running a version of Internet Explorer (IE) that is over ten years old. Caregraf web applications are tested on IE version 7 and later and their behavior on earlier versions is unpredictable. May we suggest you browse Caregraf using a newer version of IE (now at version 9) or a different browser such as Mozilla Firefox or Google Chrome.</div>
 <![endif]-->
 </div> 
 </div> 
 
-<form id="fmql-form" name="fmql-form" action="?" enctype="application/x-www-form-urlencoded" method="get">
-<section>
-<div style="float:left; with:200px;">
-RPC/VPR:
-<input type="radio" name="rpcType" value="rpc" checked>RPC</input>
-<input type="radio" name="rpcType" value="vpr">VPR</input>
+<div id="rpcFormTab">
+	<form id="fmql-form" name="fmql-form" action="?" enctype="application/x-www-form-urlencoded" method="get">
+	<section>
+	<div style="float:left; with:200px;">
+	RPC/VPR:
+	<input type="radio" name="rpcType" value="rpc" checked>RPC</input>
+	<input type="radio" name="rpcType" value="vpr">VPR</input>
+	</div>
+	<div id="domainDiv" style="margin-left: 200px;">
+	Domain:
+	<select id="domain" name="domain">
+	<option value="allergy">Allergy</option>
+	<option value="problem">Problem</option>
+	<option value="vitals">Vitals</option>
+	</select> 
+	</div>
+	</section>
+	<div style="clear:both; padding-top:10px;" id="rpcNameDiv">
+	Name: <br/>
+	<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a>
+	</div>
+	<div style="clear:both; padding-top:10px;">
+	Arguments: <br/>
+	<textarea id="args" name="args" rows="5" cols="80"></textarea>   
+	</div>     
+	<div class="options">     
+	<!-- 
+	<div class="option">
+	<span class="option-title">Query: </span> 
+	<select id="query_choice" name="query_choice" onchange="if (this.selectedIndex == 0) return; boxQuery(this.options[this.selectedIndex].getAttribute('value1'));">
+	<option>Pick a Canned Query</option>
+	</select>
+	</div>
+	 -->
+	<div class="option" id="formatDiv"> 
+	<span class="option-title">Format: </span> 
+	<select id="format" name="format">
+	<option value="XML">XML</option>
+	<option value="JSON">JSON</option> 
+	</select> 
+	</div> 
+	
+	<input type="button" value="Send Query" onclick="handleSendQuery()" /> 
+	</div>
+	</form> 
+	<div id="results">
+	</div>
 </div>
-<div id="domainDiv" style="margin-left: 200px;">
-Domain:
-<select id="domain" name="domain">
-<option value="allergy">Allergy</option>
-<option value="problem">Problem</option>
-<option value="vitals">Vitals</option>
-</select> 
+<div style="width:100%;" id="eventsTab">
+	<div class="option" id="formatDiv" style="margin-left: 10px;"> 
+		<span class="option-title">Filter: </span> 
+		<select id="eventFilter" name="eventFilter">
+		<option value="ALL">All</option>
+		<option value="DESCRIBE">DESCRIBE</option>
+		<option value="LIST">LIST</option> 
+		</select> 
+	</div> 
+	<div style="clear: both; margin: 10px;"></div>
+	<div style="width:40%; float:left; margin-right:10%">
+		<table id="eventTbl">
+			<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>
+		</table>
+	</div>
+	<div id="eventDetail" style="width:45%; float:left"></div>
 </div>
-</section>
-<div style="clear:both; padding-top:10px;" id="rpcNameDiv">
-Name: <br/>
-<textarea id="rpc" name="rpc" rows="1" cols="80"></textarea> <a href="http://vistadataproject.info/artifacts/cprsRPCs">see CPRS RPCs</a>
+<div id="adminTab">
+	<div class="option">
+		<span class="option-title">Emulation: </span>
+		<select id="emulation" name="emulation">
+		<option value="on">On</option>
+		<option value="off">Off</option>
+		</select>
+	</div>
 </div>
-<div style="clear:both; padding-top:10px;">
-Arguments: <br/>
-<textarea id="args" name="args" rows="5" cols="80"></textarea>   
-</div>     
-<div class="options">     
-<!-- 
-<div class="option">
-<span class="option-title">Query: </span> 
-<select id="query_choice" name="query_choice" onchange="if (this.selectedIndex == 0) return; boxQuery(this.options[this.selectedIndex].getAttribute('value1'));">
-<option>Pick a Canned Query</option>
-</select>
-</div>
- -->
-<div class="option" id="formatDiv"> 
-<span class="option-title">Format: </span> 
-<select id="format" name="format">
-<option value="XML">XML</option>
-<option value="JSON">JSON</option> 
-</select> 
-</div> 
-<div class="option">
-<span class="option-title">Emulation: </span>
-<select id="emulation" name="emulation">
-<option value="on">On</option>
-<option value="off">Off</option>
-</select>
-<input type="button" value="Send Query" onclick="handleSendQuery()" /> 
-</div>
-</form> 
-
-<div id="results">
-</div>
-
 </body>
 </html>
 

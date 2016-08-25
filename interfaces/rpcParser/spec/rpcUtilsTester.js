@@ -1,6 +1,6 @@
 'use strict';
 
-var rpcUtils = require('../rpcUtils.js');
+var rpcParserUtils = require('../rpcParserUtils.js');
 var VistaJSLibrary = require('../../VistaJS/VistaJSLibrary.js');
 
 var LENGTH_1_STRING_ALPHA = 'A';
@@ -92,7 +92,7 @@ var remainder = "POIUYT";
 
 for (var i = 0; i < spackArray.length; i++) {
     console.log("Unpacking " + spackArray[i].spack);
-    var unspack = rpcUtils.unSPack(spackArray[i]["spack"]);
+    var unspack = rpcParserUtils.unSPack(spackArray[i]["spack"]);
     console.log("  unpacked: " + unspack);
     if (spackArray[i]["payload"] !== unspack) {
         console.log("    ERROR!");
@@ -101,7 +101,7 @@ for (var i = 0; i < spackArray.length; i++) {
 
 for (var i = 0; i < lpackArray.length; i++) {
     console.log("Unpacking " + lpackArray[i].lpack);
-    var unlpack = rpcUtils.unLPack(lpackArray[i]["lpack"]);
+    var unlpack = rpcParserUtils.unLPack(lpackArray[i]["lpack"]);
     if (unlpack) {
         console.log("  unpacked: " + unlpack.string, ", width: " + unlpack.width);
         if (lpackArray[i]["payload"] !== unlpack.string || lpackArray[i]["width"] != unlpack.width) {
@@ -116,7 +116,7 @@ for (var i = 0; i < spackArray.length; i++) {
 }
 for (var i = 0; i < spackArrayPlus.length; i++) {
     console.log("Popping " + spackArrayPlus[i].spack);
-    var popspack = rpcUtils.popSPack(spackArrayPlus[i]["spack"]);
+    var popspack = rpcParserUtils.popSPack(spackArrayPlus[i]["spack"]);
     console.log("  popped string: " + popspack.string + ", remainder: " + popspack.remainder);
     if (spackArrayPlus[i]["string"] !== popspack.payload || spackArrayPlus[i]["remainder"] != popspack.remainder) {
         console.log("    ERROR!");

@@ -1,0 +1,30 @@
+<div class="mvdm-events">
+
+    <h4 class="filter">Filter: </h4>
+    {{filter-select eventFilter}}
+
+    <table id="mvdm-event-table" class="table table-condensed table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Domain</th>
+            <th>Type</th>
+            <th>User ID</th>
+            <th>Facility ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each mvdmEvents as |mvdmEvent|}}
+            <tr>
+                <td>{{mvdmEvent.date}}</td>
+                <td>{{mvdmEvent.time}}</td>
+                <td>{{mvdmEvent.domain}}</td>
+                <td>{{mvdmEvent.type}}</td>
+                <td>{{mvdmEvent.userId}}</td>
+                <td>{{mvdmEvent.facilityId}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>
