@@ -34,6 +34,16 @@ config.admin.port = 9020;
 config.client = {};
 config.client.defaultName = "CPRS";
 
+// connection to legacy broker
+config.vistaRpcBroker = {};
+config.vistaRpcBroker.configuration = {
+    host: '192.168.0.102',
+    port: 9430
+};
+//config.vistaRpcBroker.configuration = {
+//    host: '10.2.100.101',
+//    port: 9210
+//}
 config.vistaRpcBroker.connectPollInterval = 100;
 config.vistaRpcBroker.connectPollTimeout = 10000;
 
