@@ -27,5 +27,4 @@ define([
 
       return new Handlebars.SafeString(selectHtml);
    });
-
 });

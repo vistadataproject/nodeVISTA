@@ -8,7 +8,7 @@ define([
    'mvdmEvents/mvdmEventCollection',
    'text!mvdmEvents/mvdmEvents.hbs',
    'config',
-   'mvdmEvents/filterHelper'
+   'mvdmEvents/templateHelpers'
 ], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, mvdmEventsTemplate) {
    'use strict';
 
