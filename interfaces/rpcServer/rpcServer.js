@@ -2,6 +2,7 @@ var net = require('net');
 var fs = require('fs');
 var util = require('util');
 var _ = require('underscore');
+var HashMap = require('hashmap');
 var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
@@ -123,37 +124,41 @@ function handleConnection(conn) {
 
             if (unsupportedRPCs.has(rpcObject.name)) {
                 // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
-                response = unsupportedRPCs.get(rpcObject.name);
-            } else {
-                var rpcResult;
-                // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
-                if (mvdmManagement.isEmulation && emulatedRPCs.has(rpcObject.name)) {
-                    var domainRpcE = emulatedRPCs.get(rpcObject.name);
-                    domainRpcE.setup(db, DUZ, facilityCode);
-                    rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
-                    LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
-                } else {
-                    //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
-                    LOGGER.info("RPC parameters: %j", rpcObject.args);
 
-                    rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
-                }
+                // check if the mapped value is a map for parameters or just a single response
+                if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
+                    LOGGER.info('checking unsupported RPC/param pairs')
 
-                response = '\u0000\u0000';
-                if (rpcResult && rpcResult.result !== undefined) {
-                    if (_.isArray(rpcResult.result)) {
-                        // in localRpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
-                        for (var i = 0; i < rpcResult.result.length; i++) {
-                            response += rpcResult.result[i] +'\r\n';
+                    var params = unsupportedRPCs.get(rpcObject.name).keys();
+                    var paramKey;
+                    for (var i = 0; i < params.length; i++) {
+                        for (var j = 0; j < rpcObject.args.length; j++) {
+                            // check each argument if it contains the param
+                            if (typeof rpcObject.args[j] === 'string' && rpcObject.args[j].indexOf(params[i]) > -1) {
+                                paramKey = params[i];
+                                LOGGER.info("found an unsupported RPC/arg pair: %s %s", rpcObject.name, paramKey);
+                                break;
+                            }
                         }
-                    } else {
-                        // the SINGLE VALUE replyType is not an array
-                        response += rpcResult.result;
+                        if (paramKey !== undefined) {
+                            break;
+                        }
                     }
+                    if (paramKey !== undefined) {
+                        response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
+                    } else {
+                        // could not find a matching response, try calling the emulator or localRunner anyway
+                        LOGGER.info("no unsupported RPC/arg pair");
+                        callEmulatorOrLocalRunner(rpcObject)
+                    }
+                } else {
+                    // the unsupported RPC response does not depend on the arguments
+                    LOGGER.info("unsupported RPC not dependent on parameter");
+                    response = unsupportedRPCs.get(rpcObject.name);
                 }
-                response += '\u0004'
-                console.log("response to client: " + JSON.stringify(response));
-
+            } else {
+                LOGGER.info("calling emulator or local runner");
+                response = callEmulatorOrLocalRunner(rpcObject);
             }
 
             // log to capture file the RPC and the response to a file
@@ -175,6 +180,39 @@ function handleConnection(conn) {
 
         }
 
+    }
+
+    function callEmulatorOrLocalRunner(rpcObject) {
+        var rpcResult;
+        // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
+        if (mvdmManagement.isEmulation && emulatedRPCs.has(rpcObject.name)) {
+            var domainRpcE = emulatedRPCs.get(rpcObject.name);
+            domainRpcE.setup(db, DUZ, facilityCode);
+            rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
+            LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
+        } else {
+            //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
+            LOGGER.info("RPC parameters: %j", rpcObject.args);
+
+            rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
+        }
+
+        var response = '\u0000\u0000';
+        if (rpcResult && rpcResult.result !== undefined) {
+            if (_.isArray(rpcResult.result)) {
+                // in localRpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
+                for (var i = 0; i < rpcResult.result.length; i++) {
+                    response += rpcResult.result[i] +'\r\n';
+                }
+            } else {
+                // the SINGLE VALUE replyType is not an array
+                response += rpcResult.result;
+            }
+        }
+        response += '\u0004'
+        console.log("response to client: " + JSON.stringify(response));
+
+        return response;
     }
 
     function onConnectedClose() {
