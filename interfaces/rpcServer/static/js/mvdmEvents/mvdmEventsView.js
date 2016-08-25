@@ -123,7 +123,7 @@ define([
 
          var modelEl = this.$el.find('#mvdm-event-modal');
 
-         modelEl.find('.modal-title').html('MVDM Event: ' + mvdmEvent.get('type'));
+         modelEl.find('.modal-title-type').html(mvdmEvent.get('type'));
 
          modelEl.modal('show');
       },
