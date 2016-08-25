@@ -101,8 +101,8 @@ function processMVDMEvent(eventName, mvdmData) {
          timestamp: mvdmData.eventTimestamp,
          domain: mvdmData.domain,
          type: eventName,
-         userId: mvdmData.userId,
-         facilityId: mvdmData.facilityId,
+         user: mvdmData.user,
+         facility: mvdmData.facility,
          mvdmObj: mvdmData.data.result
       }
    };

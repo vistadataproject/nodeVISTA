@@ -26,7 +26,10 @@
             <th>Domain</th>
             <th>Type</th>
             <th>User ID</th>
+            <th>User Name</th>
             <th>Facility ID</th>
+            <th>Facility Name</th>
+            <th>Station Number</th>
         </tr>
         </thead>
         <tbody>
@@ -36,8 +39,11 @@
                 <td>{{mvdmEvent.time}}</td>
                 <td>{{mvdmEvent.domain}}</td>
                 <td>{{mvdmEvent.type}}</td>
-                <td>{{mvdmEvent.userId}}</td>
-                <td>{{mvdmEvent.facilityId}}</td>
+                <td>{{mvdmEvent.user.id}}</td>
+                <td>{{mvdmEvent.user.name}}</td>
+                <td>{{mvdmEvent.facility.id}}</td>
+                <td>{{mvdmEvent.facility.name}}</td>
+                <td>{{mvdmEvent.facility.stationNumber}}</td>
             </tr>
         {{/each}}
         </tbody>
