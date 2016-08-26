@@ -7,10 +7,10 @@ var expressWs = require('express-ws')(app);
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var path = require('path');
-var MVDM = require('../../../VDM/prototypes/mvdm');
 var CONFIG = require('./cfg/config.js');
 var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
+var EventHandler = require('./EventHandler');
 
 function init() {
    // parse application/x-www-form-urlencoded
@@ -46,11 +46,45 @@ function init() {
       return res.sendStatus(200);
    });
 
-   app.ws('/', function(ws, req) {
+   //mvdm events socket
+   app.ws('/mvdmEvents', function(ws, req) {
       //handle socket request
+      EventHandler.on('mvdmCreate', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
+
+      EventHandler.on('mvdmDescribe', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
+
+      EventHandler.on('mvdmList', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
+
+      EventHandler.on('mvdmUpdate', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
+
+      EventHandler.on('mvdmRemove', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
+
+      EventHandler.on('mvdmUnremoved', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
+
+      EventHandler.on('mvdmDelete', function(event) {
+         processEvent(ws, 'MVDM', event);
+      });
    });
 
-   initMVDMEventListeners();
+   //rpc events socket
+   app.ws('/rpcEvents', function(ws, req) {
+
+      EventHandler.on('rpcCall', function(event) {
+         processEvent(ws, 'RPC', event);
+      });
+   });
 
    var port = CONFIG.admin.port;
    app.listen(port, function () {
@@ -63,47 +97,15 @@ function init() {
    app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }
 
-function initMVDMEventListeners() {
-   MVDM.on('create', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-
-   MVDM.on('describe', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-
-   MVDM.on('list', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-
-   MVDM.on('update', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-
-   MVDM.on('remove', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-
-   MVDM.on('unremoved', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-
-   MVDM.on('delete', function(mvdmData) {
-      processMVDMEvent(mvdmData);
-   });
-}
-
-function processMVDMEvent(mvdmEvent) {
+function processEvent(ws, eventCategory, event) {
 
    var resObj = {
       type: 'socketMessage',
-      data: mvdmEvent
+      eventCategory: eventCategory,
+      data: event
    };
 
-   //send MVDM events to connected websocket clients
-   expressWs.getWss('/').clients.forEach(function (client) {
-      client.send(JSON.stringify(resObj));
-   });
+   ws.send(JSON.stringify(resObj));
 }
 
 module.exports.init = init;

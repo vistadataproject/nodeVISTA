@@ -9,6 +9,7 @@ var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
+var EventHandler = require('./EventHandler');
 
 // imports for localRpcRunner
 var nodem = require('nodem');
@@ -215,8 +216,16 @@ function handleConnection(conn) {
                 response += rpcResult.result;
             }
         }
-        response += '\u0004'
+        response += '\u0004';
         console.log("response to client: " + JSON.stringify(response));
+
+        EventHandler.emit('rpcCall', {
+            type: 'rpcCall',
+            runner: runner,
+            rpcObject: rpcObject,
+            result: rpcResult,
+            response: response
+        });
 
         return {"response": response, "runner": runner};
     }
