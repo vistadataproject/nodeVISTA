@@ -46,37 +46,19 @@ function init() {
       return res.sendStatus(200);
    });
 
+   var mvdmClients = [];
+
    //mvdm events socket
    app.ws('/mvdmEvents', function(ws, req) {
-      //handle socket request
-      EventHandler.on('mvdmCreate', function(event) {
-         processEvent(ws, 'MVDM', event);
+      mvdmClients.push(ws);
+
+      ws.on('close', function(){
+         handleSocketClose(ws, mvdmClients);
       });
 
-      EventHandler.on('mvdmDescribe', function(event) {
-         processEvent(ws, 'MVDM', event);
-      });
-
-      EventHandler.on('mvdmList', function(event) {
-         processEvent(ws, 'MVDM', event);
-      });
-
-      EventHandler.on('mvdmUpdate', function(event) {
-         processEvent(ws, 'MVDM', event);
-      });
-
-      EventHandler.on('mvdmRemove', function(event) {
-         processEvent(ws, 'MVDM', event);
-      });
-
-      EventHandler.on('mvdmUnremoved', function(event) {
-         processEvent(ws, 'MVDM', event);
-      });
-
-      EventHandler.on('mvdmDelete', function(event) {
-         processEvent(ws, 'MVDM', event);
-      });
    });
+
+   var rpcClients = [];
 
    //rpc events socket
    app.ws('/rpcEvents', function(ws, req) {
@@ -84,7 +66,14 @@ function init() {
       EventHandler.on('rpcCall', function(event) {
          processEvent(ws, 'RPC', event);
       });
+
+      ws.on('close', function(){
+         handleSocketClose(ws, rpcClients);
+      });
    });
+
+   initMVDMEventListeners(mvdmClients);
+   initRPCEventListeners(rpcClients);
 
    var port = CONFIG.admin.port;
    app.listen(port, function () {
@@ -97,7 +86,53 @@ function init() {
    app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }
 
-function processEvent(ws, eventCategory, event) {
+function handleSocketClose(ws, clients) {
+   for(var i = 0; clients.length; i++) {
+      if (clients[i] === ws) {
+         clients.splice(i, 1);
+         break;
+      }
+   }
+}
+
+function initMVDMEventListeners(mvdmClients) {
+   //handle socket request
+   EventHandler.on('mvdmCreate', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+
+   EventHandler.on('mvdmDescribe', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+
+   EventHandler.on('mvdmList', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+
+   EventHandler.on('mvdmUpdate', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+
+   EventHandler.on('mvdmRemove', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+
+   EventHandler.on('mvdmUnremoved', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+
+   EventHandler.on('mvdmDelete', function(event) {
+      processEvent(mvdmClients, 'MVDM', event);
+   });
+}
+
+function initRPCEventListeners(rpcClients) {
+   EventHandler.on('rpcCall', function(event) {
+      processEvent(rpcClients, 'RPC', event);
+   });
+}
+
+function processEvent(clients, eventCategory, event) {
 
    var resObj = {
       type: 'socketMessage',
@@ -105,7 +140,10 @@ function processEvent(ws, eventCategory, event) {
       data: event
    };
 
-   ws.send(JSON.stringify(resObj));
+   //broadcast event to clients
+   _.forEach(clients, function (client) {
+      client.send(JSON.stringify(resObj));
+   });
 }
 
 module.exports.init = init;

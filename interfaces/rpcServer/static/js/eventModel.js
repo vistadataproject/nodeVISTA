@@ -7,7 +7,7 @@ define([
 ], function ($, _, Backbone, moment) {
    'use strict';
 
-   var MVDMEventModel = Backbone.Model.extend({
+   var EventModel = Backbone.Model.extend({
       constructor: function() {
          var args = arguments[0];
          var timestmpMoment = moment(args.timestamp);
@@ -26,5 +26,5 @@ define([
       }
    });
 
-   return MVDMEventModel;
+   return EventModel;
 });

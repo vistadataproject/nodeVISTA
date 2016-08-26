@@ -4,16 +4,16 @@ define([
    'underscore',
    'backbone',
    'handlebars',
-   'mvdmEvents/eventModel',
-   'mvdmEvents/mvdmEventCollection',
+   'eventModel',
+   'eventCollection',
    'management/managementModel',
    'jsBeautify',
    'text!mvdmEvents/mvdmEvents.hbs',
-   'text!mvdmEvents/eventModal.hbs',
+   'text!eventModal.hbs',
    'config',
    'bootstrap',
    'templateHelpers'
-], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, ManagementModel, jsBeautify, MVDMEventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventModel, EventCollection, ManagementModel, jsBeautify, MVDMEventsTemplate, EventModalTemplate) {
    'use strict';
 
    var MVDMEventsView = Backbone.View.extend({
@@ -61,10 +61,10 @@ define([
 
       render: function () {
 
-         var collection = MVDMEventCollection;
+         var collection = EventCollection;
 
          if (this.eventFilter) {
-            collection = MVDMEventCollection.filterByType(this.eventFilter);
+            collection = EventCollection.filterByType(this.eventFilter);
          }
 
          this.$el.html(this.template({
@@ -78,7 +78,7 @@ define([
       handleMvdmEvent: function (eventMsg) {
          var event = JSON.parse(eventMsg.data);
 
-         MVDMEventCollection.push(new MVDMEventModel(event.data));
+         EventCollection.push(new EventModel(event.data));
 
          this.render();
       },
@@ -99,7 +99,7 @@ define([
          e.preventDefault();
 
          //clear events
-         MVDMEventCollection.reset();
+         EventCollection.reset();
 
          this.render();
       },
@@ -110,7 +110,7 @@ define([
             return;
          }
 
-         var mvdmEvent = MVDMEventCollection.get(e.currentTarget.dataset.cid);
+         var mvdmEvent = EventCollection.get(e.currentTarget.dataset.cid);
 
          var modalHtml = this.eventModalTemplate({
             eventData: jsBeautify.js_beautify(
@@ -121,7 +121,7 @@ define([
 
          this.$el.find('#mvdm-event-modal-container').html(modalHtml);
 
-         var modelEl = this.$el.find('#mvdm-event-modal');
+         var modelEl = this.$el.find('.event-modal');
 
          modelEl.find('.modal-title-type').html(mvdmEvent.get('type'));
 
