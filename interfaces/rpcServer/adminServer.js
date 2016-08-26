@@ -63,6 +63,8 @@ function init() {
    //rpc events socket
    app.ws('/rpcEvents', function(ws, req) {
 
+      rpcClients.push(ws);
+
       EventHandler.on('rpcCall', function(event) {
          processEvent(ws, 'RPC', event);
       });
