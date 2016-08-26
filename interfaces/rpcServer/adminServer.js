@@ -66,7 +66,7 @@ function init() {
       rpcClients.push(ws);
 
       EventHandler.on('rpcCall', function(event) {
-         processEvent(ws, 'RPC', event);
+         processEvent(rpcClients, 'RPC', event);
       });
 
       ws.on('close', function(){
