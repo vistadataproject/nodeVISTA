@@ -6,7 +6,7 @@ define([
    'handlebars',
    'management/managementModel',
    'text!management/management.hbs',
-   'management/templateHelpers'
+   'templateHelpers'
 ], function ($, _, Backbone, Handlebars, ManagementModel, managementTemplate) {
    'use strict';
    var ManagementView = Backbone.View.extend({

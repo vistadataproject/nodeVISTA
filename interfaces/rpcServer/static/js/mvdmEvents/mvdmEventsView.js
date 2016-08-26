@@ -12,7 +12,7 @@ define([
    'text!mvdmEvents/eventModal.hbs',
    'config',
    'bootstrap',
-   'mvdmEvents/templateHelpers'
+   'templateHelpers'
 ], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, ManagementModel, jsBeautify, MVDMEventsTemplate, EventModalTemplate) {
    'use strict';
 
