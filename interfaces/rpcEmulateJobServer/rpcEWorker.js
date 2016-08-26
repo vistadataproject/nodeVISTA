@@ -130,18 +130,16 @@ function callRpc(messageObj) {
         try {
 
             if (domain === 'problem') {
-                var args = {
+                var input = {
                     name: rpc,
-                    inputParameters: []
+                    args: []
                 };
 
                 _.forEach(rpcArgs, function(arg) {
-                    args.inputParameters.push({
-                        parameter: arg
-                    })
+                    input.args.push(arg)
                 });
 
-                rpcArgs = args;
+                rpcArgs = input;
             }
 
             var res = rpcE.run(rpc, rpcArgs);

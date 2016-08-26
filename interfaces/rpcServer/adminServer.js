@@ -65,46 +65,39 @@ function init() {
 
 function initMVDMEventListeners() {
    MVDM.on('create', function(mvdmData) {
-      processMVDMEvent('CREATE', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 
    MVDM.on('describe', function(mvdmData) {
-      processMVDMEvent('DESCRIBE', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 
    MVDM.on('list', function(mvdmData) {
-      processMVDMEvent('LIST', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 
    MVDM.on('update', function(mvdmData) {
-      processMVDMEvent('UPDATE', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 
    MVDM.on('remove', function(mvdmData) {
-      processMVDMEvent('REMOVE', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 
    MVDM.on('unremoved', function(mvdmData) {
-      processMVDMEvent('UNREMOVED', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 
    MVDM.on('delete', function(mvdmData) {
-      processMVDMEvent('DELETE', mvdmData);
+      processMVDMEvent(mvdmData);
    });
 }
 
-function processMVDMEvent(eventName, mvdmData) {
+function processMVDMEvent(mvdmEvent) {
+
    var resObj = {
       type: 'socketMessage',
-      MVDM: eventName,
-      data: {
-         timestamp: mvdmData.eventTimestamp,
-         domain: mvdmData.domain,
-         type: eventName,
-         user: mvdmData.user,
-         facility: mvdmData.facility,
-         mvdmObj: mvdmData.data.result
-      }
+      data: mvdmEvent
    };
 
    //send MVDM events to connected websocket clients
