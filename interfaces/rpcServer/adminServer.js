@@ -25,13 +25,13 @@ function init() {
       res.sendFile(path.join(__dirname + '/static/index.html'));
    });
 
-   //get emulation status
+   //get management settings
    app.get('/management', function(req, res) {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(mvdmManagement));
    });
 
-   //update emulation
+   //update management settings
    app.put('/management', function(req, res) {
       if (!req.body) {
          return res.sendStatus(400);
