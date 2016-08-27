@@ -8,7 +8,7 @@ define([
       return str.toUpperCase();
    });
 
-   Handlebars.registerHelper('filter-select', function(eventFilter) {
+   Handlebars.registerHelper('mvdm-type-filter-select', function(eventFilter) {
 
       if (!eventFilter) {
          eventFilter = '';
@@ -27,6 +27,24 @@ define([
       selectHtml += '<option value="remove"' + setSelected(eventFilter, 'remove') + '>REMOVE</option>';
       selectHtml += '<option value="unremoved"' + setSelected(eventFilter, 'unremvoed') + '>UNREMOVED</option>';
       selectHtml += '<option value="delete"' + setSelected(eventFilter, 'delete') + '>DELETE</option>';
+      selectHtml += '</select>';
+
+      return new Handlebars.SafeString(selectHtml);
+   });
+
+   Handlebars.registerHelper('rpc-emulated-filter-select', function(emulatedFilter) {
+
+      if (!emulatedFilter) {
+         emulatedFilter = 'all';
+      }
+
+      function setSelected(emulatedFilter, optionValue) {
+         return emulatedFilter.toLowerCase() === optionValue ? ' selected' : '';
+      }
+
+      var selectHtml = '<select class="filter filter-select form-control">';
+      selectHtml += '<option value="all"' + setSelected(emulatedFilter, 'all') + '>ALL</option>';
+      selectHtml += '<option value="emulated"' + setSelected(emulatedFilter, 'emulated') + '>Emulated</option>';
       selectHtml += '</select>';
 
       return new Handlebars.SafeString(selectHtml);

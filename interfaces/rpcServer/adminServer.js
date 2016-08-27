@@ -65,10 +65,6 @@ function init() {
 
       rpcClients.push(ws);
 
-      EventHandler.on('rpcCall', function(event) {
-         processEvent(rpcClients, 'RPC', event);
-      });
-
       ws.on('close', function(){
          handleSocketClose(ws, rpcClients);
       });
@@ -137,7 +133,7 @@ function initRPCEventListeners(rpcClients) {
 function processEvent(clients, eventCategory, event) {
 
    var resObj = {
-      type: 'socketMessage',
+      type: 'socketMessage_' + eventCategory,
       eventCategory: eventCategory,
       data: event
    };

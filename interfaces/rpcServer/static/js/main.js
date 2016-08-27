@@ -42,12 +42,13 @@ require([
    'jquery',
    'backbone',
    'app',
-   'router'
-], function ($, Backbone, AppView, Router) {
+   'router',
+   'EventListener'
+], function ($, Backbone, AppView, Router, EventListener) {
    /*jshint nonew:false*/
 
    //manages cleaning up previous view and rendering a new view
-   function ViewManager(){
+   function ViewManager() {
 
       this.showView = function(view) {
          if (this.currentView){
@@ -73,6 +74,7 @@ require([
 
    // Initialize routing and start Backbone.history()
    new Router({viewManager:new ViewManager()});
+   var eventListener = new EventListener();
    Backbone.history.start();
 
    // Initialize the application view

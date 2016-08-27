@@ -18,6 +18,9 @@ var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
 var emulatedRPCs = require('./emulatedRPCs.js');
 var mvdmManagement = require('./mvdmManagement');
 var adminServer = require('./adminServer');
+var moment = require('moment');
+
+var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 var db;
 var DUZ = CONFIG.USER.DUZ;
@@ -221,7 +224,10 @@ function handleConnection(conn) {
 
         EventHandler.emit('rpcCall', {
             type: 'rpcCall',
+            timestamp: moment().format(DT_FORMAT) + 'Z',
             runner: runner,
+            rpcName: rpcObject.name,
+            isEmulated: runner === 'rpcE',
             rpcObject: rpcObject,
             result: rpcResult,
             response: response

@@ -1,8 +1,8 @@
-<div class="mvdm-events">
+<div class="events">
     <div class="submenu">
 
         <span class="glyphicon glyphicon-filter" alt="Event type filter label."></span>
-        {{filter-select eventFilter}}
+        {{mvdm-type-filter-select eventTableFilter}}
 
         <a href="#" class="clear-events-list" title="Clear MVDM Events List">
             <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
@@ -18,36 +18,7 @@
 
     </div>
 
-    <table id="mvdm-event-table" class="table table-condensed table-striped table-bordered table-hover">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Domain</th>
-            <th>Type</th>
-            <th>User ID</th>
-            <th>User Name</th>
-            <th>Facility ID</th>
-            <th>Facility Name</th>
-            <th>Station Number</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each mvdmEvents as |mvdmEvent|}}
-            <tr class="mvdm-event-row" data-cid="{{mvdmEvent.cid}}"> <!-- cid is internal backbone model client id -->
-                <td>{{mvdmEvent.date}}</td>
-                <td>{{mvdmEvent.time}}</td>
-                <td>{{mvdmEvent.domain}}</td>
-                <td>{{toUpperCase mvdmEvent.type}}</td>
-                <td>{{mvdmEvent.user.id}}</td>
-                <td>{{mvdmEvent.user.name}}</td>
-                <td>{{mvdmEvent.facility.id}}</td>
-                <td>{{mvdmEvent.facility.name}}</td>
-                <td>{{mvdmEvent.facility.stationNumber}}</td>
-            </tr>
-        {{/each}}
-        </tbody>
-    </table>
+    <div id="events-table"></div>
 
-    <div id="mvdm-event-modal-container"></div>
+    <div id="event-modal-container"></div>
 </div>
