@@ -361,7 +361,7 @@ function filterEvents() {
 function displayEventTable(events) {
 	var html = '<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>';
 	events.forEach(function(event) {
-		html += '<tr><td>' + event.data.eventTimestamp + '</td><td>' + event.MVDM + '</td><td>' + event.data.user.id + '</td><td>' + event.data.facility.id + '</td></tr>'
+		html += '<tr><td>' + event.data.timestamp + '</td><td>' + event.MVDM + '</td><td>' + event.data.user.id + '</td><td>' + event.data.facility.id + '</td></tr>'
 	});
 	$('#eventTbl').html(html);
 }
