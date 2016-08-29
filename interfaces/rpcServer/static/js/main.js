@@ -34,6 +34,8 @@ require.config({
       bootstrap: '../bootstrap/dist/js/bootstrap.min',
       moment: '../moment/min/moment.min',
       jsBeautify: '../js-beautify/js/lib/beautify',
+      backgrid: '../backgrid/lib/backgrid',
+      backgridMomentCell: 'lib/backgrid-moment-cell.min',
       config: '../config'
    }
 });

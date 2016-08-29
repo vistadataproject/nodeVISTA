@@ -9,6 +9,7 @@ define([
 
    var MVDMEventCollection = Backbone.Collection.extend({
       model: EventModel,
+      comparator: 'timestamp',
       filterBy: function(value) {
          return new MVDMEventCollection(this.filter(function(data){
             return data.get('type').toLowerCase() === value.toLowerCase();

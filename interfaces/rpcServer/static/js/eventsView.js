@@ -4,11 +4,12 @@ define([
    'underscore',
    'backbone',
    'handlebars',
+   'backgrid',
    'jsBeautify',
    'config',
    'bootstrap',
    'templateHelpers'
-], function ($, _, Backbone, Handlebars, jsBeautify, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, Backgrid, jsBeautify) {
    'use strict';
 
    var EventsView = Backbone.View.extend({
@@ -27,7 +28,15 @@ define([
 
          this.eventCollection = options.eventCollection;
 
-         this.listenTo(this.eventCollection, "change reset add remove", this.renderEventTable);
+         this.gridColumns = options.gridColumns;
+         if (this.gridColumns) {
+            this.grid = new Backgrid.Grid({
+               columns: this.gridColumns,
+               collection: this.eventCollection
+            });
+         }
+
+         if (!this.gridColumns) this.listenTo(this.eventCollection, "change reset add remove", this.renderEventTable);
       },
 
       events: {
@@ -52,7 +61,6 @@ define([
          }
 
          this.$el.html(this.template(templateArgs));
-
          this.renderEventTable();
 
          return this;
@@ -64,12 +72,16 @@ define([
          if (this.eventTableFilter) {
             collection = this.eventCollection.filterBy(this.eventTableFilter);
          }
+         if (this.gridColumns) {
+            this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
+         } else {
+            var tableHtml = this.eventsTableTemplate({
+               events: collection.toJSON()
+            });
 
-         var tableHtml = this.eventsTableTemplate({
-            events: collection.toJSON()
-         });
+            this.$el.find('#events-table').html(tableHtml);
+         }
 
-         this.$el.find('#events-table').html(tableHtml);
       },
 
       onEventUpdate: function (eventMsg) {

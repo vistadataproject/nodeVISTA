@@ -73,3 +73,16 @@ nav {
 .modal-body pre {
     height: 600px;
 }
+
+.backgrid {
+    border: solid #d3d3d3 1px;
+}
+
+.backgrid tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.backgrid .moment-cell,
+.backgrid .string-cell {
+    text-align: center;
+}
