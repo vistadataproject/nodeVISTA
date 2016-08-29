@@ -5,11 +5,8 @@
         <th>Time</th>
         <th>Domain</th>
         <th>Type</th>
-        <th>User ID</th>
-        <th>User Name</th>
-        <th>Facility ID</th>
-        <th>Facility Name</th>
-        <th>Station Number</th>
+        <th>User</th>
+        <th>Facility</th>
     </tr>
     </thead>
     <tbody>
@@ -18,12 +15,9 @@
             <td>{{event.date}}</td>
             <td>{{event.time}}</td>
             <td>{{event.domain}}</td>
-            <td>{{toUpperCase event.type}}</td>
-            <td>{{event.user.id}}</td>
-            <td>{{event.user.name}}</td>
-            <td>{{event.facility.id}}</td>
-            <td>{{event.facility.name}}</td>
-            <td>{{event.facility.stationNumber}}</td>
+            <td class="text-uppercase">{{event.type}}</td>
+            <td>{{event.user.name}} ({{event.user.id}})</td>
+            <td>{{event.facility.name}} ({{event.facility.id}} / {{event.facility.stationNumber}})</td>
         </tr>
     {{/each}}
     </tbody>

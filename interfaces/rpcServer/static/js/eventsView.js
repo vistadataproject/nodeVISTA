@@ -4,13 +4,11 @@ define([
    'underscore',
    'backbone',
    'handlebars',
-   'eventModel',
    'jsBeautify',
-   'text!eventModal.hbs',
    'config',
    'bootstrap',
    'templateHelpers'
-], function ($, _, Backbone, Handlebars, EventModel, jsBeautify, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, jsBeautify, EventModalTemplate) {
    'use strict';
 
    var EventsView = Backbone.View.extend({
@@ -25,7 +23,7 @@ define([
 
          this.template = Handlebars.compile(options.template);
          this.eventsTableTemplate = Handlebars.compile(options.eventTableTemplate);
-         this.eventModalTemplate = Handlebars.compile(EventModalTemplate);
+         this.eventModalTemplate = Handlebars.compile(options.eventModalTemplate);
 
          this.eventCollection = options.eventCollection;
 
@@ -112,15 +110,15 @@ define([
          var eventData = this.eventCollection.get(e.currentTarget.dataset.cid);
 
          var modalHtml = this.eventModalTemplate({
-            eventData: jsBeautify.js_beautify(
-               JSON.stringify(
-                  _.omit(eventData.toJSON(), 'cid')
-               ))
+            event: eventData.toJSON(),
+            eventDetails: jsBeautify.js_beautify(
+               JSON.stringify(eventData.get('data') ? eventData.get('data') : _.omit(eventData.toJSON(), 'cid'))
+            )
          });
 
          this.$el.find('#event-modal-container').html(modalHtml);
 
-         var modelEl = this.$el.find('.event-modal');
+         var $modelEl = this.$el.find('.event-modal');
          var title;
 
          if (eventData.get('rpcName')) {
@@ -129,9 +127,9 @@ define([
             title = 'Event: ' + eventData.get('type');
          }
 
-         modelEl.find('.modal-title').html(title.toUpperCase());
+         $modelEl.find('.modal-title').html(title);
 
-         modelEl.modal('show');
+         $modelEl.modal('show');
       },
 
       onClose: function () {

@@ -7,8 +7,9 @@ define([
    'eventsView',
    'rpcEvents/eventCollection',
    'text!rpcEvents/rpcEvents.hbs',
-   'text!rpcEvents/rpcEventsTable.hbs'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventsTemplate, EventsTableTemplate) {
+   'text!rpcEvents/eventsTable.hbs',
+   'text!rpcEvents/eventModal.hbs'
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventsTemplate, EventsTableTemplate, EventModalTemplate) {
    'use strict';
 
    var RPCEventsView = EventsParentView.extend({
@@ -18,7 +19,8 @@ define([
             webSocketRoute: 'rpcEvents',
             eventCollection: EventCollection,
             template: EventsTemplate,
-            eventTableTemplate:EventsTableTemplate
+            eventTableTemplate: EventsTableTemplate,
+            eventModalTemplate: EventModalTemplate
          }]);
       }
    });

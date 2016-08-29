@@ -49,11 +49,11 @@ nav {
     color:#808080;
 }
 
-tr .glyphicon-plus-sign {
+.events .glyphicon-plus-sign {
     color: #008000;
 }
 
-tr .glyphicon-minus-sign {
+.events .glyphicon-minus-sign {
     color:#ff0000;
 }
 

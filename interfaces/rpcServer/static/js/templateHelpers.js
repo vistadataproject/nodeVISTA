@@ -4,10 +4,6 @@ define([
 ], function (Handlebars) {
    'use strict';
 
-   Handlebars.registerHelper('toUpperCase', function(str) {
-      return str.toUpperCase();
-   });
-
    Handlebars.registerHelper('mvdm-type-filter-select', function(eventFilter) {
 
       if (!eventFilter) {

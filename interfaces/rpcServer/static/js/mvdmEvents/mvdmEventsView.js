@@ -8,8 +8,9 @@ define([
    'mvdmEvents/eventCollection',
    'management/managementModel',
    'text!mvdmEvents/mvdmEvents.hbs',
-   'text!mvdmEvents/mvdmEventsTable.hbs'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, MVDMEventsTemplate, MVDMEventsTableTemplate) {
+   'text!mvdmEvents/eventsTable.hbs',
+   'text!mvdmEvents/eventModal.hbs'
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, MVDMEventsTemplate, EventsTableTemplate, EventModalTemplate) {
    'use strict';
 
    var MVDMEventsView = EventsParentView.extend({
@@ -26,7 +27,8 @@ define([
             webSocketRoute: 'mvdmEvents',
             eventCollection: EventCollection,
             template: MVDMEventsTemplate,
-            eventTableTemplate:MVDMEventsTableTemplate
+            eventTableTemplate:EventsTableTemplate,
+            eventModalTemplate: EventModalTemplate
          }]);
       },
       render: function () {
