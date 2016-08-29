@@ -16,11 +16,6 @@ define([
 
          args.date = date;
          args.time = time;
-         if (args.type) {
-            args.title = args.type;
-         } else if (args.rpcName) {
-            args.title = args.rpcName;
-         }
 
          Backbone.Model.apply(this, arguments);
       },

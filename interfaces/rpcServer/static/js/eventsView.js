@@ -121,8 +121,15 @@ define([
          this.$el.find('#event-modal-container').html(modalHtml);
 
          var modelEl = this.$el.find('.event-modal');
+         var title;
 
-         modelEl.find('.modal-title-type').html(eventData.get('title').toUpperCase());
+         if (eventData.get('rpcName')) {
+            title = 'RPC: ' + eventData.get('rpcName');
+         } else {
+            title = 'Event: ' + eventData.get('type');
+         }
+
+         modelEl.find('.modal-title').html(title.toUpperCase());
 
          modelEl.modal('show');
       },
