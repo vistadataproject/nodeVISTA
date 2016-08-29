@@ -43,7 +43,7 @@ require([
    'backbone',
    'app',
    'router',
-   'EventListener'
+   'EventListener' //initializes EventListener
 ], function ($, Backbone, AppView, Router, EventListener) {
    /*jshint nonew:false*/
 
@@ -74,7 +74,6 @@ require([
 
    // Initialize routing and start Backbone.history()
    new Router({viewManager:new ViewManager()});
-   var eventListener = new EventListener();
    Backbone.history.start();
 
    // Initialize the application view

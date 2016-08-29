@@ -47,5 +47,5 @@ define([
       }
    };
 
-   return EventListener;
+   return new EventListener();
 });
