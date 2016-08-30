@@ -130,7 +130,7 @@ function handleConnection(conn) {
 
                 // check if the mapped value is a map for parameters or just a single response
                 if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
-                    LOGGER.info('checking unsupported RPC/param pairs')
+                    LOGGER.info('checking for unsupported RPC/param pairs')
 
                     var params = unsupportedRPCs.get(rpcObject.name).keys();
                     var paramKey;
@@ -148,22 +148,24 @@ function handleConnection(conn) {
                         }
                     }
                     if (paramKey !== undefined) {
+                        LOGGER.info("unsupported RPC/param, returning hardcoded respionse");
                         response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
+                        runner = "hardcode";
                     } else {
                         // could not find a matching response, try calling the emulator or localRunner anyway
-                        LOGGER.info("no unsupported RPC/arg pair");
+                        LOGGER.info("no unsupported RPC/arg pair, calling RPC emulator or localRunner");
                         runnerReturn = callEmulatorOrLocalRunner(rpcObject);
                         response = runnerReturn.response;
                         runner = runnerReturn.runner;
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
-                    LOGGER.info("unsupported RPC not dependent on parameter");
+                    LOGGER.info("unsupported RPC, returning hardcoded respionse");
                     response = unsupportedRPCs.get(rpcObject.name);
                     runner = "hardcode";
                 }
             } else {
-                LOGGER.info("calling emulator or local runner");
+                LOGGER.info("calling RPC emulator or local runner");
                 runnerReturn = callEmulatorOrLocalRunner(rpcObject);
                 response = runnerReturn.response;
                 runner = runnerReturn.runner;

@@ -9,10 +9,4 @@ unsupportedRpcs.set("XUS AV CODE", "\u0000\u000058\r\n0\r\n0\r\n\r\n0\r\n0\r\n\r
 unsupportedRpcs.set("XWB IM HERE", "\u0000\u00001\u0004");
 unsupportedRpcs.set("#BYE#", "\u0000\u0000#BYE#\u0004");
 
-
-var xwbGetVariableValueMap = new HashMap();
-xwbGetVariableValueMap.set("@\"^VA(200,", "\u0000\u0000^^^^^^^^123456789\u0004");
-xwbGetVariableValueMap.set("$O(^VA(200,\"SSN\",", "\u0000\u0000" + CONFIG.USER.DUZ + "\u0004");
-unsupportedRpcs.set("XWB GET VARIABLE VALUE",  xwbGetVariableValueMap);
-
 module.exports = unsupportedRpcs;
