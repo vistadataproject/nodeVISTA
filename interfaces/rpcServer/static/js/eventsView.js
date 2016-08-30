@@ -77,14 +77,14 @@ define([
          if (this.grid) {
             this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
 
-            var gridFilter = new Backgrid.Extension.SelectFilter({
+            this.gridFilter = new Backgrid.Extension.SelectFilter({
                className: "backgrid-filter form-control filter filter-select",
                collection: this.eventCollection,
                field: this.filterConfig.field,
                selectOptions: this.filterConfig.options
             });
 
-            this.$el.find("#filter").replaceWith(gridFilter.render().$el);
+            this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
 
          } else {
             var tableHtml = this.eventsTableTemplate({
@@ -122,7 +122,7 @@ define([
          e.preventDefault();
 
          //clear events
-         this.eventCollection.remove(this.eventCollection.models);
+         this.eventCollection.reset();
 
       },
 
