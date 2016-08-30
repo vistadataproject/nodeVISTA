@@ -36,6 +36,7 @@ require.config({
       jsBeautify: '../js-beautify/js/lib/beautify',
       backgrid: '../backgrid/lib/backgrid',
       backgridMomentCell: 'lib/backgrid-moment-cell.min',
+      backgridSelectFilter: 'lib/backgrid-select-filter',
       config: '../config'
    }
 });
@@ -45,7 +46,8 @@ require([
    'backbone',
    'app',
    'router',
-   'EventListener' //initializes EventListener
+   'EventListener', //initializes EventListener,
+   'backgrid'
 ], function ($, Backbone, AppView, Router, EventListener) {
    /*jshint nonew:false*/
 

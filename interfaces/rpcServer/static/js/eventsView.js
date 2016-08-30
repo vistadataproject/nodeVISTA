@@ -8,7 +8,8 @@ define([
    'jsBeautify',
    'config',
    'bootstrap',
-   'templateHelpers'
+   'templateHelpers',
+   'backgridSelectFilter'
 ], function ($, _, Backbone, Handlebars, Backgrid, jsBeautify) {
    'use strict';
 
@@ -28,15 +29,19 @@ define([
 
          this.eventCollection = options.eventCollection;
 
-         this.gridColumns = options.gridColumns;
-         if (this.gridColumns) {
+         if (options.columns) {
             this.grid = new Backgrid.Grid({
-               columns: this.gridColumns,
+               columns: options.columns,
                collection: this.eventCollection
             });
+
+            this.filterConfig = {
+               field: options.selectField,
+               options: options.selectOptions
+            };
          }
 
-         if (!this.gridColumns) this.listenTo(this.eventCollection, "change reset add remove", this.renderEventTable);
+         if (!this.grid) this.listenTo(this.eventCollection, "change reset add remove", this.renderEventTable);
       },
 
       events: {
@@ -69,11 +74,18 @@ define([
       renderEventTable: function() {
          var collection = this.eventCollection;
 
-         if (this.eventTableFilter) {
-            collection = this.eventCollection.filterBy(this.eventTableFilter);
-         }
-         if (this.gridColumns) {
+         if (this.grid) {
             this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
+
+            var gridFilter = new Backgrid.Extension.SelectFilter({
+               className: "backgrid-filter form-control filter filter-select",
+               collection: this.eventCollection,
+               field: this.filterConfig.field,
+               selectOptions: this.filterConfig.options
+            });
+
+            this.$el.find("#filter").replaceWith(gridFilter.render().$el);
+
          } else {
             var tableHtml = this.eventsTableTemplate({
                events: collection.toJSON()
@@ -100,8 +112,10 @@ define([
          else {
             this.eventTableFilter = e.currentTarget.value;
          }
-
-         this.renderEventTable();
+         var val = e.currentTarget.value;
+         this.eventCollection.filter(function(data){
+            return data.get('type').toLowerCase() === val.toLowerCase();
+         });
       },
 
       onClearEventsList: function(e) {
@@ -110,7 +124,6 @@ define([
          //clear events
          this.eventCollection.remove(this.eventCollection.models);
 
-         this.renderEventTable();
       },
 
       //display event details modal

@@ -24,13 +24,18 @@ define([
 
          this.management.fetch();
 
+         var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
+
          MVDMEventsView.__super__.initialize.apply(this, [{
             webSocketRoute: 'mvdmEvents',
             eventCollection: EventCollection,
             template: MVDMEventsTemplate,
             eventTableTemplate:EventsTableTemplate,
             eventModalTemplate: EventModalTemplate,
-            gridColumns: [{
+            selectField: 'type',
+            selectOptions: _.union([{label: "All", value: null}],
+               _.map(selectOptions, function(val) { return {label:val.toUpperCase(), value:val};})),
+            columns: [{
                name: 'timestamp',
                label: 'Date',
                editable: false,
