@@ -57,16 +57,13 @@ nav {
     color:#ff0000;
 }
 
-.table-hover tr.event-row {
-    cursor: pointer;
-}
 
 .rpc-events.submenu {
     margin: 10px;
 }
 
-.table-emulation-status {
-    line-height: 150px;
+.grid-emulated-status {
+    display: block;
     text-align: center;
 }
 
@@ -74,15 +71,11 @@ nav {
     height: 600px;
 }
 
-.backgrid {
-    border: solid #d3d3d3 1px;
-}
-
-.backgrid tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
 .backgrid .moment-cell,
 .backgrid .string-cell {
     text-align: center;
+}
+
+.backgrid tr {
+    cursor: pointer;
 }

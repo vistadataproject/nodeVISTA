@@ -8,10 +8,12 @@ define([
    'mvdmEvents/eventCollection',
    'management/managementModel',
    'text!mvdmEvents/mvdmEvents.hbs',
-   'text!mvdmEvents/eventsTable.hbs',
    'text!mvdmEvents/eventModal.hbs',
-   'backgridMomentCell',
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, MVDMEventsTemplate, EventsTableTemplate, EventModalTemplate) {
+   'backgrid',
+   'backgridCustomCells',
+   'backgridSelectFilter',
+   'backgridMomentCell'
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventsTemplate, EventModalTemplate) {
    'use strict';
 
    var MVDMEventsView = EventsParentView.extend({
@@ -29,8 +31,7 @@ define([
          MVDMEventsView.__super__.initialize.apply(this, [{
             webSocketRoute: 'mvdmEvents',
             eventCollection: EventCollection,
-            template: MVDMEventsTemplate,
-            eventTableTemplate:EventsTableTemplate,
+            template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'type',
             selectOptions: _.union([{label: "All", value: null}],
@@ -40,7 +41,7 @@ define([
                label: 'Date',
                editable: false,
                cell: Backgrid.Extension.MomentCell.extend({
-                  displayFormat: "MMM Do YYYY h:mm:ss a"
+                  displayFormat: "MMM Do YYYY @ h:mm:ss a"
                })
             }, {
                name: 'domain',

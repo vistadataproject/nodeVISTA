@@ -10,12 +10,8 @@ define([
    var EventModel = Backbone.Model.extend({
       constructor: function() {
          var args = arguments[0];
-         var timestmpMoment = moment(args.timestamp);
-         var date = timestmpMoment.format('MMM Do YYYY');
-         var time = timestmpMoment.format('h:mm:ss a');
 
-         args.date = date;
-         args.time = time;
+         args.dateTime = moment(args.timestamp).format('MMM Do YYYY @ h:mm:ss a');
 
          Backbone.Model.apply(this, arguments);
       },

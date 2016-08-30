@@ -42,7 +42,7 @@
 
       this.listenTo(collection, "add", function (model, collection, options) {
         shadowCollection.add(model, options);
-        if (this.currentValue() && this.currentValue().toLowerCase() !== 'all') {
+        if (this.currentValue() && this.currentValue() !== 'All') {
           this.onChange();
         }
       });

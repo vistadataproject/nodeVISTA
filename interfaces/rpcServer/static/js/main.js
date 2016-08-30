@@ -37,6 +37,7 @@ require.config({
       backgrid: '../backgrid/lib/backgrid',
       backgridMomentCell: 'lib/backgrid-moment-cell.min',
       backgridSelectFilter: 'lib/backgrid-select-filter',
+      backgridCustomCells: 'lib/backgrid-custom-cells',
       config: '../config'
    }
 });
