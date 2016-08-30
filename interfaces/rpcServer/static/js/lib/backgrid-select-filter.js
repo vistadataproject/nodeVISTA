@@ -42,6 +42,9 @@
 
       this.listenTo(collection, "add", function (model, collection, options) {
         shadowCollection.add(model, options);
+        if (this.field && this.field.toLowerCase() !== 'all') {
+          this.onChange();
+        }
       });
       this.listenTo(collection, "remove", function (model, collection, options) {
         shadowCollection.remove(model, options);
