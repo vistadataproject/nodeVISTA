@@ -42,7 +42,7 @@
 
       this.listenTo(collection, "add", function (model, collection, options) {
         shadowCollection.add(model, options);
-         this.onChange(null, "add");
+        this.onChange(null, 'add');
       });
       this.listenTo(collection, "remove", function (model, collection, options) {
         shadowCollection.remove(model, options);
@@ -71,21 +71,28 @@
       return JSON.parse(this.$el.val());
     },
     onChange: function(e, fromEvent) {
-      var col = this.collection,
+      var col = this.collection.fullCollection || this.collection,
         field = this.field,
         value = this.currentValue(),
         matcher = _.bind(this.makeMatcher(value), this);
 
-      if (col.pageableCollection) {
-        if (fromEvent !== 'add') {
-          col.pageableCollection.getFirstPage({silent: true});
-        }
+      if (col.pageableCollection && fromEvent !== 'add') {
+        col.pageableCollection.getFirstPage({silent: true});
       }
 
-      if (value !== this.clearValue)
+      if (value !== this.clearValue) {
         col.reset(this.shadowCollection.filter(matcher), {reindex: false});
-      else
+
+        //ensure that pagable collection is in sync with collection
+        if (col.pageableCollection) {
+          col.pageableCollection.reset(this.shadowCollection.filter(matcher), {reindex: false});
+          col.pageableCollection.state.totalRecords = col.pageableCollection.length;
+          col.pageableCollection.state = col.pageableCollection._checkState(col.pageableCollection.state);
+        }
+      }
+      else {
         col.reset(this.shadowCollection.models, {reindex: false});
+      }
     }
   });
 }).call(this);

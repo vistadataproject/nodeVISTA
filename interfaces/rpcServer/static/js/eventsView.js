@@ -109,8 +109,8 @@ define([
          e.preventDefault();
 
          //clear events
-         this.eventCollection.reset();
-
+         var col = this.eventCollection.fullCollection || this.eventCollection;
+         col.reset();
       },
 
       //display event details modal
