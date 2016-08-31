@@ -3,13 +3,22 @@ define([
    'jquery',
    'underscore',
    'backbone',
-   'eventModel'
+   'eventModel',
+   'backbone.paginator'
 ], function ($, _, Backbone, EventModel) {
    'use strict';
 
-   var RPCEventCollection = Backbone.Collection.extend({
+   var RPCEventCollection = Backbone.PageableCollection.extend({
       model: EventModel,
-      comparator: 'timestamp',
+      mode: 'client',
+      // Initial pagination states
+      state: {
+         pageSize: 20,
+         firstPage: 0,
+         currentPage: 0,
+         sortKey: 'timestamp',
+         order: 1
+      },
       filterBy: function(value) {
          return new RPCEventCollection(this.filter(function(data){
             return data.get('isEmulated') === (value.toLowerCase() === 'emulated');

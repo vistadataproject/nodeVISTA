@@ -21,8 +21,12 @@ define([
 
       function parseAndInsertEvent(eventMsg, eventCollection) {
          var event = JSON.parse(eventMsg.data);
+
          eventCollection.push(new EventModel(event.data));
-         eventCollection.sort();
+
+         //sort collection
+         eventCollection.setSorting(eventCollection.state.sortKey);
+         eventCollection.fullCollection.sort();
       }
 
       function initWebSocket(socketRoute, onMessageCallback) {

@@ -9,6 +9,8 @@ define([
    'config',
    'bootstrap',
    'templateHelpers',
+   'backbone.paginator',
+   'backgrid.paginator',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
@@ -80,14 +82,22 @@ define([
 
          this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
 
-         this.gridFilter = new Backgrid.Extension.SelectFilter({
+         var paginator = new Backgrid.Extension.Paginator({
+            collection: this.eventCollection
+         });
+
+         //render paginator
+         this.$el.find('#events-table').append(paginator.render().el);
+
+         var gridFilter = new Backgrid.Extension.SelectFilter({
             className: "backgrid-filter form-control filter filter-select",
             collection: this.eventCollection,
             field: this.filterConfig.field,
             selectOptions: this.filterConfig.options
          });
 
-         this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
+         //render filter
+         this.$el.find("#filter").replaceWith(gridFilter.render().$el);
 
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');

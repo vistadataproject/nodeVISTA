@@ -42,15 +42,15 @@
 
       this.listenTo(collection, "add", function (model, collection, options) {
         shadowCollection.add(model, options);
-        if (this.currentValue() && this.currentValue() !== 'All') {
-          this.onChange();
-        }
+         this.onChange(null, "add");
       });
       this.listenTo(collection, "remove", function (model, collection, options) {
         shadowCollection.remove(model, options);
       });
       this.listenTo(collection, "sort", function (col) {
-        if (this.currentValue() == this.clearValue) shadowCollection.reset(col.models);
+        if (this.currentValue() == this.clearValue) {
+          shadowCollection.reset(col.models);
+        }
       });
       this.listenTo(collection, "reset", function (col, options) {
         options = _.extend({reindex: true}, options || {});
@@ -70,14 +70,17 @@
     currentValue: function() {
       return JSON.parse(this.$el.val());
     },
-    onChange: function(e) {
+    onChange: function(e, fromEvent) {
       var col = this.collection,
         field = this.field,
         value = this.currentValue(),
         matcher = _.bind(this.makeMatcher(value), this);
 
-      if (col.pageableCollection)
-        col.pageableCollection.getFirstPage({silent: true});
+      if (col.pageableCollection) {
+        if (fromEvent !== 'add') {
+          col.pageableCollection.getFirstPage({silent: true});
+        }
+      }
 
       if (value !== this.clearValue)
         col.reset(this.shadowCollection.filter(matcher), {reindex: false});

@@ -20,6 +20,56 @@ require.config({
             'jquery'
          ],
          exports: 'Backbone'
+      },
+      'backbone.paginator': {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone'
+         ],
+         exports: 'backbone.paginator'
+      },
+      backgrid: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone'
+         ],
+         exports: 'Backgrid'
+      },
+      'backgrid.paginator': {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backbone.paginator',
+            'backgrid'
+         ],
+         exports: 'backgrid.paginator'
+      },
+      backgridMomentCell: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backgrid'
+         ]
+      },
+      backgridSelectFilter: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backgrid'
+         ]
+      },
+      backgridCustomCells: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backgrid'
+         ]
       }
    },
    moment: {
@@ -29,12 +79,14 @@ require.config({
       jquery: '../jquery/dist/jquery.min',
       underscore: '../underscore/underscore-min',
       backbone: '../backbone/backbone-min',
+      'backbone.paginator': '../backbone.paginator/lib/backbone.paginator',
       text: '../text/text',
       handlebars: '../handlebars/dist/handlebars.amd.min',
       bootstrap: '../bootstrap/dist/js/bootstrap.min',
       moment: '../moment/min/moment.min',
       jsBeautify: '../js-beautify/js/lib/beautify',
       backgrid: '../backgrid/lib/backgrid',
+      'backgrid.paginator': 'lib/backgrid-paginator',
       backgridMomentCell: 'lib/backgrid-moment-cell.min',
       backgridSelectFilter: 'lib/backgrid-select-filter',
       backgridCustomCells: 'lib/backgrid-custom-cells',
