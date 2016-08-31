@@ -7,6 +7,7 @@ var MVDM = require('../../../VDM/prototypes/mvdm');
 var testAllergies = require('../../../VDM/prototypes/allergies/vdmTestAllergies'); // want to use test allergies
 var allergyUtils = require("../../../VDM/prototypes/allergies/allergyUtils");
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
+var fmql = require('../../../VDM/prototypes/fmql');
 var vprE = require('../../../VDM/prototypes/vprEmulate/vprE');
 var vpr = require('../../../VDM/prototypes/vpr');
 var vprAllergyEmulator = require('../../../VDM/prototypes/vprEmulate/vprAllergyEmulator');
@@ -43,20 +44,44 @@ var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalEmulate');
 function setModels(domain) {
     if (domain === 'allergy') {
         VDM.setDBAndModel(db, vdmModelAllergy);
+        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelAllergy);
-        vprE.setVprMappings(vprAllergyEmulator);
+        vprE.setVprMappings(vprAllergyEmulator, '1.05');
         // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
-        VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
+        // VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
         rpcE.setRpcMappings(rpcEAllergyMappings);
 
     } else if (domain === 'problem') {
-        rpcE.setDBAndModels(db, {rpcEModel: rpcEProblemModel, vdmModel: vdmModelProblem, mvdmModel: mvdmModelProblem});
+        VDM.setDBAndModel(db, vdmModelProblem);
+        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
+
+        MVDM.setModel(mvdmModelProblem);
+        vprE.setVprMappings(vprProblemEmulator, '1.05');
+
+        DUZ = 55; // Matches Robert Alexander
+
+        patientIen = 25;
+
+        var fmqlRes = fmql.query(db, "DESCRIBE 2-" + patientIen);
+
+        var patientName = fmqlRes.results[0].name.value;
+        var last4 = fmqlRes.results[0].social_security_number.value.substring(5);
+
+        patientArgs = patientIen + '^' + patientName + '^' + last4 + '^';
+        facilityCode = '2957'; //OSEHRA VistA facility code
+
+        rpcE.setDBAndModels(db, {
+            rpcEModel: rpcEProblemModel,
+            vdmModel: vdmModelProblem,
+            mvdmModel: mvdmModelProblem
+        });
         rpcE.setUserAndFacility("200-" + DUZ, "4-" + facilityCode); // note that 4-2957 would come from 200-55 if left out
 
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);
+        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelVitals);
-        vprE.setVprMappings(vprVitalsEmulator);
+        vprE.setVprMappings(vprVitalsEmulator, '1.05');
         rpcE.setRpcMappings(rpcVitalEmulate.rpcMappings);
     }
 }
@@ -156,15 +181,15 @@ function callRpc(messageObj) {
 }
 
 function isInt(value) {
-  return !isNaN(value) && 
-         parseInt(Number(value)) == value && 
-         !isNaN(parseInt(value, 10));
+    return !isNaN(value) &&
+        parseInt(Number(value)) == value &&
+        !isNaN(parseInt(value, 10));
 }
 
 function validateArgs(args) {
     var res = true;
     args.forEach(function(item) {
-        if(!isInt(item)) {
+        if (!isInt(item)) {
             res = false;
         }
     });
@@ -240,7 +265,7 @@ module.exports = function() {
                 data: mvdmData
             }
             send(resObj);
-        });        
+        });
 
         MVDM.on('update', function(mvdmData) {
             var resObj = {
@@ -249,7 +274,7 @@ module.exports = function() {
                 data: mvdmData
             }
             send(resObj);
-        });  
+        });
 
         MVDM.on('error', function(mvdmData) {
             var resObj = {
@@ -258,7 +283,7 @@ module.exports = function() {
                 data: mvdmData
             }
             send(resObj);
-        });  
+        });
 
         var application = messageObj.application;
         var res;
