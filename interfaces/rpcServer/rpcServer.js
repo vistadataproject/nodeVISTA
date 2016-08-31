@@ -160,7 +160,7 @@ function handleConnection(conn) {
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
-                    LOGGER.info("unsupported RPC, returning hardcoded respionse");
+                    LOGGER.info("unsupported RPC, returning hardcoded response");
                     response = unsupportedRPCs.get(rpcObject.name);
                     runner = "hardcode";
                 }
