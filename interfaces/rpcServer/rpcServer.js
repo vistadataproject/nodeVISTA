@@ -179,6 +179,17 @@ function handleConnection(conn) {
                 rpcObject.from = fromName;
                 rpcObject.to = runner;
                 rpcObject.timeStamp = new Date().toISOString();
+
+                EventHandler.emit('rpcCall', {
+                    type: 'rpcCall',
+                    timestamp: moment().format(DT_FORMAT) + 'Z',
+                    runner: runner,
+                    rpcName: rpcObject.name,
+                    rpcObject: rpcObject,
+                    runnerReturn: runnerReturn,
+                    response: response
+                });
+
             }
             captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
@@ -223,17 +234,6 @@ function handleConnection(conn) {
         }
         response += '\u0004';
         console.log("response to client: " + JSON.stringify(response));
-
-        EventHandler.emit('rpcCall', {
-            type: 'rpcCall',
-            timestamp: moment().format(DT_FORMAT) + 'Z',
-            runner: runner,
-            rpcName: rpcObject.name,
-            isEmulated: runner === 'rpcE',
-            rpcObject: rpcObject,
-            result: rpcResult,
-            response: response
-        });
 
         return {"response": response, "runner": runner};
     }

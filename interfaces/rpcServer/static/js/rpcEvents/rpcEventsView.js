@@ -24,8 +24,12 @@ define([
             eventCollection: EventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
-            selectField: 'isEmulated',
-            selectOptions: _.union([{label: "All", value: null}, {label: 'Emulated', value: true}]),
+            selectField: 'runner',
+            selectOptions: _.union([
+               {label: "All", value: null},
+               {label: 'Local RPC Runner', value: 'localRPCRunner'},
+               {label: 'Emulated', value: 'rpcE'},
+               {label: 'Hardcode', value: 'hardcode'},]),
             columns: [{
                name: 'timestamp',
                label: 'Date',
@@ -39,17 +43,19 @@ define([
                editable: false,
                cell: 'String'
             }, {
-               name: 'isEmulated',
-               label: 'Emulated',
+               name: 'runner',
+               label: 'RPC Runner',
                editable: false,
-               cell: 'html',
+               cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-                  fromRaw: function (rawValue) {
-                     if (rawValue) {
-                        return '<span class="grid-emulated-status glyphicon glyphicon-plus-sign" alt="This RPC is being emulated over MVDM"></span>';
-                     } else {
-                        return '<span class="grid-emulated-status glyphicon glyphicon-minus-sign" alt="This RPC is not being emulated."></span>';
-                     }
+                  fromRaw: function (rawValue, model) {
+                     if (rawValue === 'localRPCRunner') {
+                        return 'Local RPC Runner';
+                     } else if (rawValue === 'rpcE') {
+                        return 'Emulated';
+                     } else if (rawValue === 'hardcode') {
+                        return 'Hardcode';
+                     } else return rawValue;
                   }
                })
             }]
