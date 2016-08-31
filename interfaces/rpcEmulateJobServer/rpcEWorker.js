@@ -159,11 +159,9 @@ function callRpc(messageObj) {
                     name: rpc,
                     args: []
                 };
-
                 _.forEach(rpcArgs, function(arg) {
                     input.args.push(arg)
                 });
-
                 rpcArgs = input;
             }
 
