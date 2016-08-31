@@ -148,7 +148,7 @@ function handleConnection(conn) {
                         }
                     }
                     if (paramKey !== undefined) {
-                        LOGGER.info("unsupported RPC/param, returning hardcoded respionse");
+                        LOGGER.info("unsupported RPC/param, returning hardcoded response");
                         response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
                         runner = "hardcode";
                     } else {
