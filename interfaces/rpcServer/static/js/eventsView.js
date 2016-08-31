@@ -4,11 +4,15 @@ define([
    'underscore',
    'backbone',
    'handlebars',
+   'backgrid',
    'jsBeautify',
    'config',
    'bootstrap',
-   'templateHelpers'
-], function ($, _, Backbone, Handlebars, jsBeautify, EventModalTemplate) {
+   'templateHelpers',
+   'backgridCustomCells',
+   'backgridSelectFilter',
+   'backgridMomentCell'
+], function ($, _, Backbone, Handlebars, Backgrid, jsBeautify) {
    'use strict';
 
    var EventsView = Backbone.View.extend({
@@ -22,18 +26,39 @@ define([
          this.eventTableFilter = '';
 
          this.template = Handlebars.compile(options.template);
-         this.eventsTableTemplate = Handlebars.compile(options.eventTableTemplate);
          this.eventModalTemplate = Handlebars.compile(options.eventModalTemplate);
 
          this.eventCollection = options.eventCollection;
 
-         this.listenTo(this.eventCollection, "change reset add remove", this.renderEventTable);
+         var eventsView = this;
+
+         if (options.columns) {
+
+            //customize row to handle event details click
+            var row = Backgrid.Row.extend({
+               events: {
+                  'click': "rowClick"
+               },
+               rowClick: function(e) {
+                  eventsView.showEventDetails(this.model);
+               }
+            });
+
+            this.grid = new Backgrid.Grid({
+               row: row,
+               columns: options.columns,
+               collection: this.eventCollection
+            });
+
+            this.filterConfig = {
+               field: options.selectField,
+               options: options.selectOptions
+            };
+         }
       },
 
       events: {
-         "change .filter-select": 'onFilterChange',
-         'click .clear-events-list': 'onClearEventsList',
-         'click .event-row': 'onEventShow'
+         'click .clear-events-list': 'onClearEventsList'
       },
 
       /**
@@ -53,66 +78,38 @@ define([
 
          this.$el.html(this.template(templateArgs));
 
-         this.renderEventTable();
+         this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
 
-         return this;
-      },
-
-      renderEventTable: function() {
-         var collection = this.eventCollection;
-
-         if (this.eventTableFilter) {
-            collection = this.eventCollection.filterBy(this.eventTableFilter);
-         }
-
-         var tableHtml = this.eventsTableTemplate({
-            events: collection.toJSON()
+         this.gridFilter = new Backgrid.Extension.SelectFilter({
+            className: "backgrid-filter form-control filter filter-select",
+            collection: this.eventCollection,
+            field: this.filterConfig.field,
+            selectOptions: this.filterConfig.options
          });
 
-         this.$el.find('#events-table').html(tableHtml);
-      },
+         this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
 
-      onEventUpdate: function (eventMsg) {
-         var event = JSON.parse(eventMsg.data);
+         //apply bootstrap table styles to grid
+         this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
 
-         this.eventCollection.push(new EventModel(event.data));
-
-         this.renderEventTable();
-      },
-
-      onFilterChange: function(e) {
-         var filterVal = e.currentTarget.value;
-         if (filterVal.toLowerCase() === 'all') {
-            this.eventTableFilter = '';
-         }
-         else {
-            this.eventTableFilter = e.currentTarget.value;
-         }
-
-         this.renderEventTable();
+         return this;
       },
 
       onClearEventsList: function(e) {
          e.preventDefault();
 
          //clear events
-         this.eventCollection.remove(this.eventCollection.models);
+         this.eventCollection.reset();
 
-         this.renderEventTable();
       },
 
       //display event details modal
-      onEventShow: function(e) {
-         if (!e.currentTarget.dataset.cid) {
-            return;
-         }
-
-         var eventData = this.eventCollection.get(e.currentTarget.dataset.cid);
+      showEventDetails: function(eventModel) {
 
          var modalHtml = this.eventModalTemplate({
-            event: eventData.toJSON(),
+            event: eventModel.toJSON(),
             eventDetails: jsBeautify.js_beautify(
-               JSON.stringify(eventData.get('data') ? eventData.get('data') : _.omit(eventData.toJSON(), 'cid'))
+               JSON.stringify(eventModel.get('data') ? eventModel.get('data') : _.omit(eventModel.toJSON(), 'cid'))
             )
          });
 
@@ -121,10 +118,10 @@ define([
          var $modelEl = this.$el.find('.event-modal');
          var title;
 
-         if (eventData.get('rpcName')) {
-            title = 'RPC: ' + eventData.get('rpcName');
+         if (eventModel.get('rpcName')) {
+            title = 'RPC: ' + eventModel.get('rpcName');
          } else {
-            title = 'Event: ' + eventData.get('type');
+            title = 'Event: ' + eventModel.get('type');
          }
 
          $modelEl.find('.modal-title').html(title);
