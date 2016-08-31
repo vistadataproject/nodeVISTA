@@ -86,7 +86,7 @@ require.config({
       moment: '../moment/min/moment.min',
       jsBeautify: '../js-beautify/js/lib/beautify',
       backgrid: '../backgrid/lib/backgrid',
-      'backgrid.paginator': 'lib/backgrid-paginator',
+      'backgrid.paginator': 'lib/backgrid-paginator.min',
       backgridMomentCell: 'lib/backgrid-moment-cell.min',
       backgridSelectFilter: 'lib/backgrid-select-filter',
       backgridCustomCells: 'lib/backgrid-custom-cells',
