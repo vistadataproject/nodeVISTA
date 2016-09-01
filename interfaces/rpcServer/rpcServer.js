@@ -17,7 +17,7 @@ var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
 // imports for emulated
 var emulatedRPCs = require('./emulatedRPCs.js');
 var mvdmManagement = require('./mvdmManagement');
-var adminServer = require('./adminServer');
+var mvdmClient = require('./mvdmClient');
 var moment = require('moment');
 
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
@@ -86,8 +86,8 @@ captureFile.on("open", function(fd) {
     server.listen(port, function() {
         console.log('Sniffer listening to %j', server.address());
 
-        //start up rpc server admin server
-        adminServer.init();
+        //start up mvdm client
+        mvdmClient.init();
     });
 });
 
