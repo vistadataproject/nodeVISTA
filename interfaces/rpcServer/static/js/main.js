@@ -99,7 +99,7 @@ require([
    'backbone',
    'app',
    'router',
-   'EventListener', //initializes EventListener,
+   'EventListener',
    'backgrid'
 ], function ($, Backbone, AppView, Router, EventListener) {
    /*jshint nonew:false*/
@@ -130,7 +130,7 @@ require([
    };
 
    // Initialize routing and start Backbone.history()
-   new Router({viewManager:new ViewManager()});
+   new Router({viewManager: new ViewManager(), eventListener: new EventListener()});
    Backbone.history.start();
 
    // Initialize the application view

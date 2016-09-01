@@ -7,13 +7,47 @@
         <a href="#" class="clear-events-list" title="Clear MVDM Events List">
             <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
         </a>
-        <span class="emulation-status">
-            <h4 class="submenu-label">Emulation: </h4>
-            {{#if management.isEmulation}}
-                <span class="glyphicon glyphicon-ok-sign" alt="Emulation is on."></span>
-            {{else}}
-                <span class="glyphicon glyphicon-remove-sign" alt="Emulation is off."></span>
-            {{/if}}
+        <span class="mvdm-events-status">
+            <span>
+                <strong class="submenu-label">Total:</strong>
+                <span class="event-count-total"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Describe:</strong>
+                <span class="event-count-describe"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">List:</strong>
+                <span class="event-count-list"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Create:</strong>
+                <span class="event-count-create"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Update:</strong>
+                <span class="event-count-update"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Remove:</strong>
+                <span class="event-count-remove"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Unremoved:</strong>
+                <span class="event-count-unremoved"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Delete:</strong>
+                <span class="event-count-delete"></span>
+            </span>
+            <span>
+                 <strong class="submenu-label">Emulation: </strong>
+                {{#if management.isEmulation}}
+                    <span class="glyphicon glyphicon-ok-sign" alt="Emulation is on."></span>
+                {{else}}
+                    <span class="glyphicon glyphicon-remove-sign" alt="Emulation is off."></span>
+                {{/if}}
+            </span>
         </span>
 
     </div>

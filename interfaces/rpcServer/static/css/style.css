@@ -23,14 +23,14 @@ nav {
     display: inline-block;
 }
 
-.events .emulation-status {
+.events .mvdm-events-status {
     float:right;
     margin: 15px 15px 0 0;
 }
 
 .events .submenu .glyphicon {
-    font-size: 150%;
-    top: 5px;
+    font-size: 130%;
+    top: 4px;
 }
 
 .events .submenu .glyphicon-filter {

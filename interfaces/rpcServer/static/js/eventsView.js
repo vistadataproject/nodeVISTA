@@ -80,6 +80,10 @@ define([
 
          this.$el.html(this.template(templateArgs));
 
+         if (this.renderEventCounts) {
+            this.renderEventCounts();
+         }
+
          this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
 
          var paginator = new Backgrid.Extension.Paginator({
@@ -111,6 +115,10 @@ define([
          //clear events
          var col = this.eventCollection.fullCollection || this.eventCollection;
          col.reset();
+
+         if (this.clearEventCounts) {
+            this.clearEventCounts();
+         }
       },
 
       //display event details modal

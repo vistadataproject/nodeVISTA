@@ -18,7 +18,7 @@ define([
 
    var MVDMEventsView = EventsParentView.extend({
 
-      initialize: function () {
+      initialize: function (options) {
 
          this.management = new ManagementModel();
 
@@ -27,6 +27,16 @@ define([
          this.management.fetch();
 
          var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
+
+         this.clearEventCounts();
+
+         this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
+
+            this.eventCounts.total += 1;
+            this.eventCounts[model.get('type')] += 1;
+
+            this.renderEventCounts();
+         });
 
          MVDMEventsView.__super__.initialize.apply(this, [{
             webSocketRoute: 'mvdmEvents',
@@ -86,6 +96,31 @@ define([
          MVDMEventsView.__super__.render.apply(this, [{
                management:this.management.toJSON()
             }]);
+      },
+      renderEventCounts: function() {
+
+         this.$el.find('.event-count-total').html(this.eventCounts.total);
+         this.$el.find('.event-count-describe').html(this.eventCounts.describe);
+         this.$el.find('.event-count-list').html(this.eventCounts.list);
+         this.$el.find('.event-count-create').html(this.eventCounts.create);
+         this.$el.find('.event-count-update').html(this.eventCounts.update);
+         this.$el.find('.event-count-remove').html(this.eventCounts.remove);
+         this.$el.find('.event-count-unremoved').html(this.eventCounts.unremoved);
+         this.$el.find('.event-count-delete').html(this.eventCounts.delete);
+      },
+      clearEventCounts: function() {
+         this.eventCounts = {
+            total: 0,
+            describe: 0,
+            list: 0,
+            create: 0,
+            update: 0,
+            remove: 0,
+            unremoved: 0,
+            delete: 0
+         };
+
+         this.renderEventCounts();
       }
    });
 

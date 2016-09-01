@@ -11,22 +11,32 @@ define([
    'use strict';
 
    var EventListener = function() {
+
+      var self = this;
+
+      _.extend(self, Backbone.Events);
+
       this.mvdmSocket = initWebSocket('mvdmEvents', function(eventMsg) {
-         parseAndInsertEvent(eventMsg, MVDMEventCollection);
+         parseAndInsertEvent(eventMsg, MVDMEventCollection, 'mvdm');
       });
 
       this.rpcSocket = initWebSocket('rpcEvents', function(eventMsg) {
-         parseAndInsertEvent(eventMsg, RPCEventCollection);
+         parseAndInsertEvent(eventMsg, RPCEventCollection, 'rpc');
       });
 
-      function parseAndInsertEvent(eventMsg, eventCollection) {
+      function parseAndInsertEvent(eventMsg, eventCollection, eventType) {
          var event = JSON.parse(eventMsg.data);
 
+         var eventModel = new EventModel(event.data);
          eventCollection.push(new EventModel(event.data));
 
          //sort collection
          eventCollection.setSorting(eventCollection.state.sortKey);
          eventCollection.fullCollection.sort();
+
+         if (eventType === 'mvdm') {
+            self.trigger('newMvdmEvent', eventModel);
+         }
       }
 
       function initWebSocket(socketRoute, onMessageCallback) {
@@ -52,5 +62,5 @@ define([
       }
    };
 
-   return new EventListener();
+   return EventListener;
 });

@@ -4,7 +4,7 @@ define([
    'backbone',
    'mvdmEvents/mvdmEventsView',
    'rpcEvents/rpcEventsView',
-   'management/managementView',
+   'management/managementView'
 ], function ($, Backbone, MVDMEventsView, RPCEventsView, ManagementView) {
    'use strict';
 
@@ -12,7 +12,7 @@ define([
 
       initialize: function(options){
          this.viewManager = options.viewManager;
-
+         this.eventListener = options.eventListener;
       },
 
       routes: {
@@ -22,7 +22,7 @@ define([
          "": "mvdmEvents" //mvdmEvents is default view
       },
       mvdmEvents: function() {
-         this.mvdmEventsView = new MVDMEventsView();
+         this.mvdmEventsView = new MVDMEventsView({eventListener: this.eventListener});
          setActiveNavItem('mvdmEvents');
          this.viewManager.showView(this.mvdmEventsView);
       },
