@@ -6,27 +6,22 @@ define([
    'handlebars',
    'eventsView',
    'rpcEvents/eventCollection',
+   'rpcEvents/eventCounterModel',
    'text!rpcEvents/rpcEvents.hbs',
    'text!rpcEvents/eventModal.hbs',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, EventsTemplate, EventModalTemplate) {
    'use strict';
 
    var RPCEventsView = EventsParentView.extend({
 
       initialize: function (options) {
 
-         this.clearEventCounts();
-
-         this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
-
-            this.eventCounts.total += 1;
-            this.eventCounts[model.get('runner')] += 1;
-
-            this.renderEventCounts();
+         this.listenTo(options.eventListener, 'newRpcEvent', function() {
+            this.renderEventCounter();
          });
 
          RPCEventsView .__super__.initialize.apply(this, [{
@@ -71,22 +66,22 @@ define([
             }]
          }]);
       },
-      renderEventCounts: function() {
+      renderEventCounter: function() {
 
-         this.$el.find('.event-count-total').html(this.eventCounts.total);
-         this.$el.find('.event-count-local-rpc-runner').html(this.eventCounts.localRPCRunner);
-         this.$el.find('.event-count-emulated').html(this.eventCounts.rpcE);
-         this.$el.find('.event-count-hardcode').html(this.eventCounts.hardcode);
+         this.$el.find('.event-count-total').html(EventCounter.get('total'));
+         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
+         this.$el.find('.event-count-emulated').html(EventCounter.get('rpcE'));
+         this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
       },
-      clearEventCounts: function() {
-         this.eventCounts = {
+      clearEventCounter: function() {
+         EventCounter.set({
             total: 0,
             localRPCRunner: 0,
             rpcE: 0,
             hardcode: 0
-         };
+         });
 
-         this.renderEventCounts();
+         this.renderEventCounter();
       }
    });
 

@@ -7,13 +7,14 @@ define([
    'eventsView',
    'mvdmEvents/eventCollection',
    'management/managementModel',
+   'mvdmEvents/eventCounterModel',
    'text!mvdmEvents/mvdmEvents.hbs',
    'text!mvdmEvents/eventModal.hbs',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, EventsTemplate, EventModalTemplate) {
    'use strict';
 
    var MVDMEventsView = EventsParentView.extend({
@@ -28,14 +29,8 @@ define([
 
          var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
 
-         this.clearEventCounts();
-
-         this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
-
-            this.eventCounts.total += 1;
-            this.eventCounts[model.get('type')] += 1;
-
-            this.renderEventCounts();
+         this.listenTo(options.eventListener, 'newMvdmEvent', function() {
+            this.renderEventCounter();
          });
 
          MVDMEventsView.__super__.initialize.apply(this, [{
@@ -97,19 +92,19 @@ define([
                management:this.management.toJSON()
             }]);
       },
-      renderEventCounts: function() {
+      renderEventCounter: function() {
 
-         this.$el.find('.event-count-total').html(this.eventCounts.total);
-         this.$el.find('.event-count-describe').html(this.eventCounts.describe);
-         this.$el.find('.event-count-list').html(this.eventCounts.list);
-         this.$el.find('.event-count-create').html(this.eventCounts.create);
-         this.$el.find('.event-count-update').html(this.eventCounts.update);
-         this.$el.find('.event-count-remove').html(this.eventCounts.remove);
-         this.$el.find('.event-count-unremoved').html(this.eventCounts.unremoved);
-         this.$el.find('.event-count-delete').html(this.eventCounts.delete);
+         this.$el.find('.event-count-total').html(EventCounter.get('total'));
+         this.$el.find('.event-count-describe').html(EventCounter.get('describe'));
+         this.$el.find('.event-count-list').html(EventCounter.get('list'));
+         this.$el.find('.event-count-create').html(EventCounter.get('create'));
+         this.$el.find('.event-count-update').html(EventCounter.get('update'));
+         this.$el.find('.event-count-remove').html(EventCounter.get('remove'));
+         this.$el.find('.event-count-unremoved').html(EventCounter.get('unremoved'));
+         this.$el.find('.event-count-delete').html(EventCounter.get('delete'));
       },
-      clearEventCounts: function() {
-         this.eventCounts = {
+      clearEventCounter: function() {
+         EventCounter.set({
             total: 0,
             describe: 0,
             list: 0,
@@ -118,9 +113,9 @@ define([
             remove: 0,
             unremoved: 0,
             delete: 0
-         };
+         });
 
-         this.renderEventCounts();
+         this.renderEventCounter();
       }
    });
 

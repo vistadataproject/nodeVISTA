@@ -80,8 +80,8 @@ define([
 
          this.$el.html(this.template(templateArgs));
 
-         if (this.renderEventCounts) {
-            this.renderEventCounts();
+         if (this.renderEventCounter) {
+            this.renderEventCounter();
          }
 
          this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
@@ -116,8 +116,8 @@ define([
          var col = this.eventCollection.fullCollection || this.eventCollection;
          col.reset();
 
-         if (this.clearEventCounts) {
-            this.clearEventCounts();
+         if (this.clearEventCounter) {
+            this.clearEventCounter();
          }
       },
 

@@ -6,8 +6,10 @@ define([
    'eventModel',
    'mvdmEvents/eventCollection',
    'rpcEvents/eventCollection',
+   'mvdmEvents/eventCounterModel',
+   'rpcEvents/eventCounterModel',
    'config'
-], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection) {
+], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter) {
    'use strict';
 
    var EventListener = function() {
@@ -34,10 +36,21 @@ define([
          eventCollection.setSorting(eventCollection.state.sortKey);
          eventCollection.fullCollection.sort();
 
+         //increment event counters
          if (eventType === 'mvdm') {
-            self.trigger('newMvdmEvent', eventModel);
+
+            MVDMEventCounter.set('total', MVDMEventCounter.get('total') + 1);
+            var eventType = eventModel.get('type');
+            MVDMEventCounter.set(eventType, MVDMEventCounter.get(eventType) + 1);
+
+            self.trigger('newMvdmEvent', eventModel, MVDMEventCounter);
          } else if (eventType === 'rpc') {
-            self.trigger('newRpcEvent', eventModel);
+
+            RPCEventCounter.set('total', RPCEventCounter.get('total') + 1);
+            var runnerType = eventModel.get('runner');
+            RPCEventCounter.set(runnerType, RPCEventCounter.get(runnerType) + 1);
+
+            self.trigger('newRpcEvent', eventModel, RPCEventCounter);
          }
       }
 
