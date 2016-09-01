@@ -27,7 +27,7 @@ define([
          this.viewManager.showView(this.mvdmEventsView);
       },
       rpcEvents: function() {
-         this.rpcEventsView = new RPCEventsView();
+         this.rpcEventsView = new RPCEventsView({eventListener: this.eventListener});
          setActiveNavItem('rpcEvents');
          this.viewManager.showView(this.rpcEventsView);
       },

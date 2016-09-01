@@ -36,6 +36,8 @@ define([
 
          if (eventType === 'mvdm') {
             self.trigger('newMvdmEvent', eventModel);
+         } else if (eventType === 'rpc') {
+            self.trigger('newRpcEvent', eventModel);
          }
       }
 

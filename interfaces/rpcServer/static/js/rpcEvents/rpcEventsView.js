@@ -17,7 +17,17 @@ define([
 
    var RPCEventsView = EventsParentView.extend({
 
-      initialize: function () {
+      initialize: function (options) {
+
+         this.clearEventCounts();
+
+         this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
+
+            this.eventCounts.total += 1;
+            this.eventCounts[model.get('runner')] += 1;
+
+            this.renderEventCounts();
+         });
 
          RPCEventsView .__super__.initialize.apply(this, [{
             webSocketRoute: 'mvdmEvents',
@@ -60,6 +70,23 @@ define([
                })
             }]
          }]);
+      },
+      renderEventCounts: function() {
+
+         this.$el.find('.event-count-total').html(this.eventCounts.total);
+         this.$el.find('.event-count-local-rpc-runner').html(this.eventCounts.localRPCRunner);
+         this.$el.find('.event-count-emulated').html(this.eventCounts.rpcE);
+         this.$el.find('.event-count-hardcode').html(this.eventCounts.hardcode);
+      },
+      clearEventCounts: function() {
+         this.eventCounts = {
+            total: 0,
+            localRPCRunner: 0,
+            rpcE: 0,
+            hardcode: 0
+         };
+
+         this.renderEventCounts();
       }
    });
 
