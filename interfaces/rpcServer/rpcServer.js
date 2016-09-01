@@ -9,7 +9,7 @@ var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
-var EventHandler = require('./EventHandler');
+var EventManager = require('./eventManager');
 
 // imports for localRpcRunner
 var nodem = require('nodem');
@@ -180,7 +180,7 @@ function handleConnection(conn) {
                 rpcObject.to = runner;
                 rpcObject.timeStamp = new Date().toISOString();
 
-                EventHandler.emit('rpcCall', {
+                EventManager.emit('rpcCall', {
                     type: 'rpcCall',
                     timestamp: moment().format(DT_FORMAT) + 'Z',
                     runner: runner,

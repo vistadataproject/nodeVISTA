@@ -10,7 +10,7 @@ var path = require('path');
 var CONFIG = require('./cfg/config.js');
 var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
-var EventHandler = require('./EventHandler');
+var EventManager = require('./eventManager');
 
 function init() {
    // parse application/x-www-form-urlencoded
@@ -95,37 +95,37 @@ function handleSocketClose(ws, clients) {
 
 function initMVDMEventListeners(mvdmClients) {
    //handle socket request
-   EventHandler.on('mvdmCreate', function(event) {
+   EventManager.on('mvdmCreate', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 
-   EventHandler.on('mvdmDescribe', function(event) {
+   EventManager.on('mvdmDescribe', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 
-   EventHandler.on('mvdmList', function(event) {
+   EventManager.on('mvdmList', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 
-   EventHandler.on('mvdmUpdate', function(event) {
+   EventManager.on('mvdmUpdate', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 
-   EventHandler.on('mvdmRemove', function(event) {
+   EventManager.on('mvdmRemove', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 
-   EventHandler.on('mvdmUnremoved', function(event) {
+   EventManager.on('mvdmUnremoved', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 
-   EventHandler.on('mvdmDelete', function(event) {
+   EventManager.on('mvdmDelete', function(event) {
       processEvent(mvdmClients, 'MVDM', event);
    });
 }
 
 function initRPCEventListeners(rpcClients) {
-   EventHandler.on('rpcCall', function(event) {
+   EventManager.on('rpcCall', function(event) {
       processEvent(rpcClients, 'RPC', event);
    });
 }
