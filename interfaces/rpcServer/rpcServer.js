@@ -33,7 +33,7 @@ var ENQ = '\u0005';
 
 var fromName = CONFIG.client.defaultName;
 var capturePath = CONFIG.FILE.defaultCaptureFile;
-var port = CONFIG.sniffer.port;
+var port = CONFIG.rpcServer.port;
 
 // check for command line overrides
 if (process.argv.length > 2) {
@@ -50,7 +50,7 @@ if (process.argv.length > 2) {
             // snifferPort=port
             port = parseInt(process.argv[argnum].substring(12));
             if (isNaN(port)) {
-                port = CONFIG.sniffer.port;
+                port = CONFIG.rpcServer.port;
             }
             console.log("Setting sniffer port to %s", port);
         } else if (process.argv[argnum].toLowerCase().indexOf("duz=")  > -1) {

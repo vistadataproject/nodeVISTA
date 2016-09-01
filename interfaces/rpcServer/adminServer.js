@@ -73,7 +73,7 @@ function init() {
    initMVDMEventListeners(mvdmClients);
    initRPCEventListeners(rpcClients);
 
-   var port = CONFIG.admin.port;
+   var port = CONFIG.mvdmClient.port;
    app.listen(port, function () {
       LOGGER.info('MVDM Admin listening on port ' + port);
    });
