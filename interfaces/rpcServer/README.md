@@ -32,9 +32,12 @@ The RPC Server should be listening for incoming RPC connections on the configure
 
 **Launch MVDM Client**
 
-Open your browser and launch the mvdm client URL: http://<mvdmClient.host>:<mvdmClient.port>/ 
+Open your browser and launch the mvdm client URL: 
+```
+http://<mvdmClient.host>:<mvdmClient.port>
 
-(i.e http://localhost:9020/)
+i.e. http://localhost:9020
+```
 
 ![](https://github.com/vistadataproject/nodeVISTA/blob/master/interfaces/rpcServer/screenshots/mvdmEvents.jpg)
 
