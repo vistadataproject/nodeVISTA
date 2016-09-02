@@ -52,6 +52,9 @@ Modify the target and change the server and port fields:
 ```
 "C:\Program Files\VistA\CPRS\CPRSChart-VA.exe" CCOW=disable s=<VistA VM IP> p=9010 showrpcs
 ```
+<img src="https://raw.githubusercontent.com/wiki/vistadataproject/nodeVISTA/images/cprsProperties.jpg" width=300/>
+
+<img src="https://raw.githubusercontent.com/wiki/vistadataproject/nodeVISTA/images/cprsRpcServer.jpg" width=600/>
 
 **Logging**
 
