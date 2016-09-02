@@ -92,4 +92,4 @@ Here's an example of its output:
   "timeStamp": "2016-09-01T23:35:32.110Z"
 },
 ```
-The other log files are standard info, debug, and info outputs from the rpc and mvdm client.
+The other log files are standard info, debug, and error outputs from the rpc and mvdm client.
