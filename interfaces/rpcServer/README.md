@@ -20,7 +20,7 @@ config.mvdmClient.host = 'localhost';
 config.mvdmClient.port = 9020;
 ```
 
-**Run the Server**
+**Execute the Server**
 
 SSH into the nodeVista machine and login as the vdp user:
 
