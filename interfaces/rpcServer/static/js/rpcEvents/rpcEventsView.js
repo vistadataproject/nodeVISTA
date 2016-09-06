@@ -56,8 +56,8 @@ define([
                   fromRaw: function (rawValue, model) {
                      if (rawValue === 'localRPCRunner') {
                         return 'Local RPC Runner';
-                     } else if (rawValue === 'rpcE') {
-                        return 'Emulated';
+                     } else if (rawValue === 'rpcL') {
+                        return 'Locked';
                      } else if (rawValue === 'hardcode') {
                         return 'Hardcode';
                      } else return rawValue;

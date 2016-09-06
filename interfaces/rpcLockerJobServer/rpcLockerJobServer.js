@@ -77,7 +77,7 @@ app.get('/rpc/call', function(req, res) {
 app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
 
 q.on('started', function() {
-    this.worker.module = __dirname + '/rpcEWorker';
+    this.worker.module = __dirname + '/rpcLWorker';
     var port = process.argv[2] || 9001;
     var server = require('http').createServer(app);
     server.listen(port);

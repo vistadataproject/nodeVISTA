@@ -14,8 +14,8 @@ var EventManager = require('./eventManager');
 // imports for localRpcRunner
 var nodem = require('nodem');
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
-// imports for emulated
-var emulatedRPCs = require('./emulatedRPCs.js');
+// imports for locked rpcs
+var lockedRPCs = require('./lockedRPCs.js');
 var mvdmManagement = require('./mvdmManagement');
 var mvdmClient = require('./mvdmClient');
 var moment = require('moment');
@@ -152,9 +152,9 @@ function handleConnection(conn) {
                         response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
                         runner = "hardcode";
                     } else {
-                        // could not find a matching response, try calling the emulator or localRunner anyway
-                        LOGGER.info("no unsupported RPC/arg pair, calling RPC emulator or localRunner");
-                        runnerReturn = callEmulatorOrLocalRunner(rpcObject);
+                        // could not find a matching response, try calling the rpc locker or localRunner anyway
+                        LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or localRunner");
+                        runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
                         response = runnerReturn.response;
                         runner = runnerReturn.runner;
                     }
@@ -165,8 +165,8 @@ function handleConnection(conn) {
                     runner = "hardcode";
                 }
             } else {
-                LOGGER.info("calling RPC emulator or local runner");
-                runnerReturn = callEmulatorOrLocalRunner(rpcObject);
+                LOGGER.info("calling RPC locker or local runner");
+                runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
                 response = runnerReturn.response;
                 runner = runnerReturn.runner;
             }
@@ -203,16 +203,16 @@ function handleConnection(conn) {
 
     }
 
-    function callEmulatorOrLocalRunner(rpcObject) {
+    function callRpcLockerOrLocalRunner(rpcObject) {
         var rpcResult;
         var runner;
-        // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
-        if (mvdmManagement.isEmulation && emulatedRPCs.has(rpcObject.name)) {
-            var domainRpcE = emulatedRPCs.get(rpcObject.name);
-            domainRpcE.setup(db, DUZ, facilityCode);
-            runner = "rpcE";
-            rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
-            LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
+        // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
+        if (mvdmManagement.isRpcsLocked && lockedRPCs.has(rpcObject.name)) {
+            var domainrpcL = lockedRPCs.get(rpcObject.name);
+            domainrpcL.setup(db, DUZ, facilityCode);
+            runner = "rpcL";
+            rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
+            LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
             LOGGER.info("RPC parameters: %j", rpcObject.args);
