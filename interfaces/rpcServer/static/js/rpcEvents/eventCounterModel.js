@@ -10,7 +10,7 @@ define([
       defaults: {
          total: 0,
          localRPCRunner: 0,
-         rpcE: 0,
+         rpcL: 0,
          hardcode: 0
       }
    });
