@@ -41,11 +41,11 @@
                 <span class="event-count-delete"></span>
             </span>
             <span>
-                 <strong class="submenu-label">Emulation: </strong>
-                {{#if management.isEmulation}}
-                    <span class="glyphicon glyphicon-ok-sign" alt="Emulation is on."></span>
+                 <strong class="submenu-label">RPCs Locked: </strong>
+                {{#if management.isRpcsLocked}}
+                    <span class="glyphicon glyphicon-ok-sign" alt="RPCs are lockjed"></span>
                 {{else}}
-                    <span class="glyphicon glyphicon-remove-sign" alt="Emulation is off."></span>
+                    <span class="glyphicon glyphicon-remove-sign" alt="RPCs are unlocked"></span>
                 {{/if}}
             </span>
         </span>

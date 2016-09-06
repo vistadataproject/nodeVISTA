@@ -39,8 +39,8 @@ function init() {
 
       var settings = req.body;
 
-      if (_.has(settings, 'isEmulation')) {
-         mvdmManagement.isEmulation = settings.isEmulation;
+      if (_.has(settings, 'isRpcsLocked')) {
+         mvdmManagement.isRpcsLocked = settings.isRpcsLocked;
       }
       
       return res.sendStatus(200);
