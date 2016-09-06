@@ -33,7 +33,7 @@ define([
             selectOptions: _.union([
                {label: "All", value: null},
                {label: 'Local RPC Runner', value: 'localRPCRunner'},
-               {label: 'Emulated', value: 'rpcE'},
+               {label: 'Locked', value: 'rpcL'},
                {label: 'Hardcode', value: 'hardcode'}]),
             columns: [{
                name: 'timestamp',
@@ -70,14 +70,14 @@ define([
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
          this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
-         this.$el.find('.event-count-emulated').html(EventCounter.get('rpcE'));
+         this.$el.find('.event-count-locked').html(EventCounter.get('rpcL'));
          this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
       },
       clearEventCounter: function() {
          EventCounter.set({
             total: 0,
             localRPCRunner: 0,
-            rpcE: 0,
+            rpcL: 0,
             hardcode: 0
          });
 
