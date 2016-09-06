@@ -21,12 +21,8 @@
                     </li>
                     <li>
                         <div>
-                            <strong>Emulated:</strong>
-                            {{#if event.isEmulated}}
-                                <span class="glyphicon glyphicon-plus-sign" alt="This RPC is being emulated over MVDM"></span>
-                            {{else}}
-                                <span class="glyphicon glyphicon-minus-sign" alt="This RPC is not being emulated."></span>
-                            {{/if}}
+                            <strong>Runner:</strong>
+                            {{show-runner event}}
                         </div>
                     </li>
                 </ul>

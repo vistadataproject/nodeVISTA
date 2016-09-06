@@ -34,7 +34,7 @@ define([
                {label: "All", value: null},
                {label: 'Local RPC Runner', value: 'localRPCRunner'},
                {label: 'Emulated', value: 'rpcE'},
-               {label: 'Hardcode', value: 'hardcode'},]),
+               {label: 'Hardcode', value: 'hardcode'}]),
             columns: [{
                name: 'timestamp',
                label: 'Date',

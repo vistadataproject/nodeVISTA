@@ -26,4 +26,15 @@ define([
 
       return new Handlebars.SafeString(selectHtml);
    });
+
+   Handlebars.registerHelper('show-runner', function(event) {
+
+      if (event.runner === 'localRPCRunner') {
+         return 'Local RPC Runner';
+      } else if (event.runner === 'rpcE') {
+         return 'Emulated';
+      } else if (event.runner === 'hardcode') {
+         return 'Hardcode';
+      } else return event.runner;
+   });
 });
