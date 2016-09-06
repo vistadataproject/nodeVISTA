@@ -107,9 +107,9 @@ function callVpr(messageObj) {
     if (rpcArgs.length > 1)
         var ien = rpcArgs[1];
     var format = messageObj.query.format;
-    var emulation = messageObj.query.emulation;
+    var rpcsLocked = messageObj.query.rpcsLocked;
     if (format === 'XML') {
-        if (emulation === 'on') {
+        if (rpcsLocked === 'on') {
             // call vpr emulator
             if (ien)
                 var res = vprE.queryXML(db, patient, domain, ien);
@@ -140,8 +140,8 @@ function callRpc(messageObj) {
     var domain = getDomain(messageObj.query.rpc);
     setModels(domain);
     var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
-    var emulation = messageObj.query.emulation;
-    if (emulation === 'off' || !rpcL.isRPCSupported(rpc)) {
+    var rpcsLocked = messageObj.query.rpcsLocked;
+    if (rpcsLocked === 'off' || !rpcL.isRPCSupported(rpc)) {
         //run local rpc
         try {
             var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
