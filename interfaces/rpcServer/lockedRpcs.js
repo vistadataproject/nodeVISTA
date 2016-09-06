@@ -4,14 +4,14 @@ var HashMap = require('hashmap');
 var rpcLProblems = require('./rpcLDomains/problems/rpcLProblems.js');
 
 // Add Supported emulated RPCs to a map
-var emulatedRPCs = new HashMap();
+var lockedRPCs = new HashMap();
 
-emulatedRPCs.set('ORQQPL ADD SAVE', rpcLProblems);
-emulatedRPCs.set('ORQQPL DETAIL', rpcLProblems);
-emulatedRPCs.set('ORQQPL PROBLEM LIST', rpcLProblems);
-emulatedRPCs.set('ORQQPL EDIT SAVE', rpcLProblems);
-emulatedRPCs.set('ORQQPL UPDATE', rpcLProblems);
-emulatedRPCs.set('ORQQPL DELETE', rpcLProblems);
-emulatedRPCs.set('ORQQPL REPLACE', rpcLProblems);
+lockedRPCs.set('ORQQPL ADD SAVE', rpcLProblems);
+lockedRPCs.set('ORQQPL DETAIL', rpcLProblems);
+lockedRPCs.set('ORQQPL PROBLEM LIST', rpcLProblems);
+lockedRPCs.set('ORQQPL EDIT SAVE', rpcLProblems);
+lockedRPCs.set('ORQQPL UPDATE', rpcLProblems);
+lockedRPCs.set('ORQQPL DELETE', rpcLProblems);
+lockedRPCs.set('ORQQPL REPLACE', rpcLProblems);
 
-module.exports = emulatedRPCs;
+module.exports = lockedRPCs;
