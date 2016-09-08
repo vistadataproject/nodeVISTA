@@ -4,91 +4,120 @@ define([
    'underscore',
    'backbone',
    'handlebars',
-   'mvdmEvents/eventModel',
-   'mvdmEvents/mvdmEventCollection',
+   'eventsView',
+   'mvdmEvents/eventCollection',
    'management/managementModel',
+   'mvdmEvents/eventCounterModel',
    'text!mvdmEvents/mvdmEvents.hbs',
-   'config',
-   'mvdmEvents/templateHelpers'
-], function ($, _, Backbone, Handlebars, MVDMEventModel, MVDMEventCollection, ManagementModel, mvdmEventsTemplate) {
+   'text!mvdmEvents/eventModal.hbs',
+   'backgrid',
+   'backgridCustomCells',
+   'backgridSelectFilter',
+   'backgridMomentCell'
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, EventsTemplate, EventModalTemplate) {
    'use strict';
 
-   var MVDMEventsView = Backbone.View.extend({
+   var MVDMEventsView = EventsParentView.extend({
 
-      template: Handlebars.compile(mvdmEventsTemplate),
-
-      initialize: function () {
-
-         // Open MVDM event web sockets
-         this.mvdmEventsSocket = new WebSocket("ws://" + config.admin.host + ":" + config.admin.port);
-
-         this.mvdmEventsSocket.onopen = function () {
-            // Web Socket is connected, send data using send()
-            console.log("WebSocket: MVDM Event Handler is connected...");
-         };
-
-         this.mvdmEventsSocket.onmessage = _.bind(function (eventMsg) {
-            this.handleMvdmEvent(eventMsg);
-
-         }, this);
-
-         this.mvdmEventsSocket.onclose = function () {
-            // websocket is closed.
-            console.log("WebSocket: MVDM Event Handler connection is closed...");
-         };
-
-         this.eventFilter = '';
+      initialize: function (options) {
 
          this.management = new ManagementModel();
 
-         this.management.on('change', _.bind(function() {
-            this.render();
-         }, this));
+         this.listenTo(this.management, 'change', this.render);
 
          this.management.fetch();
+
+         var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
+
+         this.listenTo(options.eventListener, 'newMvdmEvent', function() {
+            this.renderEventCounter();
+         });
+
+         MVDMEventsView.__super__.initialize.apply(this, [{
+            webSocketRoute: 'mvdmEvents',
+            eventCollection: EventCollection,
+            template: EventsTemplate,
+            eventModalTemplate: EventModalTemplate,
+            selectField: 'type',
+            selectOptions: _.union([{label: "All", value: null}],
+               _.map(selectOptions, function(val) { return {label:val.toUpperCase(), value:val};})),
+            columns: [{
+               name: 'timestamp',
+               label: 'Date',
+               editable: false,
+               cell: Backgrid.Extension.MomentCell.extend({
+                  displayFormat: "MMM Do YYYY @ h:mm:ss a"
+               })
+            }, {
+               name: 'domain',
+               label: 'Domain',
+               editable: false,
+               cell: 'String'
+            }, {
+               name: 'type',
+               label: 'Type',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.toUpperCase()
+                  }
+               })
+            }, {
+               name: 'user',
+               label: 'User',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.name + ' (' + rawValue.id + ')'
+                  }
+               })
+            }, {
+               name: 'facility',
+               label: 'Facility',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.name + ' (' + rawValue.id + ' / ' + rawValue.stationNumber + ')'
+                  }
+               })
+            }]
+         }]);
       },
-
-      events: {
-         "change .filter-select": "onFilterChange"
-      },
-
-      onFilterChange: function(event) {
-         var filterVal = event.currentTarget.value;
-         if (filterVal.toLowerCase() === 'all') {
-            this.eventFilter = '';
-         }
-         else {
-            this.eventFilter = event.currentTarget.value;
-         }
-
-         this.render();
-      },
-
       render: function () {
-
-         var collection = MVDMEventCollection;
-
-         if (this.eventFilter) {
-            collection = MVDMEventCollection.filterByType(this.eventFilter);
-         }
-
-         this.$el.html(this.template({mvdmEvents: collection.toJSON(), eventFilter: this.eventFilter, management:this.management.toJSON()}));
-         return this;
+         //call parent render
+         MVDMEventsView.__super__.render.apply(this, [{
+               management:this.management.toJSON()
+            }]);
       },
+      renderEventCounter: function() {
 
-      handleMvdmEvent: function (eventMsg) {
-         var event = JSON.parse(eventMsg.data);
-
-         MVDMEventCollection.push(new MVDMEventModel(event.data));
-
-         this.render();
+         this.$el.find('.event-count-total').html(EventCounter.get('total'));
+         this.$el.find('.event-count-describe').html(EventCounter.get('describe'));
+         this.$el.find('.event-count-list').html(EventCounter.get('list'));
+         this.$el.find('.event-count-create').html(EventCounter.get('create'));
+         this.$el.find('.event-count-update').html(EventCounter.get('update'));
+         this.$el.find('.event-count-remove').html(EventCounter.get('remove'));
+         this.$el.find('.event-count-unremoved').html(EventCounter.get('unremoved'));
+         this.$el.find('.event-count-delete').html(EventCounter.get('delete'));
       },
+      clearEventCounter: function() {
+         EventCounter.set({
+            total: 0,
+            describe: 0,
+            list: 0,
+            create: 0,
+            update: 0,
+            remove: 0,
+            unremoved: 0,
+            delete: 0
+         });
 
-      onClose: function () {
-         this.mvdmEventsSocket.close();
+         this.renderEventCounter();
       }
    });
-
 
    return MVDMEventsView;
 });

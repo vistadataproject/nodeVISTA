@@ -20,6 +20,56 @@ require.config({
             'jquery'
          ],
          exports: 'Backbone'
+      },
+      'backbone.paginator': {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone'
+         ],
+         exports: 'backbone.paginator'
+      },
+      backgrid: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone'
+         ],
+         exports: 'Backgrid'
+      },
+      'backgrid.paginator': {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backbone.paginator',
+            'backgrid'
+         ],
+         exports: 'backgrid.paginator'
+      },
+      backgridMomentCell: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backgrid'
+         ]
+      },
+      backgridSelectFilter: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backgrid'
+         ]
+      },
+      backgridCustomCells: {
+         deps: [
+            'underscore',
+            'jquery',
+            'backbone',
+            'backgrid'
+         ]
       }
    },
    moment: {
@@ -29,10 +79,17 @@ require.config({
       jquery: '../jquery/dist/jquery.min',
       underscore: '../underscore/underscore-min',
       backbone: '../backbone/backbone-min',
+      'backbone.paginator': '../backbone.paginator/lib/backbone.paginator',
       text: '../text/text',
       handlebars: '../handlebars/dist/handlebars.amd.min',
       bootstrap: '../bootstrap/dist/js/bootstrap.min',
       moment: '../moment/min/moment.min',
+      jsBeautify: '../js-beautify/js/lib/beautify',
+      backgrid: '../backgrid/lib/backgrid',
+      'backgrid.paginator': 'lib/backgrid-paginator.min',
+      backgridMomentCell: 'lib/backgrid-moment-cell.min',
+      backgridSelectFilter: 'lib/backgrid-select-filter',
+      backgridCustomCells: 'lib/backgrid-custom-cells',
       config: '../config'
    }
 });
@@ -41,12 +98,14 @@ require([
    'jquery',
    'backbone',
    'app',
-   'router'
-], function ($, Backbone, AppView, Router) {
+   'router',
+   'EventListener',
+   'backgrid'
+], function ($, Backbone, AppView, Router, EventListener) {
    /*jshint nonew:false*/
 
    //manages cleaning up previous view and rendering a new view
-   function ViewManager(){
+   function ViewManager() {
 
       this.showView = function(view) {
          if (this.currentView){
@@ -71,7 +130,7 @@ require([
    };
 
    // Initialize routing and start Backbone.history()
-   new Router({viewManager:new ViewManager()});
+   new Router({viewManager: new ViewManager(), eventListener: new EventListener()});
    Backbone.history.start();
 
    // Initialize the application view

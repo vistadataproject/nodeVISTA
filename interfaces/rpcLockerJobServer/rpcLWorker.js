@@ -7,6 +7,7 @@ var MVDM = require('../../../VDM/prototypes/mvdm');
 var testAllergies = require('../../../VDM/prototypes/allergies/vdmTestAllergies'); // want to use test allergies
 var allergyUtils = require("../../../VDM/prototypes/allergies/allergyUtils");
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
+var fmql = require('../../../VDM/prototypes/fmql');
 var vprE = require('../../../VDM/prototypes/vprEmulate/vprE');
 var vpr = require('../../../VDM/prototypes/vpr');
 var vprAllergyEmulator = require('../../../VDM/prototypes/vprEmulate/vprAllergyEmulator');
@@ -31,33 +32,57 @@ var visitModel = require('../../../VDM/prototypes/visits/vdmVisitsModel').vdmMod
 var vdmModelAllergy = allergyModel.concat(documentModel, visitModel);
 var vdmModelProblem = require('../../../VDM/prototypes/problems/vdmProblemsModel').vdmModel;
 var vdmModelVitals = require('../../../VDM/prototypes/vitals/vdmVitalsModel').vdmModel;
-var rpcEProblemModel = require('../../../VDM/prototypes/problems/rpcEProblemModel').rpcEModel;
+var rpcLProblemModel = require('../../../VDM/prototypes/problems/rpcLProblemModel').rpcLModel;
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
 var facilityCode = 2957;
 
 
-var rpcE = require('../../../VDM/prototypes/rpcE');
-var rpcEAllergyMappings = require('../../../VDM/prototypes/allergies/rpcAllergiesEmulate');
-var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalEmulate');
+var rpcL = require('../../../VDM/prototypes/rpcL');
+var rpcLAllergyMappings = require('../../../VDM/prototypes/allergies/rpcAllergiesLocker');
+var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalLocker');
 
 function setModels(domain) {
     if (domain === 'allergy') {
         VDM.setDBAndModel(db, vdmModelAllergy);
+        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelAllergy);
-        vprE.setVprMappings(vprAllergyEmulator);
+        vprE.setVprMappings(vprAllergyEmulator, '1.05');
         // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
-        VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
-        rpcE.setRpcMappings(rpcEAllergyMappings);
+        // VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
+        rpcL.setRpcMappings(rpcLAllergyMappings);
 
     } else if (domain === 'problem') {
-        rpcE.setDBAndModels(db, {rpcEModel: rpcEProblemModel, vdmModel: vdmModelProblem, mvdmModel: mvdmModelProblem});
-        rpcE.setUserAndFacility("200-" + DUZ, "4-" + facilityCode); // note that 4-2957 would come from 200-55 if left out
+        VDM.setDBAndModel(db, vdmModelProblem);
+        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
+
+        MVDM.setModel(mvdmModelProblem);
+        vprE.setVprMappings(vprProblemEmulator, '1.05');
+
+        DUZ = 55; // Matches Robert Alexander
+
+        patientIen = 25;
+
+        var fmqlRes = fmql.query(db, "DESCRIBE 2-" + patientIen);
+
+        var patientName = fmqlRes.results[0].name.value;
+        var last4 = fmqlRes.results[0].social_security_number.value.substring(5);
+
+        patientArgs = patientIen + '^' + patientName + '^' + last4 + '^';
+        facilityCode = '2957'; //OSEHRA VistA facility code
+
+        rpcL.setDBAndModels(db, {
+            rpcLModel: rpcLProblemModel,
+            vdmModel: vdmModelProblem,
+            mvdmModel: mvdmModelProblem
+        });
+        rpcL.setUserAndFacility("200-" + DUZ, "4-" + facilityCode); // note that 4-2957 would come from 200-55 if left out
 
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);
+        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelVitals);
-        vprE.setVprMappings(vprVitalsEmulator);
-        rpcE.setRpcMappings(rpcVitalEmulate.rpcMappings);
+        vprE.setVprMappings(vprVitalsEmulator, '1.05');
+        rpcL.setRpcMappings(rpcVitalEmulate.rpcMappings);
     }
 }
 
@@ -82,9 +107,9 @@ function callVpr(messageObj) {
     if (rpcArgs.length > 1)
         var ien = rpcArgs[1];
     var format = messageObj.query.format;
-    var emulation = messageObj.query.emulation;
+    var rpcsLocked = messageObj.query.rpcsLocked;
     if (format === 'XML') {
-        if (emulation === 'on') {
+        if (rpcsLocked === 'on') {
             // call vpr emulator
             if (ien)
                 var res = vprE.queryXML(db, patient, domain, ien);
@@ -115,8 +140,8 @@ function callRpc(messageObj) {
     var domain = getDomain(messageObj.query.rpc);
     setModels(domain);
     var rpc = messageObj.query.rpc; //'ORQQAL DETAIL', ORQQPL DETAIL
-    var emulation = messageObj.query.emulation;
-    if (emulation === 'off' || !rpcE.isRPCSupported(rpc)) {
+    var rpcsLocked = messageObj.query.rpcsLocked;
+    if (rpcsLocked === 'off' || !rpcL.isRPCSupported(rpc)) {
         //run local rpc
         try {
             var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
@@ -130,21 +155,17 @@ function callRpc(messageObj) {
         try {
 
             if (domain === 'problem') {
-                var args = {
+                var input = {
                     name: rpc,
-                    inputParameters: []
+                    args: []
                 };
-
                 _.forEach(rpcArgs, function(arg) {
-                    args.inputParameters.push({
-                        parameter: arg
-                    })
+                    input.args.push(arg)
                 });
-
-                rpcArgs = args;
+                rpcArgs = input;
             }
 
-            var res = rpcE.run(rpc, rpcArgs);
+            var res = rpcL.run(rpc, rpcArgs);
             if (res.result) {
                 res = res.result.join('\n');
             }
@@ -158,15 +179,15 @@ function callRpc(messageObj) {
 }
 
 function isInt(value) {
-  return !isNaN(value) && 
-         parseInt(Number(value)) == value && 
-         !isNaN(parseInt(value, 10));
+    return !isNaN(value) &&
+        parseInt(Number(value)) == value &&
+        !isNaN(parseInt(value, 10));
 }
 
 function validateArgs(args) {
     var res = true;
     args.forEach(function(item) {
-        if(!isInt(item)) {
+        if (!isInt(item)) {
             res = false;
         }
     });
@@ -242,7 +263,7 @@ module.exports = function() {
                 data: mvdmData
             }
             send(resObj);
-        });        
+        });
 
         MVDM.on('update', function(mvdmData) {
             var resObj = {
@@ -251,7 +272,7 @@ module.exports = function() {
                 data: mvdmData
             }
             send(resObj);
-        });  
+        });
 
         MVDM.on('error', function(mvdmData) {
             var resObj = {
@@ -260,7 +281,7 @@ module.exports = function() {
                 data: mvdmData
             }
             send(resObj);
-        });  
+        });
 
         var application = messageObj.application;
         var res;

@@ -1,10 +1,10 @@
 var config = {};
 
 config.LOGGER = {};
-config.LOGGER.name = 'sniffer';
-config.LOGGER.infoFile = './log/snifferInfo.log';
-config.LOGGER.debugFile = './log/snifferDebug.log';
-config.LOGGER.errorFile = './log/snifferError.log';
+config.LOGGER.name = 'rpcServer';
+config.LOGGER.infoFile = './log/rpcServerInfo.log';
+config.LOGGER.debugFile = './log/rpcServerDebug.log';
+config.LOGGER.errorFile = './log/rpcServerError.log';
 
 config.FILE = {};
 config.FILE.options = {
@@ -22,14 +22,14 @@ config.USER.DUZ = 57;
 config.FACILITY = {};
 config.FACILITY.ID = 2957;
 
-// serverSocket
-config.sniffer = {};
-config.sniffer.port = 9010;
+// rpc server socket
+config.rpcServer = {};
+config.rpcServer.port = 9010;
 
-//admin socket
-config.admin = {};
-config.admin.host = 'localhost';
-config.admin.port = 9020;
+// mvdm socket
+config.mvdmClient = {};
+config.mvdmClient.host = 'localhost';
+config.mvdmClient.port = 9020;
 
 config.client = {};
 config.client.defaultName = "CPRS";

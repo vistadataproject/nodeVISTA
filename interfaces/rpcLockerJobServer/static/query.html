@@ -139,7 +139,7 @@ function sendQueryInURLBar()
     var rpcType = "";
     var rpcName = "";
     var domain = "";
-    var emulation = "";
+    var rpcsLocked = "";
     for(var i=0; i < pairs.length; i++)
     {
         var pos = pairs[i].indexOf("=");
@@ -158,8 +158,8 @@ function sendQueryInURLBar()
         	domain = value;
         else if (argname == "format")
         	format = value;
-        else if (argname == "emulation")
-        	emulation = value;
+        else if (argname == "rpcsLocked")
+        	rpcsLocked = value;
     }
     if (!rpcArgs)
     {
@@ -169,7 +169,7 @@ function sendQueryInURLBar()
     if (!format)
          format = "HTML";
 
-    boxQuery(rpcName, rpcArgs, format, rpcType, domain, emulation);
+    boxQuery(rpcName, rpcArgs, format, rpcType, domain, rpcsLocked);
 
     var xhr = getXMLHttpRequest();
     xhr.onreadystatechange = function()
@@ -196,7 +196,7 @@ function sendQueryInURLBar()
     queryURL += "&rpcArgs=" + encodeURIComponent(rpcArgs);
     queryURL += "&domain=" + domain;
     queryURL += "&format=" + format;
-    queryURL += "&emulation=" + emulation;
+    queryURL += "&rpcsLocked=" + rpcsLocked;
     xhr.open('GET', queryURL,  true);
     xhr.send(null);   
 }
@@ -206,7 +206,7 @@ function sendQueryInURLBar()
  * in the query box and hitting send and updating the query
  * box from the location bar.
  */
-function boxQuery(rpc, rpcArgs, format, rpcType, domain, emulation)
+function boxQuery(rpc, rpcArgs, format, rpcType, domain, rpcsLocked)
 {
     document.getElementById('args').value = rpcArgs;
     document.getElementById('rpc').value = rpc;
@@ -218,7 +218,7 @@ function boxQuery(rpc, rpcArgs, format, rpcType, domain, emulation)
 		$('#format').val(format);
 		$('#domain').val(domain);
 	}
-	$('#emulation').val(emulation);
+	$('#rpcsLocked').val(rpcsLocked);
 }
 
 function handleSendQuery()
@@ -228,13 +228,13 @@ function handleSendQuery()
     var rpcName = $('#rpc').val();
     var domain = $('#domain').val();
     var format = $('#format').val();
-    var emulation = $('#emulation').val();
+    var rpcsLocked = $('#rpcsLocked').val();
     var queryArgs = "rpcType=" + encodeURIComponent(rpcType);
     queryArgs += "&rpcName=" + encodeURIComponent(rpcName);
     queryArgs += "&rpcArgs=" + encodeURIComponent(args);
     queryArgs += "&domain=" + encodeURIComponent(domain);
     queryArgs += "&format=" + format;
-    queryArgs += "&emulation=" + emulation;
+    queryArgs += "&rpcsLocked=" + rpcsLocked;
 	window.search = queryArgs;
 	sendQueryInURLBar();
 }
@@ -361,7 +361,7 @@ function filterEvents() {
 function displayEventTable(events) {
 	var html = '<tr><th>Time</th><th>Type</th><th>User ID</th><th>Facility ID</th></tr>';
 	events.forEach(function(event) {
-		html += '<tr><td>' + event.data.eventTimestamp + '</td><td>' + event.MVDM + '</td><td>' + event.data.userId + '</td><td>' + event.data.facilityId + '</td></tr>'
+		html += '<tr><td>' + event.data.timestamp + '</td><td>' + event.MVDM + '</td><td>' + event.data.user.id + '</td><td>' + event.data.facility.id + '</td></tr>'
 	});
 	$('#eventTbl').html(html);
 }
@@ -455,8 +455,8 @@ function displayEventTable(events) {
 </div>
 <div id="adminTab">
 	<div class="option">
-		<span class="option-title">Emulation: </span>
-		<select id="emulation" name="emulation">
+		<span class="option-title">RPCs Locked: </span>
+		<select id="rpcsLocked" name="rpcsLocked">
 		<option value="on">On</option>
 		<option value="off">Off</option>
 		</select>

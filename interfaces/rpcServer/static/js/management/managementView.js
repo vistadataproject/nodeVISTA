@@ -6,7 +6,7 @@ define([
    'handlebars',
    'management/managementModel',
    'text!management/management.hbs',
-   'management/templateHelpers'
+   'templateHelpers'
 ], function ($, _, Backbone, Handlebars, ManagementModel, managementTemplate) {
    'use strict';
    var ManagementView = Backbone.View.extend({
@@ -23,7 +23,7 @@ define([
       },
 
       events: {
-         "change .emulation-select": "onEmulationChange"
+         "change .rpcs-locked-select": "onRpcsLockedChange"
       },
 
       render: function() {
@@ -33,26 +33,26 @@ define([
          return this;
       },
 
-      onEmulationChange: function(event) {
+      onRpcsLockedChange: function(event) {
          if (!event.currentTarget || !event.currentTarget.value) {
             return;
          }
 
-         var isEmulation = undefined;
+         var isRpcsLocked = undefined;
          if (event.currentTarget.value.toLowerCase() === 'on') {
-            isEmulation = true;
+            isRpcsLocked = true;
          } else if (event.currentTarget.value.toLowerCase() === 'off') {
-            isEmulation = false;
+            isRpcsLocked = false;
          } else {
             return;
          }
 
          //no change
-         if (isEmulation === this.management.get('isEmulation')) {
+         if (isRpcsLocked === this.management.get('isRpcsLocked')) {
             return;
          }
 
-         this.management.set('isEmulation', isEmulation);
+         this.management.set('isRpcsLocked', isRpcsLocked);
 
          this.management.sync('update', this.management);
       },

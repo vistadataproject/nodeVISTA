@@ -2,7 +2,7 @@
 
 //mvdm default management settings
 var mvdmManagement = {
-   isEmulation: true
+   isRpcsLocked: true
 };
 
 module.exports = mvdmManagement;

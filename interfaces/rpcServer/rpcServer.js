@@ -9,14 +9,18 @@ var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
+var EventManager = require('./eventManager');
 
 // imports for localRpcRunner
 var nodem = require('nodem');
 var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
-// imports for emulated
-var emulatedRPCs = require('./emulatedRPCs.js');
+// imports for locked rpcs
+var lockedRPCs = require('./lockedRPCs.js');
 var mvdmManagement = require('./mvdmManagement');
-var adminServer = require('./adminServer');
+var mvdmClient = require('./mvdmClient');
+var moment = require('moment');
+
+var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 var db;
 var DUZ = CONFIG.USER.DUZ;
@@ -29,7 +33,7 @@ var ENQ = '\u0005';
 
 var fromName = CONFIG.client.defaultName;
 var capturePath = CONFIG.FILE.defaultCaptureFile;
-var port = CONFIG.sniffer.port;
+var port = CONFIG.rpcServer.port;
 
 // check for command line overrides
 if (process.argv.length > 2) {
@@ -46,7 +50,7 @@ if (process.argv.length > 2) {
             // snifferPort=port
             port = parseInt(process.argv[argnum].substring(12));
             if (isNaN(port)) {
-                port = CONFIG.sniffer.port;
+                port = CONFIG.rpcServer.port;
             }
             console.log("Setting sniffer port to %s", port);
         } else if (process.argv[argnum].toLowerCase().indexOf("duz=")  > -1) {
@@ -82,8 +86,8 @@ captureFile.on("open", function(fd) {
     server.listen(port, function() {
         console.log('Sniffer listening to %j', server.address());
 
-        //start up rpc server admin server
-        adminServer.init();
+        //start up mvdm client
+        mvdmClient.init();
     });
 });
 
@@ -126,7 +130,7 @@ function handleConnection(conn) {
 
                 // check if the mapped value is a map for parameters or just a single response
                 if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
-                    LOGGER.info('checking unsupported RPC/param pairs')
+                    LOGGER.info('checking for unsupported RPC/param pairs')
 
                     var params = unsupportedRPCs.get(rpcObject.name).keys();
                     var paramKey;
@@ -144,23 +148,25 @@ function handleConnection(conn) {
                         }
                     }
                     if (paramKey !== undefined) {
+                        LOGGER.info("unsupported RPC/param, returning hardcoded response");
                         response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
+                        runner = "hardcode";
                     } else {
-                        // could not find a matching response, try calling the emulator or localRunner anyway
-                        LOGGER.info("no unsupported RPC/arg pair");
-                        runnerReturn = callEmulatorOrLocalRunner(rpcObject);
+                        // could not find a matching response, try calling the rpc locker or localRunner anyway
+                        LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or localRunner");
+                        runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
                         response = runnerReturn.response;
                         runner = runnerReturn.runner;
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
-                    LOGGER.info("unsupported RPC not dependent on parameter");
+                    LOGGER.info("unsupported RPC, returning hardcoded response");
                     response = unsupportedRPCs.get(rpcObject.name);
                     runner = "hardcode";
                 }
             } else {
-                LOGGER.info("calling emulator or local runner");
-                runnerReturn = callEmulatorOrLocalRunner(rpcObject);
+                LOGGER.info("calling RPC locker or local runner");
+                runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
                 response = runnerReturn.response;
                 runner = runnerReturn.runner;
             }
@@ -173,6 +179,17 @@ function handleConnection(conn) {
                 rpcObject.from = fromName;
                 rpcObject.to = runner;
                 rpcObject.timeStamp = new Date().toISOString();
+
+                EventManager.emit('rpcCall', {
+                    type: 'rpcCall',
+                    timestamp: moment().format(DT_FORMAT) + 'Z',
+                    runner: runner,
+                    rpcName: rpcObject.name,
+                    rpcObject: rpcObject,
+                    runnerReturn: runnerReturn,
+                    response: response
+                });
+
             }
             captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
@@ -186,16 +203,16 @@ function handleConnection(conn) {
 
     }
 
-    function callEmulatorOrLocalRunner(rpcObject) {
+    function callRpcLockerOrLocalRunner(rpcObject) {
         var rpcResult;
         var runner;
-        // It isn't one that needs to be squashed so we call either emulate or localRpcRunner
-        if (mvdmManagement.isEmulation && emulatedRPCs.has(rpcObject.name)) {
-            var domainRpcE = emulatedRPCs.get(rpcObject.name);
-            domainRpcE.setup(db, DUZ, facilityCode);
-            runner = "rpcE";
-            rpcResult = domainRpcE.rpcE.run(rpcObject.name, rpcObject);
-            LOGGER.info("RpcE: %s, result: %j", rpcObject.name, rpcResult);
+        // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
+        if (mvdmManagement.isRpcsLocked && lockedRPCs.has(rpcObject.name)) {
+            var domainrpcL = lockedRPCs.get(rpcObject.name);
+            domainrpcL.setup(db, DUZ, facilityCode);
+            runner = "rpcL";
+            rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
+            LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
             LOGGER.info("RPC parameters: %j", rpcObject.args);
@@ -215,7 +232,7 @@ function handleConnection(conn) {
                 response += rpcResult.result;
             }
         }
-        response += '\u0004'
+        response += '\u0004';
         console.log("response to client: " + JSON.stringify(response));
 
         return {"response": response, "runner": runner};
