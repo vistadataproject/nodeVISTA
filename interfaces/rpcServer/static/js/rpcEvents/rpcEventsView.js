@@ -20,12 +20,20 @@ define([
 
       initialize: function (options) {
 
-         this.listenTo(options.eventListener, 'newRpcEvent', function() {
+         this.eventCollection = new EventCollection();
+         this.eventCollection.reset(options.eventCollection.models);
+
+         this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
             this.renderEventCounter();
+
+            this.eventCollection.push(model);
+            //sort collection
+            this.eventCollection.setSorting(this.eventCollection.state.sortKey);
+            this.eventCollection.fullCollection.sort();
          });
 
          RPCEventsView.__super__.initialize.apply(this, [{
-            eventCollection: EventCollection,
+            eventCollection: this.eventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',

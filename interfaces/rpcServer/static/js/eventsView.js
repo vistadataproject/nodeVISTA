@@ -148,10 +148,7 @@ define([
       },
 
       onClose: function () {
-         //remove any filters
-         if (this.gridFilter) {
-            this.eventCollection.reset(this.gridFilter.shadowCollection.models, {reindex: false});
-         }
+
       }
    });
 

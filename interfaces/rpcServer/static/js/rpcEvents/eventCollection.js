@@ -26,5 +26,5 @@ define([
       }
    });
 
-   return new RPCEventCollection();
+   return RPCEventCollection;
 });

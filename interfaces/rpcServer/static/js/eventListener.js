@@ -18,12 +18,23 @@ define([
 
       _.extend(self, Backbone.Events);
 
+      var mvdmCollection = new MVDMEventCollection();
+      var rpcEventCollection = new RPCEventCollection();
+
+      this.getMvdmEventCollection = function() {
+         return mvdmCollection.fullCollection;
+      };
+
+      this.getRpcEventCollection = function() {
+         return rpcEventCollection.fullCollection;
+      };
+
       this.mvdmSocket = initWebSocket('mvdmEvents', function(eventMsg) {
-         parseAndInsertEvent(eventMsg, MVDMEventCollection, 'mvdm');
+         parseAndInsertEvent(eventMsg, mvdmCollection, 'mvdm');
       });
 
       this.rpcSocket = initWebSocket('rpcEvents', function(eventMsg) {
-         parseAndInsertEvent(eventMsg, RPCEventCollection, 'rpc');
+         parseAndInsertEvent(eventMsg, rpcEventCollection, 'rpc');
       });
 
       function parseAndInsertEvent(eventMsg, eventCollection, eventType) {
