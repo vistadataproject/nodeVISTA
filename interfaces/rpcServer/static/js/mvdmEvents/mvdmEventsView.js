@@ -34,7 +34,6 @@ define([
          });
 
          MVDMEventsView.__super__.initialize.apply(this, [{
-            webSocketRoute: 'mvdmEvents',
             eventCollection: EventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
