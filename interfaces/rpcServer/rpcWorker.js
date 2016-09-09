@@ -1,4 +1,4 @@
-
+var lockerModelUtils = re
 var lockedRPCs = require('./lockedRPCs.js');
 
 
@@ -23,15 +23,15 @@ function callRpcRunner(messageObject) {
 
 module.exports = function() {
     this.on('message', function(messageObj, send, finished) {
+        var application = messageObj.application;
+        var res;
+        if (application === 'rpcL') {
+            res = callRpcL(messageObj);
+        } else if (application === 'rpcRunner') {
+            res = callRpcRunner(messageObj);
+        }
+        finished(res);
+    });
 
-    }
-    var application = messageObj.application;
-    var res;
-    if (application === 'rpcL') {
-        res = callRpcL(messageObj);
-    } else if (application === 'rpcRunner') {
-        res = callRpcRunner(messageObj);
-    }
-    finished(res);
 
 }
