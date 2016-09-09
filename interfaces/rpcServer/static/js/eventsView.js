@@ -93,7 +93,7 @@ define([
          //render paginator
          this.$el.find('#events-table').append(paginator.render().el);
 
-         var gridFilter = new Backgrid.Extension.SelectFilter({
+         this.gridFilter = new Backgrid.Extension.SelectFilter({
             className: "backgrid-filter form-control filter filter-select",
             collection: this.eventCollection,
             field: this.filterConfig.field,
@@ -101,7 +101,7 @@ define([
          });
 
          //render filter
-         this.$el.find("#filter").replaceWith(gridFilter.render().$el);
+         this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
 
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
@@ -148,6 +148,10 @@ define([
       },
 
       onClose: function () {
+         //remove any filters
+         if (this.gridFilter) {
+            this.eventCollection.reset(this.gridFilter.shadowCollection.models, {reindex: false});
+         }
       }
    });
 

@@ -24,17 +24,17 @@ define([
             this.renderEventCounter();
          });
 
-         RPCEventsView .__super__.initialize.apply(this, [{
+         RPCEventsView.__super__.initialize.apply(this, [{
             webSocketRoute: 'mvdmEvents',
             eventCollection: EventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',
-            selectOptions: _.union([
+            selectOptions: [
                {label: "All", value: null},
                {label: 'Local RPC Runner', value: 'localRPCRunner'},
                {label: 'Locked', value: 'rpcL'},
-               {label: 'Hardcode', value: 'hardcode'}]),
+               {label: 'Hardcode', value: 'hardcode'}],
             columns: [{
                name: 'timestamp',
                label: 'Date',
