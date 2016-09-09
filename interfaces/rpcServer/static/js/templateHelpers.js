@@ -29,7 +29,7 @@ define([
 
    Handlebars.registerHelper('show-runner', function(event) {
 
-      if (event.runner === 'localRPCRunner') {
+      if (event.runner === 'rpcRunner') {
          return 'Local RPC Runner';
       } else if (event.runner === 'rpcL') {
          return 'Locked';

@@ -32,7 +32,7 @@ define([
             selectField: 'runner',
             selectOptions: _.union([
                {label: "All", value: null},
-               {label: 'Local RPC Runner', value: 'localRPCRunner'},
+               {label: 'Local RPC Runner', value: 'rpcRunner'},
                {label: 'Locked', value: 'rpcL'},
                {label: 'Hardcode', value: 'hardcode'}]),
             columns: [{
@@ -54,7 +54,7 @@ define([
                cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     if (rawValue === 'localRPCRunner') {
+                     if (rawValue === 'rpcRunner') {
                         return 'Local RPC Runner';
                      } else if (rawValue === 'rpcL') {
                         return 'Locked';
@@ -69,7 +69,7 @@ define([
       renderEventCounter: function() {
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
-         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
+         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('rpcRunner'));
          this.$el.find('.event-count-locked').html(EventCounter.get('rpcL'));
          this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
       },

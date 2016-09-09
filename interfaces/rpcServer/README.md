@@ -91,7 +91,7 @@ Here's an example of its output:
   "rpc": "[XWB]11302\u00010\rXUS INTRO MSG54f\u0004",
   "response": "\u0000\u0000NEW SYSTEM 304-262-7078\r\n\u0004",
   "from": "CPRS",
-  "to": "localRPCRunner", // <--- Indicates which runner the RPC was forwarded to (localRPCRunner, rpcE, hardcode) 
+  "to": "rpcRunner", // <--- Indicates which runner the RPC was forwarded to (rpcRunner, rpcE, hardcode)
   "timeStamp": "2016-09-01T23:35:32.110Z"
 },
 ```

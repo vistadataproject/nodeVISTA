@@ -13,7 +13,7 @@ var EventManager = require('./eventManager');
 
 // imports for localRpcRunner
 var nodem = require('nodem');
-var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
+var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 // imports for locked rpcs
 var lockedRPCs = require('./lockedRPCs.js');
 var mvdmManagement = require('./mvdmManagement');
@@ -22,7 +22,8 @@ var moment = require('moment');
 
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
-var db;
+var db, rpcRunner;
+var server;
 var DUZ = CONFIG.USER.DUZ;
 var facilityCode = CONFIG.FACILITY.ID;
 
@@ -37,6 +38,8 @@ var port = CONFIG.rpcServer.port;
 
 var loggedIn = false;
 var passThroughRPCs = [
+    "TCPConnect", "#BYE#", "XUS SIGNON SETUP", "XUS INTRO MSG",
+
     "XWB IM HERE", "XWB CREATE CONTEXT", "XWB RPC LIST", "XWB IS RPC AVAILABLE", "XUS GET USER INFO", "XUS GET TOKEN", "XUS SET VISITOR"
 ]
 
@@ -130,6 +133,7 @@ function handleConnection(conn) {
 
             if (loggedIn) {
                 // logged in so send RPCs to the correct handler
+                response = callRPC(rpcObject, rpcPacket);
             } else {
                 // not logged in so check if these are pass through or login
                 if (rpcObject.name === 'XUS AV CODE') {
@@ -160,19 +164,25 @@ function handleConnection(conn) {
 
     function callRpcLockerOrLocalRunner(rpcObject) {
         var rpcResult;
-        var runner;
+
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
         if (mvdmManagement.isRpcsLocked && lockedRPCs.has(rpcObject.name)) {
             var domainrpcL = lockedRPCs.get(rpcObject.name);
             domainrpcL.setup(db, DUZ, facilityCode);
-            runner = "rpcL";
+            rpcObject.to = "rpcL";
             rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
             LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
             LOGGER.info("RPC parameters: %j", rpcObject.args);
-            runner = "localRPCRunner";
-            rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
+            rpcObject.to = "rpcRunner";
+
+            rpcRunner = new RPCRunner(db);
+            rpcRunner.setUserAndFacility(60, 1);
+
+            rpcResult = rpcRunner.RPCRunner.run(rpcObject.name, rpcObject.args);
+
+            rpcRunner.bye();
         }
 
         var response = '\u0000\u0000';
@@ -190,7 +200,7 @@ function handleConnection(conn) {
         response += '\u0004';
         console.log("response to client: " + JSON.stringify(response));
 
-        return {"response": response, "runner": runner};
+        return response;
     }
 
     function onConnectedClose() {
@@ -219,7 +229,7 @@ function handleConnection(conn) {
      */
     function callRPC(rpcObject, rpcPacket) {
         var response = '';
-        var runnerReturn, runner;
+        var runnerReturn;
 
         if (unsupportedRPCs.has(rpcObject.name)) {
             // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
@@ -246,25 +256,23 @@ function handleConnection(conn) {
                 if (paramKey !== undefined) {
                     LOGGER.info("unsupported RPC/param, returning hardcoded response");
                     response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
-                    runner = "hardcode";
+                    rpcObject.to = "hardcode";
                 } else {
-                    // could not find a matching response, try calling the rpc locker or localRunner anyway
-                    LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or localRunner");
+                    // could not find a matching response, try calling the rpc locker or rpcRunner anyway
+                    LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or rpcRunner");
                     runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
                     response = runnerReturn.response;
-                    runner = runnerReturn.runner;
                 }
             } else {
                 // the unsupported RPC response does not depend on the arguments
                 LOGGER.info("unsupported RPC, returning hardcoded response");
                 response = unsupportedRPCs.get(rpcObject.name);
-                runner = "hardcode";
+                rpcObject.to = "hardcode";
             }
         } else {
             LOGGER.info("calling RPC locker or local runner");
             runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
             response = runnerReturn.response;
-            runner = runnerReturn.runner;
         }
 
         // log to capture file the RPC and the response to a file
@@ -273,13 +281,12 @@ function handleConnection(conn) {
             rpcObject.rpc = rpcPacket;
             rpcObject.response = response;
             rpcObject.from = fromName;
-            rpcObject.to = runner;
             rpcObject.timeStamp = new Date().toISOString();
 
             EventManager.emit('rpcCall', {
                 type: 'rpcCall',
                 timestamp: moment().format(DT_FORMAT) + 'Z',
-                runner: runner,
+                runner: rpcObject.to,
                 rpcName: rpcObject.name,
                 rpcObject: rpcObject,
                 runnerReturn: runnerReturn,
