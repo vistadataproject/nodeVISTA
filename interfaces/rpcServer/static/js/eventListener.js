@@ -58,6 +58,9 @@ define([
          } else if (eventType === 'rpc') {
 
             RPCEventCounter.set('total', RPCEventCounter.get('total') + 1);
+            if (eventModel.get('rpcName') !== 'ORWCV POLL') {
+               RPCEventCounter.set('totalNoPoller', RPCEventCounter.get('totalNoPoller') + 1);
+            }
             var runnerType = eventModel.get('runner');
             RPCEventCounter.set(runnerType, RPCEventCounter.get(runnerType) + 1);
 

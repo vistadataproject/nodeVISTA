@@ -37,11 +37,22 @@ define([
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',
+            selectInitialValue: 'noPoller',
             selectOptions: [
                {label: "All", value: null},
+               {label: "All No Polling", value: 'noPoller'},
                {label: 'Local RPC Runner', value: 'localRPCRunner'},
                {label: 'Locked', value: 'rpcL'},
                {label: 'Hardcode', value: 'hardcode'}],
+            selectMatcher: function(value) {
+               return function(model) {
+                  if (value === 'noPoller') { //exclude poller
+                     return model.get('rpcName') !== 'ORWCV POLL';
+                  }
+
+                  return model.get(this.field) == value;
+               };
+            },
             columns: [{
                name: 'timestamp',
                label: 'Date',
@@ -76,6 +87,7 @@ define([
       renderEventCounter: function() {
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
+         this.$el.find('.event-count-total-no-poller').html(EventCounter.get('totalNoPoller'));
          this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
          this.$el.find('.event-count-locked').html(EventCounter.get('rpcL'));
          this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
@@ -83,6 +95,7 @@ define([
       clearEventCounter: function() {
          EventCounter.set({
             total: 0,
+            totalNoPoller: 0,
             localRPCRunner: 0,
             rpcL: 0,
             hardcode: 0
