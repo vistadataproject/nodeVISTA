@@ -93,7 +93,7 @@ captureFile.on("open", function(fd) {
     server = net.createServer();
     server.on('connection', handleConnection);
     server.listen(port, function() {
-        console.log('Sniffer listening to %j', server.address());
+        console.log('RPCServer listening to %j', server.address());
 
         //start up mvdm client
         mvdmClient.init();
