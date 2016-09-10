@@ -81,6 +81,26 @@ define([
                      } else return rawValue;
                   }
                })
+            },{
+               name: 'user',
+               label: 'User',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.name + ' (' + rawValue.id + ')'
+                  }
+               })
+            }, {
+               name: 'facility',
+               label: 'Facility',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.name + ' (' + rawValue.id + ' / ' + rawValue.stationNumber + ')'
+                  }
+               })
             }]
          }]);
       },

@@ -20,11 +20,16 @@ var mvdmManagement = require('./mvdmManagement');
 var mvdmClient = require('./mvdmClient');
 var moment = require('moment');
 
+
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 var db;
 var DUZ = CONFIG.USER.DUZ;
 var facilityCode = CONFIG.FACILITY.ID;
+
+//need for user and facility lookup
+var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
+var USER, FACILITY;
 
 var NUL = '\u0000';
 var SOH = '\u0001';
@@ -71,6 +76,10 @@ function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
     db = new nodem.Gtm();
     db.open();
+
+    //needed for RPC event reporting
+    USER = vdmUtils.userFromId(db, '200-' + DUZ);
+    FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
 }
 
 
@@ -90,6 +99,10 @@ captureFile.on("open", function(fd) {
         mvdmClient.init();
     });
 });
+
+function getUserData(DUZ) {
+
+}
 
 // main function to handle the connection from the client
 function handleConnection(conn) {
@@ -172,6 +185,7 @@ function handleConnection(conn) {
             }
 
             // log to capture file the RPC and the response to a file
+            // emit rpc call event
             if (rpcObject) {
                 // add more info to captured object
                 rpcObject.rpc = rpcPacket;
@@ -183,6 +197,15 @@ function handleConnection(conn) {
                 EventManager.emit('rpcCall', {
                     type: 'rpcCall',
                     timestamp: moment().format(DT_FORMAT) + 'Z',
+                    user: {
+                        id: '200-' + DUZ,
+                        name: USER.name.value
+                    },
+                    facility: {
+                        id: '4-' + facilityCode,
+                        name: FACILITY.name.value,
+                        stationNumber:  FACILITY['station_number'].value
+                    },
                     runner: runner,
                     rpcName: rpcObject.name,
                     rpcObject: rpcObject,

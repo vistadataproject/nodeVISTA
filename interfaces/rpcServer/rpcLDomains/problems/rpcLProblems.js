@@ -1,16 +1,16 @@
 var rpcL = require('../../../../../VDM/prototypes/rpcL');
 
 // rpcLModels
-var rpcLProblemModel = require('../../../../../VDM/prototypes/problems/rpcLProblemModel').rpcLModel;
+var rpcLModel = require('../../../../../VDM/prototypes/problems/rpcLProblemModel').rpcLModel;
 
 // vdmModels
-var vdmProblemModel = require('../../../../../VDM/prototypes/problems/vdmProblemsModel').vdmModel;
+var vdmModel = require('../../../../../VDM/prototypes/problems/vdmProblemsModel').vdmModel;
 
 // mvdmModels
-var mvdmProblemModel = require('../../../../../VDM/prototypes/problems/mvdmProblemsModel').mvdmModel;
+var mvdmModel = require('../../../../../VDM/prototypes/problems/mvdmProblemsModel').mvdmModel;
 
 // model objects for map
-var problemModels = {rpcLModel: rpcLProblemModel, vdmModel: vdmProblemModel, mvdmModel: mvdmProblemModel};
+var problemModels = {rpcLModel: rpcLModel, vdmModel: vdmModel, mvdmModel: mvdmModel};
 
 var isSetup = false;
 
