@@ -1,30 +1,58 @@
-<div class="mvdm-events">
+<div class="events">
+    <div class="submenu">
 
-    <h4 class="filter">Filter: </h4>
-    {{filter-select eventFilter}}
+        <span class="glyphicon glyphicon-filter" alt="Event type filter label."></span>
+        <div id="filter"></div>
 
-    <table id="mvdm-event-table" class="table table-condensed table-striped table-bordered table-hover">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Domain</th>
-            <th>Type</th>
-            <th>User ID</th>
-            <th>Facility ID</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each mvdmEvents as |mvdmEvent|}}
-            <tr>
-                <td>{{mvdmEvent.date}}</td>
-                <td>{{mvdmEvent.time}}</td>
-                <td>{{mvdmEvent.domain}}</td>
-                <td>{{mvdmEvent.type}}</td>
-                <td>{{mvdmEvent.userId}}</td>
-                <td>{{mvdmEvent.facilityId}}</td>
-            </tr>
-        {{/each}}
-        </tbody>
-    </table>
+        <a href="#" class="clear-events-list" title="Clear MVDM Events List">
+            <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+        </a>
+        <span class="events-status">
+            <span>
+                <strong class="submenu-label">Total:</strong>
+                <span class="event-count-total"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Describe:</strong>
+                <span class="event-count-describe"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">List:</strong>
+                <span class="event-count-list"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Create:</strong>
+                <span class="event-count-create"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Update:</strong>
+                <span class="event-count-update"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Remove:</strong>
+                <span class="event-count-remove"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Unremoved:</strong>
+                <span class="event-count-unremoved"></span>
+            </span>
+            <span>
+                <strong class="submenu-label">Delete:</strong>
+                <span class="event-count-delete"></span>
+            </span>
+            <span>
+                 <strong class="submenu-label">RPCs Locked: </strong>
+                {{#if management.isRpcsLocked}}
+                    <span class="glyphicon glyphicon-ok-sign" alt="RPCs are lockjed"></span>
+                {{else}}
+                    <span class="glyphicon glyphicon-remove-sign" alt="RPCs are unlocked"></span>
+                {{/if}}
+            </span>
+        </span>
+
+    </div>
+
+    <div id="events-table"></div>
+
+    <div id="event-modal-container"></div>
 </div>

@@ -194,7 +194,13 @@ function inputParametersToArgs (rpcObjectInputParameters) {
                     }
                 }
                 args.push(listObject);
+            } else if (rpcObjectInputParameters[paramnum].parameterType === 'REFERENCE') {
+                var referenceObject = {};
+                referenceObject.type = 'REFERENCE';
+                referenceObject.value = rpcObjectInputParameters[paramnum].parameter;
+                args.push(referenceObject);
             } else {
+                // LITERAL
                 args.push(rpcObjectInputParameters[paramnum].parameter);
             }
         }

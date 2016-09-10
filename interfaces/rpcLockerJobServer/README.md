@@ -1,4 +1,4 @@
-## RPC Emulator Job Server
+## RPC Locker Job Server
 
 To start the job server, run
 
@@ -7,7 +7,7 @@ $ su vdp
 password: vistaisdata
 $ cd /home/vdp/interfaces/
 $ npm install <--- installs dependencies
-$ node rpcEmulateJobServer/rpcEmulateJobServer.js
+$ node rpcLockerJobServer/rpcLockerJobServer.js
 ```
 
 Then go to this link to see it in action:

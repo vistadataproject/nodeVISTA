@@ -6,7 +6,7 @@ define([
    'handlebars',
    'management/managementModel',
    'text!management/management.hbs',
-   'management/templateHelpers'
+   'templateHelpers'
 ], function ($, _, Backbone, Handlebars, ManagementModel, managementTemplate) {
    'use strict';
    var ManagementView = Backbone.View.extend({
@@ -16,43 +16,43 @@ define([
       initialize: function () {
          this.management = new ManagementModel();
          this.management.fetch();
+
+         this.management.on('change', _.bind(function() {
+           this.render();
+         }, this));
       },
 
       events: {
-         "change .emulation-select": "onEmulationChange"
+         "change .rpcs-locked-select": "onRpcsLockedChange"
       },
 
       render: function() {
 
-         this.management.on('change', _.bind(function() {
-            console.log("on change");
-            console.log("this management: " + JSON.stringify(this.management));
-            this.$el.html(this.template({management:this.management}));
-         }, this));
+         this.$el.html(this.template({management:this.management.toJSON()}));
 
          return this;
       },
 
-      onEmulationChange: function(event) {
+      onRpcsLockedChange: function(event) {
          if (!event.currentTarget || !event.currentTarget.value) {
             return;
          }
 
-         var isEmulation = undefined;
+         var isRpcsLocked = undefined;
          if (event.currentTarget.value.toLowerCase() === 'on') {
-            isEmulation = true;
+            isRpcsLocked = true;
          } else if (event.currentTarget.value.toLowerCase() === 'off') {
-            isEmulation = false;
+            isRpcsLocked = false;
          } else {
             return;
          }
 
          //no change
-         if (isEmulation === this.management.get('isEmulation')) {
+         if (isRpcsLocked === this.management.get('isRpcsLocked')) {
             return;
          }
 
-         this.management.set('isEmulation', isEmulation);
+         this.management.set('isRpcsLocked', isRpcsLocked);
 
          this.management.sync('update', this.management);
       },

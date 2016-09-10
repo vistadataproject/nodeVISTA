@@ -5,34 +5,25 @@ define([
    'backbone',
    'handlebars',
    'eventsView',
-   'mvdmEvents/eventCollection',
-   'management/managementModel',
-   'mvdmEvents/eventCounterModel',
-   'text!mvdmEvents/mvdmEvents.hbs',
-   'text!mvdmEvents/eventModal.hbs',
+   'rpcEvents/eventCollection',
+   'rpcEvents/eventCounterModel',
+   'text!rpcEvents/rpcEvents.hbs',
+   'text!rpcEvents/eventModal.hbs',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, EventsTemplate, EventModalTemplate) {
    'use strict';
 
-   var MVDMEventsView = EventsParentView.extend({
+   var RPCEventsView = EventsParentView.extend({
 
       initialize: function (options) {
 
          this.eventCollection = new EventCollection();
          this.eventCollection.reset(options.eventCollection.models);
 
-         this.management = new ManagementModel();
-
-         this.listenTo(this.management, 'change', this.render);
-
-         this.management.fetch();
-
-         var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
-
-         this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
+         this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
             this.renderEventCounter();
 
             this.eventCollection.push(model);
@@ -41,13 +32,27 @@ define([
             this.eventCollection.fullCollection.sort();
          });
 
-         MVDMEventsView.__super__.initialize.apply(this, [{
+         RPCEventsView.__super__.initialize.apply(this, [{
             eventCollection: this.eventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
-            selectField: 'type',
-            selectOptions: _.union([{label: "All", value: null}],
-               _.map(selectOptions, function(val) { return {label:val.toUpperCase(), value:val};})),
+            selectField: 'runner',
+            selectInitialValue: 'noPoller',
+            selectOptions: [
+               {label: "All", value: null},
+               {label: "All No Polling", value: 'noPoller'},
+               {label: 'Local RPC Runner', value: 'localRPCRunner'},
+               {label: 'Locked', value: 'rpcL'},
+               {label: 'Hardcode', value: 'hardcode'}],
+            selectMatcher: function(value) {
+               return function(model) {
+                  if (value === 'noPoller') { //exclude poller
+                     return model.get('rpcName') !== 'ORWCV POLL';
+                  }
+
+                  return model.get(this.field) == value;
+               };
+            },
             columns: [{
                name: 'timestamp',
                label: 'Date',
@@ -56,21 +61,27 @@ define([
                   displayFormat: "MMM Do YYYY @ h:mm:ss a"
                })
             }, {
-               name: 'domain',
-               label: 'Domain',
+               name: 'rpcName',
+               label: 'RPC Name',
                editable: false,
                cell: 'String'
             }, {
-               name: 'type',
-               label: 'Type',
+               name: 'runner',
+               label: 'RPC Runner',
                editable: false,
                cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     return rawValue.toUpperCase()
+                     if (rawValue === 'localRPCRunner') {
+                        return 'Local RPC Runner';
+                     } else if (rawValue === 'rpcL') {
+                        return 'Locked';
+                     } else if (rawValue === 'hardcode') {
+                        return 'Hardcode';
+                     } else return rawValue;
                   }
                })
-            }, {
+            },{
                name: 'user',
                label: 'User',
                editable: false,
@@ -93,38 +104,26 @@ define([
             }]
          }]);
       },
-      render: function () {
-         //call parent render
-         MVDMEventsView.__super__.render.apply(this, [{
-               management:this.management.toJSON()
-            }]);
-      },
       renderEventCounter: function() {
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
-         this.$el.find('.event-count-describe').html(EventCounter.get('describe'));
-         this.$el.find('.event-count-list').html(EventCounter.get('list'));
-         this.$el.find('.event-count-create').html(EventCounter.get('create'));
-         this.$el.find('.event-count-update').html(EventCounter.get('update'));
-         this.$el.find('.event-count-remove').html(EventCounter.get('remove'));
-         this.$el.find('.event-count-unremoved').html(EventCounter.get('unremoved'));
-         this.$el.find('.event-count-delete').html(EventCounter.get('delete'));
+         this.$el.find('.event-count-total-no-poller').html(EventCounter.get('totalNoPoller'));
+         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
+         this.$el.find('.event-count-locked').html(EventCounter.get('rpcL'));
+         this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
       },
       clearEventCounter: function() {
          EventCounter.set({
             total: 0,
-            describe: 0,
-            list: 0,
-            create: 0,
-            update: 0,
-            remove: 0,
-            unremoved: 0,
-            delete: 0
+            totalNoPoller: 0,
+            localRPCRunner: 0,
+            rpcL: 0,
+            hardcode: 0
          });
 
          this.renderEventCounter();
       }
    });
 
-   return MVDMEventsView;
+   return RPCEventsView;
 });
