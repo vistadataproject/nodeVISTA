@@ -99,7 +99,7 @@ require([
    'backbone',
    'app',
    'router',
-   'EventListener',
+   'eventListener',
    'backgrid'
 ], function ($, Backbone, AppView, Router, EventListener) {
    /*jshint nonew:false*/
