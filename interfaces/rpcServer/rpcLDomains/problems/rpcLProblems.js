@@ -15,15 +15,11 @@ var problemModels = {rpcLModel: rpcLModel, vdmModel: vdmModel, mvdmModel: mvdmMo
 var isSetup = false;
 
 function setup(db, DUZ, facilityId) {
-    if (!isSetup) {
-        var user = '200-' + DUZ;
-        var facility = '4-' + facilityId;
+    var user = '200-' + DUZ;
+    var facility = '4-' + facilityId;
 
-        rpcL.setDBAndModels(db, problemModels);
-        rpcL.setUserAndFacility(user, facility); // note that 4-2957 would come from 200-55 if left out
-
-        isSetup = true;
-    }
+    rpcL.setDBAndModels(db, problemModels);
+    rpcL.setUserAndFacility(user, facility);
 }
 
 module.exports.setup = setup;
