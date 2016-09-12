@@ -30,7 +30,7 @@ config.vistaRpcBroker = {}
 //    port: 9430
 //}
 config.vistaRpcBroker.configuration = {
-    host: '10.2.100.101',
+    host: '10.2.2.100',
     port: 9210
 }
 config.vistaRpcBroker.connectPollInterval = 100;
