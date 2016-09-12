@@ -20,12 +20,17 @@ var mvdmManagement = require('./mvdmManagement');
 var mvdmClient = require('./mvdmClient');
 var moment = require('moment');
 
+
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 var db, rpcRunner;
 var server;
 var DUZ = CONFIG.USER.DUZ;
 var facilityCode = CONFIG.FACILITY.ID;
+
+//need for user and facility lookup
+var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
+var USER, FACILITY;
 
 var NUL = '\u0000';
 var SOH = '\u0001';
@@ -79,6 +84,10 @@ function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
     db = new nodem.Gtm();
     db.open();
+
+    //needed for RPC event reporting
+    USER = vdmUtils.userFromId(db, '200-' + DUZ);
+    FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
 }
 
 
@@ -98,6 +107,10 @@ captureFile.on("open", function (fd) {
         mvdmClient.init();
     });
 });
+
+function getUserData(DUZ) {
+
+}
 
 // main function to handle the connection from the client
 function handleConnection(conn) {

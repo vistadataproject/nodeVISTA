@@ -22,12 +22,18 @@ define([
          "": "mvdmEvents" //mvdmEvents is default view
       },
       mvdmEvents: function() {
-         this.mvdmEventsView = new MVDMEventsView({eventListener: this.eventListener});
+         this.mvdmEventsView = new MVDMEventsView({
+            eventListener: this.eventListener,
+            eventCollection: this.eventListener.getMvdmEventCollection()
+         });
          setActiveNavItem('mvdmEvents');
          this.viewManager.showView(this.mvdmEventsView);
       },
       rpcEvents: function() {
-         this.rpcEventsView = new RPCEventsView({eventListener: this.eventListener});
+         this.rpcEventsView = new RPCEventsView({
+            eventListener: this.eventListener,
+            eventCollection: this.eventListener.getRpcEventCollection()
+         });
          setActiveNavItem('rpcEvents');
          this.viewManager.showView(this.rpcEventsView);
       },

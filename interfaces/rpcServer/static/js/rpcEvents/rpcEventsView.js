@@ -20,21 +20,39 @@ define([
 
       initialize: function (options) {
 
-         this.listenTo(options.eventListener, 'newRpcEvent', function() {
+         this.eventCollection = new EventCollection();
+         this.eventCollection.reset(options.eventCollection.models);
+
+         this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
             this.renderEventCounter();
+
+            this.eventCollection.push(model);
+            //sort collection
+            this.eventCollection.setSorting(this.eventCollection.state.sortKey);
+            this.eventCollection.fullCollection.sort();
          });
 
-         RPCEventsView .__super__.initialize.apply(this, [{
-            webSocketRoute: 'mvdmEvents',
-            eventCollection: EventCollection,
+         RPCEventsView.__super__.initialize.apply(this, [{
+            eventCollection: this.eventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',
-            selectOptions: _.union([
+            selectInitialValue: 'noPoller',
+            selectOptions: [
                {label: "All", value: null},
-               {label: 'Local RPC Runner', value: 'rpcRunner'},
+               {label: "All No Polling", value: 'noPoller'},
+               {label: 'Local RPC Runner', value: 'localRPCRunner'},
                {label: 'Locked', value: 'rpcL'},
-               {label: 'Hardcode', value: 'hardcode'}]),
+               {label: 'Hardcode', value: 'hardcode'}],
+            selectMatcher: function(value) {
+               return function(model) {
+                  if (value === 'noPoller') { //exclude poller
+                     return model.get('rpcName') !== 'ORWCV POLL';
+                  }
+
+                  return model.get(this.field) == value;
+               };
+            },
             columns: [{
                name: 'timestamp',
                label: 'Date',
@@ -54,7 +72,7 @@ define([
                cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     if (rawValue === 'rpcRunner') {
+                     if (rawValue === 'localRPCRunner') {
                         return 'Local RPC Runner';
                      } else if (rawValue === 'rpcL') {
                         return 'Locked';
@@ -63,19 +81,41 @@ define([
                      } else return rawValue;
                   }
                })
+            },{
+               name: 'user',
+               label: 'User',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.name + ' (' + rawValue.id + ')'
+                  }
+               })
+            }, {
+               name: 'facility',
+               label: 'Facility',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+                     return rawValue.name + ' (' + rawValue.id + ' / ' + rawValue.stationNumber + ')'
+                  }
+               })
             }]
          }]);
       },
       renderEventCounter: function() {
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
-         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('rpcRunner'));
+         this.$el.find('.event-count-total-no-poller').html(EventCounter.get('totalNoPoller'));
+         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
          this.$el.find('.event-count-locked').html(EventCounter.get('rpcL'));
          this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
       },
       clearEventCounter: function() {
          EventCounter.set({
             total: 0,
+            totalNoPoller: 0,
             localRPCRunner: 0,
             rpcL: 0,
             hardcode: 0

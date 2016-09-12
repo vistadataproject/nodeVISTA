@@ -58,24 +58,13 @@ function setModels(domain) {
         MVDM.setModel(mvdmModelProblem);
         vprE.setVprMappings(vprProblemEmulator, '1.05');
 
-        DUZ = 55; // Matches Robert Alexander
-
-        patientIen = 25;
-
-        var fmqlRes = fmql.query(db, "DESCRIBE 2-" + patientIen);
-
-        var patientName = fmqlRes.results[0].name.value;
-        var last4 = fmqlRes.results[0].social_security_number.value.substring(5);
-
-        patientArgs = patientIen + '^' + patientName + '^' + last4 + '^';
-        facilityCode = '2957'; //OSEHRA VistA facility code
-
         rpcL.setDBAndModels(db, {
             rpcLModel: rpcLProblemModel,
             vdmModel: vdmModelProblem,
             mvdmModel: mvdmModelProblem
         });
-        rpcL.setUserAndFacility("200-" + DUZ, "4-" + facilityCode); // note that 4-2957 would come from 200-55 if left out
+
+        rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
 
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);

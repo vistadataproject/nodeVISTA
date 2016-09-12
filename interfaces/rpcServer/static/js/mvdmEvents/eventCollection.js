@@ -26,5 +26,5 @@ define([
       }
    });
 
-   return new MVDMEventCollection();
+   return MVDMEventCollection;
 });

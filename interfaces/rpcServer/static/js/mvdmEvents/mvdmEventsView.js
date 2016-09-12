@@ -21,6 +21,9 @@ define([
 
       initialize: function (options) {
 
+         this.eventCollection = new EventCollection();
+         this.eventCollection.reset(options.eventCollection.models);
+
          this.management = new ManagementModel();
 
          this.listenTo(this.management, 'change', this.render);
@@ -29,13 +32,17 @@ define([
 
          var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
 
-         this.listenTo(options.eventListener, 'newMvdmEvent', function() {
+         this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
             this.renderEventCounter();
+
+            this.eventCollection.push(model);
+            //sort collection
+            this.eventCollection.setSorting(this.eventCollection.state.sortKey);
+            this.eventCollection.fullCollection.sort();
          });
 
          MVDMEventsView.__super__.initialize.apply(this, [{
-            webSocketRoute: 'mvdmEvents',
-            eventCollection: EventCollection,
+            eventCollection: this.eventCollection,
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'type',

@@ -83,8 +83,8 @@
       if (value !== this.clearValue) {
         col.reset(this.shadowCollection.filter(matcher), {reindex: false});
 
-        //ensure that pagable collection is in sync with collection
-        if (col.pageableCollection) {
+        //ensure that pagable collection is in sync with collection when additional items are added
+        if (col.pageableCollection && fromEvent === 'add') {
           col.pageableCollection.reset(this.shadowCollection.filter(matcher), {reindex: false});
           col.pageableCollection.state.totalRecords = col.pageableCollection.length;
           col.pageableCollection.state = col.pageableCollection._checkState(col.pageableCollection.state);
