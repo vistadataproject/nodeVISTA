@@ -23,7 +23,7 @@ define([
       },
 
       events: {
-         "change .rpcs-locked-select": "onRpcsLockedChange"
+         "change .mvdm-lock-select": "onMvdmLockChange"
       },
 
       render: function() {
@@ -33,7 +33,7 @@ define([
          return this;
       },
 
-      onRpcsLockedChange: function(event) {
+      onMvdmLockChange: function(event) {
          if (!event.currentTarget || !event.currentTarget.value) {
             return;
          }
@@ -48,11 +48,11 @@ define([
          }
 
          //no change
-         if (isRpcsLocked === this.management.get('isRpcsLocked')) {
+         if (isRpcsLocked === this.management.get('isMvdmLocked')) {
             return;
          }
 
-         this.management.set('isRpcsLocked', isRpcsLocked);
+         this.management.set('isMvdmLocked', isRpcsLocked);
 
          this.management.sync('update', this.management);
       },

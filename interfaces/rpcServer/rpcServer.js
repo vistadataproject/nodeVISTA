@@ -161,9 +161,9 @@ function handleConnection(conn) {
                         }
                     }
                     if (paramKey !== undefined) {
-                        LOGGER.info("unsupported RPC/param, returning hardcoded response");
+                        LOGGER.info("unsupported RPC/param, returning hardcoded server response");
                         response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
-                        runner = "hardcode";
+                        runner = "server";
                     } else {
                         // could not find a matching response, try calling the rpc locker or localRunner anyway
                         LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or localRunner");
@@ -173,9 +173,9 @@ function handleConnection(conn) {
                     }
                 } else {
                     // the unsupported RPC response does not depend on the arguments
-                    LOGGER.info("unsupported RPC, returning hardcoded response");
+                    LOGGER.info("unsupported RPC, returning hardcoded server response");
                     response = unsupportedRPCs.get(rpcObject.name);
-                    runner = "hardcode";
+                    runner = "server";
                 }
             } else {
                 LOGGER.info("calling RPC locker or local runner");
@@ -230,16 +230,16 @@ function handleConnection(conn) {
         var rpcResult;
         var runner;
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
-        if (mvdmManagement.isRpcsLocked && lockedRPCs.has(rpcObject.name)) {
+        if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
             var domainrpcL = lockedRPCs.get(rpcObject.name);
             domainrpcL.setup(db, DUZ, facilityCode);
-            runner = "rpcL";
+            runner = "mvdmLocked";
             rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
             LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
             LOGGER.info("RPC parameters: %j", rpcObject.args);
-            runner = "localRPCRunner";
+            runner = "rpcRunner";
             rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
         }
 
