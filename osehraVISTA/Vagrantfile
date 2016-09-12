@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 9000, host: 9000 # For FMQL Server
   config.vm.network :forwarded_port, guest: 9001, host: 9001 # For RPC Server
   config.vm.network :forwarded_port, guest: 9002, host: 9002 # For MVDM Server
-  config.vm.network :forwarded_port, guest: 9010, host: 9010 # For RPCBroker Sniffer
-  config.vm.network :forwarded_port, guest: 9020, host: 9020 # For RPC Server Admin
+  config.vm.network :forwarded_port, guest: 9010, host: 9010 # For RPC Server or RPC Sniffer
+  config.vm.network :forwarded_port, guest: 9020, host: 9020 # For MVDM Client
 
   # New Forward Node Inspector
   config.vm.network :forwarded_port, guest: 5858, host: 5858 # for node-inspector (debug-port) 
