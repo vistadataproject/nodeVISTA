@@ -8,13 +8,14 @@ define([
    'mvdmEvents/eventCollection',
    'management/managementModel',
    'mvdmEvents/eventCounterModel',
+   'appState',
    'text!mvdmEvents/mvdmEvents.hbs',
    'text!mvdmEvents/eventModal.hbs',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, AppState, EventsTemplate, EventModalTemplate) {
    'use strict';
 
    var MVDMEventsView = EventsParentView.extend({
@@ -30,8 +31,6 @@ define([
 
          this.management.fetch();
 
-         var selectOptions = ['create', 'list', 'describe', 'update', 'remove', 'unremove', 'delete'];
-
          this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
             this.renderEventCounter();
 
@@ -46,8 +45,20 @@ define([
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'type',
-            selectOptions: _.union([{label: "All", value: null}],
-               _.map(selectOptions, function(val) { return {label:val.toUpperCase(), value:val};})),
+            selectInitialValue: AppState.get('mvdmFilterInitialValue'),
+            selectOptions: [
+               {label: "All", value: null},
+               {label: "Change", value: 'change'}
+            ],
+            selectMatcher: function(value) {
+               return function(model) {
+                  if (value === 'change') { //exclude LIST/DESCRIBE
+                     return model.get('type') !== 'list' && model.get('type') !== 'describe';
+                  }
+
+                  return model.get(this.field) == value;
+               };
+            },
             columns: [{
                name: 'timestamp',
                label: 'Date',
@@ -94,10 +105,13 @@ define([
          }]);
       },
       render: function () {
-         //call parent render
-         MVDMEventsView.__super__.render.apply(this, [{
+
+         this.listenTo(this.management, 'change', function() {
+            //call parent render
+            MVDMEventsView.__super__.render.apply(this, [{
                management:this.management.toJSON()
             }]);
+         });
       },
       renderEventCounter: function() {
 
@@ -123,6 +137,9 @@ define([
          });
 
          this.renderEventCounter();
+      },
+      onFilterChange: function(e) {
+         AppState.set('mvdmFilterInitialValue', e.currentTarget.value.replace(/"/g,"")); //remove double quotes
       }
    });
 

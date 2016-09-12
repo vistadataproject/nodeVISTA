@@ -7,13 +7,14 @@ define([
    'eventsView',
    'rpcEvents/eventCollection',
    'rpcEvents/eventCounterModel',
+   'appState',
    'text!rpcEvents/rpcEvents.hbs',
    'text!rpcEvents/eventModal.hbs',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate) {
    'use strict';
 
    var RPCEventsView = EventsParentView.extend({
@@ -37,7 +38,7 @@ define([
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',
-            selectInitialValue: 'noPoller',
+            selectInitialValue: AppState.get('rpcFilterInitialValue'),
             selectOptions: [
                {label: "All", value: null},
                {label: "All No Polling", value: 'noPoller'},
@@ -122,6 +123,9 @@ define([
          });
 
          this.renderEventCounter();
+      },
+      onFilterChange: function(e) {
+         AppState.set('rpcFilterInitialValue', e.currentTarget.value.replace(/"/g,"")); //remove double quotes
       }
    });
 
