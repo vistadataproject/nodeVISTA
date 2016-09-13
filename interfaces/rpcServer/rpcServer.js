@@ -25,8 +25,8 @@ var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 var db, rpcRunner;
 var server;
-var DUZ = CONFIG.USER.DUZ;
-var facilityCode = CONFIG.FACILITY.ID;
+var DUZ = '';
+var facilityCode = '';
 
 //need for user and facility lookup
 var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
@@ -84,6 +84,15 @@ function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
     db = new nodem.Gtm();
     db.open();
+
+    setUserAndFacilityCode(DUZ, facilityCode);
+
+    rpcRunner = new RPCRunner(db);
+}
+
+function setUserAndFacilityCode(newDUZ, newFacilityCode) {
+    DUZ = newDUZ;
+    facilityCode = newFacilityCode;
 
     //needed for RPC event reporting
     USER = vdmUtils.userFromId(db, '200-' + DUZ);
@@ -144,28 +153,7 @@ function handleConnection(conn) {
             var rpcObject = parser.parseRawRPC(rpcPacket);
             LOGGER.info("RPC name: %s", rpcObject.name);
 
-            if (loggedIn) {
-                // logged in so send RPCs to the correct handler
-                response = callRPC(rpcObject, rpcPacket);
-            } else {
-                // not logged in so check if these are pass through or login
-                if (rpcObject.name === 'XUS AV CODE') {
-                    // this is the RPC sending AV so let's log the user in
-                    response = callRPC(rpcObject, rpcPacket);
-
-                    // check the response for valid login
-                    var loginResponseFields = response.split('\r\n');
-
-                    if (loginResponseFields[0] !== "\u0000\u00000") {
-                        // valid login
-                        loggedIn = true;
-                    }
-
-                } else if (passThroughRPCs.indexOf(rpcObject.name) > -1) {
-                    // these are passthrough RPCs regardless of logged in state
-                    response = callRPC(rpcObject, rpcPacket);
-                }
-            }
+            response = callRPC(rpcObject, rpcPacket);
 
             // write the response back to the client
             var responseBuffer = new Buffer(response, 'binary');
@@ -178,24 +166,39 @@ function handleConnection(conn) {
     function callRpcLockerOrRunner(rpcObject) {
         var rpcResult;
 
-        // It isn't one that needs to be squashed so we call either rpc locker or RpcRunner
+        // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
         if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
-            var domainrpcL = lockedRPCs.get(rpcObject.name);
-            domainrpcL.setup(db, DUZ, facilityCode);
-            rpcObject.to = "mvdmLocked";
-            rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
-            LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
+            if (loggedIn) {
+                var domainrpcL = lockedRPCs.get(rpcObject.name);
+                domainrpcL.setup(db, DUZ, facilityCode);
+                rpcObject.to = "mvdmLocked";
+                rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
+                LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
+            } else {
+                LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
+            }
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
             LOGGER.info("RPC parameters: %j", rpcObject.args);
             rpcObject.to = "rpcRunner";
 
-            rpcRunner = new RPCRunner(db);
-            rpcRunner.setUserAndFacility(60, 1);
+            rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
 
-            rpcResult = rpcRunner.RPCRunner.run(rpcObject.name, rpcObject.args);
+            if (rpcObject.name === 'XUS AV CODE') {
+                // check if it was a login attempt, if it was successful, set the DUZ and facility
+                // from a call to XUS GET USER INFO, and set the loggedIn state
+                var authResultArray = rpcResult.split("\r\n");
+                if (authResultArray[0] === '0') {
+                    LOGGER.info('Authentication error on XUS AV CODE: %j', rpcResult);
+                } else {
+                    loggedIn = true;
 
-            rpcRunner.bye();
+                    var userInfoResult = rpcRunner.run("XUS GET USER INFO");
+                    var userInfoArray = userInfoResult.split('^');
+                    setUserAndFacilityCode(userInfoArray[0], userInfoArray[24]);
+                }
+            }
+
         }
 
         var response = '\u0000\u0000';
