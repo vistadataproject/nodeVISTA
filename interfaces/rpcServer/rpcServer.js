@@ -42,11 +42,6 @@ var capturePath = CONFIG.FILE.defaultCaptureFile;
 var port = CONFIG.rpcServer.port;
 
 var loggedIn = false;
-var passThroughRPCs = [
-    "TCPConnect", "#BYE#", "XUS SIGNON SETUP", "XUS INTRO MSG",
-
-    "XWB IM HERE", "XWB CREATE CONTEXT", "XWB RPC LIST", "XWB IS RPC AVAILABLE", "XUS GET USER INFO", "XUS GET TOKEN", "XUS SET VISITOR"
-]
 
 // check for command line overrides
 if (process.argv.length > 2) {
@@ -187,15 +182,14 @@ function handleConnection(conn) {
             if (rpcObject.name === 'XUS AV CODE') {
                 // check if it was a login attempt, if it was successful, set the DUZ and facility
                 // from a call to XUS GET USER INFO, and set the loggedIn state
-                var authResultArray = rpcResult.split("\r\n");
-                if (authResultArray[0] === '0') {
+                if (rpcResult.result[0] === '0') {
                     LOGGER.info('Authentication error on XUS AV CODE: %j', rpcResult);
                 } else {
                     loggedIn = true;
 
                     var userInfoResult = rpcRunner.run("XUS GET USER INFO");
-                    var userInfoArray = userInfoResult.split('^');
-                    setUserAndFacilityCode(userInfoArray[0], userInfoArray[24]);
+
+                    setUserAndFacilityCode(userInfoResult.result[0], userInfoResult.result[24]);
                 }
             }
 
