@@ -11,7 +11,7 @@ var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 var EventManager = require('./eventManager');
 
-// imports for localRpcRunner
+// imports for RpcRunner
 var nodem = require('nodem');
 var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 // imports for locked rpcs
@@ -175,14 +175,14 @@ function handleConnection(conn) {
         }
     }
 
-    function callRpcLockerOrLocalRunner(rpcObject) {
+    function callRpcLockerOrRunner(rpcObject) {
         var rpcResult;
 
-        // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
-        if (mvdmManagement.isRpcsLocked && lockedRPCs.has(rpcObject.name)) {
+        // It isn't one that needs to be squashed so we call either rpc locker or RpcRunner
+        if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
             var domainrpcL = lockedRPCs.get(rpcObject.name);
             domainrpcL.setup(db, DUZ, facilityCode);
-            rpcObject.to = "rpcL";
+            rpcObject.to = "mvdmLocked";
             rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
             LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
         } else {
@@ -201,7 +201,7 @@ function handleConnection(conn) {
         var response = '\u0000\u0000';
         if (rpcResult && rpcResult.result !== undefined) {
             if (_.isArray(rpcResult.result)) {
-                // in localRpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
+                // in rpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
                 for (var i = 0; i < rpcResult.result.length; i++) {
                     response += rpcResult.result[i] + '\r\n';
                 }
@@ -234,15 +234,14 @@ function handleConnection(conn) {
 
     /**
      * This takes the object (rpcObject) from the parsed RPC string (rpcPacket) and passes it
-     * to either the rpcLocker or rpcLocalRunner
+     * to either the rpcLocker or rpcRunner
      *
      * @param rpcObject js object returned from rpc parser
      * @param rpcPacket the raw rpc string
-     * @returns {string} the response from the rpcLocker or rpcLocalRunner (enveloped in \u0000\u0000 and \u0004)
+     * @returns {string} the response from the rpcLocker or rpcRunner (enveloped in \u0000\u0000 and \u0004)
      */
     function callRPC(rpcObject, rpcPacket) {
         var response = '';
-        var runnerReturn;
 
         if (unsupportedRPCs.has(rpcObject.name)) {
             // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
@@ -267,35 +266,34 @@ function handleConnection(conn) {
                     }
                 }
                 if (paramKey !== undefined) {
-                    LOGGER.info("unsupported RPC/param, returning hardcoded response");
+                    LOGGER.info("unsupported RPC/param, returning server defined response");
                     response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
-                    rpcObject.to = "hardcode";
+                    rpcObject.to = "server";
                 } else {
                     // could not find a matching response, try calling the rpc locker or rpcRunner anyway
                     LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or rpcRunner");
-                    runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
-                    response = runnerReturn.response;
+                    response = callRpcLockerOrRunner(rpcObject);
+
                 }
             } else {
                 // the unsupported RPC response does not depend on the arguments
-                LOGGER.info("unsupported RPC, returning hardcoded response");
+                LOGGER.info("unsupported RPC, returning server defined response");
                 response = unsupportedRPCs.get(rpcObject.name);
-                rpcObject.to = "hardcode";
+                rpcObject.to = "server";
             }
         } else {
-            LOGGER.info("calling RPC locker or local runner");
-            runnerReturn = callRpcLockerOrLocalRunner(rpcObject);
-            response = runnerReturn.response;
+            LOGGER.info("calling RPC locker or runner");
+            response = callRpcLockerOrRunner(rpcObject);
         }
 
-            // log to capture file the RPC and the response to a file
-            // emit rpc call event
-            if (rpcObject) {
-                // add more info to captured object
-                rpcObject.rpc = rpcPacket;
-                rpcObject.response = response;
-                rpcObject.from = fromName;
-                rpcObject.timeStamp = new Date().toISOString();
+        // log to capture file the RPC and the response to a file
+        // emit rpc call event
+        if (rpcObject) {
+            // add more info to captured object
+            rpcObject.rpc = rpcPacket;
+            rpcObject.response = response;
+            rpcObject.from = fromName;
+            rpcObject.timeStamp = new Date().toISOString();
 
             EventManager.emit('rpcCall', {
                 type: 'rpcCall',
@@ -303,7 +301,6 @@ function handleConnection(conn) {
                 runner: rpcObject.to,
                 rpcName: rpcObject.name,
                 rpcObject: rpcObject,
-                runnerReturn: runnerReturn,
                 response: response
             });
         }
@@ -315,20 +312,5 @@ function handleConnection(conn) {
 
 }
 
-    function callRpcLockerOrLocalRunner(rpcObject) {
-        var rpcResult;
-        var runner;
-        // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
-        if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
-            var domainrpcL = lockedRPCs.get(rpcObject.name);
-            domainrpcL.setup(db, DUZ, facilityCode);
-            rpcObject.to = "mvdmLocked";
-            rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
-            LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
-        } else {
-            //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
-            LOGGER.info("RPC parameters: %j", rpcObject.args);
-            rpcObject.to = "rpcRunner";
-            rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
-        }
+
 
