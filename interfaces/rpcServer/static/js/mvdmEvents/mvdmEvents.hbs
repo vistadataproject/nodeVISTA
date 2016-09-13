@@ -9,43 +9,43 @@
         </a>
         <span class="events-status">
             <span>
-                <strong class="submenu-label">Total:</strong>
+                <div class="submenu-label">Total:</div>
                 <span class="event-count-total"></span>
             </span>
             <span>
-                <strong class="submenu-label">Describe:</strong>
+                <div class="submenu-label">Describe:</div>
                 <span class="event-count-describe"></span>
             </span>
             <span>
-                <strong class="submenu-label">List:</strong>
+                <div class="submenu-label">List:</div>
                 <span class="event-count-list"></span>
             </span>
             <span>
-                <strong class="submenu-label">Create:</strong>
+                <div class="submenu-label">Create:</div>
                 <span class="event-count-create"></span>
             </span>
             <span>
-                <strong class="submenu-label">Update:</strong>
+                <div class="submenu-label">Update:</div>
                 <span class="event-count-update"></span>
             </span>
             <span>
-                <strong class="submenu-label">Remove:</strong>
+                <div class="submenu-label">Remove:</div>
                 <span class="event-count-remove"></span>
             </span>
             <span>
-                <strong class="submenu-label">Unremoved:</strong>
+                <div class="submenu-label">Unremoved:</div>
                 <span class="event-count-unremoved"></span>
             </span>
             <span>
-                <strong class="submenu-label">Delete:</strong>
+                <div class="submenu-label">Delete:</div>
                 <span class="event-count-delete"></span>
             </span>
             <span>
-                 <strong class="submenu-label">RPCs Locked: </strong>
-                {{#if management.isRpcsLocked}}
-                    <span class="glyphicon glyphicon-ok-sign" alt="RPCs are lockjed"></span>
+                 <strong class="submenu-label">MVDM Lock: </strong>
+                {{#if management.isMvdmLocked}}
+                    <span class="glyphicon glyphicon-ok-sign" alt="MVDM Lock is on"></span>
                 {{else}}
-                    <span class="glyphicon glyphicon-remove-sign" alt="RPCs are unlocked"></span>
+                    <span class="glyphicon glyphicon-remove-sign" alt="MVDM lock is off"></span>
                 {{/if}}
             </span>
         </span>

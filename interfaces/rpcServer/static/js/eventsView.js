@@ -52,7 +52,7 @@ define([
                collection: this.eventCollection
             });
 
-            this.filterConfig = {
+            var filterConfig = {
                className: "backgrid-filter form-control filter filter-select",
                collection: this.eventCollection,
                field: options.selectField,
@@ -60,12 +60,18 @@ define([
             };
 
             if (options.selectInitialValue) {
-               this.filterConfig.initialValue = options.selectInitialValue;
+               filterConfig.initialValue = options.selectInitialValue;
             }
 
             if (options.selectMatcher) {
-               this.filterConfig.makeMatcher = options.selectMatcher;
+               filterConfig.makeMatcher = options.selectMatcher;
             }
+
+            this.gridFilter = new Backgrid.Extension.SelectFilter(filterConfig);
+
+            this.paginator = new Backgrid.Extension.Paginator({
+               collection: this.eventCollection
+            });
          }
       },
 
@@ -79,7 +85,7 @@ define([
        * @returns {EventsView}
        */
       render: function (templateOptions) {
-
+         console.log('calling events render');
          var templateArgs = {
             eventTableFilter: this.eventTableFilter
          };
@@ -96,17 +102,18 @@ define([
 
          this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
 
-         var paginator = new Backgrid.Extension.Paginator({
-            collection: this.eventCollection
-         });
-
          //render paginator
-         this.$el.find('#events-table').append(paginator.render().el);
-
-         this.gridFilter = new Backgrid.Extension.SelectFilter(this.filterConfig);
+         this.$el.find('#events-table').append(this.paginator.render().el);
 
          //render filter
          this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
+
+         this.$el.find('.filter')
+            .on('change', _.bind(function(e) {
+               if (this.onFilterChange) {
+                  this.onFilterChange(e);
+               }
+            }, this));
 
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');

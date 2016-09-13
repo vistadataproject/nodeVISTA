@@ -10,9 +10,9 @@ define([
       defaults: {
          total: 0,
          totalNoPoller: 0,
-         localRPCRunner: 0,
-         rpcL: 0,
-         hardcode: 0
+         rpcRunner: 0,
+         mvdmLocked: 0,
+         server: 0
       }
    });
 

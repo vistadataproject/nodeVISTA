@@ -16,7 +16,7 @@ config.rpcServer.port = 9010;
 
 // mvdm socket
 config.mvdmClient = {};
-config.mvdmClient.host = 'localhost';
+config.mvdmClient.host = '10.2.2.100'; <-- osehraVISTA IP
 config.mvdmClient.port = 9020;
 ```
 
@@ -36,7 +36,7 @@ Open your browser and launch the mvdm client URL:
 ```
 http://<mvdmClient.host>:<mvdmClient.port>
 
-i.e. http://localhost:9020
+i.e. http://10.2.2.100:9020
 ```
 
 ![](https://github.com/vistadataproject/nodeVISTA/blob/master/interfaces/rpcServer/screenshots/mvdmEvents.jpg)

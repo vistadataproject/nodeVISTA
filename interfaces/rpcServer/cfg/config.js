@@ -28,7 +28,7 @@ config.rpcServer.port = 9010;
 
 // mvdm socket
 config.mvdmClient = {};
-config.mvdmClient.host = 'localhost';
+config.mvdmClient.host = '10.2.2.100';
 config.mvdmClient.port = 9020;
 
 config.client = {};

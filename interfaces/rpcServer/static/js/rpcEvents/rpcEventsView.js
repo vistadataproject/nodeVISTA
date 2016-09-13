@@ -7,13 +7,14 @@ define([
    'eventsView',
    'rpcEvents/eventCollection',
    'rpcEvents/eventCounterModel',
+   'appState',
    'text!rpcEvents/rpcEvents.hbs',
    'text!rpcEvents/eventModal.hbs',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate) {
    'use strict';
 
    var RPCEventsView = EventsParentView.extend({
@@ -37,13 +38,13 @@ define([
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',
-            selectInitialValue: 'noPoller',
+            selectInitialValue: AppState.get('rpcFilterInitialValue'),
             selectOptions: [
                {label: "All", value: null},
                {label: "All No Polling", value: 'noPoller'},
-               {label: 'Local RPC Runner', value: 'localRPCRunner'},
-               {label: 'Locked', value: 'rpcL'},
-               {label: 'Hardcode', value: 'hardcode'}],
+               {label: 'RPC Runner', value: 'rpcRunner'},
+               {label: 'MVDM Locked', value: 'mvdmLocked'},
+               {label: 'Server', value: 'server'}],
             selectMatcher: function(value) {
                return function(model) {
                   if (value === 'noPoller') { //exclude poller
@@ -67,17 +68,17 @@ define([
                cell: 'String'
             }, {
                name: 'runner',
-               label: 'RPC Runner',
+               label: 'Path',
                editable: false,
                cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     if (rawValue === 'localRPCRunner') {
-                        return 'Local RPC Runner';
-                     } else if (rawValue === 'rpcL') {
-                        return 'Locked';
-                     } else if (rawValue === 'hardcode') {
-                        return 'Hardcode';
+                     if (rawValue === 'rpcRunner') {
+                        return 'RPC Runner';
+                     } else if (rawValue === 'mvdmLocked') {
+                        return 'MVDM Locked';
+                     } else if (rawValue === 'server') {
+                        return 'Server';
                      } else return rawValue;
                   }
                })
@@ -108,20 +109,23 @@ define([
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
          this.$el.find('.event-count-total-no-poller').html(EventCounter.get('totalNoPoller'));
-         this.$el.find('.event-count-local-rpc-runner').html(EventCounter.get('localRPCRunner'));
-         this.$el.find('.event-count-locked').html(EventCounter.get('rpcL'));
-         this.$el.find('.event-count-hardcode').html(EventCounter.get('hardcode'));
+         this.$el.find('.event-count-rpc-runner').html(EventCounter.get('rpcRunner'));
+         this.$el.find('.event-count-mvdm-locked').html(EventCounter.get('mvdmLocked'));
+         this.$el.find('.event-count-server').html(EventCounter.get('server'));
       },
       clearEventCounter: function() {
          EventCounter.set({
             total: 0,
             totalNoPoller: 0,
-            localRPCRunner: 0,
-            rpcL: 0,
-            hardcode: 0
+            rpcRunner: 0,
+            mvdmLocked: 0,
+            server: 0
          });
 
          this.renderEventCounter();
+      },
+      onFilterChange: function(e) {
+         AppState.set('rpcFilterInitialValue', e.currentTarget.value.replace(/"/g,"")); //remove double quotes
       }
    });
 

@@ -39,8 +39,8 @@ function init() {
 
       var settings = req.body;
 
-      if (_.has(settings, 'isRpcsLocked')) {
-         mvdmManagement.isRpcsLocked = settings.isRpcsLocked;
+      if (_.has(settings, 'isMvdmLocked')) {
+         mvdmManagement.isMvdmLocked = settings.isMvdmLocked;
       }
       
       return res.sendStatus(200);
@@ -75,7 +75,7 @@ function init() {
 
    var port = CONFIG.mvdmClient.port;
    app.listen(port, function () {
-      LOGGER.info('MVDM Admin listening on port ' + port);
+      LOGGER.info('MVDM Client listening on port ' + port);
    });
 
    //static files

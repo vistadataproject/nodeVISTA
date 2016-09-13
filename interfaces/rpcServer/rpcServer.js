@@ -288,13 +288,14 @@ function handleConnection(conn) {
             response = runnerReturn.response;
         }
 
-        // log to capture file the RPC and the response to a file
-        if (rpcObject) {
-            // add more info to captured object
-            rpcObject.rpc = rpcPacket;
-            rpcObject.response = response;
-            rpcObject.from = fromName;
-            rpcObject.timeStamp = new Date().toISOString();
+            // log to capture file the RPC and the response to a file
+            // emit rpc call event
+            if (rpcObject) {
+                // add more info to captured object
+                rpcObject.rpc = rpcPacket;
+                rpcObject.response = response;
+                rpcObject.from = fromName;
+                rpcObject.timeStamp = new Date().toISOString();
 
             EventManager.emit('rpcCall', {
                 type: 'rpcCall',
@@ -314,4 +315,20 @@ function handleConnection(conn) {
 
 }
 
+    function callRpcLockerOrLocalRunner(rpcObject) {
+        var rpcResult;
+        var runner;
+        // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
+        if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
+            var domainrpcL = lockedRPCs.get(rpcObject.name);
+            domainrpcL.setup(db, DUZ, facilityCode);
+            rpcObject.to = "mvdmLocked";
+            rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
+            LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
+        } else {
+            //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
+            LOGGER.info("RPC parameters: %j", rpcObject.args);
+            rpcObject.to = "rpcRunner";
+            rpcResult = localRPCRunner.run(db, DUZ, rpcObject.name, rpcObject.args, facilityCode);
+        }
 
