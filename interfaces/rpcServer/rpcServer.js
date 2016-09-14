@@ -80,8 +80,6 @@ function connectVistaDatabase() {
     db = new nodem.Gtm();
     db.open();
 
-    setUserAndFacilityCode(DUZ, facilityCode);
-
     rpcRunner = new RPCRunner(db);
 }
 
@@ -188,8 +186,9 @@ function handleConnection(conn) {
                     loggedIn = true;
 
                     var userInfoResult = rpcRunner.run("XUS GET USER INFO");
+                    //var facilityArray = userInfoResult[3].split("^");
 
-                    setUserAndFacilityCode(userInfoResult.result[0], userInfoResult.result[24]);
+                    setUserAndFacilityCode(60, 2957);
                 }
             }
 
