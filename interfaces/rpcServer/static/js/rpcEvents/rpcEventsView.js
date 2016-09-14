@@ -89,7 +89,12 @@ define([
                cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     return rawValue.name + ' (' + rawValue.id + ')'
+
+                     if (!rawValue) {
+                        return '';
+                     }
+
+                     return rawValue.name + ' (' + rawValue.id + ')';
                   }
                })
             }, {
@@ -99,7 +104,12 @@ define([
                cell: 'String',
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     return rawValue.name + ' (' + rawValue.id + ' / ' + rawValue.stationNumber + ')'
+
+                     if (!rawValue) {
+                        return '';
+                     }
+
+                     return rawValue.name + ' (' + rawValue.id + ' / ' + rawValue.stationNumber + ')';
                   }
                })
             }]
