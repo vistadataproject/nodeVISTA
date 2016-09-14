@@ -175,7 +175,11 @@ function handleConnection(conn) {
             LOGGER.info("RPC parameters: %j", rpcObject.args);
             rpcObject.to = "rpcRunner";
 
-            rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
+            try {
+                rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
+            } catch (err) {
+                LOGGER.info("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message)
+            }
 
             if (rpcObject.name === 'XUS AV CODE') {
                 // check if it was a login attempt, if it was successful, set the DUZ and facility
@@ -185,10 +189,11 @@ function handleConnection(conn) {
                 } else {
                     loggedIn = true;
 
-                    var userInfoResult = rpcRunner.run("XUS GET USER INFO");
-                    //var facilityArray = userInfoResult[3].split("^");
+                    var userInfoResult = rpcRunner.run("XUS GET USER INFO").result;
+                    var facilityArray = userInfoResult[3].split("^");
 
-                    setUserAndFacilityCode(60, 2957);
+                    // TODO: validate that USER INFO is an array.
+                    setUserAndFacilityCode(userInfoResult[0], facilityArray[0]);
                 }
             }
 
@@ -213,6 +218,7 @@ function handleConnection(conn) {
     }
 
     function onConnectedClose() {
+        rpcRunner.reinit();
         loggedIn = false;
         LOGGER.info('Connection from %s closed', remoteAddress);
         conn.removeAllListeners();
@@ -221,6 +227,7 @@ function handleConnection(conn) {
     }
 
     function onConnectedError(err) {
+        rpcRunner.reinit();
         loggedIn = false;
         LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
         conn.removeAllListeners();
