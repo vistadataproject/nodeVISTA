@@ -147,7 +147,7 @@ function parseParameters(paramRpcString) {
 /**
  *  rpcObject.inputParameters is an array of objects {"parameterType": "LITERAL|REFERENCE|LIST", "parameter": value|Array, "num": ordinal}.
  *
- *  args is an array that is accepted by the localRPCRunner.
+ *  args is an array that is accepted by the rpcRunner.
  *
  *  This function modifies the inputParameters into an array where LITERALs and REFERENCEs are each element of the array. The LISTs stay as an
  *  sub-array as the element of the array of parameters. But these sub-arrays are modified to be either a list of only the values
