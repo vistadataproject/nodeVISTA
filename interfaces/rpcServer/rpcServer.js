@@ -110,10 +110,6 @@ captureFile.on("open", function (fd) {
     });
 });
 
-function getUserData(DUZ) {
-
-}
-
 // main function to handle the connection from the client
 function handleConnection(conn) {
     var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
@@ -298,14 +294,33 @@ function handleConnection(conn) {
             rpcObject.from = fromName;
             rpcObject.timeStamp = new Date().toISOString();
 
-            EventManager.emit('rpcCall', {
+            var rpcCallEvent = {
                 type: 'rpcCall',
                 timestamp: moment().format(DT_FORMAT) + 'Z',
                 runner: rpcObject.to,
                 rpcName: rpcObject.name,
                 rpcObject: rpcObject,
                 response: response
-            });
+            };
+
+            //include user if available
+            if (USER) {
+                rpcCallEvent.user = {
+                    id: '200-' + DUZ,
+                    name: USER.name.value
+                }
+            }
+
+            //include facility if available
+            if (FACILITY) {
+                rpcCallEvent.facility = {
+                    id: '4-' + facilityCode,
+                    name: FACILITY.name.value,
+                    stationNumber:  FACILITY['station_number'].value
+                }
+            }
+
+            EventManager.emit('rpcCall', rpcCallEvent);
         }
         captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
