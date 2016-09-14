@@ -49,25 +49,25 @@ if (process.argv.length > 2) {
         if (process.argv[argnum].indexOf("from=") > -1) {
             // from=something
             fromName = process.argv[argnum].substring(5);
-            console.log("Using '%s' as the from in the capture", fromName);
+            LOGGER.info("Using '%s' as the from in the capture", fromName);
         } else if (process.argv[argnum].indexOf("captureFile=") > -1) {
             // captureFile=path
             capturePath = process.argv[argnum].substring(12);
-            console.log("Capture file being written to %s", capturePath);
+            LOGGER.info("Capture file being written to %s", capturePath);
         } else if (process.argv[argnum].indexOf("snifferPort=") > -1) {
             // snifferPort=port
             port = parseInt(process.argv[argnum].substring(12));
             if (isNaN(port)) {
                 port = CONFIG.rpcServer.port;
             }
-            console.log("Setting sniffer port to %s", port);
+            LOGGER.info("Setting sniffer port to %s", port);
         } else if (process.argv[argnum].toLowerCase().indexOf("duz=") > -1) {
             // DUZ=DUZ
             DUZ = parseInt(process.argv[argnum].substring(4));
             if (isNaN(DUZ)) {
                 port = CONFIG.USER.DUZ;
             }
-            console.log("Setting DUZ to %s", DUZ);
+            LOGGER.info("Setting DUZ to %s", DUZ);
         }
     }
 }
@@ -103,7 +103,7 @@ captureFile.on("open", function (fd) {
     server = net.createServer();
     server.on('connection', handleConnection);
     server.listen(port, function () {
-        console.log('RPCServer listening to %j', server.address());
+        LOGGER.info('RPCServer listening to %j', server.address());
 
         //start up mvdm client
         mvdmClient.init();
@@ -113,7 +113,7 @@ captureFile.on("open", function (fd) {
 // main function to handle the connection from the client
 function handleConnection(conn) {
     var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
-    console.log('New client connection from %s', remoteAddress);
+    LOGGER.info('New client connection from %s', remoteAddress);
     var chunk = '';
 
     conn.on('data', onConnectedData);
@@ -138,13 +138,13 @@ function handleConnection(conn) {
             eotIndex = chunk.indexOf(EOT);
 
             // process the packet
-            LOGGER.info('Connection data from %s: %s', remoteAddress, data);
+            LOGGER.info('RECEIVED RPC from %s: %s', remoteAddress, data);
             var rpcObject = parser.parseRawRPC(rpcPacket);
-            LOGGER.info("RPC name: %s", rpcObject.name);
 
             response = callRPC(rpcObject, rpcPacket);
 
             // write the response back to the client
+            LOGGER.info("SENDING RESPONSE to client: " + response);
             var responseBuffer = new Buffer(response, 'binary');
 
             conn.write(responseBuffer);
@@ -162,26 +162,27 @@ function handleConnection(conn) {
                 domainrpcL.setup(db, DUZ, facilityCode);
                 rpcObject.to = "mvdmLocked";
                 rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
-                LOGGER.info("RpcL: %s, result: %j", rpcObject.name, rpcResult);
+                LOGGER.info("RESULT FROM RpcL for RPC: %s, result: %j", rpcObject.name, rpcResult);
             } else {
                 LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
             }
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
-            LOGGER.info("RPC parameters: %j", rpcObject.args);
+
             rpcObject.to = "rpcRunner";
 
             try {
                 rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
+                LOGGER.info("RESULT FROM rpcRunner for RPC: %s, result: %j", rpcObject.name, rpcResult);
             } catch (err) {
-                LOGGER.info("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message)
+                LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message)
             }
 
             if (rpcObject.name === 'XUS AV CODE') {
                 // check if it was a login attempt, if it was successful, set the DUZ and facility
                 // from a call to XUS GET USER INFO, and set the loggedIn state
                 if (rpcResult.result[0] === '0') {
-                    LOGGER.info('Authentication error on XUS AV CODE: %j', rpcResult);
+                    LOGGER.error('Authentication error on XUS AV CODE: %j', rpcResult);
                 } else {
                     loggedIn = true;
 
@@ -208,24 +209,23 @@ function handleConnection(conn) {
             }
         }
         response += '\u0004';
-        console.log("response to client: " + JSON.stringify(response));
 
         return response;
     }
 
     function onConnectedClose() {
-        rpcRunner.reinit();
+        //rpcRunner.reinit();
         loggedIn = false;
-        LOGGER.info('Connection from %s closed', remoteAddress);
+        LOGGER.info('CONNECTION from %s CLOSED', remoteAddress);
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
     }
 
     function onConnectedError(err) {
-        rpcRunner.reinit();
+        //rpcRunner.reinit();
         loggedIn = false;
-        LOGGER.error('Connection %s error: %s', remoteAddress, err.message);
+        LOGGER.error('CONNECTION %s ERROR: %s', remoteAddress, err.message);
         conn.removeAllListeners();
         conn.end();
         conn.destroy();
@@ -247,7 +247,7 @@ function handleConnection(conn) {
 
             // check if the mapped value is a map for parameters or just a single response
             if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
-                LOGGER.info('checking for unsupported RPC/param pairs')
+                LOGGER.debug('checking for unsupported RPC/param pairs')
 
                 var params = unsupportedRPCs.get(rpcObject.name).keys();
                 var paramKey;
@@ -256,7 +256,7 @@ function handleConnection(conn) {
                         // check each argument if it contains the param
                         if (typeof rpcObject.args[j] === 'string' && rpcObject.args[j].indexOf(params[i]) > -1) {
                             paramKey = params[i];
-                            LOGGER.info("found an unsupported RPC/arg pair: %s %s", rpcObject.name, paramKey);
+                            LOGGER.debug("found an unsupported RPC/arg pair: %s %s", rpcObject.name, paramKey);
                             break;
                         }
                     }
@@ -265,23 +265,23 @@ function handleConnection(conn) {
                     }
                 }
                 if (paramKey !== undefined) {
-                    LOGGER.info("unsupported RPC/param, returning server defined response");
+                    LOGGER.debug("unsupported RPC/param, returning server defined response");
                     response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
                     rpcObject.to = "server";
                 } else {
                     // could not find a matching response, try calling the rpc locker or rpcRunner anyway
-                    LOGGER.info("no unsupported RPC/arg pair, calling RPC locker or rpcRunner");
+                    LOGGER.debug("no unsupported RPC/arg pair, calling RPC locker or rpcRunner");
                     response = callRpcLockerOrRunner(rpcObject);
 
                 }
             } else {
                 // the unsupported RPC response does not depend on the arguments
-                LOGGER.info("unsupported RPC, returning server defined response");
+                LOGGER.debug("unsupported RPC, returning server defined response");
                 response = unsupportedRPCs.get(rpcObject.name);
                 rpcObject.to = "server";
             }
         } else {
-            LOGGER.info("calling RPC locker or runner");
+            LOGGER.debug("calling RPC locker or runner");
             response = callRpcLockerOrRunner(rpcObject);
         }
 
