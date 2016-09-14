@@ -23,7 +23,7 @@ define([
       initialize: function (options) {
 
          this.eventCollection = new EventCollection();
-         this.eventCollection.reset(options.eventCollection.models);
+         this.eventCollection.fullCollection.reset(options.eventCollection.models);
 
          this.management = new ManagementModel();
 
@@ -34,10 +34,7 @@ define([
          this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
             this.renderEventCounter();
 
-            this.eventCollection.push(model);
-            //sort collection
-            this.eventCollection.setSorting(this.eventCollection.state.sortKey);
-            this.eventCollection.fullCollection.sort();
+            this.eventCollection.fullCollection.unshift(model, {sort: false});
          });
 
          MVDMEventsView.__super__.initialize.apply(this, [{

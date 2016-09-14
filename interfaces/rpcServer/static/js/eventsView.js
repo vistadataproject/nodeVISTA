@@ -70,7 +70,8 @@ define([
             this.gridFilter = new Backgrid.Extension.SelectFilter(filterConfig);
 
             this.paginator = new Backgrid.Extension.Paginator({
-               collection: this.eventCollection
+               collection: this.eventCollection,
+               goBackFirstOnSort: false
             });
          }
       },
@@ -106,15 +107,17 @@ define([
          this.$el.find('#events-table').append(this.paginator.render().el);
 
          //render filter
-         this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
+         if (this.gridFilter) {
+            this.$el.find("#filter").replaceWith(this.gridFilter.render().$el);
 
-         this.$el.find('.filter')
-            .on('change', _.bind(function(e) {
-               if (this.onFilterChange) {
-                  this.onFilterChange(e);
-               }
-            }, this));
+            this.$el.find('.filter')
+               .on('change', _.bind(function(e) {
+                  if (this.onFilterChange) {
+                     this.onFilterChange(e);
+                  }
+               }, this));
 
+         }
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
 

@@ -22,15 +22,12 @@ define([
       initialize: function (options) {
 
          this.eventCollection = new EventCollection();
-         this.eventCollection.reset(options.eventCollection.models);
+         this.eventCollection.fullCollection.reset(options.eventCollection.models);
 
          this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
             this.renderEventCounter();
 
-            this.eventCollection.push(model);
-            //sort collection
-            this.eventCollection.setSorting(this.eventCollection.state.sortKey);
-            this.eventCollection.fullCollection.sort();
+            this.eventCollection.fullCollection.unshift(model, {sort: false});
          });
 
          RPCEventsView.__super__.initialize.apply(this, [{
