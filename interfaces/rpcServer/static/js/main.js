@@ -99,9 +99,10 @@ require([
    'backbone',
    'app',
    'router',
-   'EventListener',
+   'eventListener',
+   'appState',
    'backgrid'
-], function ($, Backbone, AppView, Router, EventListener) {
+], function ($, Backbone, AppView, Router, EventListener, AppState) {
    /*jshint nonew:false*/
 
    //manages cleaning up previous view and rendering a new view
