@@ -39,22 +39,29 @@ function parseRawRPC (rpcString) {
         // e.g. rpc "MY DOG" parameter: LITERAL abcde = "{XWB}007XWB;;;;000170MY DOG^000090060abcde"
         //      or "YOUR DOG" parameter: LIST (a,1) (b,2) = "{XWB}007XWB;;;;000341YOUR DOG^00019001a0011001b0012000"
 
-    } else if (rpcString.indexOf("[XWB]10304\nTCPConnect") === 0) {
-        rpcObject.name = "TCPConnect";
+        // this type of RPC is not supported so we will reject it
+        rpcObject.name = "#REJECT#";
+    } else if (rpcString.indexOf("TCPConnect") > -1) {
+        // first check that the TCPConnect header fits the protocol
+        if (rpcString.indexOf("[XWB]10304\nTCPConnect") === 0) {
+            rpcObject.name = "TCPConnect";
 
-        // parse the originating IP and hostname
-        // form [XWB]10<COUNT_WIDTH>04\nTCPConnect + "5" + "0" + LPack(Address, COUNT_WIDTH) + "f"
-        //                                               + "0" + LPack("0", COUNT_WIDTH) + "f"
-        //                                               + "0" + LPack(Name, COUNT_WIDTH + 1) + "f\u0004"
-        //rpcString = rpcString.substring("[XWB]10304\nTCPConnect50".length);
-        //rpcObject.ipaddress = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
-        //rpcString = rpcString.substring(2 + COUNT_WIDTH + 3);
-        //rpcObject.hostName = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
+            // parse the originating IP and hostname
+            // form [XWB]10<COUNT_WIDTH>04\nTCPConnect + "5" + "0" + LPack(Address, COUNT_WIDTH) + "f"
+            //                                               + "0" + LPack("0", COUNT_WIDTH) + "f"
+            //                                               + "0" + LPack(Name, COUNT_WIDTH + 1) + "f\u0004"
+            //rpcString = rpcString.substring("[XWB]10304\nTCPConnect50".length);
+            //rpcObject.ipaddress = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
+            //rpcString = rpcString.substring(2 + COUNT_WIDTH + 3);
+            //rpcObject.hostName = rpcParserUtils.popLPack(rpcString, COUNT_WIDTH).string;
 
-        var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
-        //rpcObject.inputParameters = parametersArray;
-        rpcObject.args = inputParametersToArgs(parametersArray);
-
+            var parametersArray = parseParameters(rpcString.substring("[XWB]10304\nTCPConnect".length));
+            //rpcObject.inputParameters = parametersArray;
+            rpcObject.args = inputParametersToArgs(parametersArray);
+        } else {
+            // the header for the TCPConnect is not correct so we will inject a reject object
+            rpcObject.name = "#REJECT#";
+        }
     } else if (rpcString.indexOf("[XWB]10304\u0005#BYE#\u0004") === 0) {
         rpcObject.name = "#BYE#";
     } else if (rpcString.indexOf("[XWB]") === 0) {

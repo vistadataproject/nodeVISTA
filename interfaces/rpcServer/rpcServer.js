@@ -252,7 +252,8 @@ function handleConnection(conn) {
 
     /**
      * This takes the object (rpcObject) from the parsed RPC string (rpcPacket) and passes it
-     * to either the rpcLocker or rpcRunner
+     * to either the rpcLocker or rpcRunner. For connection type commands such as TCPConnect and #BYE#,
+     * the server will send a fixed response instead of calling the RPC Locker or RPC Runner.
      *
      * @param rpcObject js object returned from rpc parser
      * @param rpcPacket the raw rpc string
@@ -263,16 +264,18 @@ function handleConnection(conn) {
         var transactionId;
 
         if (unsupportedRPCs.has(rpcObject.name)) {
-            // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
+            // Check if it is a connection RPC, for now we will just catch these and return hard coded responses
+            // these can be found in unsupportedRpcs.js map.
 
             transactionId = generateTransactionId();
 
             // check if the mapped value is a map for parameters or just a single response
             if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
-                LOGGER.debug('checking for unsupported RPC/param pairs')
+                LOGGER.debug('checking for unsupported RPC/param pairs');
 
                 var params = unsupportedRPCs.get(rpcObject.name).keys();
                 var paramKey;
+                // check if it is an unsupported rpc that depends on a parameter
                 for (var i = 0; i < params.length; i++) {
                     for (var j = 0; j < rpcObject.args.length; j++) {
                         // check each argument if it contains the param
@@ -299,12 +302,13 @@ function handleConnection(conn) {
 
                 }
             } else {
-                // the unsupported RPC response does not depend on the arguments
+                // the unsupported RPC response does not depend on the arguments, this is usually the simple case
                 LOGGER.debug("unsupported RPC, returning server defined response");
                 response = unsupportedRPCs.get(rpcObject.name);
                 rpcObject.to = "server";
             }
         } else {
+            // These are normal RPCs that can go to either the locker or the runner.
             LOGGER.debug("calling RPC locker or runner");
             var ret = callRpcLockerOrRunner(rpcObject);
             response = ret.rpcResponse;
@@ -349,6 +353,7 @@ function handleConnection(conn) {
 
             EventManager.emit('rpcCall', rpcCallEvent);
         }
+        // write out the rpc to a capture log
         captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
         return response;
