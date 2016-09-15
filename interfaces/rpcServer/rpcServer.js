@@ -193,7 +193,7 @@ function handleConnection(conn) {
                 rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
                 LOGGER.info("RESULT FROM rpcRunner for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
             } catch (err) {
-                LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message)
+                LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message);
                 rpcResult = {"result": err.message};
             }
 
