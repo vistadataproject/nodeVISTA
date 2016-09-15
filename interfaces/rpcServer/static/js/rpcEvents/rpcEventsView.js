@@ -28,10 +28,15 @@ define([
             this.renderEventCounter();
 
             this.eventCollection.fullCollection.unshift(model, {sort: false});
+
+            if (this.gridFilter) {
+               this.gridFilter.onChange(null, true);
+            }
          });
 
          RPCEventsView.__super__.initialize.apply(this, [{
             eventCollection: this.eventCollection,
+            gridPage: AppState.get('rpcEventsGridPage'),
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'runner',
@@ -132,7 +137,12 @@ define([
          this.renderEventCounter();
       },
       onFilterChange: function(e) {
-         AppState.set('rpcFilterInitialValue', e.currentTarget.value.replace(/"/g,"")); //remove double quotes
+         AppState.set('rpcFilterInitialValue', e.currentTarget.value.replace(/"/g, "")); //remove double quotes
+      },
+      onClose: function () {
+         if (this.eventCollection.fullCollection.pageableCollection) {
+            AppState.set('rpcEventsGridPage', this.eventCollection.fullCollection.pageableCollection.state.currentPage);
+         }
       }
    });
 

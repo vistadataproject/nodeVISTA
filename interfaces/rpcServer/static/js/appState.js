@@ -13,7 +13,9 @@ define([
       //app state defaults
       {
          mvdmFilterInitialValue: 'All',
-         rpcFilterInitialValue: 'noPoller'
+         rpcFilterInitialValue: 'noPoller',
+         rpcEventsGridPage: 0,
+         mvdmEventsGridPage: 0
       }
    );
 });

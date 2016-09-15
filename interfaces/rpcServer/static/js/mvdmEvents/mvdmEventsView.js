@@ -35,10 +35,15 @@ define([
             this.renderEventCounter();
 
             this.eventCollection.fullCollection.unshift(model, {sort: false});
+
+            if (this.gridFilter) {
+               this.gridFilter.onChange(null, true);
+            }
          });
 
          MVDMEventsView.__super__.initialize.apply(this, [{
             eventCollection: this.eventCollection,
+            gridPage: AppState.get('mvdmEventsGridPage'),
             template: EventsTemplate,
             eventModalTemplate: EventModalTemplate,
             selectField: 'type',
@@ -137,6 +142,11 @@ define([
       },
       onFilterChange: function(e) {
          AppState.set('mvdmFilterInitialValue', e.currentTarget.value.replace(/"/g,"")); //remove double quotes
+      },
+      onClose: function () {
+         if (this.eventCollection.fullCollection.pageableCollection) {
+            AppState.set('mvdmEventsGridPage', this.eventCollection.fullCollection.pageableCollection.state.currentPage);
+         }
       }
    });
 
