@@ -83,6 +83,11 @@ define([
                      return rawValue.toUpperCase()
                   }
                })
+            },{
+               name: 'transactionId',
+               label: 'Transaction Id',
+               editable: false,
+               cell: 'String'
             }, {
                name: 'user',
                label: 'User',

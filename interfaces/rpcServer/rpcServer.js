@@ -10,6 +10,7 @@ var unsupportedRPCs = require('./unsupportedRPCs.js');
 var VistaJS = require('../VistaJS/VistaJS.js');
 var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 var EventManager = require('./eventManager');
+var uuid = require('uuid');
 
 // imports for RpcRunner
 var nodem = require('nodem');
@@ -81,6 +82,10 @@ process.on('uncaughtException', function(err) {
 });
 
 connectVistaDatabase();
+
+function generateTransactionId() {
+    return uuid.v4();
+}
 
 // first set up a connection to VistA's RPC Broker
 function connectVistaDatabase() {
@@ -162,7 +167,7 @@ function handleConnection(conn) {
 
     function callRpcLockerOrRunner(rpcObject) {
         var rpcResult;
-
+        var transactionId;
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
         if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
             if (loggedIn) {
@@ -170,20 +175,25 @@ function handleConnection(conn) {
                 domainrpcL.setup(db, DUZ, facilityCode);
                 rpcObject.to = "mvdmLocked";
                 rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
-                LOGGER.info("RESULT FROM RpcL for RPC: %s, result: %j", rpcObject.name, rpcResult);
+
+                transactionId = rpcResult.transactionId;
+
+                LOGGER.info("RESULT FROM RpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
             } else {
                 LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
             }
         } else {
             //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
 
+            transactionId = generateTransactionId();
+
             rpcObject.to = "rpcRunner";
 
             try {
                 rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
-                LOGGER.info("RESULT FROM rpcRunner for RPC: %s, result: %j", rpcObject.name, rpcResult);
+                LOGGER.info("RESULT FROM rpcRunner for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
             } catch (err) {
-                LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message)
+                LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message);
                 rpcResult = {"result": err.message};
             }
 
@@ -219,7 +229,7 @@ function handleConnection(conn) {
         }
         response += '\u0004';
 
-        return response;
+        return {rpcResponse: response, transactionId: transactionId}
     }
 
     function onConnectedClose() {
@@ -250,9 +260,12 @@ function handleConnection(conn) {
      */
     function callRPC(rpcObject, rpcPacket) {
         var response = '';
+        var transactionId;
 
         if (unsupportedRPCs.has(rpcObject.name)) {
             // Check if it is one of the auth RPCs, for now we will just catch these and return hard coded responses
+
+            transactionId = generateTransactionId();
 
             // check if the mapped value is a map for parameters or just a single response
             if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
@@ -280,7 +293,9 @@ function handleConnection(conn) {
                 } else {
                     // could not find a matching response, try calling the rpc locker or rpcRunner anyway
                     LOGGER.debug("no unsupported RPC/arg pair, calling RPC locker or rpcRunner");
-                    response = callRpcLockerOrRunner(rpcObject);
+                    var ret = callRpcLockerOrRunner(rpcObject);
+                    response = ret.rpcResponse;
+                    transactionId = ret.transactionId;
 
                 }
             } else {
@@ -291,7 +306,9 @@ function handleConnection(conn) {
             }
         } else {
             LOGGER.debug("calling RPC locker or runner");
-            response = callRpcLockerOrRunner(rpcObject);
+            var ret = callRpcLockerOrRunner(rpcObject);
+            response = ret.rpcResponse;
+            transactionId = ret.transactionId;
         }
 
         // log to capture file the RPC and the response to a file
@@ -305,6 +322,7 @@ function handleConnection(conn) {
 
             var rpcCallEvent = {
                 type: 'rpcCall',
+                transactionId: transactionId,
                 timestamp: moment().format(DT_FORMAT) + 'Z',
                 runner: rpcObject.to,
                 rpcName: rpcObject.name,
@@ -336,7 +354,6 @@ function handleConnection(conn) {
         return response;
 
     }
-
 }
 
 
