@@ -85,6 +85,11 @@ define([
                   }
                })
             },{
+               name: 'transactionId',
+               label: 'Transaction Id',
+               editable: false,
+               cell: 'String'
+            }, {
                name: 'user',
                label: 'User',
                editable: false,
