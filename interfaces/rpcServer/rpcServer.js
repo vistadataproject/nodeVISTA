@@ -72,6 +72,14 @@ if (process.argv.length > 2) {
     }
 }
 
+process.on('uncaughtException', function(err) {
+  db.close();
+
+  console.trace('Uncaught Exception:\n', err);
+
+  process.exit(1);
+});
+
 connectVistaDatabase();
 
 // first set up a connection to VistA's RPC Broker
@@ -176,6 +184,7 @@ function handleConnection(conn) {
                 LOGGER.info("RESULT FROM rpcRunner for RPC: %s, result: %j", rpcObject.name, rpcResult);
             } catch (err) {
                 LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message)
+                rpcResult = {"result": err.message};
             }
 
             if (rpcObject.name === 'XUS AV CODE') {
@@ -214,7 +223,7 @@ function handleConnection(conn) {
     }
 
     function onConnectedClose() {
-        //rpcRunner.reinit();
+        rpcRunner.reinit();
         loggedIn = false;
         LOGGER.info('CONNECTION from %s CLOSED', remoteAddress);
         conn.removeAllListeners();

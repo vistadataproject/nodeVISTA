@@ -18,15 +18,15 @@ define([
 
       _.extend(self, Backbone.Events);
 
-      var mvdmCollection = new MVDMEventCollection();
-      var rpcEventCollection = new RPCEventCollection();
+      var mvdmCollection = new Backbone.Collection();
+      var rpcEventCollection = new Backbone.Collection();
 
       this.getMvdmEventCollection = function() {
-         return mvdmCollection.fullCollection;
+         return mvdmCollection;
       };
 
       this.getRpcEventCollection = function() {
-         return rpcEventCollection.fullCollection;
+         return rpcEventCollection;
       };
 
       this.mvdmSocket = initWebSocket('mvdmEvents', function(eventMsg) {
@@ -41,11 +41,7 @@ define([
          var event = JSON.parse(eventMsg.data);
 
          var eventModel = new EventModel(event.data);
-         eventCollection.push(new EventModel(event.data));
-
-         //sort collection
-         eventCollection.setSorting(eventCollection.state.sortKey);
-         eventCollection.fullCollection.sort();
+         eventCollection.unshift(new EventModel(event.data));
 
          //increment event counters
          if (eventType === 'mvdm') {
