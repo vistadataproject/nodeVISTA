@@ -34,46 +34,45 @@ define([
 
          var eventsView = this;
 
-         if (options.columns) {
-
-            //customize row to handle event details click
-            var row = Backgrid.Row.extend({
-               events: {
-                  'click': "rowClick"
-               },
-               rowClick: function(e) {
-                  eventsView.showEventDetails(this.model);
-               }
-            });
-
-            this.grid = new Backgrid.Grid({
-               row: row,
-               columns: options.columns,
-               collection: this.eventCollection
-            });
-
-            var filterConfig = {
-               className: "backgrid-filter form-control filter filter-select",
-               collection: this.eventCollection,
-               field: options.selectField,
-               selectOptions: options.selectOptions
-            };
-
-            if (options.selectInitialValue) {
-               filterConfig.initialValue = options.selectInitialValue;
+         //customize row to handle event details click
+         var row = Backgrid.Row.extend({
+            events: {
+               'click': "rowClick"
+            },
+            rowClick: function(e) {
+               eventsView.showEventDetails(this.model);
             }
+         });
 
-            if (options.selectMatcher) {
-               filterConfig.makeMatcher = options.selectMatcher;
-            }
+         this.grid = new Backgrid.Grid({
+            row: row,
+            columns: options.columns,
+            collection: this.eventCollection
+         });
 
-            this.gridFilter = new Backgrid.Extension.SelectFilter(filterConfig);
+         var filterConfig = {
+            className: "backgrid-filter form-control filter filter-select",
+            collection: this.eventCollection,
+            field: options.selectField,
+            selectOptions: options.selectOptions
+         };
 
-            this.paginator = new Backgrid.Extension.Paginator({
-               collection: this.eventCollection,
-               goBackFirstOnSort: false
-            });
+         if (options.selectInitialValue) {
+            filterConfig.initialValue = options.selectInitialValue;
          }
+
+         if (options.selectMatcher) {
+            filterConfig.makeMatcher = options.selectMatcher;
+         }
+
+         this.gridFilter = new Backgrid.Extension.SelectFilter(filterConfig);
+
+         this.paginator = new Backgrid.Extension.Paginator({
+            collection: this.eventCollection,
+            goBackFirstOnSort: false
+         });
+
+         this.gridPage = options.gridPage;
       },
 
       events: {
@@ -101,7 +100,7 @@ define([
             this.renderEventCounter();
          }
 
-         this.$el.find('#events-table').append(this.grid.render().sort('timestamp', 'descending').el);
+         this.$el.find('#events-table').append(this.grid.render().el);
 
          //render paginator
          this.$el.find('#events-table').append(this.paginator.render().el);
@@ -120,6 +119,10 @@ define([
          }
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
+
+         if (this.gridPage && this.eventCollection.fullCollection.pageableCollection) {
+            this.eventCollection.fullCollection.pageableCollection.getPage(this.gridPage);
+         }
 
          return this;
       },

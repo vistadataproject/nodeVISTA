@@ -42,8 +42,6 @@
 
       this.listenTo(collection, "add", function (model, collection, options) {
         shadowCollection.add(model, options);
-
-        this.onChange();
       });
       this.listenTo(collection, "remove", function (model, collection, options) {
         shadowCollection.remove(model, options);
@@ -71,18 +69,13 @@
     currentValue: function() {
       return JSON.parse(this.$el.val());
     },
-    onChange: function(e) {
+    onChange: function(e, isAdd) {
       var col = this.collection.fullCollection || this.collection,
         field = this.field,
         value = this.currentValue(),
         matcher = _.bind(this.makeMatcher(value), this);
 
-      //if (col.pageableCollection) {
-      //  col.pageableCollection.getFirstPage({silent: true});
-      //}
-
       var page = col.pageableCollection.state.currentPage;
-
 
       if (value !== this.clearValue) {
         col.reset(this.shadowCollection.filter(matcher), {reindex: false});
@@ -91,7 +84,9 @@
         col.reset(this.shadowCollection.models, {reindex: false});
       }
 
-      col.pageableCollection.getPage(page);
+      if (isAdd) {
+        col.pageableCollection.getPage(page);
+      }
     }
   });
 }).call(this);
