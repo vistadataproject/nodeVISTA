@@ -99,6 +99,21 @@ define([
                   }
                })
             }, {
+               name: 'patient',
+               label: 'Patient',
+               editable: false,
+               cell: 'String',
+               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                  fromRaw: function (rawValue, model) {
+
+                     if (!rawValue) {
+                        return '';
+                     }
+
+                     return rawValue.label + ' (' + rawValue.id + ')';
+                  }
+               })
+            }, {
                name: 'facility',
                label: 'Facility',
                editable: false,

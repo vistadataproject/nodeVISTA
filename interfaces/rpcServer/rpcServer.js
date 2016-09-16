@@ -167,7 +167,7 @@ function handleConnection(conn) {
 
     function callRpcLockerOrRunner(rpcObject) {
         var rpcResult;
-        var transactionId;
+        var transactionId, patient;
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
         if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
             if (loggedIn) {
@@ -177,6 +177,10 @@ function handleConnection(conn) {
                 rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
 
                 transactionId = rpcResult.transactionId;
+
+                if (rpcResult.patient) {
+                    patient = rpcResult.patient;
+                }
 
                 LOGGER.info("RESULT FROM RpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
             } else {
@@ -229,7 +233,13 @@ function handleConnection(conn) {
         }
         response += '\u0004';
 
-        return {rpcResponse: response, transactionId: transactionId}
+        var ret = {rpcResponse: response, transactionId: transactionId};
+
+        if (patient) {
+            ret.patient = patient;
+        }
+
+        return ret;
     }
 
     function onConnectedClose() {
@@ -261,7 +271,7 @@ function handleConnection(conn) {
      */
     function callRPC(rpcObject, rpcPacket) {
         var response = '';
-        var transactionId;
+        var transactionId, patient; //patient is only returned by calls to rpcLocker
 
         if (unsupportedRPCs.has(rpcObject.name)) {
             // Check if it is a connection RPC, for now we will just catch these and return hard coded responses
@@ -299,6 +309,9 @@ function handleConnection(conn) {
                     var ret = callRpcLockerOrRunner(rpcObject);
                     response = ret.rpcResponse;
                     transactionId = ret.transactionId;
+                    if (ret.patient) {
+                        patient = ret.patient;
+                    }
 
                 }
             } else {
@@ -313,6 +326,9 @@ function handleConnection(conn) {
             var ret = callRpcLockerOrRunner(rpcObject);
             response = ret.rpcResponse;
             transactionId = ret.transactionId;
+            if (ret.patient) {
+                patient = ret.patient;
+            }
         }
 
         // log to capture file the RPC and the response to a file
@@ -340,6 +356,10 @@ function handleConnection(conn) {
                     id: '200-' + DUZ,
                     name: USER.name.value
                 }
+            }
+
+            if (patient) {
+                rpcCallEvent.patient = patient;
             }
 
             //include facility if available
