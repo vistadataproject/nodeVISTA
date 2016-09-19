@@ -343,6 +343,7 @@ function handleConnection(conn) {
             var rpcCallEvent = {
                 type: 'rpcCall',
                 transactionId: transactionId,
+                ipAddress: conn.remoteAddress,
                 timestamp: moment().format(DT_FORMAT) + 'Z',
                 runner: rpcObject.to,
                 rpcName: rpcObject.name,
