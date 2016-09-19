@@ -9,6 +9,7 @@ var lockedRPCs = new HashMap();
 
 //allergies
 lockedRPCs.set('ORQQAL DETAIL', rpcLAllergies);
+lockedRPCs.set('ORWDAL32 SAVE ALLERGY', rpcLAllergies);
 
 //problems
 lockedRPCs.set('ORQQPL ADD SAVE', rpcLProblems);
