@@ -271,7 +271,7 @@ function handleConnection(conn) {
      */
     function callRPC(rpcObject, rpcPacket) {
         var response = '';
-        var transactionId, patient; //patient is only returned by calls to rpcLocker
+        var transactionId;
 
         if (unsupportedRPCs.has(rpcObject.name)) {
             // Check if it is a connection RPC, for now we will just catch these and return hard coded responses
@@ -309,9 +309,6 @@ function handleConnection(conn) {
                     var ret = callRpcLockerOrRunner(rpcObject);
                     response = ret.rpcResponse;
                     transactionId = ret.transactionId;
-                    if (ret.patient) {
-                        patient = ret.patient;
-                    }
 
                 }
             } else {
@@ -326,9 +323,6 @@ function handleConnection(conn) {
             var ret = callRpcLockerOrRunner(rpcObject);
             response = ret.rpcResponse;
             transactionId = ret.transactionId;
-            if (ret.patient) {
-                patient = ret.patient;
-            }
         }
 
         // log to capture file the RPC and the response to a file
@@ -357,10 +351,6 @@ function handleConnection(conn) {
                     id: '200-' + DUZ,
                     name: USER.name.value
                 }
-            }
-
-            if (patient) {
-                rpcCallEvent.patient = patient;
             }
 
             //include facility if available
