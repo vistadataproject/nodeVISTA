@@ -12,8 +12,6 @@ var mvdmModel = require('../../../../../VDM/prototypes/problems/mvdmProblemsMode
 // model objects for map
 var problemModels = {rpcLModel: rpcLModel, vdmModel: vdmModel, mvdmModel: mvdmModel};
 
-var isSetup = false;
-
 function setup(db, DUZ, facilityId) {
     var user = '200-' + DUZ;
     var facility = '4-' + facilityId;
