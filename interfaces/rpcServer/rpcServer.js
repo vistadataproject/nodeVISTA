@@ -20,12 +20,10 @@ var nodem = require('nodem');
 var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 
 // imports for locked rpcs
-var lockedRPCs = require('./lockedRPCs.js');
 var RPCL = require('../../../VDM/prototypes/rpcL');
 var mvdmManagement = require('./mvdmManagement');
 var mvdmClient = require('./mvdmClient');
 var moment = require('moment');
-
 
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
@@ -179,7 +177,7 @@ function handleConnection(conn) {
         var rpcResult;
         var transactionId, patient;
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
-        if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
+        if (mvdmManagement.isMvdmLocked && rpcL.isRPCSupported(rpcObject.name)) {
             if (loggedIn) {
                 rpcObject.to = "mvdmLocked";
                 rpcResult = rpcL.run(rpcObject.name, rpcObject);
