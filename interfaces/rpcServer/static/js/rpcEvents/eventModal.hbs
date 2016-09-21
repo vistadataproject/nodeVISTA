@@ -34,6 +34,28 @@
                         </div>
                     </li>
                 </ul>
+                <ul class="list-inline">
+                    <li>
+                        <div>
+                            <strong>IP Adress:</strong>
+                            <span>{{event.ipAddress}}</span>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-inline">
+                    <li>
+                        <div>
+                            <strong>User:</strong>
+                            <span>{{event.user.name}} ({{event.user.id}})</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <strong>Facility:</strong>
+                            <span>{{event.facility.name}} ({{event.facility.id}} / {{event.facility.stationNumber}})</span>
+                        </div>
+                    </li>
+                </ul>
                 <pre><code>{{eventDetails}}</code></pre>
             </div>
             <div class="modal-footer">

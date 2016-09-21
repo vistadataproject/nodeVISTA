@@ -1,7 +1,8 @@
+#!/usr/bin/env node
+'use strict';
+
 var lockerModelUtils = re
 var lockedRPCs = require('./lockedRPCs.js');
-
-
 
 function callRpcL(messageObject) {
 

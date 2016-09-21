@@ -1,4 +1,5 @@
-'use strict'
+#!/usr/bin/env node
+'use strict';
 
 var bunyan = require('bunyan');
 var CONFIG = require('./cfg/config.js');

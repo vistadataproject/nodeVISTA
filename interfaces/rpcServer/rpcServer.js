@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 var net = require('net');
 var fs = require('fs');
 var util = require('util');
@@ -15,8 +18,10 @@ var uuid = require('uuid');
 // imports for RpcRunner
 var nodem = require('nodem');
 var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
+
 // imports for locked rpcs
 var lockedRPCs = require('./lockedRPCs.js');
+var RPCL = require('../../../VDM/prototypes/rpcL');
 var mvdmManagement = require('./mvdmManagement');
 var mvdmClient = require('./mvdmClient');
 var moment = require('moment');
@@ -24,7 +29,7 @@ var moment = require('moment');
 
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
-var db, rpcRunner;
+var db, rpcRunner, rpcL;
 var server;
 var DUZ = '';
 var facilityCode = '';
@@ -76,7 +81,7 @@ if (process.argv.length > 2) {
 process.on('uncaughtException', function(err) {
   db.close();
 
-  console.trace('Uncaught Exception:\n', err);
+  console.trace('Uncaught Exception:\n', err.stack);
 
   process.exit(1);
 });
@@ -94,6 +99,7 @@ function connectVistaDatabase() {
     db.open();
 
     rpcRunner = new RPCRunner(db);
+    rpcL = new RPCL(db);
 }
 
 function setUserAndFacilityCode(newDUZ, newFacilityCode) {
@@ -103,6 +109,10 @@ function setUserAndFacilityCode(newDUZ, newFacilityCode) {
     //needed for RPC event reporting
     USER = vdmUtils.userFromId(db, '200-' + DUZ);
     FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
+
+    if (facilityCode !== 'unk') { //unknown facility a result of a failed logon attempt
+        rpcL.setUserAndFacility('200-'+DUZ, '4-'+facilityCode);
+    }
 }
 
 
@@ -167,16 +177,18 @@ function handleConnection(conn) {
 
     function callRpcLockerOrRunner(rpcObject) {
         var rpcResult;
-        var transactionId;
+        var transactionId, patient;
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
         if (mvdmManagement.isMvdmLocked && lockedRPCs.has(rpcObject.name)) {
             if (loggedIn) {
-                var domainrpcL = lockedRPCs.get(rpcObject.name);
-                domainrpcL.setup(db, DUZ, facilityCode);
                 rpcObject.to = "mvdmLocked";
-                rpcResult = domainrpcL.rpcL.run(rpcObject.name, rpcObject);
+                rpcResult = rpcL.run(rpcObject.name, rpcObject);
 
                 transactionId = rpcResult.transactionId;
+
+                if (rpcResult.patient) {
+                    patient = rpcResult.patient;
+                }
 
                 LOGGER.info("RESULT FROM RpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
             } else {
@@ -229,12 +241,20 @@ function handleConnection(conn) {
         }
         response += '\u0004';
 
-        return {rpcResponse: response, transactionId: transactionId}
+        var ret = {rpcResponse: response, transactionId: transactionId};
+
+        if (patient) {
+            ret.patient = patient;
+        }
+
+        return ret;
     }
 
     function onConnectedClose() {
         rpcRunner.reinit();
         loggedIn = false;
+        USER = null;
+        FACILITY = null;
         LOGGER.info('CONNECTION from %s CLOSED', remoteAddress);
         conn.removeAllListeners();
         conn.end();
@@ -242,8 +262,9 @@ function handleConnection(conn) {
     }
 
     function onConnectedError(err) {
-        //rpcRunner.reinit();
         loggedIn = false;
+        USER = null;
+        FACILITY = null;
         LOGGER.error('CONNECTION %s ERROR: %s', remoteAddress, err.message);
         conn.removeAllListeners();
         conn.end();
@@ -327,6 +348,7 @@ function handleConnection(conn) {
             var rpcCallEvent = {
                 type: 'rpcCall',
                 transactionId: transactionId,
+                ipAddress: conn.remoteAddress,
                 timestamp: moment().format(DT_FORMAT) + 'Z',
                 runner: rpcObject.to,
                 rpcName: rpcObject.name,
