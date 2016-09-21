@@ -88,8 +88,8 @@ process.on('uncaughtException', function(err) {
   process.exit(1);
 });
 
-q.on('started', function() {
-    this.worker.module = __dirname + '/rpcWorker';
+processQueue.on('started', function() {
+    this.worker.module = __dirname + '/rpcQWorker';
 });
 
 processQueue.on('start', function() {
@@ -103,6 +103,10 @@ processQueue.on('started', function() {
 });
 
 processQueue.start();
+
+/** messageObject for processQueue expected elements:
+ * messageObject = { rpcObject, rpcL, rpcRunner
+ */
 
 function generateTransactionId() {
     return uuid.v4();
@@ -192,21 +196,24 @@ function handleConnection(conn) {
     }
 
     function callRpcLockerOrRunner(rpcObject) {
+        var self = this;
         var rpcResult;
         var transactionId, patient;
         // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
         if (mvdmManagement.isMvdmLocked && rpcL.isRPCSupported(rpcObject.name)) {
             if (loggedIn) {
                 rpcObject.to = "mvdmLocked";
-                rpcResult = rpcL.run(rpcObject.name, rpcObject);
+                //rpcResult = rpcL.run(rpcObject.name, rpcObject);
+                processQueue.handleMessage(messageObject, function(rpcResult) {
+                    self.rpcResult = rpcResult;
+                    transactionId = rpcResult.transactionId;
 
-                transactionId = rpcResult.transactionId;
+                    if (rpcResult.patient) {
+                        patient = rpcResult.patient;
+                    }
 
-                if (rpcResult.patient) {
-                    patient = rpcResult.patient;
-                }
-
-                LOGGER.info("RESULT FROM rpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
+                    LOGGER.info("RESULT FROM rpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
+                });
             } else {
                 LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
             }
@@ -217,29 +224,39 @@ function handleConnection(conn) {
 
             rpcObject.to = "rpcRunner";
 
-            try {
-                rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
+            //rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
+            var messageObject = {};
+            messageObject.rpcRunner = rpcRunner;
+            messageObject.rpcObject = rpcObject;
+
+            processQueue.handleMessage(messageObject, function(rpcResult) {
+                self.rpcResult = rpcResult;
                 LOGGER.info("RESULT FROM rpcRunner for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
-            } catch (err) {
-                LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message);
-                rpcResult = {"result": err.message};
-            }
 
-            if (rpcObject.name === 'XUS AV CODE') {
-                // check if it was a login attempt, if it was successful, set the DUZ and facility
-                // from a call to XUS GET USER INFO, and set the loggedIn state
-                if (rpcResult.result[0] === '0') {
-                    LOGGER.error('Authentication error on XUS AV CODE: %j', rpcResult);
-                } else {
-                    loggedIn = true;
+                if (rpcObject.name === 'XUS AV CODE') {
+                    // check if it was a login attempt, if it was successful, set the DUZ and facility
+                    // from a call to XUS GET USER INFO, and set the loggedIn state
+                    if (rpcResult.result[0] === '0') {
+                        LOGGER.error('Authentication error on XUS AV CODE: %j', rpcResult);
+                    } else {
+                        loggedIn = true;
 
-                    var userInfoResult = rpcRunner.run("XUS GET USER INFO").result;
-                    var facilityArray = userInfoResult[3].split("^");
+                        // var userInfoResult = rpcRunner.run("XUS GET USER INFO").result;
+                        var messageObject = {};
+                        messageObject.rpcRunner = rpcRunner;
+                        messageObject.rpcObject = {};
+                        messageObject.rpcObject.name = "XUS GET USER INFO";
+                        processQueue.handleMessage(messageObject, function(userInfoResult) {
+                            var facilityArray = userInfoResult[3].split("^");
 
-                    // TODO: validate that USER INFO is an array.
-                    setUserAndFacilityCode(userInfoResult[0], facilityArray[0]);
+                            // TODO: validate that USER INFO is an array.
+                            setUserAndFacilityCode(userInfoResult[0], facilityArray[0]);
+                        });
+                    }
                 }
-            }
+
+            });
+
 
         }
 
