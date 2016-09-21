@@ -6,7 +6,7 @@ var mvdmModelAllergy = require('../../../VDM/prototypes/allergies/mvdmAllergiesM
 var MVDM = require('../../../VDM/prototypes/mvdm');
 var testAllergies = require('../../../VDM/prototypes/allergies/vdmTestAllergies'); // want to use test allergies
 var allergyUtils = require("../../../VDM/prototypes/allergies/allergyUtils");
-var localRPCRunner = require('../../../VDM/prototypes/localRPCRunner');
+var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 var fmql = require('../../../VDM/prototypes/fmql');
 var vprE = require('../../../VDM/prototypes/vprEmulate/vprE');
 var vpr = require('../../../VDM/prototypes/vpr');
@@ -36,10 +36,13 @@ var rpcLProblemModel = require('../../../VDM/prototypes/problems/rpcLProblemMode
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
 var facilityCode = 2957;
 
+var rpcRunner = new RPCRunner(db);
+rpcRunner.setUserAndFacility(DUZ, facilityCode);
 
-var rpcL = require('../../../VDM/prototypes/rpcL');
-var rpcLAllergyMappings = require('../../../VDM/prototypes/allergies/rpcAllergiesLocker');
+var RPCL = require('../../../VDM/prototypes/rpcL');
 var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalLocker');
+
+var rpcL = new RPCL(db);
 
 function setModels(domain) {
     if (domain === 'allergy') {
@@ -49,7 +52,7 @@ function setModels(domain) {
         vprE.setVprMappings(vprAllergyEmulator, '1.05');
         // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
         // VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
-        rpcL.setRpcMappings(rpcLAllergyMappings);
+        rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
 
     } else if (domain === 'problem') {
         VDM.setDBAndModel(db, vdmModelProblem);
@@ -57,12 +60,6 @@ function setModels(domain) {
 
         MVDM.setModel(mvdmModelProblem);
         vprE.setVprMappings(vprProblemEmulator, '1.05');
-
-        rpcL.setDBAndModels(db, {
-            rpcLModel: rpcLProblemModel,
-            vdmModel: vdmModelProblem,
-            mvdmModel: mvdmModelProblem
-        });
 
         rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
 
@@ -133,7 +130,7 @@ function callRpc(messageObj) {
     if (rpcsLocked === 'off' || !rpcL.isRPCSupported(rpc)) {
         //run local rpc
         try {
-            var res = localRPCRunner.run(db, DUZ, rpc, rpcArgs);
+            var res = rpcRunner.run(rpc, rpcArgs);
             res = res.result.join('\n');
         } catch (exception) {
             console.log(exception);
@@ -143,7 +140,7 @@ function callRpc(messageObj) {
     } else {
         try {
 
-            if (domain === 'problem') {
+            if (domain !== 'vitals') {
                 var input = {
                     name: rpc,
                     args: []

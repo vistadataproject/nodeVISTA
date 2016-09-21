@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 var HashMap = require('hashmap');
 var CONFIG = require('./cfg/config.js');
 

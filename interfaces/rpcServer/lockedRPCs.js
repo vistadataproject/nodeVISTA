@@ -1,23 +1,30 @@
-var HashMap = require('hashmap');
+#!/usr/bin/env node
+'use strict';
 
-// RpcLDomain helper
-var rpcLAllergies = require('./rpcLDomains/allergies/rpcLAllergies.js');
-var rpcLProblems = require('./rpcLDomains/problems/rpcLProblems.js');
+var _ = require('underscore');
 
-// Add Supported emulated RPCs to a map
-var lockedRPCs = new HashMap();
+var lockedList = [
+   //allergies
+   'ORQQAL DETAIL',
+   'ORWDAL32 SAVE ALLERGY',
 
-//allergies
-lockedRPCs.set('ORQQAL DETAIL', rpcLAllergies);
-lockedRPCs.set('ORWDAL32 SAVE ALLERGY', rpcLAllergies);
+   //problems
+   'ORQQPL ADD SAVE',
+   'ORQQPL DETAIL',
+   'ORQQPL PROBLEM LIST',
+   'ORQQPL EDIT SAVE',
+   'ORQQPL UPDATE',
+   'ORQQPL DELETE',
+   'ORQQPL REPLACE'
+];
 
-//problems
-lockedRPCs.set('ORQQPL ADD SAVE', rpcLProblems);
-lockedRPCs.set('ORQQPL DETAIL', rpcLProblems);
-lockedRPCs.set('ORQQPL PROBLEM LIST', rpcLProblems);
-lockedRPCs.set('ORQQPL EDIT SAVE', rpcLProblems);
-lockedRPCs.set('ORQQPL UPDATE', rpcLProblems);
-lockedRPCs.set('ORQQPL DELETE', rpcLProblems);
-lockedRPCs.set('ORQQPL REPLACE', rpcLProblems);
+module.exports = function() {
 
-module.exports = lockedRPCs;
+   var sortedList = _.sortBy(lockedList);
+
+   return {
+      has: function(rpcName) {
+         return _.indexOf(sortedList, rpcName, true) > -1;
+      }
+   }
+}();
