@@ -15,6 +15,10 @@ var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 var EventManager = require('./eventManager');
 var uuid = require('uuid');
 
+// import for multiprocess management
+var qoper8 = require('ewd-qoper8');
+var processQueue = new qoper8.masterProcess();
+
 // imports for RpcRunner
 var nodem = require('nodem');
 var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
@@ -84,7 +88,21 @@ process.on('uncaughtException', function(err) {
   process.exit(1);
 });
 
-connectVistaDatabase();
+q.on('started', function() {
+    this.worker.module = __dirname + '/rpcWorker';
+});
+
+processQueue.on('start', function() {
+    this.setWorkerPoolSize(CONFIG.workerQ.size);
+
+});
+
+processQueue.on('started', function() {
+
+    connectVistaDatabase();
+});
+
+processQueue.start();
 
 function generateTransactionId() {
     return uuid.v4();
@@ -188,7 +206,7 @@ function handleConnection(conn) {
                     patient = rpcResult.patient;
                 }
 
-                LOGGER.info("RESULT FROM RpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
+                LOGGER.info("RESULT FROM rpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
             } else {
                 LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
             }
