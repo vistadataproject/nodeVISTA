@@ -16,11 +16,11 @@ config.FILE.options = {
 };
 config.FILE.defaultCaptureFile = './log/capture.txt';
 
-config.USER = {};
-config.USER.DUZ = 57;
-
-config.FACILITY = {};
-config.FACILITY.ID = 2957;
+//config.USER = {};
+//config.USER.DUZ = 60;
+//
+//config.FACILITY = {};
+//config.FACILITY.ID = 2957;
 
 // rpc server socket
 config.rpcServer = {};
@@ -28,11 +28,14 @@ config.rpcServer.port = 9010;
 
 // mvdm socket
 config.mvdmClient = {};
-config.mvdmClient.host = '10.2.2.100';
+config.mvdmClient.host = '10.2.100.110';
 config.mvdmClient.port = 9020;
 
 config.client = {};
 config.client.defaultName = "CPRS";
+
+config.workerQ = {}
+config.workerQ.size = 1;
 
 try {
     module.exports = config;

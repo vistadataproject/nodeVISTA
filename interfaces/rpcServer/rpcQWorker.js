@@ -2,10 +2,12 @@
 'use strict';
 
 var LOGGER = require('./logger.js');
+var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 var EventManager = require('./eventManager');
-var HashMap = require('hashmap');
+var parser = require('./../rpcParser/rpcParser.js');
 
+var HashMap = require('hashmap');
 var uuid = require('uuid');
 var $ = require('jquery');
 
@@ -27,7 +29,8 @@ var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
 var USER, FACILITY;
 var loggedIn = false;
 
-
+var fromName = CONFIG.client.defaultName;
+var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
@@ -72,9 +75,11 @@ function setUserAndFacilityCode(newDUZ, newFacilityCode) {
  * @param rpcPacket the raw rpc string
  * @returns {string} the response from the rpcLocker or rpcRunner (enveloped in \u0000\u0000 and \u0004)
  */
-function callRPC(rpcObject, rpcPacket) {
+function callRPC(rpcPacket) {
     var response = '';
     var transactionId;
+
+    var rpcObject = parser.parseRawRPC(rpcPacket);
 
     if (unsupportedRPCs.has(rpcObject.name)) {
         // Check if it is a connection RPC, for now we will just catch these and return hard coded responses
@@ -140,7 +145,7 @@ function callRPC(rpcObject, rpcPacket) {
         var rpcCallEvent = {
             type: 'rpcCall',
             transactionId: transactionId,
-            ipAddress: conn.remoteAddress,
+            //ipAddress: conn.remoteAddress,
             timestamp: moment().format(DT_FORMAT) + 'Z',
             runner: rpcObject.to,
             rpcName: rpcObject.name,
@@ -167,10 +172,9 @@ function callRPC(rpcObject, rpcPacket) {
 
         EventManager.emit('rpcCall', rpcCallEvent);
     }
-    // write out the rpc to a capture log
-    captureFile.write(JSON.stringify(rpcObject, null, 2) + ",\n");
 
-    return response;
+
+    return {"rpcObject": rpcObject, "response": response};
 
 }
 
@@ -296,7 +300,11 @@ module.exports = function() {
     this.on('message', function(messageObj, send, finished) {
         var res;
         if (messageObj.method === 'callRPC') {
-            res = callRPC(messageObj.rpcObject, messageObj.rpcPacket);
+            LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
+
+            res = callRPC(messageObj.rpcPacket);
+
+            LOGGER.debug('rpcQWorker: in on(\'message\') res = %j', res);
         }
         finished(res);
     });

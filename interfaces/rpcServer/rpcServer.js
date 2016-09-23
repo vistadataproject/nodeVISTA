@@ -5,7 +5,6 @@ var net = require('net');
 var fs = require('fs');
 var util = require('util');
 var _ = require('underscore');
-var parser = require('./../rpcParser/rpcParser.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
 
@@ -106,7 +105,7 @@ function handleConnection(conn) {
 
             // process the packet
             LOGGER.info('RECEIVED RPC from %s: %s', remoteAddress, data);
-            var rpcObject = parser.parseRawRPC(rpcPacket);
+
 
             //response = callRPC(rpcObject, rpcPacket);
             //
@@ -117,12 +116,16 @@ function handleConnection(conn) {
             //conn.write(responseBuffer);
 
             var messageObject = {};
-            messageObject.rpcObject = rpcObject;
+            messageObject.method = 'callRPC';
             messageObject.rpcPacket = rpcPacket;
-            processQueue.handleMessage(messageObject, function(response) {
+            processQueue.handleMessage(messageObject, null, function(responseObject) {
+                LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
+                // write out the rpc to a capture log
+                captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
+
                 // write the response back to the client
-                LOGGER.info("SENDING RESPONSE to client: " + response);
-                var responseBuffer = new Buffer(response, 'binary');
+                LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
+                var responseBuffer = new Buffer(responseObject.message.response, 'binary');
 
                 conn.write(responseBuffer);
             });
