@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title text-uppercase"></h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body rpc-events">
                 <ul class="list-inline">
                     <li>
                         <div>
@@ -37,26 +37,37 @@
                 <ul class="list-inline">
                     <li>
                         <div>
-                            <strong>IP Adress:</strong>
+                            <strong>IP Address:</strong>
                             <span>{{event.ipAddress}}</span>
                         </div>
                     </li>
                 </ul>
                 <ul class="list-inline">
+                    {{#if event.user}}
                     <li>
                         <div>
                             <strong>User:</strong>
                             <span>{{event.user.name}} ({{event.user.id}})</span>
                         </div>
                     </li>
+                    {{/if}}
+                    {{#if event.facility}}
                     <li>
                         <div>
                             <strong>Facility:</strong>
                             <span>{{event.facility.name}} ({{event.facility.id}} / {{event.facility.stationNumber}})</span>
                         </div>
                     </li>
+                    {{/if}}
                 </ul>
-                <pre><code>{{eventDetails}}</code></pre>
+                <div>
+                    <strong>Request</strong>
+                    <pre><code>{{jsBeautify event.request}}</code></pre>
+                </div>
+                <div>
+                    <strong>Response</strong>
+                    <pre><code>{{event.response}}</code></pre>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

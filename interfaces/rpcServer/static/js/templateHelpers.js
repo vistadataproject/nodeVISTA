@@ -1,7 +1,8 @@
 /*global define*/
 define([
-   'handlebars'
-], function (Handlebars) {
+   'handlebars',
+   'jsBeautify'
+], function (Handlebars, jsBeautify) {
    'use strict';
 
    Handlebars.registerHelper('mvdm-lock-select', function(management) {
@@ -36,5 +37,9 @@ define([
       } else if (event.runner === 'server') {
          return 'Server';
       } else return event.runner;
+   });
+
+   Handlebars.registerHelper('jsBeautify', function(obj) {
+      return jsBeautify.js_beautify(JSON.stringify(obj));
    });
 });

@@ -68,7 +68,11 @@ nav {
 }
 
 .modal-body pre {
-    height: 600px;
+    max-height: 600px;
+}
+
+.rpc-events.modal-body pre {
+    max-height: 400px;
 }
 
 .backgrid .moment-cell,
