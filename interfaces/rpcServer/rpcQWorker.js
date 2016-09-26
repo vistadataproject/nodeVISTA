@@ -19,7 +19,6 @@ var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 // imports for locked rpcs
 var RPCL = require('../../../VDM/prototypes/rpcL');
 var mvdmManagement = require('./mvdmManagement');
-var moment = require('moment');
 
 var db, rpcRunner, rpcL;
 var DUZ = '';
@@ -30,7 +29,6 @@ var USER, FACILITY;
 var loggedIn = false;
 
 var fromName = CONFIG.client.defaultName;
-var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
 process.on('uncaughtException', function(err) {
     db.close();
@@ -112,11 +110,12 @@ function callRPC(messageObject, send) {
             type: 'rpcCall',
             transactionId: transactionId,
             ipAddress: messageObject.ipAddress,
-            timestamp: moment().format(DT_FORMAT) + 'Z',
+            timestamp: rpcObject.timeStamp,
             runner: rpcObject.to,
             rpcName: rpcObject.name,
             rpcObject: rpcObject,
-            response: response
+            request: {args: rpcObject.args},
+            response: rpcObject.response
         };
 
         //include user if available
