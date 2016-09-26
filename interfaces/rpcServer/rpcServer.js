@@ -73,7 +73,6 @@ captureFile.on("open", function (fd) {
         LOGGER.info('RPCServer listening to %j', server.address());
 
         //start up mvdm client
-        console.log("\n\nInit mvdmClient");
         mvdmClient.init();
     });
 });

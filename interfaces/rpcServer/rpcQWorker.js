@@ -45,14 +45,6 @@ function connectVistaDatabase() {
     db = new nodem.Gtm();
     db.open();
 
-    process.on('uncaughtException', function(err) {
-        db.close();
-
-        console.trace('Uncaught Exception:\n', err.stack);
-
-        process.exit(1);
-    });
-
     rpcRunner = new RPCRunner(db);
     rpcL = new RPCL(db);
 }
@@ -147,6 +139,7 @@ function callRPC(messageObject, send) {
         var qMessage = {};
         qMessage.type = 'emitEvent';
         qMessage.event = rpcCallEvent;
+        // send the rpc emit event back to the worker queue server.
         send(qMessage);
     }
 
@@ -250,12 +243,12 @@ module.exports = function() {
 
             finished(res);
         } else if (messageObj.method === 'dbReinit') {
+            // if the connection to the server is disconnected it will send a reinit for the rpcRunner
             if (rpcRunner !== undefined) {
                 rpcRunner.reinit();
             }
             finished();
         }
-
 
     });
 
