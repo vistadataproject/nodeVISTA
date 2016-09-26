@@ -9,6 +9,7 @@ var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
 
 var mvdmClient = require('./mvdmClient');
+var EventManager = require('./eventManager');
 
 // import for multiprocess management
 var qoper8 = require('ewd-qoper8');
@@ -72,6 +73,7 @@ captureFile.on("open", function (fd) {
         LOGGER.info('RPCServer listening to %j', server.address());
 
         //start up mvdm client
+        console.log("\n\nInit mvdmClient");
         mvdmClient.init();
     });
 });
@@ -121,6 +123,10 @@ function handleConnection(conn) {
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
 
+                if (!responseObject.finished && responseObject.message.type === 'emitEvent') {
+                    EventManager.emit('rpcCall', responseObject.message.event);
+                }
+
                 if (responseObject.finished && responseObject.message.type === 'rpcResponse') {
                     // write out the rpc to a capture log
                     captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
@@ -138,7 +144,15 @@ function handleConnection(conn) {
 
 
     function onConnectedClose() {
-        //rpcRunner.reinit();
+
+        var messageObject = {};
+        messageObject.method = 'dbReinit';
+        processQueue.handleMessage(messageObject, function(responseObject) {
+            LOGGER.debug("in rpcServer onConnectedClose after reinit");
+
+        });
+
+
         //loggedIn = false;
         //USER = null;
         //FACILITY = null;

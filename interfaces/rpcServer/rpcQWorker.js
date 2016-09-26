@@ -4,7 +4,7 @@
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
-var EventManager = require('./eventManager');
+
 var parser = require('./../rpcParser/rpcParser.js');
 
 var uuid = require('uuid');
@@ -83,7 +83,7 @@ function setUserAndFacilityCode(newDUZ, newFacilityCode) {
  * @param rpcPacket the raw rpc string
  * @returns {string} the response from the rpcLocker or rpcRunner (enveloped in \u0000\u0000 and \u0004)
  */
-function callRPC(rpcPacket) {
+function callRPC(rpcPacket, send) {
     var response = '';
     var transactionId;
 
@@ -143,7 +143,13 @@ function callRPC(rpcPacket) {
             }
         }
 
-        EventManager.emit('rpcCall', rpcCallEvent);
+
+        console.log("\n\nin rpcQWorker emit rpcEvent")
+        //EventManager.emit('rpcCall', rpcCallEvent);
+        var res = {};
+        res.type = 'emitEvent';
+        res.event = rpcCallEvent;
+        send(res);
     }
 
 
@@ -272,13 +278,18 @@ module.exports = function() {
         if (messageObj.method === 'callRPC') {
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
-            var res = callRPC(messageObj.rpcPacket);
+            var res = callRPC(messageObj.rpcPacket, send);
 
             LOGGER.debug('rpcQWorker: in on(\'message\') res = %j', res);
 
             res.type = 'rpcResponse';
 
             finished(res);
+        } else if (messageObj.method === 'dbReinit') {
+            if (rpcRunner !== undefined) {
+                rpcRunner.reinit();
+            }
+            finished();
         }
 
 
