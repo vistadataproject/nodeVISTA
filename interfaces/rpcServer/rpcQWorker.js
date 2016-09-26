@@ -230,40 +230,6 @@ function callRpcLockerOrRunner(rpcObject) {
     return ret;
 }
 
-
-
-
-
-
-
-
-
-
-function callRpcL(messageObject) {
-    var rpcResult = messageObject.rpcL.run(messageObject.rpcObject.name, messageObject.rpcObject);
-    LOGGER.debug("rpcQWorker rpcL.run: %s, result: %j", messageObject.rpcObject.name, rpcResult);
-
-    return rpcResult;
-}
-
-
-function callRpcRunner(messageObject) {
-    var rpcResult = messageObject.rpcRunner.run(messageObject.rpcObject.name, messageObject.rpcObject.args);
-    LOGGER.debug("rpcQWorker rpcRunner.run: %s, result: %j", messageObject.rpcObject.name, rpcResult);
-
-
-    //try {
-    //    rpcResult = messageObject.runnerOrLocker.run(rpcObject.name, rpcObject.args);
-    //    LOGGER.info("RESULT FROM rpcRunner for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
-    //} catch (err) {
-    //    LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message);
-    //    rpcResult = {"result": err.message};
-    //}
-    //
-    return rpcResult;
-}
-
-
 connectVistaDatabase();
 
 module.exports = function() {
