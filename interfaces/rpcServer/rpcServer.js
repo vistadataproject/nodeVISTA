@@ -119,6 +119,7 @@ function handleConnection(conn) {
 
             var messageObject = {};
             messageObject.method = 'callRPC';
+            messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);

@@ -83,9 +83,10 @@ function setUserAndFacilityCode(newDUZ, newFacilityCode) {
  * @param rpcPacket the raw rpc string
  * @returns {string} the response from the rpcLocker or rpcRunner (enveloped in \u0000\u0000 and \u0004)
  */
-function callRPC(rpcPacket, send) {
+function callRPC(messageObject, send) {
     var response = '';
     var transactionId;
+    var rpcPacket = messageObject.rpcPacket;
 
     var rpcObject = parser.parseRawRPC(rpcPacket);
 
@@ -118,7 +119,7 @@ function callRPC(rpcPacket, send) {
         var rpcCallEvent = {
             type: 'rpcCall',
             transactionId: transactionId,
-            //ipAddress: conn.remoteAddress,
+            ipAddress: messageObject.ipAddress,
             timestamp: moment().format(DT_FORMAT) + 'Z',
             runner: rpcObject.to,
             rpcName: rpcObject.name,
@@ -143,13 +144,10 @@ function callRPC(rpcPacket, send) {
             }
         }
 
-
-        console.log("\n\nin rpcQWorker emit rpcEvent")
-        //EventManager.emit('rpcCall', rpcCallEvent);
-        var res = {};
-        res.type = 'emitEvent';
-        res.event = rpcCallEvent;
-        send(res);
+        var qMessage = {};
+        qMessage.type = 'emitEvent';
+        qMessage.event = rpcCallEvent;
+        send(qMessage);
     }
 
 
@@ -278,7 +276,7 @@ module.exports = function() {
         if (messageObj.method === 'callRPC') {
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
-            var res = callRPC(messageObj.rpcPacket, send);
+            var res = callRPC(messageObj, send);
 
             LOGGER.debug('rpcQWorker: in on(\'message\') res = %j', res);
 
