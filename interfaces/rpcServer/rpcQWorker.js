@@ -10,6 +10,7 @@ var parser = require('./../rpcParser/rpcParser.js');
 var HashMap = require('hashmap');
 var uuid = require('uuid');
 var $ = require('jquery');
+var _ = require('underscore');
 
 
 // imports for RpcRunner
@@ -31,6 +32,14 @@ var loggedIn = false;
 
 var fromName = CONFIG.client.defaultName;
 var DT_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+
+process.on('uncaughtException', function(err) {
+    db.close();
+
+    console.trace('Uncaught Exception:\n', err.stack);
+
+    process.exit(1);
+});
 
 function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
@@ -179,24 +188,22 @@ function callRPC(rpcPacket) {
 }
 
 function callRpcLockerOrRunner(rpcObject) {
-    var self = this;
+    LOGGER.debug('rpcQWorker:callRpcLockerOrRunner: %j', rpcObject);
+
     var rpcResult;
     var transactionId, patient;
     // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
     if (mvdmManagement.isMvdmLocked && rpcL.isRPCSupported(rpcObject.name)) {
         if (loggedIn) {
             rpcObject.to = "mvdmLocked";
-            //rpcResult = rpcL.run(rpcObject.name, rpcObject);
-            processQueue.handleMessage(messageObject, function(rpcResult) {
-                self.rpcResult = rpcResult;
-                transactionId = rpcResult.transactionId;
+            rpcResult = rpcL.run(rpcObject.name, rpcObject);
+            transactionId = rpcResult.transactionId;
 
-                if (rpcResult.patient) {
-                    patient = rpcResult.patient;
-                }
+            if (rpcResult.patient) {
+                patient = rpcResult.patient;
+            }
 
-                LOGGER.info("RESULT FROM rpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
-            });
+            LOGGER.info("RESULT FROM rpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
         } else {
             LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
         }
@@ -208,13 +215,13 @@ function callRpcLockerOrRunner(rpcObject) {
         rpcObject.to = "rpcRunner";
 
         try {
-            rpcResult = messageObject.runnerOrLocker.run(rpcObject.name, rpcObject.args);
+            rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
             LOGGER.info("RESULT FROM rpcRunner for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
         } catch (err) {
             LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message);
             rpcResult = {"result": err.message};
         }
-        if (rpcObject.name === 'XUS AV CODE' && $.isArray(rpcResult.result)) {
+        if (rpcObject.name === 'XUS AV CODE') {
             // check if it was a login attempt, if it was successful, set the DUZ and facility
             // from a call to XUS GET USER INFO, and set the loggedIn state
             if (rpcResult.result[0] === '0') {
@@ -298,18 +305,23 @@ module.exports = function() {
     });
 
     this.on('message', function(messageObj, send, finished) {
-        var res;
         if (messageObj.method === 'callRPC') {
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
-            res = callRPC(messageObj.rpcPacket);
+            var res = callRPC(messageObj.rpcPacket);
 
             LOGGER.debug('rpcQWorker: in on(\'message\') res = %j', res);
+
+            res.type = 'rpcResponse';
+
+            finished(res);
         }
-        finished(res);
+
+
     });
 
     this.on('stop', function() {
+        db.close();
         LOGGER.debug('Stopping rpcWorker process pid: %s ...', process.pid);
     });
 }

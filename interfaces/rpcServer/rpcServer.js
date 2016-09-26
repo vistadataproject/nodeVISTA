@@ -118,16 +118,19 @@ function handleConnection(conn) {
             var messageObject = {};
             messageObject.method = 'callRPC';
             messageObject.rpcPacket = rpcPacket;
-            processQueue.handleMessage(messageObject, null, function(responseObject) {
+            processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
-                // write out the rpc to a capture log
-                captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
 
-                // write the response back to the client
-                LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
-                var responseBuffer = new Buffer(responseObject.message.response, 'binary');
+                if (responseObject.finished && responseObject.message.type === 'rpcResponse') {
+                    // write out the rpc to a capture log
+                    captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
 
-                conn.write(responseBuffer);
+                    // write the response back to the client
+                    LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
+                    var responseBuffer = new Buffer(responseObject.message.response, 'binary');
+
+                    conn.write(responseBuffer);
+                }
             });
 
         }
