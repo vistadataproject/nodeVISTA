@@ -123,19 +123,25 @@ function handleConnection(conn) {
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
 
-                if (!responseObject.finished && responseObject.message.type === 'emitEvent') {
-                    EventManager.emit('rpcCall', responseObject.message.event);
-                }
+                if (!responseObject.finished) {
+                    // send() from worker handler
+                    if (responseObject.message.type === 'emitRpcEvent') {
+                        EventManager.emit('rpcCall', responseObject.message.event);
+                    } else if (responseObject.message.type === 'emitMvdmEvent') {
+                        EventManager.emit(responseObject.message.eventType, responseObject.message.event);
+                    }
+                } else {
+                    // finished() from worker handler
+                    if (responseObject.message.type === 'rpcResponse') {
+                        // write out the rpc to a capture log
+                        captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
 
-                if (responseObject.finished && responseObject.message.type === 'rpcResponse') {
-                    // write out the rpc to a capture log
-                    captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
+                        // write the response back to the client
+                        LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
+                        var responseBuffer = new Buffer(responseObject.message.response, 'binary');
 
-                    // write the response back to the client
-                    LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
-                    var responseBuffer = new Buffer(responseObject.message.response, 'binary');
-
-                    conn.write(responseBuffer);
+                        conn.write(responseBuffer);
+                    }
                 }
             });
 
