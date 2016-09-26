@@ -7,7 +7,6 @@ var unsupportedRPCs = require('./unsupportedRPCs.js');
 var EventManager = require('./eventManager');
 var parser = require('./../rpcParser/rpcParser.js');
 
-var HashMap = require('hashmap');
 var uuid = require('uuid');
 var $ = require('jquery');
 var _ = require('underscore');
@@ -95,45 +94,10 @@ function callRPC(rpcPacket) {
         // these can be found in unsupportedRpcs.js map.
 
         transactionId = generateTransactionId();
-
-        // check if the mapped value is a map for parameters or just a single response
-        if (unsupportedRPCs.get(rpcObject.name) instanceof HashMap && rpcObject.args !== undefined) {
-            LOGGER.debug('checking for unsupported RPC/param pairs');
-
-            var params = unsupportedRPCs.get(rpcObject.name).keys();
-            var paramKey;
-            // check if it is an unsupported rpc that depends on a parameter
-            for (var i = 0; i < params.length; i++) {
-                for (var j = 0; j < rpcObject.args.length; j++) {
-                    // check each argument if it contains the param
-                    if (typeof rpcObject.args[j] === 'string' && rpcObject.args[j].indexOf(params[i]) > -1) {
-                        paramKey = params[i];
-                        LOGGER.debug("found an unsupported RPC/arg pair: %s %s", rpcObject.name, paramKey);
-                        break;
-                    }
-                }
-                if (paramKey !== undefined) {
-                    break;
-                }
-            }
-            if (paramKey !== undefined) {
-                LOGGER.debug("unsupported RPC/param, returning server defined response");
-                response = unsupportedRPCs.get(rpcObject.name).get(paramKey);
-                rpcObject.to = "server";
-            } else {
-                // could not find a matching response, try calling the rpc locker or rpcRunner anyway
-                LOGGER.debug("no unsupported RPC/arg pair, calling RPC locker or rpcRunner");
-                var ret = callRpcLockerOrRunner(rpcObject);
-                response = ret.rpcResponse;
-                transactionId = ret.transactionId;
-
-            }
-        } else {
-            // the unsupported RPC response does not depend on the arguments, this is usually the simple case
-            LOGGER.debug("unsupported RPC, returning server defined response");
-            response = unsupportedRPCs.get(rpcObject.name);
-            rpcObject.to = "server";
-        }
+        // the unsupported RPC response does not depend on the arguments, this is usually the simple case
+        LOGGER.debug("unsupported RPC, returning server defined response");
+        response = unsupportedRPCs.get(rpcObject.name);
+        rpcObject.to = "server";
     } else {
         // These are normal RPCs that can go to either the locker or the runner.
         LOGGER.debug("calling RPC locker or runner");
