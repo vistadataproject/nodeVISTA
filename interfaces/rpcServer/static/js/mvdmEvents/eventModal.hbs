@@ -48,10 +48,12 @@
                         </div>
                     </li>
                     <li>
-                        <div>
-                            <strong>Patient:</strong>
-                            <span>{{event.patient.label}} ({{event.patient.id}})</span>
-                        </div>
+                        {{#if event.patient}}
+                            <div>
+                                <strong>Patient:</strong>
+                                <span>{{event.patient.label}} ({{event.patient.id}})</span>
+                            </div>
+                        {{/if}}
                     </li>
                 </ul>
                 <pre><code>{{eventDetails}}</code></pre>
