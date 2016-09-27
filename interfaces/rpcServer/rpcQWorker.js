@@ -28,6 +28,7 @@ var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
 var MVDM = require('../../../VDM/prototypes/mvdm');
 var USER, FACILITY;
 var loggedIn = false;
+var mvdmHandlersSet = false;
 
 var fromName = CONFIG.client.defaultName;
 
@@ -223,6 +224,68 @@ function callRpcLockerOrRunner(rpcObject) {
     return ret;
 }
 
+function setMvdmHandlers(send) {
+    // Setup MVDM event handlers for rpcServer to proxy
+    MVDM.on('create', function(mvdmData) {
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmCreate';
+        send(qMessage);
+    });
+
+    MVDM.on('describe', function(mvdmData) {
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmDescribe';
+        send(qMessage);
+    });
+
+    MVDM.on('list', function(mvdmData) {
+        console.log('\n\naaaaargghhh');
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmList';
+        send(qMessage);
+    });
+
+    MVDM.on('update', function(mvdmData) {
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmUpdate';
+        send(qMessage);
+    });
+
+    MVDM.on('remove',function(mvdmData) {
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmRemove';
+        send(qMessage);
+    });
+
+    MVDM.on('unremoved', function(mvdmData) {
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmUnremoved';
+        send(qMessage);
+    });
+
+    MVDM.on('delete', function(mvdmData) {
+        var qMessage = {};
+        qMessage.type = 'emitMvdmEvent';
+        qMessage.event = mvdmData;
+        qMessage.eventType = 'mvdmDelete';
+        send(qMessage);
+    });
+
+    mvdmHandlersSet = true;
+}
+
 connectVistaDatabase();
 
 module.exports = function() {
@@ -232,63 +295,10 @@ module.exports = function() {
     });
 
     this.on('message', function(messageObj, send, finished) {
-        // Setup MVDM event handlers for rpcServer to proxy
-        MVDM.on('create', function(mvdmData) {
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmCreate';
-            send(qMessage);
-        });
 
-        MVDM.on('describe', function(mvdmData) {
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmDescribe';
-            send(qMessage);
-        });
-
-        MVDM.on('list', function(mvdmData) {
-            console.log('\n\naaaaargghhh');
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmList';
-            send(qMessage);
-        });
-
-        MVDM.on('update', function(mvdmData) {
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmUpdate';
-            send(qMessage);
-        });
-
-        MVDM.on('remove',function(mvdmData) {
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmRemove';
-            send(qMessage);
-        });
-
-        MVDM.on('unremoved', function(mvdmData) {
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmUnremoved';
-            send(qMessage);
-        });
-
-        MVDM.on('delete', function(mvdmData) {
-            var qMessage = {};
-            qMessage.type = 'emitMvdmEvent';
-            qMessage.event = mvdmData;
-            qMessage.eventType = 'mvdmDelete';
-            send(qMessage);
-        });
+        if (!mvdmHandlersSet) {
+            setMvdmHandlers(send);
+        }
 
         // now check the message to setup callbacks to the rpcServer after running the rpc or other messages
         if (messageObj.method === 'callRPC') {
