@@ -13,6 +13,7 @@
     "bunyan": "latest",
     "express": "^4.14.0",
     "express-ws": "^2.0.0",
+    "ewd-qoper8": "3.4.0",
     "fs": "latest",
     "handlebars": "^4.0.5",
     "hashmap": "latest",
