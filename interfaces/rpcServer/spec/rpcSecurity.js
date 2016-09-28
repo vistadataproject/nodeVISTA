@@ -56,6 +56,9 @@ commandList.push(buildRpcCommand(logger, "XUS GET USER INFO", []));
 commandList.push(buildRpcCommand(logger, "XWB GET BROKER INFO", []));
 commandList.push(buildRpcCommand(logger, "XUS DIVISION GET", []));
 commandList.push(VistaJSLibrary.buildCreateContextCommand(logger, configuration));
+commandList.push(buildRpcCommand(logger, "ORWU UESRINFO", []));
+commandList.push(buildRpcCommand(logger, "XWB GET VARIABLE VALUE", [VistaJSLibrary.buildReferenceParamString("\"\"_$$GET^XPAR(\"SYS\",\"XU522\",1,\"Q\")")]));
+commandList.push(buildRpcCommand(logger, "XWB GET VARIABLE VALUE", [VistaJSLibrary.buildReferenceParamString("@\"^VA(200," + 60 + ",1)\"")]));
 //var commmandList = VistaJSLibrary.buildConnectionCommandList(logger, configuration);
 commandList.push(VistaJSLibrary.buildSignOffCommand(logger));
 
@@ -67,14 +70,14 @@ commandList.push(VistaJSLibrary.buildSignOffCommand(logger));
  *
  * to build rpcArgs for buildRpcCommand
  *   rpcArgs = [];
- *   literalParam = VistaJS.RpcParameter.literal(theLiteralString);
+ *   literalParam = VistaJSLibrary.buildLiteralParamString(theLiteralString);
  *   rpcArgs.push(literalParam);
  *
- *   referenceParam = VistaJS.RpcParameter.reference(theReferenceString);
+ *   referenceParam = VistaJSLibrary.buildReferenceParamString(theReferenceString);
  *   rpcArgs.push(referenceParam);
  *
- *   listObject = {key1: value1, key2: value2, key3: value3}
- *   listParam = VistaJS.RpcParameter.list(listObject);
+ *   listObject = [{key: "key1", value: "value1", {key: "key2", value: "value2"}, {key: "key3", value: "value3"}]
+ *   listParam = VistaJSLibrary.buildListParamString(listObject);
  *   rpcArgs.push(listParam);
  *
  *   for an encrypted literal parameter use VistaJSLibrary:
@@ -100,6 +103,29 @@ function buildRpcCommand(logger, rpc, rpcArgs) {
 
 }
 
+
+var client = new VistaJSLibrary.RpcClient(logger, configuration, commandList, function(error, result) {
+    //logger.debug('callRpc("%s") via Vista-RPC', rpc);
+
+    printJsonResult(error, result);
+
+    //callback(new Error('results were incomplete or undefined'));
+});
+
+client.start();
+
+
+commandList.length = 0;
+commandList.push(buildRpcCommand(logger, "XUS SIGNON SETUP", [VistaJSLibrary.buildLiteralParamString("-31^DVBA_^" + "000000112" + "^" + "ALEXANDER,ROBERT" + "^OSEHRA^111^11111^No phone")]));
+commandList.push(buildRpcCommand(logger, "XWB CREATE CONTEXT", [VistaJSLibrary.buildEncryptedParamString("DVBA CAPRI GUI")]));
+commandList.push(buildRpcCommand(logger, "XWB GET VARIABLE VALUE", [VistaJSLibrary.buildReferenceParamString("$O(^VA(200,\"SSN\",\"" + "000000112" + "\",0))")]));
+commandList.push(buildRpcCommand(logger, "XWB CREATE CONTEXT", [VistaJSLibrary.buildEncryptedParamString("VPR APPLICATION PROXY")]));
+var vprParams = [];
+vprParams.push(VistaJSLibrary.buildLiteralParamString("3"));
+vprParams.push(VistaJSLibrary.buildLiteralParamString("reactions"));
+vprParams.push(VistaJSLibrary.buildLiteralParamString("3160101"));
+vprParams.push(VistaJSLibrary.buildLiteralParamString("3160929"));
+commandList.push(buildRpcCommand(logger, "VPR GET PATIENT DATA", vprParams));
 
 var client = new VistaJSLibrary.RpcClient(logger, configuration, commandList, function(error, result) {
     //logger.debug('callRpc("%s") via Vista-RPC', rpc);
