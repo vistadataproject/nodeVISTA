@@ -32,7 +32,6 @@ var visitModel = require('../../../VDM/prototypes/visits/vdmVisitsModel').vdmMod
 var vdmModelAllergy = allergyModel.concat(documentModel, visitModel);
 var vdmModelProblem = require('../../../VDM/prototypes/problems/vdmProblemsModel').vdmModel;
 var vdmModelVitals = require('../../../VDM/prototypes/vitals/vdmVitalsModel').vdmModel;
-var rpcLProblemModel = require('../../../VDM/prototypes/problems/rpcLProblemModel').rpcLModel;
 var DUZ = 55; // Should match Robert Alexander used in JSON tests but may not.
 var facilityCode = 2957;
 
@@ -40,7 +39,6 @@ var rpcRunner = new RPCRunner(db);
 rpcRunner.setUserAndFacility(DUZ, facilityCode);
 
 var RPCL = require('../../../VDM/prototypes/rpcL');
-var rpcVitalEmulate = require('../../../VDM/prototypes/vitals/rpcVitalLocker');
 
 var rpcL = new RPCL(db);
 
@@ -68,7 +66,7 @@ function setModels(domain) {
         VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelVitals);
         vprE.setVprMappings(vprVitalsEmulator, '1.05');
-        rpcL.setRpcMappings(rpcVitalEmulate.rpcMappings);
+        rpcL.setUserAndFacility("200-55", "4-2957");
     }
 }
 
