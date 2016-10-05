@@ -13,11 +13,10 @@ var ENQ = '\u0005';
 
 var client = new net.Socket();
 client.on('error', function(error) {
-    console.log('ffff\n\n\n');
-    console.error(error);
+    console.log(error);
+    client.end();
 });
 client.on('connect', test1);
-//client.on('close', reconnectClient(test2));
 client.connect(CONFIG.rpcServer.port, CONFIG.rpcServer.host);
 
 function reconnectClient(testFunction) {
@@ -34,7 +33,7 @@ function test1() {
     sendRpc(client, VistaJSLibrary.buildRpcGreetingString(client.localAddress, 'testClient'))
     .then(function (response) {
         if (response === encapsulate('accept')) {
-            console.log('yay');
+            console.log('TCPConnect OK, trying XUS SIGNON SETUP');
 
             // build next rpc
             var rpcName = "XUS SIGNON SETUP";
@@ -43,12 +42,14 @@ function test1() {
 
             // send the rpc and wait on the promise of the response
             return sendRpc(client, rpc);
-        }
+        } else throwError('TCPConnect', response);
     })
     .then(function (response) {
         var signonSetupResponseArray = response.split("\r\n");
 
         if (signonSetupResponseArray.length > 8 && signonSetupResponseArray[5] == 1) {
+            console.log('XUS SIGNON SETUP OK, trying XWB CREATE CONTEXT');
+
             // build next rpc
             var rpcName = "XWB CREATE CONTEXT";
             var rpcArgs = [VistaJSLibrary.buildEncryptedParamString("DVBA CAPRI GUI")];
@@ -56,23 +57,30 @@ function test1() {
 
             // send the rpc and wait on the promise of the response
             return sendRpc(client, rpc);
-        }
+        } else throwError('XUS SIGNON SETUP', response);
     })
     .then(function (response) {
 
         if (response === encapsulate('1')) {
-            console.log('yip yip');
-        }
-        return sendRpc(client, VistaJSLibrary.buildRpcSignOffString());
+            console.log('XWB CREATE CONTEXT OK, trying #BYE#');
+
+            return sendRpc(client, VistaJSLibrary.buildRpcSignOffString());
+        } else throwError('XWB CREATE CONTEXT', response);
     })
     .then(function (response) {
         if (response === encapsulate('#BYE#')) {
-            console.log('yippee');
-
-            client.end();
-        }
+            console.log('#BYE#');
+        } else throwError('#BYE#', response);
+    })
+    .catch(function (error) {
+        console.log(error);
+        client.destroy();
     });
 
+}
+
+function throwError(rpcName, response) {
+    throw new Error(rpcName + " Error: " + response);
 }
 
 
@@ -120,4 +128,3 @@ function receiveData(data) {
     return recievedPacket;
 
 }
-
