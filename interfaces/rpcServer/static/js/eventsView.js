@@ -85,7 +85,6 @@ define([
        * @returns {EventsView}
        */
       render: function (templateOptions) {
-         console.log('calling events render');
          var templateArgs = {
             eventTableFilter: this.eventTableFilter
          };
