@@ -12,11 +12,12 @@ define([
    'text!rpcEvents/rpcEvents.hbs',
    'text!rpcEvents/eventModal.hbs',
    'eventBus',
+   'rpcRecord',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, Moment, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus) {
+], function ($, _, Backbone, Handlebars, Moment, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus, RPCRecord) {
    'use strict';
 
    /**
@@ -59,6 +60,8 @@ define([
                this.gridFilter.onChange(null, true);
             }
          });
+
+         this.rpcRecord = new RPCRecord();
 
          var formatAsHtml = function(rawValue, model) {
 
@@ -183,6 +186,12 @@ define([
             }]
          }]);
       },
+      events: {
+         'click .clear-events-list': 'onClearEventsList',
+         'click .rpc-record .start': 'onStartRecordRpcSession',
+         'click .rpc-record .stop': 'onStopRecordRpcSession',
+         'click .rpc-record .download': 'onDownloadRecordRpcSession'
+      },
       renderEventCounter: function() {
 
          this.$el.find('.event-count-total').html(EventCounter.get('total'));
@@ -201,6 +210,40 @@ define([
          });
 
          this.renderEventCounter();
+      },
+      hideAllRecordingControls: function() {
+         this.$el.find('.rpc-record .start').addClass('hidden');
+         this.$el.find('.rpc-record .stop').addClass('hidden');
+         this.$el.find('.rpc-record .download').addClass('hidden');
+      },
+      onStartRecordRpcSession: function(e) {
+         e.preventDefault();
+         this.rpcRecord.start();
+
+         this.hideAllRecordingControls();
+         this.$el.find('.rpc-record .stop').removeClass('hidden');
+      },
+      onStopRecordRpcSession: function(e) {
+         e.preventDefault();
+         this.rpcRecord.stop();
+
+         this.hideAllRecordingControls();
+         this.$el.find('.rpc-record .start').removeClass('hidden');
+         this.$el.find('.rpc-record .download').removeClass('hidden');
+      },
+      onDownloadRecordRpcSession: function(e) {
+         e.preventDefault();
+
+         var element = document.createElement('a');
+         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.rpcRecord.getSessionOutput()));
+         element.setAttribute('download', 'rpcSession.json');
+
+         element.style.display = 'none';
+         document.body.appendChild(element);
+
+         element.click();
+
+         document.body.removeChild(element);
       },
       onFilterChange: function(e) {
          AppState.set('rpcFilterInitialValue', e.currentTarget.value.replace(/"/g, "")); //remove double quotes

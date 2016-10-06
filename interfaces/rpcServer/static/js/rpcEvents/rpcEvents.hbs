@@ -2,33 +2,48 @@
     <div class="rpc-events submenu">
 
         <span class="glyphicon glyphicon-filter" alt="Emulated RPC filter label."></span>
+
         <div id="filter" class="rpc-event-select"></div>
 
         <a href="#" class="clear-events-list" title="Clear RPC Events List">
-            <span class="rpcEvents glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
         </a>
-        <span class="events-status">
-            <span>
-                <div class="submenu-label">Total:</div>
-                <span class="event-count-total"></span>
-            </span>
-            <span>
-                <div class="submenu-label">Total No Polling:</div>
-                <span class="event-count-total-no-poller"></span>
-            </span>
-            <span>
-                <div class="submenu-label">RPC Runner:</div>
-                <span class="event-count-rpc-runner"></span>
-            </span>
-            <span>
-                <div class="submenu-label">MVDM Locked:</div>
-                <span class="event-count-mvdm-locked"></span>
-            </span>
-            <span>
-                <div class="submenu-label">Server:</div>
-                <span class="event-count-server"></span>
-            </span>
+        <span class="rpc-record">
+            <a href="#" class="start" title="Start recording a RPC session">
+                <span class="glyphicon glyphicon-record" aria-hidden="true"></span>
+            </a>
+            <a href="#" class="stop hidden" title="Stop recording the RPC session">
+                <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                <span class="recording">Recording RPC session ...</span>
+            </a>
+            <a href="#" class="download hidden" title="Download the RPC session">
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+            </a>
         </span>
+        <div>
+            <span class="events-status">
+                <span>
+                    <div class="submenu-label">Total:</div>
+                    <span class="event-count-total"></span>
+                </span>
+                <span>
+                    <div class="submenu-label">Total No Polling:</div>
+                    <span class="event-count-total-no-poller"></span>
+                </span>
+                <span>
+                    <div class="submenu-label">RPC Runner:</div>
+                    <span class="event-count-rpc-runner"></span>
+                </span>
+                <span>
+                    <div class="submenu-label">MVDM Locked:</div>
+                    <span class="event-count-mvdm-locked"></span>
+                </span>
+                <span>
+                    <div class="submenu-label">Server:</div>
+                    <span class="event-count-server"></span>
+                </span>
+            </span>
+        </div>
     </div>
 
     <div id="events-table"></div>
