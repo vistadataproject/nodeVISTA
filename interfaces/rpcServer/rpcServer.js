@@ -9,6 +9,7 @@ var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
 
 var mvdmClient = require('./mvdmClient');
+var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 
 // import for multiprocess management
@@ -120,6 +121,7 @@ function handleConnection(conn) {
             messageObject.method = 'callRPC';
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
+            messageObject.isMvdmLocked = mvdmManagement.isMvdmLocked;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
 
