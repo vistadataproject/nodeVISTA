@@ -4,15 +4,15 @@ define([
    'backbone',
    'mvdmEvents/mvdmEventsView',
    'rpcEvents/rpcEventsView',
-   'management/managementView'
-], function ($, Backbone, MVDMEventsView, RPCEventsView, ManagementView) {
+   'management/managementView',
+   'eventBus',
+], function ($, Backbone, MVDMEventsView, RPCEventsView, ManagementView, EventBus) {
    'use strict';
 
    var AppRouter = Backbone.Router.extend({
 
       initialize: function(options){
          this.viewManager = options.viewManager;
-         this.eventListener = options.eventListener;
       },
 
       routes: {
@@ -23,16 +23,14 @@ define([
       },
       mvdmEvents: function() {
          this.mvdmEventsView = new MVDMEventsView({
-            eventListener: this.eventListener,
-            eventCollection: this.eventListener.getMvdmEventCollection()
+            eventCollection: EventBus.getMvdmEventCollection()
          });
          setActiveNavItem('mvdmEvents');
          this.viewManager.showView(this.mvdmEventsView);
       },
       rpcEvents: function() {
          this.rpcEventsView = new RPCEventsView({
-            eventListener: this.eventListener,
-            eventCollection: this.eventListener.getRpcEventCollection()
+            eventCollection: EventBus.getRpcEventCollection()
          });
          setActiveNavItem('rpcEvents');
          this.viewManager.showView(this.rpcEventsView);

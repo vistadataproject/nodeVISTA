@@ -99,10 +99,9 @@ require([
    'backbone',
    'app',
    'router',
-   'eventListener',
    'appState',
    'backgrid'
-], function ($, Backbone, AppView, Router, EventListener, AppState) {
+], function ($, Backbone, AppView, Router, AppState) {
    /*jshint nonew:false*/
 
    //manages cleaning up previous view and rendering a new view
@@ -131,7 +130,7 @@ require([
    };
 
    // Initialize routing and start Backbone.history()
-   new Router({viewManager: new ViewManager(), eventListener: new EventListener()});
+   new Router({viewManager: new ViewManager()});
    Backbone.history.start();
 
    // Initialize the application view

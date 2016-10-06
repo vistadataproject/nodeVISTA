@@ -12,7 +12,7 @@ define([
 ], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter) {
    'use strict';
 
-   var EventListener = function() {
+   var EventBus = function() {
 
       var self = this;
 
@@ -87,5 +87,5 @@ define([
       }
    };
 
-   return EventListener;
+   return new EventBus();
 });
