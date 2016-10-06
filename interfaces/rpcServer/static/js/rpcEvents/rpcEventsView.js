@@ -11,11 +11,12 @@ define([
    'appState',
    'text!rpcEvents/rpcEvents.hbs',
    'text!rpcEvents/eventModal.hbs',
+   'eventBus',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, Moment, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, Moment, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus) {
    'use strict';
 
    /**
@@ -49,7 +50,7 @@ define([
          this.eventCollection = new EventCollection();
          this.eventCollection.fullCollection.reset(options.eventCollection.models);
 
-         this.listenTo(options.eventListener, 'newRpcEvent', function(model) {
+         this.listenTo(EventBus, 'newRpcEvent', function(model) {
             this.renderEventCounter();
 
             this.eventCollection.fullCollection.unshift(model, {sort: false});

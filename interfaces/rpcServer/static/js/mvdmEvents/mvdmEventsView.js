@@ -11,11 +11,12 @@ define([
    'appState',
    'text!mvdmEvents/mvdmEvents.hbs',
    'text!mvdmEvents/eventModal.hbs',
+   'eventBus',
    'backgrid',
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, AppState, EventsTemplate, EventModalTemplate) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus) {
    'use strict';
 
    var MVDMEventsView = EventsParentView.extend({
@@ -31,7 +32,7 @@ define([
 
          this.management.fetch();
 
-         this.listenTo(options.eventListener, 'newMvdmEvent', function(model) {
+         this.listenTo(EventBus, 'newMvdmEvent', function(model) {
             this.renderEventCounter();
 
             this.eventCollection.fullCollection.unshift(model, {sort: false});

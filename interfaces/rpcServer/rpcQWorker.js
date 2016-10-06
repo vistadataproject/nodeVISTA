@@ -18,7 +18,7 @@ var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 
 // imports for locked rpcs
 var RPCL = require('../../../VDM/prototypes/rpcL');
-var mvdmManagement = require('./mvdmManagement');
+var isMvdmLocked = false;
 
 var db, rpcRunner, rpcL;
 var DUZ = '';
@@ -155,7 +155,7 @@ function callRpcLockerOrRunner(rpcObject) {
     var rpcResult;
     var transactionId, patient;
     // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
-    if (mvdmManagement.isMvdmLocked && rpcL.isRPCSupported(rpcObject.name)) {
+    if (isMvdmLocked && rpcL.isRPCSupported(rpcObject.name)) {
         if (loggedIn) {
             rpcObject.to = "mvdmLocked";
             rpcResult = rpcL.run(rpcObject.name, rpcObject);
@@ -302,6 +302,8 @@ module.exports = function() {
 
         // now check the message to setup callbacks to the rpcServer after running the rpc or other messages
         if (messageObj.method === 'callRPC') {
+            isMvdmLocked = messageObj.isMvdmLocked;
+
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
             var res = callRPC(messageObj, send);
