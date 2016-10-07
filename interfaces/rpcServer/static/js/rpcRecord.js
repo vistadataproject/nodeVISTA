@@ -29,6 +29,8 @@ define([
 
       this.start = function() {
          this.rpcSession = {
+            description: '', //placeholder
+            comment: '', //placeholder
             sequence: []
          };
 
