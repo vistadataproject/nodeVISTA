@@ -15,7 +15,7 @@ define([
          if (this.recordSession) {
             this.rpcSession.sequence.push(
                {
-                  rpcName: event.get('rpcName'),
+                  name: event.get('rpcName'),
                   args: event.get('request').args,
                   response: event.get('response'),
                   runner: event.get('runner'),
