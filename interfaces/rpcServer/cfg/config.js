@@ -24,6 +24,7 @@ config.FILE.defaultCaptureFile = './log/capture.txt';
 
 // rpc server socket
 config.rpcServer = {};
+config.rpcServer.host = '10.2.100.110';
 config.rpcServer.port = 9010;
 
 // mvdm socket
