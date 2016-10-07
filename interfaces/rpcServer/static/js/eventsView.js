@@ -35,7 +35,7 @@ define([
 
          this.management = new ManagementModel();
 
-         //update management icon
+         //update is mvdm locked icon
          this.listenTo(this.management, 'change', function() {
 
             this.$el.find('.glyphicon-ok-sign').addClass('hidden');
