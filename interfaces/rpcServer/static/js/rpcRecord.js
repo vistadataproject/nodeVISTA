@@ -13,7 +13,7 @@ define([
 
       this.listenTo(EventBus, 'newRpcEvent', function(event) {
          if (this.recordSession) {
-            this.rpcSession.push(
+            this.rpcSession.sequence.push(
                {
                   rpcName: event.get('rpcName'),
                   args: event.get('request').args,
@@ -28,7 +28,10 @@ define([
       });
 
       this.start = function() {
-         this.rpcSession = [];
+         this.rpcSession = {
+            sequence: []
+         };
+
          this.recordSession = true;
       };
 
