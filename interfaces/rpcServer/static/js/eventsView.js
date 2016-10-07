@@ -5,6 +5,7 @@ define([
    'backbone',
    'handlebars',
    'backgrid',
+   'management/managementModel',
    'jsBeautify',
    'config',
    'bootstrap',
@@ -14,7 +15,7 @@ define([
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, Backgrid, jsBeautify) {
+], function ($, _, Backbone, Handlebars, Backgrid, ManagementModel, jsBeautify) {
    'use strict';
 
    var EventsView = Backbone.View.extend({
@@ -31,6 +32,9 @@ define([
          this.eventModalTemplate = Handlebars.compile(options.eventModalTemplate);
 
          this.eventCollection = options.eventCollection;
+
+         this.management = new ManagementModel();
+         this.management.fetch();
 
          var eventsView = this;
 
@@ -85,8 +89,10 @@ define([
        * @returns {EventsView}
        */
       render: function (templateOptions) {
+
          var templateArgs = {
-            eventTableFilter: this.eventTableFilter
+            eventTableFilter: this.eventTableFilter,
+            management:this.management.toJSON()
          };
 
          if (templateOptions) {
@@ -116,12 +122,26 @@ define([
                }, this));
 
          }
+
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
 
          if (this.gridPage && this.eventCollection.fullCollection.pageableCollection) {
             this.eventCollection.fullCollection.pageableCollection.getPage(this.gridPage);
          }
+
+         //update management icon
+         this.listenTo(this.management, 'change', function() {
+
+            this.$el.find('.glyphicon-ok-sign').addClass('hidden');
+            this.$el.find('.glyphicon-remove-sign').addClass('hidden');
+
+            if (this.management.get('isMvdmLocked')) {
+               this.$el.find('.glyphicon-ok-sign').removeClass('hidden');
+            } else {
+               this.$el.find('.glyphicon-remove-sign').removeClass('hidden');
+            }
+         });
 
          return this;
       },
