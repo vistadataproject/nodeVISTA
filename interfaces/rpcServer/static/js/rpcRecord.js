@@ -18,6 +18,8 @@ define([
                   rpcName: event.get('rpcName'),
                   args: event.get('request').args,
                   response: event.get('response'),
+                  runner: event.get('runner'),
+                  from: event.get('rpcObject').from,
                   transactionId: event.get('transactionId'),
                   timestamp: event.get('timestamp')
                }
