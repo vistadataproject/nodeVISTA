@@ -43,6 +43,14 @@
                     <span class="event-count-server"></span>
                 </span>
             </span>
+            <span>
+                 <strong class="submenu-label">MVDM Lock: </strong>
+                {{#if management.isMvdmLocked}}
+                    <span class="glyphicon glyphicon-ok-sign" alt="MVDM Lock is on"></span>
+                {{else}}
+                    <span class="glyphicon glyphicon-remove-sign" alt="MVDM lock is off"></span>
+                {{/if}}
+            </span>
         </div>
     </div>
 
