@@ -2,7 +2,7 @@
 
 var net = require('net');
 var CONFIG = require('../cfg/config.js');
-var VistaJSLibrary = require('../../VistaJS/VistaJSLibrary.js');
+var rpcFormatter = require('../../rpcParser/rpcFormatter.js');
 
 var Promise = require('promise');
 
@@ -13,6 +13,7 @@ var ENQ = '\u0005';
 var NEW_LINE = '\r\n';
 
 var client = new net.Socket();
+var clientActive = false;
 client.on('error', function(error) {
     console.log(error);
     client.end();
@@ -21,14 +22,17 @@ client.on('connect', test1);
 client.connect(CONFIG.rpcServer.port, CONFIG.rpcServer.host);
 
 function reconnectClientForNewTest(client, testFunction) {
-    // setup for reconnect when
+    // end the current client
+    client.end();
+
+    // setup new client for reconnect
     client.on('close', function (){
+        var client = new net.Socket();
         client.on('connect', testFunction);
         client.connect(CONFIG.rpcServer.port, CONFIG.rpcServer.host);
     });
 
-    // end the current client
-    client.end();
+
 }
 
 function closeClient(client) {
@@ -42,15 +46,15 @@ var robertIEN = '58';
 
 
 function test1() {
-    sendRpc(client, VistaJSLibrary.buildRpcGreetingString(client.localAddress, 'testClient'))
+    sendRpc(client, rpcFormatter.buildRpcGreetingString(client.localAddress, 'testClient'))
     .then(function (response) {
-        if (response === encapsulate('accept')) {
+        if (response === rpcFormatter.encapsulate('accept')) {
             console.log('TCPConnect OK, trying XUS SIGNON SETUP');
 
             // build next rpc
             var rpcName = "XUS SIGNON SETUP";
-            var rpcArgs = [VistaJSLibrary.buildLiteralParamString("-31^DVBA_^" + robertSSN + "^" + robertName + "^OSEHRA^111^11111^No phone")];
-            var rpc = VistaJSLibrary.buildRpcString(rpcName, rpcArgs);
+            var rpcArgs = [rpcFormatter.buildLiteralParamString("-31^DVBA_^" + robertSSN + "^" + robertName + "^OSEHRA^111^11111^No phone")];
+            var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
 
             // send the rpc and wait on the promise of the response
             return sendRpc(client, rpc);
@@ -64,8 +68,8 @@ function test1() {
 
             // build next rpc
             var rpcName = "XWB CREATE CONTEXT";
-            var rpcArgs = [VistaJSLibrary.buildEncryptedParamString("DVBA CAPRI GUI")];
-            var rpc = VistaJSLibrary.buildRpcString(rpcName, rpcArgs);
+            var rpcArgs = [rpcFormatter.buildEncryptedParamString("DVBA CAPRI GUI")];
+            var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
 
             // send the rpc and wait on the promise of the response
             return sendRpc(client, rpc);
@@ -73,13 +77,13 @@ function test1() {
     })
         .then(function (response) {
 
-            if (response === encapsulate('1')) {
+            if (response === rpcFormatter.encapsulate('1')) {
                 console.log('XWB CREATE CONTEXT OK, trying XWB GET VARIABLE VALUE');
 
                 // build next rpc
                 var rpcName = "XWB GET VARIABLE VALUE";
-                var rpcArgs = [VistaJSLibrary.buildReferenceParamString("$O(^VA(200,\"SSN\",\"" + robertSSN + "\",0))")];
-                var rpc = VistaJSLibrary.buildRpcString(rpcName, rpcArgs);
+                var rpcArgs = [rpcFormatter.buildReferenceParamString("$O(^VA(200,\"SSN\",\"" + robertSSN + "\",0))")];
+                var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
 
                 // send the rpc and wait on the promise of the response
                 return sendRpc(client, rpc);
@@ -87,13 +91,13 @@ function test1() {
         })
         .then(function (response) {
 
-            if (stripMarkers(response) === robertIEN) {
+            if (rpcFormatter.stripMarkers(response) === robertIEN) {
                 console.log('XWB GET VARIABLE VALUE OK, trying XWB CREATE CONTEXT OR CPRS GUI CHART');
 
                 // build next rpc
                 var rpcName = "XWB CREATE CONTEXT";
-                var rpcArgs = [VistaJSLibrary.buildEncryptedParamString("OR CPRS GUI CHART")];
-                var rpc = VistaJSLibrary.buildRpcString(rpcName, rpcArgs);
+                var rpcArgs = [rpcFormatter.buildEncryptedParamString("OR CPRS GUI CHART")];
+                var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
 
                 // send the rpc and wait on the promise of the response
                 return sendRpc(client, rpc);
@@ -101,13 +105,13 @@ function test1() {
         })
     .then(function (response) {
 
-        if (response === encapsulate('1')) {
+        if (response === rpcFormatter.encapsulate('1')) {
             console.log('XWB CREATE CONTEXT OK, trying DG SENSITIVE RECORD ACCESS');
 
             // build next rpc
             var rpcName = "DG SENSITIVE RECORD ACCESS";
-            var rpcArgs = [VistaJSLibrary.buildLiteralParamString(robertIEN)];
-            var rpc = VistaJSLibrary.buildRpcString(rpcName, rpcArgs);
+            var rpcArgs = [rpcFormatter.buildLiteralParamString(robertIEN)];
+            var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
 
             // send the rpc and wait on the promise of the response
             return sendRpc(client, rpc);
@@ -115,16 +119,16 @@ function test1() {
     })
     .then(function (response) {
 
-        if (response === encapsulate('0\r\n')) {
+        if (response === rpcFormatter.encapsulate('0\r\n')) {
             console.log('DG SENSITIVE RECORD ACCESS OK, trying ORWPT LIST ALL');
 
             // build next rpc
             var rpcName = "ORWPT LIST ALL";
             var rpcArgs = [
-                VistaJSLibrary.buildLiteralParamString("CARTER,DAVIC~"),
-                VistaJSLibrary.buildLiteralParamString("1")
+                rpcFormatter.buildLiteralParamString("CARTER,DAVIC~"),
+                rpcFormatter.buildLiteralParamString("1")
             ];
-            var rpc = VistaJSLibrary.buildRpcString(rpcName, rpcArgs);
+            var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
 
             // send the rpc and wait on the promise of the response
             return sendRpc(client, rpc);
@@ -136,14 +140,15 @@ function test1() {
         if (orwptListAllArray.length > 0 && orwptListAllArray[0].match(/\^CARTER,DAVID/)) {
             console.log('ORWPT LIST ALL OK, trying #BYE#');
 
-            return sendRpc(client, VistaJSLibrary.buildRpcSignOffString());
+            return sendRpc(client, rpcFormatter.buildRpcSignOffString());
         } else throwError('ORWPT LIST ALL', response);
     })
     .then(function (response) {
-        if (response === encapsulate('#BYE#')) {
+        if (response === rpcFormatter.encapsulate('#BYE#')) {
             console.log('#BYE#');
+            //reconnectClientForNewTest(client, test2);
+            client.close();
         } else throwError('#BYE#', response);
-        closeClient(client);
     })
     .catch(function (error) {
         console.log(error);
@@ -152,22 +157,48 @@ function test1() {
 
 }
 
+function test2() {
+    var rpcName = "XUS GET USER INFO";
+    var rpc = rpcFormatter.buildRpcString(rpcName);
+
+    sendRpc(client, rpc)
+        .then(function (response) {
+            var responseArray = rpcFormatter.stripMarkers(response).split(NEW_LINE);
+
+            if (responseArray.length > 0 && responseArray[0] === robertIEN) {
+                console.log('XUS GET USER INFO OK, trying ORWPT LIST ALL');
+
+                var rpcName = "ORWPT LIST ALL";
+                var rpcArgs = [
+                    rpcFormatter.buildLiteralParamString("CARTER,DAVIC~"),
+                    rpcFormatter.buildLiteralParamString("1")
+                ];
+                var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
+
+                // send the rpc and wait on the promise of the response
+                return sendRpc(client, rpc);
+            } else throwError('XUS GET USER INFO', response);
+        })
+        .then(function (response) {
+            var orwptListAllArray = response.split(NEW_LINE);
+
+            if (orwptListAllArray.length > 0 && orwptListAllArray[0].match(/\^CARTER,DAVID/)) {
+                console.log('ORWPT LIST ALL OK, ending test\n\n');
+
+                closeClient(client);
+            } else throwError('ORWPT LIST ALL', response);
+        })
+        .catch(function (error) {
+            console.log(error);
+            closeClient(client);
+        });
+
+}
+
+
 function throwError(rpcName, response) {
     throw new Error(rpcName + " Error: " + response);
 }
-
-
-function encapsulate(str) {
-    return "\u0000\u0000" + str + "\u0004";
-}
-
-function stripMarkers(str) {
-    if (str.indexOf(NUL + NUL) === 0 && str.indexOf(EOT) == str.length - 1) {
-        return str.substring (2, str.length - 1);
-    }
-    return str;
-}
-
 
 function sendRpc(client, rpc) {
     chunk = '';
