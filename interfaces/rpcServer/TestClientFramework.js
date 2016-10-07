@@ -64,13 +64,20 @@ Clients.prototype = {
 
         return new Promise(function (fulfill, reject) {
 
-            self.clients[clientNum].on('data', function (data) {
-                fulfill(receiveData(self.chunks[clientNum], data));
-            });
-
-            self.clients[clientNum].on('error', function (error) {
+            function errorFunction(error) {
                 reject(error);
-            });
+            }
+
+            function dataFunction(data) {
+                // clean up the 'data' and 'error' listeners for the next step through
+                self.clients[clientNum].removeListener('data', dataFunction);
+                self.clients[clientNum].removeListener('error', errorFunction);
+
+                fulfill(receiveData(self.chunks[clientNum], data));
+            }
+
+            self.clients[clientNum].on('data', dataFunction);
+            self.clients[clientNum].on('error', errorFunction);
 
             var rpcBuffer = new Buffer(rpc, 'binary');
             self.clients[clientNum].write(rpcBuffer);
