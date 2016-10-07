@@ -34,6 +34,20 @@ define([
          this.eventCollection = options.eventCollection;
 
          this.management = new ManagementModel();
+
+         //update management icon
+         this.listenTo(this.management, 'change', function() {
+
+            this.$el.find('.glyphicon-ok-sign').addClass('hidden');
+            this.$el.find('.glyphicon-remove-sign').addClass('hidden');
+
+            if (this.management.get('isMvdmLocked')) {
+               this.$el.find('.glyphicon-ok-sign').removeClass('hidden');
+            } else {
+               this.$el.find('.glyphicon-remove-sign').removeClass('hidden');
+            }
+         });
+
          this.management.fetch();
 
          var eventsView = this;
@@ -129,19 +143,6 @@ define([
          if (this.gridPage && this.eventCollection.fullCollection.pageableCollection) {
             this.eventCollection.fullCollection.pageableCollection.getPage(this.gridPage);
          }
-
-         //update management icon
-         this.listenTo(this.management, 'change', function() {
-
-            this.$el.find('.glyphicon-ok-sign').addClass('hidden');
-            this.$el.find('.glyphicon-remove-sign').addClass('hidden');
-
-            if (this.management.get('isMvdmLocked')) {
-               this.$el.find('.glyphicon-ok-sign').removeClass('hidden');
-            } else {
-               this.$el.find('.glyphicon-remove-sign').removeClass('hidden');
-            }
-         });
 
          return this;
       },
