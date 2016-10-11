@@ -6,7 +6,6 @@ define([
    'handlebars',
    'eventsView',
    'mvdmEvents/eventCollection',
-   'management/managementModel',
    'mvdmEvents/eventCounterModel',
    'appState',
    'text!mvdmEvents/mvdmEvents.hbs',
@@ -16,7 +15,7 @@ define([
    'backgridCustomCells',
    'backgridSelectFilter',
    'backgridMomentCell'
-], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, ManagementModel, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus) {
+], function ($, _, Backbone, Handlebars, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus) {
    'use strict';
 
    var MVDMEventsView = EventsParentView.extend({
@@ -25,12 +24,6 @@ define([
 
          this.eventCollection = new EventCollection();
          this.eventCollection.fullCollection.reset(options.eventCollection.models);
-
-         this.management = new ManagementModel();
-
-         this.listenTo(this.management, 'change', this.render);
-
-         this.management.fetch();
 
          this.listenTo(EventBus, 'newMvdmEvent', function(model) {
             this.renderEventCounter();
@@ -126,15 +119,6 @@ define([
                })
             }]
          }]);
-      },
-      render: function () {
-
-         this.listenTo(this.management, 'change', function() {
-            //call parent render
-            MVDMEventsView.__super__.render.apply(this, [{
-               management:this.management.toJSON()
-            }]);
-         });
       },
       renderEventCounter: function() {
 

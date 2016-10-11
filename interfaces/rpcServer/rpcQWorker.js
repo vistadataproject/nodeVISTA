@@ -78,6 +78,7 @@ function setUserAndFacilityCode(newDUZ, newFacilityCode) {
 function callRPC(messageObject, send) {
     var response = '';
     var transactionId;
+    var runResult;
     var rpcPacket = messageObject.rpcPacket;
 
     var rpcObject = parser.parseRawRPC(rpcPacket);
@@ -95,8 +96,10 @@ function callRPC(messageObject, send) {
         // These are normal RPCs that can go to either the locker or the runner.
         LOGGER.debug("calling RPC locker or runner");
         var ret = callRpcLockerOrRunner(rpcObject);
+
         response = ret.rpcResponse;
         transactionId = ret.transactionId;
+        runResult = ret.runResult;
     }
 
     // log to capture file the RPC and the response to a file
@@ -114,6 +117,7 @@ function callRPC(messageObject, send) {
             ipAddress: messageObject.ipAddress,
             timestamp: rpcObject.timeStamp,
             runner: rpcObject.to,
+            runResult: runResult,
             rpcName: rpcObject.name,
             rpcObject: rpcObject,
             request: {args: rpcObject.args},
@@ -215,7 +219,7 @@ function callRpcLockerOrRunner(rpcObject) {
     }
     response += '\u0004';
 
-    var ret = {rpcResponse: response, transactionId: transactionId};
+    var ret = {rpcResponse: response, transactionId: transactionId, runResult: rpcResult.result};
 
     if (patient) {
         ret.patient = patient;

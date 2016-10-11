@@ -12,6 +12,10 @@ nav {
     display: inline-block;
 }
 
+.events a, u {
+    text-decoration: none;
+}
+
 .events .submenu .submenu-label {
     display: inline-block;
     margin:10px;
@@ -82,4 +86,28 @@ nav {
 
 .backgrid tr {
     cursor: pointer;
+}
+
+.rpc-record {
+    margin-left: 15px;
+}
+
+.rpc-record a {
+    margin-right: 15px;
+}
+
+.rpc-record .glyphicon-record {
+    color: #008000;
+}
+
+.rpc-record .glyphicon-stop {
+    color: #ff0000;
+}
+
+.rpc-record .glyphicon-download-alt {
+    color: #404040;
+}
+
+.rpc-record .recording {
+    color: #404040;
 }
