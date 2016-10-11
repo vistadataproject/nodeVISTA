@@ -84,10 +84,14 @@ Clients.prototype = {
         });
     },
 
-    start: function() {
+    startAllClients: function() {
         for (var i = 0; i < this.clients.length; i++) {
             this.clients[i].connect(this.serverPort, this.serverHost);
         }
+    },
+
+    startClient: function(clientNum) {
+        this.clients[clientNum].connect(this.serverPort, this.serverHost);
     },
 
     setClientTest: function(clientNum, testFunction) {

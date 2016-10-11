@@ -300,6 +300,6 @@ function success(testName) {
 
 Clients.setClientTest(0, test1);
 //Clients.setClientTest(1, test2);
-Clients.start();
+Clients.startAllClients();
 
 
