@@ -137,17 +137,10 @@ function callRpc(messageObj) {
         res = '<pre>' + res + '</pre>';
     } else {
         try {
-
-            if (domain !== 'vitals') {
-                var input = {
-                    name: rpc,
-                    args: []
-                };
-                _.forEach(rpcArgs, function(arg) {
-                    input.args.push(arg)
-                });
-                rpcArgs = input;
-            }
+            rpcArgs = [];
+            _.forEach(rpcArgs, function(arg) {
+                rpcArgs.push(arg)
+            });
 
             var res = rpcL.run(rpc, rpcArgs);
             if (res.result) {
