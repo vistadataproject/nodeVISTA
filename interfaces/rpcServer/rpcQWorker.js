@@ -12,22 +12,18 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 
-// imports for RpcRunner
+// imports for RPCService
 var nodem = require('nodem');
-var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
-
-// imports for locked rpcs
-var RPCL = require('../../../VDM/prototypes/rpcL');
+var RPCFacade = require('../../../VDM/prototypes/rpcFacade');
 var isMvdmLocked = false;
 
-var db, rpcRunner, rpcL;
+var db, rpcFacade;
 var DUZ = '';
 var facilityCode = '';
 //need for user and facility lookup
 var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
 var MVDM = require('../../../VDM/prototypes/mvdm');
 var USER, FACILITY;
-var loggedIn = false;
 var mvdmHandlersSet = false;
 
 var fromName = CONFIG.client.defaultName;
@@ -45,8 +41,7 @@ function connectVistaDatabase() {
     db = new nodem.Gtm();
     db.open();
 
-    rpcRunner = new RPCRunner(db);
-    rpcL = new RPCL(db);
+    rpcFacade = new RPCFacade(db);
 }
 
 function generateTransactionId() {
@@ -62,18 +57,18 @@ function setUserAndFacilityCode(newDUZ, newFacilityCode) {
     FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
 
     if (facilityCode !== 'unk') { //unknown facility a result of a failed logon attempt
-        rpcL.setUserAndFacility('200-'+DUZ, '4-'+facilityCode);
+        rpcFacade.setUserAndFacility(DUZ, facilityCode);
     }
 }
 
 /**
  * This takes the object (rpcObject) from the parsed RPC string (rpcPacket) and passes it
- * to either the rpcLocker or rpcRunner. For connection type commands such as TCPConnect and #BYE#,
+ * to the rpcService. For connection type commands such as TCPConnect and #BYE#,
  * the server will send a fixed response instead of calling the RPC Locker or RPC Runner.
  *
  * @param rpcObject js object returned from rpc parser
  * @param rpcPacket the raw rpc string
- * @returns {string} the response from the rpcLocker or rpcRunner (enveloped in \u0000\u0000 and \u0004)
+ * @returns {string} the response from the rpcService (enveloped in \u0000\u0000 and \u0004)
  */
 function callRPC(messageObject, send) {
     var response = '';
@@ -94,9 +89,10 @@ function callRPC(messageObject, send) {
         rpcObject.to = "server";
     } else {
         // These are normal RPCs that can go to either the locker or the runner.
-        LOGGER.debug("calling RPC locker or runner");
-        var ret = callRpcLockerOrRunner(rpcObject);
+        LOGGER.debug("calling RPC service");
+        var ret = rpcFacade.run(rpcObject.name, rpcObject.args, isMvdmLocked);
 
+        rpcObject.to = ret.path;
         response = ret.rpcResponse;
         transactionId = ret.transactionId;
         runResult = ret.runResult;
@@ -151,81 +147,6 @@ function callRPC(messageObject, send) {
 
     return {"rpcObject": rpcObject, "response": response};
 
-}
-
-function callRpcLockerOrRunner(rpcObject) {
-    LOGGER.debug('rpcQWorker:callRpcLockerOrRunner: %j', rpcObject);
-
-    var rpcResult;
-    var transactionId, patient;
-    // It isn't one that needs to be squashed so we call either rpc locker or localRpcRunner
-    if (isMvdmLocked && rpcL.isRPCSupported(rpcObject.name)) {
-        if (loggedIn) {
-            rpcObject.to = "mvdmLocked";
-            rpcResult = rpcL.run(rpcObject.name, rpcObject);
-            transactionId = rpcResult.transactionId;
-
-            if (rpcResult.patient) {
-                patient = rpcResult.patient;
-            }
-
-            LOGGER.info("RESULT FROM rpcL for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
-        } else {
-            LOGGER.info('NOT LOGGED IN, dropping RPC call: %s', rpcObject.name);
-        }
-    } else {
-        //rpcObject.args = parser.inputParametersToArgs(rpcObject.inputParameters);
-
-        transactionId = generateTransactionId();
-
-        rpcObject.to = "rpcRunner";
-
-        try {
-            rpcResult = rpcRunner.run(rpcObject.name, rpcObject.args);
-            LOGGER.info("RESULT FROM rpcRunner for RPC: %s, transactionId: %s, result: %j", rpcObject.name, transactionId, rpcResult);
-        } catch (err) {
-            LOGGER.error("Error thrown from rpcRunner.run() in rpcServer:  %s", err.message);
-            rpcResult = {"result": err.message};
-        }
-        if (rpcObject.name === 'XUS AV CODE') {
-            // check if it was a login attempt, if it was successful, set the DUZ and facility
-            // from a call to XUS GET USER INFO, and set the loggedIn state
-            if (rpcResult.result[0] === '0') {
-                LOGGER.error('Authentication error on XUS AV CODE: %j', rpcResult);
-            } else {
-                loggedIn = true;
-
-                var userInfoResult = rpcRunner.run("XUS GET USER INFO").result;
-                var facilityArray = userInfoResult[3].split("^");
-
-                // TODO: validate that USER INFO is an array.
-                setUserAndFacilityCode(userInfoResult[0], facilityArray[0]);
-            }
-        }
-
-    }
-
-    var response = '\u0000\u0000';
-    if (rpcResult && rpcResult.result !== undefined) {
-        if (_.isArray(rpcResult.result)) {
-            // in rpcRunner the ARRAY, WORD PROCESSING, and GLOBAL ARRAY returns an array as the replyType
-            for (var i = 0; i < rpcResult.result.length; i++) {
-                response += rpcResult.result[i] + '\r\n';
-            }
-        } else {
-            // the SINGLE VALUE replyType is not an array
-            response += rpcResult.result;
-        }
-    }
-    response += '\u0004';
-
-    var ret = {rpcResponse: response, transactionId: transactionId, runResult: rpcResult.result};
-
-    if (patient) {
-        ret.patient = patient;
-    }
-
-    return ret;
 }
 
 function setMvdmHandlers(send) {
@@ -318,9 +239,9 @@ module.exports = function() {
 
             finished(res);
         } else if (messageObj.method === 'dbReinit') {
-            // if the connection to the server is disconnected it will send a reinit for the rpcRunner
-            if (rpcRunner !== undefined) {
-                rpcRunner.reinit();
+            // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcFacade)
+            if (rpcFacade !== undefined) {
+                rpcFacade.reinit();
             }
             finished();
         }
