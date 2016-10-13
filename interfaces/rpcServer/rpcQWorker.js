@@ -23,7 +23,6 @@ var facilityCode = '';
 //need for user and facility lookup
 var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
 var MVDM = require('../../../VDM/prototypes/mvdm');
-var USER, FACILITY;
 var mvdmHandlersSet = false;
 
 var fromName = CONFIG.client.defaultName;
@@ -48,18 +47,18 @@ function generateTransactionId() {
     return uuid.v4();
 }
 
-function setUserAndFacilityCode(newDUZ, newFacilityCode) {
-    DUZ = newDUZ;
-    facilityCode = newFacilityCode;
-
-    //needed for RPC event reporting
-    USER = vdmUtils.userFromId(db, '200-' + DUZ);
-    FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
-
-    if (facilityCode !== 'unk') { //unknown facility a result of a failed logon attempt
-        rpcFacade.setUserAndFacility(DUZ, facilityCode);
-    }
-}
+//function setUserAndFacilityCode(newDUZ, newFacilityCode) {
+//    DUZ = newDUZ;
+//    facilityCode = newFacilityCode;
+//
+//    //needed for RPC event reporting
+//    USER = vdmUtils.userFromId(db, '200-' + DUZ);
+//    FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
+//
+//    if (facilityCode !== 'unk') { //unknown facility a result of a failed logon attempt
+//        rpcFacade.setUserAndFacility(DUZ, facilityCode);
+//    }
+//}
 
 /**
  * This takes the object (rpcObject) from the parsed RPC string (rpcPacket) and passes it
@@ -120,7 +119,11 @@ function callRPC(messageObject, send) {
             response: rpcObject.response
         };
 
-        //include user if available
+        //include user if
+        var userIdAndFacilityCode= rpcFacade.getUserIdAndFacilityCode();
+        var USER = vdmUtils.userFromId(db, '200-' + userIdAndFacilityCode.userId);
+        var FACILITY = vdmUtils.facilityFromId(db, '4-' + userIdAndFacilityCode.facilityCode);
+
         if (USER) {
             rpcCallEvent.user = {
                 id: '200-' + DUZ,
