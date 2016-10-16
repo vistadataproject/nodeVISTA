@@ -8,14 +8,14 @@ var testAllergies = require('../../../VDM/prototypes/allergies/vdmTestAllergies'
 var allergyUtils = require("../../../VDM/prototypes/allergies/allergyUtils");
 var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 var fmql = require('../../../VDM/prototypes/fmql');
-var vprE = require('../../../VDM/prototypes/vprEmulate/vprE');
+var vprLocker = require('../../../VDM/prototypes/vprLocker/vprL');
 var vpr = require('../../../VDM/prototypes/vpr');
-var vprAllergyEmulator = require('../../../VDM/prototypes/vprEmulate/vprAllergyEmulator');
+var vprAllergyLocker = require('../../../VDM/prototypes/vprLocker/vprAllergyLocker');
 var mvdmModelProblem = require('../../../VDM/prototypes/problems/mvdmProblemsModel').mvdmModel;
-var vprProblemEmulator = require('../../../VDM/prototypes/vprEmulate/vprProblemEmulator');
+var vprProblemLocker = require('../../../VDM/prototypes/vprLocker/vprProblemLocker');
 var vitalUtils = require('../../../VDM/prototypes/vitals/vitalUtils');
 var mvdmModelVitals = require('../../../VDM/prototypes/vitals/mvdmVitalsModel').mvdmModel;
-var vprVitalsEmulator = require('../../../VDM/prototypes/vprEmulate/vprVitalsEmulator');
+var vprVitalsLocker = require('../../../VDM/prototypes/vprLocker/vprVitalsLocker');
 
 var fs = require('fs');
 var os = require("os");
@@ -41,13 +41,14 @@ rpcRunner.setUserAndFacility(DUZ, facilityCode);
 var RPCL = require('../../../VDM/prototypes/rpcL');
 
 var rpcL = new RPCL(db);
+var vprL = new vprLocker(db);
 
 function setModels(domain) {
     if (domain === 'allergy') {
         VDM.setDBAndModel(db, vdmModelAllergy);
         VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelAllergy);
-        vprE.setVprMappings(vprAllergyEmulator, '1.05');
+        vprL.setVprMappings(vprAllergyLocker, '1.05');
         // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
         // VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
         rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
@@ -57,7 +58,7 @@ function setModels(domain) {
         VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
 
         MVDM.setModel(mvdmModelProblem);
-        vprE.setVprMappings(vprProblemEmulator, '1.05');
+        vprL.setVprMappings(vprProblemLocker, '1.05');
 
         rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
 
@@ -65,7 +66,7 @@ function setModels(domain) {
         VDM.setDBAndModel(db, vdmModelVitals);
         VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelVitals);
-        vprE.setVprMappings(vprVitalsEmulator, '1.05');
+        vprL.setVprMappings(vprVitalsLocker, '1.05');
         rpcL.setUserAndFacility("200-55", "4-2957");
     }
 }
@@ -84,9 +85,9 @@ function callVpr(messageObj) {
     var domain = messageObj.query.domain;
     setModels(domain);
     var rpcArgs = messageObj.query.rpcArgs.split(',');
-    if (!validateArgs(rpcArgs)) {
-        return 'Error: invalid args';
-    }
+    // if (!validateArgs(rpcArgs)) {
+    //     return 'Error: invalid args';
+    // }
     var patient = rpcArgs[0];
     if (rpcArgs.length > 1)
         var ien = rpcArgs[1];
@@ -95,10 +96,12 @@ function callVpr(messageObj) {
     if (format === 'XML') {
         if (rpcsLocked === 'on') {
             // call vpr emulator
-            if (ien)
-                var res = vprE.queryXML(db, patient, domain, ien);
-            else
-                var res = vprE.queryXML(db, patient, domain);
+            var query = {
+                dfn: patient,
+                type: domain,
+                id: ien
+            };
+            var res = vprL.query(query);
         } else {
             if (ien)
                 var res = vpr.queryXML(db, patient, domain, ien);
