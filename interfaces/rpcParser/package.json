@@ -6,6 +6,7 @@
     "private": true,
     "dependencies": {
         "underscore": "latest",
+        "underscore.string": "latest",
         "mathjs": "latest",
         "util": "latest"
     }
