@@ -8,8 +8,8 @@ var testAllergies = require('../../../VDM/prototypes/allergies/vdmTestAllergies'
 var allergyUtils = require("../../../VDM/prototypes/allergies/allergyUtils");
 var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 var fmql = require('../../../VDM/prototypes/fmql');
-var vprLocker = require('../../../VDM/prototypes/vprLocker/vprL');
-var vpr = require('../../../VDM/prototypes/vpr');
+// var vprLocker = require('../../../VDM/prototypes/vprLocker/vprL');
+var VPRFacade = require('../../../VDM/prototypes/vprFacade');
 var vprAllergyLocker = require('../../../VDM/prototypes/vprLocker/vprAllergyLocker');
 var mvdmModelProblem = require('../../../VDM/prototypes/problems/mvdmProblemsModel').mvdmModel;
 var vprProblemLocker = require('../../../VDM/prototypes/vprLocker/vprProblemLocker');
@@ -38,37 +38,36 @@ var facilityCode = 2957;
 var rpcRunner = new RPCRunner(db);
 rpcRunner.setUserAndFacility(DUZ, facilityCode);
 
-var RPCL = require('../../../VDM/prototypes/rpcL');
 
+var RPCL = require('../../../VDM/prototypes/rpcL');
 var rpcL = new RPCL(db);
-var vprL = new vprLocker(db);
+// Initialize vprFacade
+vprFacade = new VPRFacade(db);
+vprFacade.setUserAndFacility(DUZ, facilityCode);
 
 function setModels(domain) {
+    VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
     if (domain === 'allergy') {
         VDM.setDBAndModel(db, vdmModelAllergy);
-        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelAllergy);
-        vprL.setVprMappings(vprAllergyLocker, '1.05');
         // Note: allergy doesn't note the facility, just the user logged in but can get it (need for full creation events)
-        // VDM.setUserAndFacility("200-" + DUZ, "4-" + facilityCode);
         rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
+        vprFacade.setupVprLocker(vprAllergyLocker);
 
     } else if (domain === 'problem') {
         VDM.setDBAndModel(db, vdmModelProblem);
-        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
-
         MVDM.setModel(mvdmModelProblem);
-        vprL.setVprMappings(vprProblemLocker, '1.05');
-
         rpcL.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
+        vprFacade.setupVprLocker(vprProblemLocker);
 
     } else if (domain === 'vitals') {
         VDM.setDBAndModel(db, vdmModelVitals);
-        VDM.setUserAndFacility("200-55", "4-2957"); // note that 4-2957 would come from 200-55 if left out
         MVDM.setModel(mvdmModelVitals);
-        vprL.setVprMappings(vprVitalsLocker, '1.05');
         rpcL.setUserAndFacility("200-55", "4-2957");
+        vprFacade.setupVprLocker(vprVitalsLocker);
     }
+
+
 }
 
 //for emulator only
@@ -85,38 +84,18 @@ function callVpr(messageObj) {
     var domain = messageObj.query.domain;
     setModels(domain);
     var rpcArgs = messageObj.query.rpcArgs.split(',');
-    // if (!validateArgs(rpcArgs)) {
-    //     return 'Error: invalid args';
-    // }
     var patient = rpcArgs[0];
     if (rpcArgs.length > 1)
         var ien = rpcArgs[1];
-    var format = messageObj.query.format;
+    var format = messageObj.query.format.toLowerCase();
     var rpcsLocked = messageObj.query.rpcsLocked;
-    if (format === 'XML') {
-        if (rpcsLocked === 'on') {
-            // call vpr emulator
-            var query = {
-                dfn: patient,
-                type: domain,
-                id: ien
-            };
-            var res = vprL.query(query);
-        } else {
-            if (ien)
-                var res = vpr.queryXML(db, patient, domain, ien);
-            else
-                var res = vpr.queryXML(db, patient, domain);
-        }
-        res = '<textarea rows="60" cols="140" style="border:none;">' + res + '</textarea>';
-    } else if (format === 'JSON') {
-        // call vpr
-        if (ien)
-            var res = vpr.query(db, patient, domain, ien);
-        else
-            var res = vpr.query(db, patient, domain);
-    }
-    return res;
+
+    var vprArgs = {
+        dfn: patient,
+        type: domain,
+        id: ien
+    };
+    return vprFacade.run(vprArgs, format, rpcsLocked == 'on');
 }
 
 function callRpc(messageObj) {

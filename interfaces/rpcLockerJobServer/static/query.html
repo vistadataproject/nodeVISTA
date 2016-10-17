@@ -181,7 +181,7 @@ function sendQueryInURLBar()
                   if (format == "JSONLD" || format == "JSON")
                       $("#results").html("<pre>" + makeJSONPretty(xhr.responseText) + "</pre>"); 
                   else if (format == "HTML" || format == "XML") {
-                  	  $('#results').html(xhr.responseText);
+                  	  $('#results').text(xhr.responseText);
                   }
                   else
                       $("#results").html(xhr.responseText);
