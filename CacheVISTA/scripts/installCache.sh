@@ -12,7 +12,7 @@ cp /etc/redhat-release /etc/redhat-release.orig
 echo "Red Hat Enterprise Linux (Santiago) release 6" > /etc/redhat-release
 
 # ============================= Install clean copy of Cache from kit ===============================
-instance=prod
+instance=cache
 scriptdir=`dirname $0`
 cache_home=/opt/cachesys/$instance
 
@@ -36,16 +36,19 @@ cd $cache_package_name
 ISC_PACKAGE_INSTANCENAME="$instance" ISC_PACKAGE_INSTALLDIR="$cache_home" ./cinstall_silent
 
 # Copy init scripts to $cache_home
-cp -R /vagrant/VistA/Scripts/Install/Cache/etc $cache_home/etc
-ln -s $cache_home/etc/init.d/cache /etc/init.d/cacheprod
+mkdir $cache_home/etc && mkdir $cache_home/etc/init.d
+sed 's/cacheprod/cache/g; s/prod/cache/g' /vagrant/VistA/Scripts/Install/Cache/etc/init.d/cache > $cache_home/etc/init.d/cache
+
+ln -s $cache_home/etc/init.d/cache /etc/init.d/cache
+chmod 755 /etc/init.d/cache
 
 # shutdown cache manually
 ccontrol stop $instance quietly
 
 # use init script to start Caché again
-chkconfig --add cacheprod
-chkconfig cacheprod on
-service cacheprod start
+chkconfig --add cache
+chkconfig cache on
+service cache start
 
 # Clean up from install
 mv /etc/redhat-release.orig /etc/redhat-release
@@ -63,10 +66,10 @@ cache_dat_file=DBA_VISTA_FOIA_20161007-CACHEv2014.zip
 cache_dat_baseurl=http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files
 
 # Before we do anything, we stop the Cache service
-service cacheprod stop
+service cache stop
 
 # Setup the VistA installation directory and bring in the configuration file
-cache_vista_dir=/opt/cachesys/prod/mgr/VistA
+cache_vista_dir=/opt/cachesys/cache/mgr/VistA
 mkdir $cache_vista_dir
 chgrp cacheusr $cache_vista_dir
 chmod g+w $cache_vista_dir
@@ -104,7 +107,7 @@ fi
 cp -rf ./CACHE.DAT $cache_home/mgr/VistA
 
 # Restart the Cache service
-service cacheprod start
+service cache start
 
 cd $scriptdir
 rm -rf $tmpdir

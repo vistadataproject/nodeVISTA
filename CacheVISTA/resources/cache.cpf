@@ -2,15 +2,15 @@
 Version=2015.3
 
 [Databases]
-CACHESYS=/opt/cachesys/prod/mgr/
-CACHELIB=/opt/cachesys/prod/mgr/cachelib/
-CACHETEMP=/opt/cachesys/prod/mgr/cachetemp/
-CACHE=/opt/cachesys/prod/mgr/cache/
-CACHEAUDIT=/opt/cachesys/prod/mgr/cacheaudit/
-DOCBOOK=/opt/cachesys/prod/mgr/docbook/
-SAMPLES=/opt/cachesys/prod/mgr/samples/
-USER=/opt/cachesys/prod/mgr/user/
-VISTA=/opt/cachesys/prod/mgr/VistA/,,1
+CACHESYS=/opt/cachesys/cache/mgr/
+CACHELIB=/opt/cachesys/cache/mgr/cachelib/
+CACHETEMP=/opt/cachesys/cache/mgr/cachetemp/
+CACHE=/opt/cachesys/cache/mgr/cache/
+CACHEAUDIT=/opt/cachesys/cache/mgr/cacheaudit/
+DOCBOOK=/opt/cachesys/cache/mgr/docbook/
+SAMPLES=/opt/cachesys/cache/mgr/samples/
+USER=/opt/cachesys/cache/mgr/user/
+VISTA=/opt/cachesys/cache/mgr/VistA/,,1
 
 [Namespaces]
 %SYS=CACHESYS
@@ -47,9 +47,9 @@ ValidatedMember=0
 VirtualAddressInterface=
 
 [Journal]
-AlternateDirectory=/opt/cachesys/prod/mgr/journal/
+AlternateDirectory=/opt/cachesys/cache/mgr/journal/
 BackupsBeforePurge=2
-CurrentDirectory=/opt/cachesys/prod/mgr/journal/
+CurrentDirectory=/opt/cachesys/cache/mgr/journal/
 DaysBeforePurge=2
 FileSizeLimit=1024
 FreezeOnError=0
