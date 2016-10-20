@@ -94,7 +94,7 @@ function callRPC(messageObject, send) {
         rpcObject.to = ret.path;
         response = ret.rpcResponse;
         transactionId = ret.transactionId;
-        runResult = ret.runResult;
+        runResult = ret.result;
     }
 
     // log to capture file the RPC and the response to a file
