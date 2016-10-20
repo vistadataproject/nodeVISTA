@@ -112,3 +112,11 @@ service cache start
 cd $scriptdir
 rm -rf $tmpdir
 rm -rf $tmp_cache_dat_dir
+
+
+# Run the post-install python scripts if this was a fresh CACHE.DAT file
+# if [[ -n $fresh_install]]; then
+#     python /vagrant/scripts/PostImportSetupScript.py
+#     python /vagrant/scripts/ImportPats.py
+#     python /vagrant/scripts/ClinicSetup.py
+# fi
