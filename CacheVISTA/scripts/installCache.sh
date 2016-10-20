@@ -84,19 +84,20 @@ tmp_cache_dat_dir=/tmp/cache_dat
 mkdir $tmp_cache_dat_dir
 cd $tmp_cache_dat_dir
 
+# If we have a CACHE.DAT file in our "resources" directory, use that. If not, pull an
+# OSEHRA FOIA VistA CACHE.DAT from the OSEHRA archive
 if [[ -f /vagrant/resources/CACHE.DAT ]]; then
     cp /vagrant/resources/CACHE.DAT .
-# else
-    # For now, we ONLY allow loading from a CACHE.DAT file
+else
+    wget $cache_dat_baseurl/$cache_dat_file
 
-    # wget $cache_dat_baseurl/$cache_dat_file
-    #
-    # if [[ ! -f $cache_dat_file ]]; then
-    #     echo "For some reason, we couldn't download the CACHE.DAT archive! ($cache_dat_baseurl/$cache_dat_file)"
-    #     exit 1
-    # fi
-    #
-    # unzip $cache_dat_file
+    if [[ ! -f $cache_dat_file ]]; then
+        echo "For some reason, we couldn't download the CACHE.DAT archive! ($cache_dat_baseurl/$cache_dat_file)"
+        exit 1
+    fi
+
+    fresh_install=true
+    unzip $cache_dat_file
 fi
 
 # Backup the existing CACHE.DAT file, just to be safe
