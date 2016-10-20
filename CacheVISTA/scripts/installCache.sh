@@ -61,7 +61,7 @@ iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT    # Web access
 iptables -I INPUT 1 -p tcp --dport 9430 -j ACCEPT  # RPC Broker
 service iptables save
 
-# =============== Set the VistA up using a pre-configured parameter file ================
+# ============================ Set the VistA up using a CACHE.DAT file =============================
 cache_dat_file=DBA_VISTA_FOIA_20161007-CACHEv2014.zip
 cache_dat_baseurl=http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files
 
