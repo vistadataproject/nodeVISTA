@@ -34,7 +34,6 @@ from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
 VistA=ConnectToMUMPS("./VistA/bin/Testing/Log/PostImport1.log","CACHE","VISTA")
 if ('' and ''):
-  print "WTF VISTA LOGIN"
   VistA.login('','')
 if VistA.type=='cache':
   try:
@@ -186,4 +185,4 @@ if VistA.type=='cache':
     pass
 # Function arguments:
 # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-OSEHRASetup.addPatient(VistA,'/vagrant/VistA/Testing/Functional/dataFiles/patdata0.csv')
+# OSEHRASetup.addPatient(VistA,'/vagrant/VistA/Testing/Functional/dataFiles/patdata0.csv')

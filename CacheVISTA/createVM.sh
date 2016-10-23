@@ -1,7 +1,7 @@
 #~/bin/bash
 
 # ------------------------------------------- UTILITIES --------------------------------------------
-prompt="UniversalFidelityVM =>"
+prompt="Cache VistA =>"
 
 log() {
     echo $prompt $1
