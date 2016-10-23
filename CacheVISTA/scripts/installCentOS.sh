@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Prepares the CentOS operating system for Cache/user installation
 
 # Make sure we are root
 if [[ $EUID -ne 0 ]]; then
@@ -6,13 +7,8 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-instance="osehra"
-
-# Abort provisioning if it appears that an instance is already installed.
-test -d /home/$instance/g &&
-{ echo "VistA already Installed. Aborting."; exit 0; }
-
 # Install the epel repo (needed for cmake28)
+echo "Updating the CentOS operating system..."
 cat > /etc/yum.repos.d/epel.repo << EOF
 [epel]
 name=epel
@@ -21,29 +17,21 @@ enabled=1
 gpgcheck=0
 EOF
 
-# extra utils - used for cmake and dashboards and initial clones
-echo "Updating operating system"
-yum update -y > /dev/null
-yum install -y cmake28 git dos2unix > /dev/null
+# Install extra utilities
+echo "Updating yum..."
+yum update -y
+
+echo "Installing utilities..."
 yum install -y http://libslack.org/daemon/download/daemon-0.6.4-1.i686.rpm > /dev/null
-yum install -y unzip > /dev/null
+yum install -y unzip nodejs npm > /dev/null
 
-# Fix cmake28 links
-ln -s /usr/bin/cmake28 /usr/bin/cmake
-ln -s /usr/bin/ctest28 /usr/bin/ctest
-ln -s /usr/bin/ccmake28 /usr/bin/ccmake
-ln -s /usr/bin/cpack28 /usr/bin/cpack
 
-# See if vagrant folder exists if it does use it. if it doesn't clone the repo
-if [ -d /vagrant ]; then
-    scriptdir=/vagrant/VistA/Scripts/Install
-else
-    git clone -q https://github.com/OSEHRA/VistA
-    scriptdir=/usr/local/src/VistA/Scripts/Install
-fi
+# Bootstrap the system
+echo "Bootstrapping operating system..."
+cd /vagrant/VistA/Scripts/Install
+./RHEL/bootstrapRHELserver.sh
 
+# Manually add the 'wheel' group to the sudoers list
 echo "%wheel       	ALL=(ALL)      	NOPASSWD: ALL" | (EDITOR="tee -a" visudo)
 
-# bootstrap the system
-cd $scriptdir
-./RHEL/bootstrapRHELserver.sh
+echo "Operating system update complete!"
