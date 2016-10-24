@@ -66,10 +66,10 @@ chgrp cacheusr $cache_vista_dir
 chmod g+w $cache_vista_dir
 
 # Copy the pre-fabricated Cache parameter file to the Cache home directory
-echo "Configuring the VistA Cache parameter file..."
-cp $cache_home/cache.cpf $cache_home/cache.cpf.save
-cp /vagrant/resources/cache.cpf $cache_home
+echo "Rewriting the VistA Cache parameter file..."
+python /vagrant/scripts/ModifyCacheParameterFile.py $cache_home/cache.cpf
 chgrp cacheusr $cache_home/cache.cpf
+chmod 666 $cache_home/cache.cpf
 
 # Retrieve, extract and copy the CACHE.DAT save file into the Cache instance
 temp_cache_dat_dir=/tmp/cache_dat
