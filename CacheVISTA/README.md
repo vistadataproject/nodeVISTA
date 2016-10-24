@@ -67,6 +67,13 @@ The post-install scripts associated with the Caché installation will also confi
 the Taskman task list.
 
 
+# Installation Verification / Smoke Test
+One way to verify that Cache was installed and is running properly is to access the Cache Management Portal via CSP:
+http://10.2.2.201:57772/csp/sys/UtilHome.csp
+
+If the page does not come up, something may have gone wrong during installation (see the Troubleshooting section for details)
+
+
 ## Operation
 After successful creation of the VM, you can manipulate the VM using standard Vagrant commands:
 * Start an SSH session in the VM: `vagrant ssh`
@@ -76,4 +83,4 @@ After successful creation of the VM, you can manipulate the VM using standard Va
 
 
 ## Troubleshooting
-<TBD>
+TBD
