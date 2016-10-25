@@ -67,7 +67,7 @@ The post-install scripts associated with the Caché installation will also confi
 the Taskman task list.
 
 
-# Installation Verification / Smoke Test
+## Installation Verification / Smoke Test
 One way to verify that Cache was installed and is running properly is to access the Cache Management Portal via CSP:
 http://10.2.2.201:57772/csp/sys/UtilHome.csp
 
