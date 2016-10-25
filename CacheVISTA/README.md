@@ -7,9 +7,9 @@ Before creating the development VM, you'll need to ensure that you have the foll
 gathered on your workstation:
 
 ### Tools
-* [Git](http://www.git-scm.com)
-* [Vagrant](http://downloads.vagrantup.com)
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+* [Git](http://www.git-scm.com) - Tested with v2.5.4
+* [Vagrant](http://downloads.vagrantup.com) - Tested with v1.6.5
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with v4.3.30
 
 ### Resources
 * **_REQUIRED_ - Connection to the Internet**:
@@ -53,7 +53,8 @@ Dev Password: vistaisdata
               9430  (RPC Broker)
 ```
 
-The scripts then installed and configured the Caché software from an OSEHRA FOIA VistA archive with the following parameters:
+The scripts then installed and configured the Caché software and base VistA instance from an OSEHRA FOIA VistA archive
+(or your own custom CACHE.DAT file, if you provided it) with the following parameters:
 ```
 Install Directory: /opt/cachesys/cache
     Instance Name: cache
@@ -61,10 +62,8 @@ Install Directory: /opt/cachesys/cache
                    START - sudo service cache stop
 ```
 
-Note that if you used the default, the VistA instance installed is a base system with no clinical data added.
-
 The post-install scripts associated with the Caché installation will also configure and add the RPC Broker listener service to
-the Taskman task list.
+the Taskman task list. Note that if you used the default, the VistA instance installed is a base system with no clinical data added.
 
 
 ## Installation Verification / Smoke Test
