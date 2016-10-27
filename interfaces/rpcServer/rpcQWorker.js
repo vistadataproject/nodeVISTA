@@ -15,7 +15,6 @@ var _ = require('underscore');
 // imports for RPCService
 var nodem = require('nodem');
 var RPCFacade = require('../../../VDM/prototypes/rpcFacade');
-var isMvdmLocked = false;
 
 var db, rpcFacade;
 var DUZ = '';
@@ -41,6 +40,7 @@ function connectVistaDatabase() {
     db.open();
 
     rpcFacade = new RPCFacade(db);
+    rpcFacade.setLocking(true); //default is to utilize mvdm locking
 }
 
 function generateTransactionId() {
@@ -89,7 +89,7 @@ function callRPC(messageObject, send) {
     } else {
         // These are normal RPCs that can go to either the locker or the runner.
         LOGGER.debug("calling RPC service");
-        var ret = rpcFacade.run(rpcObject.name, rpcObject.args, isMvdmLocked);
+        var ret = rpcFacade.run(rpcObject.name, rpcObject.args);
 
         rpcObject.to = ret.path;
         response = ret.rpcResponse;
@@ -230,7 +230,7 @@ module.exports = function() {
 
         // now check the message to setup callbacks to the rpcServer after running the rpc or other messages
         if (messageObj.method === 'callRPC') {
-            isMvdmLocked = messageObj.isMvdmLocked;
+            rpcFacade.setLocking(messageObj.isMvdmLocked);
 
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
