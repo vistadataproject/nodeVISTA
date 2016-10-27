@@ -8,7 +8,7 @@ user_uid=1100
 # Create the 'vistad' user with all rights, privileges and configuration
 echo "Creating user '$user_id'..."
 sudo groupadd -g $user_uid $user_id
-sudo useradd -c "VistA Dev User" -m -u $user_uid -s /bin/bash -g $user_id -G wheel $user_id
+sudo useradd -c "VistA Dev User" -m -u $user_uid -s /bin/bash -g $user_id -G wheel,cacheusr $user_id
 echo $user_id:vistaisdata | sudo chpasswd
 chmod -R g+rw $user_home
 
