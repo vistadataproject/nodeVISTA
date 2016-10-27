@@ -17,8 +17,8 @@ var nodem = require('nodem');
 var RPCFacade = require('../../../VDM/prototypes/rpcFacade');
 
 var db, rpcFacade;
-var DUZ = '';
-var facilityCode = '';
+var userId = '';
+var facilityId = '';
 //need for user and facility lookup
 var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
 var MVDM = require('../../../VDM/prototypes/mvdm');
@@ -120,13 +120,16 @@ function callRPC(messageObject, send) {
         };
 
         //include user if
-        var userAndFacility= rpcFacade.getUserAndFacility();
-        var USER = vdmUtils.userFromId(db, '200-' + userAndFacility.userId);
-        var FACILITY = vdmUtils.facilityFromId(db, '4-' + userAndFacility.facilityId);
+        var userAndFacility = rpcFacade.getUserAndFacility();
+        userId = userAndFacility.userId;
+        var USER = vdmUtils.userFromId(db, '200-' + userId);
+
+        facilityId = userAndFacility.facilityId;
+        var FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityId);
 
         if (USER) {
             rpcCallEvent.user = {
-                id: '200-' + DUZ,
+                id: '200-' + userId,
                 name: USER.name.value
             }
         }
@@ -134,7 +137,7 @@ function callRPC(messageObject, send) {
         //include facility if available
         if (FACILITY) {
             rpcCallEvent.facility = {
-                id: '4-' + facilityCode,
+                id: '4-' + facilityId,
                 name: FACILITY.name.value,
                 stationNumber:  FACILITY['station_number'].value
             }
