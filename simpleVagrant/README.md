@@ -4,6 +4,8 @@ See: https://github.com/vistadataproject/nodeVISTA/issues/74
 
 vdp dev overlay on that
 
+Also see _VBoxManage_
+
 # Vagrant file
 
 1. sets up Ubuntu
