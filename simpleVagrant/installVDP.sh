@@ -39,10 +39,9 @@ su $vdpid -c "mkdir logs"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> logs/nodemInstall.log"
 
 # git clone nodeVISTA into /tmp and take parts
+# ... todo: put commands into vagrant if needed
 echo "Cloning nodeVISTA client code for use by $vdpid"
 git clone -q https://github.com/vistadataproject/nodeVISTA.git
-su $vdpid -c "cp -r nodeVISTA/nodemExamples ."
-su $vdpid -c "cp -r nodeVISTA/interfaces/fmql ."
 su $vdpid -c "cp -r nodeVISTA/Commands ."
 rm -rf nodeVISTA
 
@@ -53,6 +52,8 @@ git clone -q https://github.com/caregraf/FMQL.git
 su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
 su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
 echo "Adding FMQL one pagers to fmql server copied from nodeVISTA"
+su $vdpid -c "mkdir fmql"
+su $vdpid -c "cp FMQL/webserver/*.j* fmql/."
 su $vdpid -c "mkdir fmql/static"
 su $vdpid -c "cp FMQL/webclients/* fmql/static"
 # TODO: check if this removes NPM install step from fmql server setup
