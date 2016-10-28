@@ -134,6 +134,10 @@ mkdir -p $cache_home/csp/fmquery
 chmod g+w $cache_home/csp/fmquery
 chgrp cacheusr $cache_home/csp/fmquery
 
+# Move the Cache node files to a suitable home
+mkdir /usr/lib/node
+cp $cache_home/bin/cache0100.node /usr/lib/node/cache.node
+
 # Clean up from install
 echo "Cleaning up install..."
 mv /etc/redhat-release.orig /etc/redhat-release
