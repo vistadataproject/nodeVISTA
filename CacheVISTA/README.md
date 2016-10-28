@@ -32,8 +32,13 @@ also be copied to the 'resources' project subdirectory.**
 
 
 ## Installation
-Once you have all the prerequisites in place, kick-start the installation process from within the base project directory
-by typing the following command:
+Begin by cloning this repository via Git using the following command:
+```
+git clone https://github.com/vistadataproject/nodeVISTA.git
+```
+
+Once all the prerequisites in place and after you have cloned the repository, enter the repository directory and
+kick-start the installation process from within the base project directory by typing the following command:
 ```
 ./createVM.sh
 ```
