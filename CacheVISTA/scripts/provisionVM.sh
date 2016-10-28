@@ -7,6 +7,13 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+yum install -y dos2unix
+
+echo "Fixing script files for Linux..."
+find /vagrant/scripts -name "*.sh" -type f | xargs dos2unix
+find /vagrant/VistA -name "*.sh" -type f | xargs dos2unix
+find /vagrant/VistA -name "cache" -type f | xargs dos2unix
+
 # Install software for CentOS
 cd /vagrant/scripts
 ./installCentOS.sh
