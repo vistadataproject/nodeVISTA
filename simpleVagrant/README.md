@@ -2,6 +2,8 @@ Want simple Vagrant install for Ubuntu/node/nodem/jasmine etc
 
 See: https://github.com/vistadataproject/nodeVISTA/issues/74
 
+See: the VDM/prototypes/sysSetup too (will combine)
+
 vdp dev overlay on that
 
 Also see _VBoxManage_
