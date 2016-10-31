@@ -17,7 +17,7 @@ var robertVerify = CONFIG.robertVerify;
 var marySSN = CONFIG.marySSN;
 var maryName = CONFIG.maryName;
 var maryIEN = CONFIG.maryIEN;
-var maryAccess = CONFIG.maryAccess';
+var maryAccess = CONFIG.maryAccess;
 var maryVerify = CONFIG.maryVerify;
 
 function test1() {
