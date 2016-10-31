@@ -3,6 +3,11 @@
 var math = require("mathjs");
 var _ = require("underscore");
 
+var NUL = '\u0000';
+var SOH = '\u0001';
+var EOT = '\u0004';
+var ENQ = '\u0005';
+
 /**
  * Unpack an LPacked structure
  *
@@ -132,7 +137,22 @@ function removeLeftPad(lPaddedNum) {
     }
 }
 
+function extractSecurityErrorMessage(string) {
+    if (string === null || string === undefined) {
+        return null;
+    }
+
+    var parts = string.split(NUL);
+    var message = parts[parts.length - 1];
+    if (message.indexOf(EOT) !== -1) {
+        message = message.split(EOT)[0];
+    }
+
+    return message;
+}
+
 module.exports.unLPack = unLPack;
 module.exports.unSPack = unSPack;
 module.exports.popSPack = popSPack;
 module.exports.popLPack = popLPack;
+module.exports.extractSecurityErrorMessage = extractSecurityErrorMessage;
