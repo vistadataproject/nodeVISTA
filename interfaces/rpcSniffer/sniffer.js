@@ -3,10 +3,9 @@ var async = require('async');
 var fs = require('fs');
 var util = require('util');
 var parser = require('./../rpcParser/rpcParser.js');
+var parserUtils = require('./../rpParser/rpcParserUtils.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
-var VistaJS = require('../VistaJS/VistaJS.js');
-var VistaJSLibrary = require('../VistaJS/VistaJSLibrary.js');
 
 var DEFAULT_TIMEOUT = CONFIG.vistaRpcBroker.connectPollTimeout;
 var DEFAULT_INTERVAL = CONFIG.vistaRpcBroker.connectPollInterval;
@@ -162,7 +161,7 @@ function handleConnection(conn) {
 
             if (buffer[0] !== NUL) {
                 LOGGER.trace(data);
-                error = new Error('VistA SECURITY error: ' + VistaJSLibrary.extractSecurityErrorMessage(buffer));
+                error = new Error('VistA SECURITY error: ' + parserUtils.extractSecurityErrorMessage(buffer));
             } else if (buffer[1] !== NUL) {
                 LOGGER.trace(data);
                 error = new Error('VistA APPLICATION error: ' + buffer);

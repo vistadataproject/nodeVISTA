@@ -122,6 +122,7 @@ function handleConnection(conn) {
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
             messageObject.isMvdmLocked = mvdmManagement.isMvdmLocked;
+            messageObject.contextId = remoteAddress;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
 
