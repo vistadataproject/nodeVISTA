@@ -1,7 +1,7 @@
 'use strict';
 
 var net = require('net');
-var CONFIG = require('../cfg/config.js');
+var CONFIG = require('../cfg/testconfig.js');
 var rpcFormatter = require('../../rpcParser/rpcFormatter.js');
 var Clients = new require('../TestClientFramework').Clients(2, CONFIG.rpcServer.port, CONFIG.rpcServer.host);
 
@@ -9,16 +9,16 @@ var NEW_LINE = '\r\n';
 
 
 // change for local VistA
-var robertSSN = '000000029';
-var robertName = "ALEXANDER,ROBERT";
-var robertIEN = '61';
-var robertAccess = 'fakedoc1';
-var robertVerify = '1Doc!@#$';
-var marySSN = '000000030';
-var maryName = "SMITH,MARY";
-var maryIEN = '62';
-var maryAccess = 'fakenurse1';
-var maryVerify = '1Nur!@#$';
+var robertSSN = CONFIG.robertSSN;
+var robertName = CONFIG.robertName;
+var robertIEN = CONFIG.robertIEN;
+var robertAccess = CONFIG.robertAccess;
+var robertVerify = CONFIG.robertVerify;
+var marySSN = CONFIG.marySSN;
+var maryName = CONFIG.maryName;
+var maryIEN = CONFIG.maryIEN;
+var maryAccess = CONFIG.maryAccess';
+var maryVerify = CONFIG.maryVerify;
 
 function test1() {
     Clients.sendRpc(0, rpcFormatter.buildRpcGreetingString(Clients.getClient(0).localAddress, 'testClient'))
