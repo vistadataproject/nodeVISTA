@@ -1,3 +1,27 @@
 <div class="stats">
-    Hello, Stats!
+    <table class="table">
+        <thead>
+            <th>Total</th>
+            <th>Locked</th>
+            <th>Distinct</th>
+            <th>Distinct Locked</th>
+            <th>Top Ten</th>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{total}}</td>
+                <td>{{locked}}</td>
+                <td>{{distinct}}</td>
+                <td>{{distinctLocked}}</td>
+                <td>
+                    {{#each topTen}}
+                        <div>
+                            {{name}} <strong>({{count}})</strong>
+                        </div>
+                    {{/each}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
