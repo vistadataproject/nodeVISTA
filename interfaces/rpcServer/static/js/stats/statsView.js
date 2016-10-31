@@ -37,10 +37,6 @@ define([
          });
       },
 
-      events: {
-         // "change .mvdm-lock-select": "onMvdmLockChange"
-      },
-
       render: function() {
 
          this.$el.html(this.template({
