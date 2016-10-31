@@ -15,8 +15,9 @@ var _ = require('underscore');
 // imports for RPCService
 var nodem = require('nodem');
 var RPCFacade = require('../../../VDM/prototypes/rpcFacade');
+var RPCContexts = require('../../../VDM/prototypes/rpcRunner').RPCContexts;
 
-var db, rpcFacade;
+var db, rpcFacade, rpcContexts;
 var userId = '';
 var facilityId = '';
 //need for user and facility lookup
@@ -41,6 +42,8 @@ function connectVistaDatabase() {
 
     rpcFacade = new RPCFacade(db);
     rpcFacade.setLocking(true); //default is to utilize mvdm locking
+
+    rpcContexts = new RPCContexts(db);
 }
 
 function generateTransactionId() {
@@ -237,6 +240,9 @@ module.exports = function() {
 
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
+            // set the context (user, facility of the runner)
+            rpcContexts.setContext(messageObj.contextId);
+
             var res = callRPC(messageObj, send);
 
             LOGGER.debug('rpcQWorker: in on(\'message\') res = %j', res);
@@ -248,6 +254,10 @@ module.exports = function() {
             // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcFacade)
             if (rpcFacade !== undefined) {
                 rpcFacade.reinit();
+            }
+            // also clear the contexts
+            if (rpcContexts !== undefined) {
+                rpcContexts.clearAll();
             }
             finished();
         }

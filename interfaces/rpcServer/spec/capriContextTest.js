@@ -11,7 +11,7 @@ var NEW_LINE = '\r\n';
 // change for local VistA
 var robertSSN = '000000029';
 var robertName = "ALEXANDER,ROBERT";
-var robertIEN = '58';
+var robertIEN = '61';
 var robertAccess = 'fakedoc1';
 var robertVerify = '1Doc!@#$';
 
@@ -34,7 +34,7 @@ function test1() {
         .then(function (response) {
             var signonSetupResponseArray = response.split(NEW_LINE);
 
-            if (signonSetupResponseArray.length > 8 && signonSetupResponseArray[5] == 1) {
+            if (signonSetupResponseArray.length > 7 && signonSetupResponseArray[5] == 1) {
                 console.log('XUS SIGNON SETUP OK, trying XWB CREATE CONTEXT DVBA CAPRI GUI');
 
                 // build next rpc
