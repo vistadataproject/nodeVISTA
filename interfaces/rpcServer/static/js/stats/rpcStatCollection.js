@@ -47,7 +47,7 @@ define([
       },
 
       distinctTotal: function() {
-         return this.size();
+         return this.fullCollection.size();
       },
 
       distinctLockedTotal: function() {
