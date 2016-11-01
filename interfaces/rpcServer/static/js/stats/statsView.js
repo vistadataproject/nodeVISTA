@@ -45,6 +45,11 @@ define([
                editable: false,
                cell:'string'
             }, {
+               name: 'count',
+               label: '# Calls',
+               editable: false,
+               cell: 'integer'
+            }, {
                name: 'runner',
                label: 'Path',
                editable: false,
@@ -64,11 +69,6 @@ define([
                      return Backgrid.HtmlCell.formatAsHtml(retVal, model);
                   }
                })
-            }, {
-               name: 'count',
-               label: '# Calls',
-               editable: false,
-               cell: 'integer'
             }],
             collection: RPCStatCollection
          });
