@@ -30,10 +30,10 @@
 
       //mvdmLocked runner events are displayed as bold
       if (model.get('runner') === 'mvdmLocked') {
-         return '<strong>' + rawValue + '</strong>';
+         rawValue = '<strong>' + rawValue + '</strong>';
       }
 
-      return rawValue;
+      return '<span class="html-cell">' + rawValue + '</span>';
    };
 
 })();

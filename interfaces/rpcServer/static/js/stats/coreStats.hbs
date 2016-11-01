@@ -1,10 +1,9 @@
-<table class="table">
+<table class="table table-condensed">
     <thead>
     <th>Total</th>
     <th>Locked</th>
     <th>Distinct</th>
     <th>Distinct Locked</th>
-    <th>Top Ten</th>
 
     </thead>
     <tbody>
@@ -13,13 +12,6 @@
         <td>{{locked}}</td>
         <td>{{distinct}}</td>
         <td>{{distinctLocked}}</td>
-        <td>
-            {{#each topTen}}
-                <div>
-                    {{name}} <strong>({{count}})</strong>
-                </div>
-            {{/each}}
-        </td>
     </tr>
     </tbody>
 </table>

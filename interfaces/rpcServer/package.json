@@ -21,7 +21,7 @@
     "js-beautify": "^1.6.3",
     "moment": "^2.14.1",
     "net": "latest",
-    "nodem": "latest",
+    "nodem": "0.7.0",
     "promise": "latest",
     "requirejs": "^2.2.0",
     "text": "requirejs/text",

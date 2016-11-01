@@ -72,11 +72,6 @@ define([
          });
 
          return locked;
-      },
-
-      topTen: function() {
-         var topTen = this.fullCollection.sortBy('count').reverse().splice(0, 10);
-         return _.map(topTen, function(model) { return {name: model.get('name'), count: model.get('count')};});
       }
    });
 

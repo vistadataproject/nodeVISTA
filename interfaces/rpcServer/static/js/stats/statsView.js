@@ -45,11 +45,6 @@ define([
                editable: false,
                cell:'string'
             }, {
-               name: 'count',
-               label: '# Calls',
-               editable: false,
-               cell: 'integer'
-            }, {
                name: 'runner',
                label: 'Path',
                editable: false,
@@ -69,6 +64,11 @@ define([
                      return Backgrid.HtmlCell.formatAsHtml(retVal, model);
                   }
                })
+            }, {
+               name: 'count',
+               label: '# Calls',
+               editable: false,
+               cell: 'integer'
             }],
             collection: RPCStatCollection
          });
@@ -80,6 +80,7 @@ define([
 
          this.listenTo(EventBus, 'statsEvent', function(statsModel) {
             this.renderCoreStats();
+            this.grid.sort("count", "descending")
          });
       },
 
@@ -95,7 +96,7 @@ define([
          this.$el.find('#rpc-table').append(this.paginator.render().el);
 
          //apply bootstrap table styles to grid
-         this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
+         this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered');
 
          return this;
       },
@@ -106,8 +107,7 @@ define([
             total: RPCStatCollection.total(),
             distinct: RPCStatCollection.distinctTotal(),
             distinctLocked: RPCStatCollection.distinctLockedTotal(),
-            locked: RPCStatCollection.lockedTotal(),
-            topTen: RPCStatCollection.topTen()
+            locked: RPCStatCollection.lockedTotal()
          }));
       },
 

@@ -111,3 +111,7 @@ nav {
 .rpc-record .recording {
     color: #404040;
 }
+
+.backgrid .integer-cell {
+    text-align: center;
+}
