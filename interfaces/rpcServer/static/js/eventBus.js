@@ -8,9 +8,9 @@ define([
    'rpcEvents/eventCollection',
    'mvdmEvents/eventCounterModel',
    'rpcEvents/eventCounterModel',
-   'stats/statsModel',
+   'stats/rpcStatCollection',
    'config'
-], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, StatsModel) {
+], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCStatCollection) {
    'use strict';
 
    var EventBus = function() {
@@ -61,18 +61,9 @@ define([
             var runnerType = eventModel.get('runner');
             RPCEventCounter.set(runnerType, RPCEventCounter.get(runnerType) + 1);
 
-            var distinctRPC = StatsModel.get('distinctRPC');
-            var rpcName = eventModel.get('rpcName');
-            if (!distinctRPC[rpcName]) {
-               distinctRPC[rpcName] = {
-                  count: 1,
-                  eventModel: eventModel
-               };
-            } else {
-               distinctRPC[rpcName].count++;
-            }
+            RPCStatCollection.consumeEvent(eventModel);
 
-            self.trigger('statsEvent', StatsModel);
+            self.trigger('statsEvent', RPCStatCollection);
             self.trigger('newRpcEvent', eventModel, RPCEventCounter);
          }
       }
