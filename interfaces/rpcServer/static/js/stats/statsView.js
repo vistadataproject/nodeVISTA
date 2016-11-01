@@ -38,35 +38,6 @@ define([
       initialize: function () {
          this.coreStatsTemplate = Handlebars.compile(coreStatsTemplate);
 
-         var HtmlCell = Backgrid.HtmlCell = Backgrid.Cell.extend({
-
-            /** @property */
-            className: "html-cell",
-
-            initialize: function () {
-               Backgrid.Cell.prototype.initialize.apply(this, arguments);
-            },
-
-            render: function () {
-               this.$el.empty();
-               var rawValue = this.model.get(this.column.get("name"));
-               var formattedValue = this.formatter.fromRaw(rawValue, this.model);
-               this.$el.append(formattedValue);
-               this.delegateEvents();
-               return this;
-            }
-         });
-
-         var formatAsHtml = function(rawValue, model) {
-
-            //mvdmLocked runner events are displayed as bold
-            if (model.get('runner') === 'mvdmLocked') {
-               return '<strong>' + rawValue + '</strong>';
-            }
-
-            return rawValue;
-         };
-
          this.grid = new Backgrid.Grid({
             columns: [{
                name: 'name',
@@ -77,7 +48,7 @@ define([
                name: 'runner',
                label: 'Path',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
                      var retVal = rawValue;
@@ -90,7 +61,7 @@ define([
                         retVal = 'Server';
                      }
 
-                     return formatAsHtml(retVal, model);
+                     return Backgrid.HtmlCell.formatAsHtml(retVal, model);
                   }
                })
             }, {
