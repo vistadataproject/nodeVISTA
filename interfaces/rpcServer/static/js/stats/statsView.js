@@ -80,7 +80,7 @@ define([
 
          this.listenTo(EventBus, 'statsEvent', function(statsModel) {
             this.renderCoreStats();
-            this.grid.sort("count", "descending")
+            this.grid.sort("count", "descending");
          });
       },
 
@@ -97,6 +97,8 @@ define([
 
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered');
+
+         this.grid.sort("count", "descending");
 
          return this;
       },
