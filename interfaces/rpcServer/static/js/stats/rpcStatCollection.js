@@ -75,7 +75,8 @@ define([
       },
 
       topTen: function() {
-         return _.map(this.fullCollection.sortBy('count').reverse().splice(0, 10), function(model) { return {name: model.get('name'), count: model.get('count')};});
+         var topTen = this.fullCollection.sortBy('count').reverse().splice(0, 10);
+         return _.map(topTen, function(model) { return {name: model.get('name'), count: model.get('count')};});
       }
    });
 
