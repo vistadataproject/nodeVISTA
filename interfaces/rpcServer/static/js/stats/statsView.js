@@ -109,7 +109,8 @@ define([
             total: RPCStatCollection.total(),
             distinct: RPCStatCollection.distinctTotal(),
             distinctLocked: RPCStatCollection.distinctLockedTotal(),
-            locked: RPCStatCollection.lockedTotal()
+            locked: RPCStatCollection.lockedTotal(),
+            percentLocked: RPCStatCollection.percentLocked()
          }));
       },
 

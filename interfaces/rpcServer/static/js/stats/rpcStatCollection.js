@@ -72,6 +72,21 @@ define([
          });
 
          return locked;
+      },
+
+      percentLocked: function() {
+         var distinctLockedTotal = this.distinctLockedTotal();
+         var distinctTotal = this.distinctTotal();
+
+         var percent;
+
+         if (distinctTotal === 0) {
+            percent = 0;
+         } else {
+            percent = (distinctLockedTotal / distinctTotal) * 100;
+         }
+
+         return percent.toFixed(1);
       }
    });
 
