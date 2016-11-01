@@ -44,23 +44,15 @@ define([
          var eventModel = new EventModel(event.data);
          eventCollection.unshift(new EventModel(event.data));
 
-         //increment event counters
+         //counters & stats consume events
          if (eventType === 'mvdm') {
 
-            MVDMEventCounter.set('total', MVDMEventCounter.get('total') + 1);
-            var eventType = eventModel.get('type');
-            MVDMEventCounter.set(eventType, MVDMEventCounter.get(eventType) + 1);
+            MVDMEventCounter.consumeEvent(eventModel);
 
             self.trigger('newMvdmEvent', eventModel, MVDMEventCounter);
          } else if (eventType === 'rpc') {
 
-            RPCEventCounter.set('total', RPCEventCounter.get('total') + 1);
-            if (eventModel.get('rpcName') !== 'ORWCV POLL') {
-               RPCEventCounter.set('totalNoPoller', RPCEventCounter.get('totalNoPoller') + 1);
-            }
-            var runnerType = eventModel.get('runner');
-            RPCEventCounter.set(runnerType, RPCEventCounter.get(runnerType) + 1);
-
+            RPCEventCounter.consumeEvent(eventModel);
             RPCStatCollection.consumeEvent(eventModel);
 
             self.trigger('statsEvent', RPCStatCollection);

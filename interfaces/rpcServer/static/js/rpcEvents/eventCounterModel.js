@@ -13,6 +13,14 @@ define([
          rpcRunner: 0,
          mvdmLocked: 0,
          server: 0
+      },
+      consumeEvent: function(eventModel) {
+         this.set('total', this.get('total') + 1);
+         if (eventModel.get('rpcName') !== 'ORWCV POLL') {
+            this.set('totalNoPoller', this.get('totalNoPoller') + 1);
+         }
+
+         this.set(eventModel.get('runner'), this.get(eventModel.get('runner')) + 1);
       }
    });
 
