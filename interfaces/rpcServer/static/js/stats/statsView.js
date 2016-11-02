@@ -68,7 +68,7 @@ define([
                })
             }, {
                name: 'count',
-               label: '# Calls',
+               label: '# of Calls',
                sortable: false,
                editable: false,
                cell: 'integer'
