@@ -42,12 +42,14 @@ define([
             columns: [{
                name: 'name',
                label: 'RPC',
+               sortable: false,
                editable: false,
                cell:'string'
             }, {
                name: 'runner',
                label: 'Path',
                editable: false,
+               sortable: false,
                cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
@@ -67,6 +69,7 @@ define([
             }, {
                name: 'count',
                label: '# Calls',
+               sortable: false,
                editable: false,
                cell: 'integer'
             }],
@@ -91,9 +94,6 @@ define([
 
          //render table
          this.$el.find('#rpc-table').append(this.grid.render().el);
-
-         //render paginator
-         this.$el.find('#rpc-table').append(this.paginator.render().el);
 
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered');

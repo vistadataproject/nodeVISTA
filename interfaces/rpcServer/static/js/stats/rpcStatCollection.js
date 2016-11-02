@@ -13,7 +13,7 @@ define([
       mode: 'client',
       // Initial pagination states
       state: {
-         pageSize: 10,
+         pageSize: 20,
          firstPage: 0,
          currentPage: 0,
          sortKey: 'count',
