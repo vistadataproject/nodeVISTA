@@ -115,3 +115,7 @@ nav {
 .backgrid .integer-cell {
     text-align: center;
 }
+
+.stats th, td {
+    text-align: center;
+}

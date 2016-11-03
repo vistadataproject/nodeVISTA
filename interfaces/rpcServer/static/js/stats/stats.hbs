@@ -1,6 +1,36 @@
 <div class="stats">
     <h3>RPC Stats</h3>
-    <div id="core-stats"></div>
+    <table class="table table-condensed">
+        <thead>
+        <th>Total</th>
+        <th>Distinct</th>
+        <th>Locked</th>
+        <th>Distinct Locked</th>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{total}}</td>
+            <td>{{distinct}}</td>
+            <td>{{locked}}</td>
+            <td>{{distinctLocked}}</td>
+        </tr>
+        </tbody>
+    </table>
     <h3>Top 20</h3>
-    <div id="rpc-table"></div>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <th>RPC</th>
+            <th>Path</th>
+            <th># of Calls</th>
+        </thead>
+        <tbody>
+            {{#each topList}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{show-runner runner}}</td>
+                    <td>{{count}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </div>

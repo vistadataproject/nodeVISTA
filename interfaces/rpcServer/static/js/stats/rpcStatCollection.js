@@ -3,28 +3,38 @@ define([
    'jquery',
    'underscore',
    'backbone',
-   'stats/rpcStatModel',
-   'backbone.paginator'
+   'stats/rpcStatModel'
 ], function ($, _, Backbone, RPCStatModel) {
    'use strict';
 
-   var RPCStatCollection = Backbone.PageableCollection.extend({
+   var RPCStatCollection = Backbone.Collection.extend({
       model: RPCStatModel,
       mode: 'client',
-      // Initial pagination states
-      state: {
-         pageSize: 20,
-         firstPage: 0,
-         currentPage: 0,
-         sortKey: 'count',
-         order: 1
+      comparator: function(a, b) {
+         var aCount = a.get('count');
+         var bCount = b.get('count');
+         var aName = a.get('name');
+         var bName = b.get('name');
+
+         if (aCount > bCount) {
+            return 1;
+         } else if (aCount === bCount) {
+            //if counts are equal, compare by name
+            if (aName < bName) {
+               return 1;
+            } if (aName === bName) {
+               return 0;
+            }
+         }
+
+         return -1;
       },
 
       consumeEvent: function(eventModel) {
          var rpcName = eventModel.get('rpcName');
          var runner = eventModel.get('runner');
 
-         var rpc = this.fullCollection.find(function(model) {return model.get('name') === rpcName});
+         var rpc = this.find(function(model) {return model.get('name') === rpcName});
 
          if (!rpc) {
             this.add(new RPCStatModel({
@@ -39,7 +49,7 @@ define([
 
       total: function() {
          var total = 0;
-         this.fullCollection.forEach(function(rpc) {
+         this.forEach(function(rpc) {
             total += rpc.get('count');
          });
 
@@ -47,13 +57,13 @@ define([
       },
 
       distinctTotal: function() {
-         return this.fullCollection.size();
+         return this.size();
       },
 
       distinctLockedTotal: function() {
          var distinctLocked = 0;
 
-         this.fullCollection.forEach(function(rpc) {
+         this.forEach(function(rpc) {
             if (rpc.get('runner') === 'mvdmLocked') {
                distinctLocked++;
             }
@@ -65,13 +75,21 @@ define([
       lockedTotal: function() {
          var locked = 0;
 
-         this.fullCollection.forEach(function(rpc) {
+         this.forEach(function(rpc) {
             if (rpc.get('runner') === 'mvdmLocked') {
                locked += rpc.get('count');
             }
          });
 
          return locked;
+      },
+
+      top: function(num) {
+         if (num < 1) {
+            throw new Error('Number parameter must be greater than zero.')
+         }
+
+         return this.toJSON().reverse().splice(0, num);
       }
    });
 
