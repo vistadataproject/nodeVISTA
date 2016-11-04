@@ -1,0 +1,5252 @@
+[
+  {
+    "name": "XUS AV CODE",
+    "desc": "This API checks if a ACCESS/VERIFY code pair is valid.It returns an array of values R(0)=DUZ if sign-on was OK, zero if not OK.R(1)=(0=OK, 1,2…=Can’t sign-on for some reason).R(2)=verify needs changing.R(3)=Message.R(4)=0R(5)=count of the number of lines of text, zero if none.R(5+n)=message text.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS AV HELP",
+    "desc": "Returns instructions on entering new access/verify codes.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS CCOW VAULT PARAM",
+    "desc": "This RPC returns a value for use with the CCOW vault.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS CVC",
+    "desc": "This RPC is used as part of Kernel to allow the user to change thereverify code.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS DIVISION GET",
+    "desc": "This RPC will return a list of divisions of a user.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS DIVISION SET",
+    "desc": "This RPC is used to set the user’s selected Division in DUZ(2) duringsign-on.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS GET CCOW TOKEN",
+    "desc": "This RPC gets a token to save in the CCOW context to aid in sign-on.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS GET TOKEN",
+    "desc": "",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS GET USER INFO",
+    "desc": "Returns information about a user after logon.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS INTRO MSG",
+    "desc": "This RPC returns the INTRO message from the KERNEL SYSTEM PARAMETERS file.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS PKI GET UPN",
+    "desc": "This RPC gets the SUBJECT ALTERNATIVE NAME field from the New Person (#200) file field 501.2.  It is used to check that the correct PIV card has been put into the reader.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS PKI SET UPN",
+    "desc": "This RPC is used to set the SUBJECT ALTERNATIVE NAME in the New Person #(200) file field 501.2.",
+    "category": "authentication"
+  },
+  {
+    "name": "XUS SIGNON SETUP",
+    "desc": "Establishes environment necessary for DHCP sign-on",
+    "category": "authentication"
+  },
+  {
+    "name": "GMRC LIST CONSULT REQUESTS",
+    "desc": "This RPC will return a list of active and pending consult requests toassociate a result with.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "OREVNTX LIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQ NULL LIST",
+    "desc": "Returns a null list.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQOR DETAIL",
+    "desc": "Returns detailed information regarding an order.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQOR LIST",
+    "desc": "Returns a list of patient orders.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQPT DEFAULT LIST SORT",
+    "desc": "Returns the current user’s default patient selection list SORT ORDERsetting.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQPT DEFAULT LIST SOURCE",
+    "desc": "Function returns the source of the current user’s default patient list.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQPT DEFAULT PATIENT LIST",
+    "desc": "Function returns the current user’s default patient list.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQAL DETAIL",
+    "desc": "This function returns a string of information for a specific allergy/adverse reaction.  Returned data is delimited by “^” and includes:allergen/reactant, originator, originator title, verified/not verified, observed/historical,",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQAL LIST",
+    "desc": "Returns a list of allergies for a patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQAL LIST REPORT",
+    "desc": "Returns a list of allergens, severity and signs/symptoms in a reportformat which can be used in a “detailed” display.  This RPC was set upto support the listing of allergies when selected from the Patient Postingslist.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQCN DETAIL",
+    "desc": "Returns formatted detailed information regarding the consult request,including result report if available.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQCN GET MED RESULT DETAILS",
+    "desc": "Detailed display of medicine results.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQCN LIST",
+    "desc": "Returns a list of consult requests for a patient within optional date rangeand optional service.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQCN SVCLIST",
+    "desc": "Because the combo box on the Consults order dialog needs to include ashortlist at the top, a call was needed that returned the list of consultsservices alphabetically as a long list.  This is it.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQLR DETAIL",
+    "desc": "Returns the details of a lab order.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL CLIN FILTER LIST",
+    "desc": "rETURNS ARRAY OF IEN^NAME FOR AN ARRAY OF IEN PASSED IN",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL DETAIL",
+    "desc": "Function returns a string of detailed information for a problem.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL LIST",
+    "desc": "Function returns a list of problems for a patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL PROBLEM LIST",
+    "desc": "Problem list for CPRS GUI client",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL PROV FILTER LIST",
+    "desc": "RETURNS A LIST OF PROVIDERS CORRESPONDING TO INPUT ARRAY OF IEN",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL PROVIDER LIST",
+    "desc": "RETURNS ARRAY OF PROVIDERS MATCHING INPUT",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL SERV FILTER LIST",
+    "desc": "RETURNS ARRAY OF IEN^NAME FOR INPUT ARRAY OF IEN",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPL USER PROB LIST",
+    "desc": "Returns array of user specific problems to select from",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPP LIST",
+    "desc": "Returns a list of active Patient Postings for a patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPS DETAIL",
+    "desc": "Returns the details of a medication order.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPS LIST",
+    "desc": "Function returns a list of a patient’s medications.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPX IMMUN LIST",
+    "desc": "Returns a list of patient immunizations.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPX REMINDER DETAIL",
+    "desc": "Returns the details of a clinical reminder.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPX REMINDERS LIST",
+    "desc": "Returns a list of clinical reminders.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPXRM GET WH REPORT TEXT",
+    "desc": "This RPC will return the Radiology/Lab Report for a WH Procedure",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQPXRM REMINDER DETAIL",
+    "desc": "Returns the details of a clinical reminder",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQVI1 DETAIL",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQVS DETAIL NOTES",
+    "desc": "Returns the progress notes based on patient and visit identifier.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORQQVS DETAIL SUMMARY",
+    "desc": "Returns discharge summary for a visit.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORVW FACLIST",
+    "desc": "Wrapper for the TFL^VAFCTFU1 routine, which returns all the treatingfacilities for a given patient DFN.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWCIRN FACLIST",
+    "desc": "Returns a list of the remote VA facilities at which the selected patienthas been seen.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWCOM DETAILS",
+    "desc": "Returns details of COM object when passed in COM IEN.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWCS LIST OF CONSULT REPORTS",
+    "desc": "This remote procedure call returns a list on consult reports for aspecific patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWCS REPORT TEXT",
+    "desc": "This remote procedure call returns an array containinga formattied consult report. This array matches exactlythe report format on the roll ‘n scroll version of CPRS.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWCV1 COVERSHEET LIST",
+    "desc": "This remote procedure call returns a list of Cover Sheet reports,There are no input parameters fo this rpc.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWDFH ISOLIST",
+    "desc": "Returns a list of active Isolation/Precaution Type (file #119.4) entries.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWGRPC DETAIL",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWGRPC DETAILS",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWLR CUMULATIVE REPORT",
+    "desc": "This call returns an up to date laboratory cumulative report for a given patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWLR REPORT LISTS",
+    "desc": "This remote procedure call returns a list of lab cumulative sections,and date ranges that can be displayed at the workstation.There are no input parameters fo this rpc.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWPS DETAIL",
+    "desc": "Returns text of details for a specific mediction order.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWPT LIST ALL",
+    "desc": "Returns a set of patient names for use with a long list box.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWPT1 PCDETAIL",
+    "desc": "Returns primary care detailed information about a patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWPT16 LIST ALL",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRA REPORT TEXT",
+    "desc": "This remote procedure call returns an array containinga formattied imaging report. This array matches exactlythe report format on the roll ‘n scroll version of CPRS.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRA REPORT TEXT1",
+    "desc": "This remote procedure call returns an array containinga formattied imaging report. This array matches exactlythe report format on the roll ‘n scroll version of CPRS.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP LAB REPORT LISTS",
+    "desc": "This remote procedure call returns a list of lab reports,There are no input parameters fo this rpc.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP REPORT LISTS",
+    "desc": "This remote procedure call returns a list of reports,Health Summary types and date ranges that can be displayedat the workstation.There are no input parameters fo this rpc.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP REPORT TEXT",
+    "desc": "This rpc retrieves the report text for a report selected onthe Report tab.the report format on the roll ‘n scroll version of CPRS.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP1 LISTNUTR",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP16 REPORT LISTS",
+    "desc": "This remote procedure call returns a list of reports,Health Summary types and date ranges that can be displayedat the workstation.There are no input parameters fo this rpc.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP16 REPORT TEXT",
+    "desc": "This rpc retrieves the report text for a report selected onthe Report tab.the report format on the roll ‘n scroll version of CPRS.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWRP2 HS REPORT TEXT",
+    "desc": "This RPC is used to build the ADHOC Health Summary from an array ofpre-selected health summary components.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWSR CASELIST",
+    "desc": "Returns a list of all surgery cases for a patient, without documents asreturned by ORWSR LIST.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWSR LIST",
+    "desc": "Return list of surgery cases for a patient.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWSR RPTLIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTIU GET LISTBOX ITEM",
+    "desc": "Given a TIU document IEN, return the information required to construct alistbox item for that single document.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTPP ADDLIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTPP DELLIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTPP NEWLIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTPP PLISTS",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTPP REMLIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "ORWTPP SAVELIST",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU DETAILED DISPLAY",
+    "desc": "Gets details for display of a given record.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU FIELD LIST",
+    "desc": "Returns long list array of template fields",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU FIELD LIST ADD",
+    "desc": "Takes in the XML string, in the format XMLSET(1)=” ",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU FIELD LIST IMPORT",
+    "desc": "Calls the import process for a pre-loaded (into ^TMP) list of templatefields.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU GET LIST OF OBJECTS",
+    "desc": "This RPC returns the list of TIU OBJECTS that the current user may selectfrom.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU LONG LIST BOILERPLATED",
+    "desc": "Used by the GUI to supply a long list of boilerplated titles.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU LONG LIST CLINPROC TITLES",
+    "desc": "This RPC serves data to a longlist of selectable Titles for CLINICALPROCEDURES.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU LONG LIST CONSULT TITLES",
+    "desc": "This RPC serves data to a longlist of selectable TITLES for CONSULTS.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU LONG LIST OF TITLES",
+    "desc": "This RPC serves data to a longlist of selectable TITLES by CLASS.  e.g.,passing the class PROGRESS NOTES will return active Progress Notes titleswhich the current user is authorized to enter notes under.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU LONG LIST SURGERY TITLES",
+    "desc": "This RPC serves data to a longlist of selectable TITLES for the classnamed in the CLNAME parameter.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU PERSONAL TITLE LIST",
+    "desc": "This Remote Procedure returns the user’s list of preferred titles for agiven class of documents, along with the default title, if specified.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU TEMPLATE LISTOWNR",
+    "desc": "",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "TIU USER CLASS LONG LIST",
+    "desc": "Long List of User Classes",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV ADD VM",
+    "desc": "This remote procedure call is used to enter a new Vital/Measurement recordin the GMRV Vital Measurement file (#120.5). This remote procedure call is documented in Integration Agreement 3996.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORB DELETE ALERT",
+    "desc": "This function deletes an alert.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQCN ADDCMT",
+    "desc": "Allows addition of a comment to a consult request/consult without changingits status. Optionally, allows sending of an alert to the requestingprovider and others.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQCN REMOVE MED RESULTS",
+    "desc": "Allows removal of medicine results from a  procedure.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQCN2 SAVE CONTEXT",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPL ADD SAVE",
+    "desc": "Add new problem record",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPL DELETE",
+    "desc": "DELETES A PROBLEM",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPL EDIT SAVE",
+    "desc": "sAVES EDITED PROBLEM RECORD",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPL SAVEVIEW",
+    "desc": "Saves preferred view (inpatient/outpatient) and list of preferredclinics/services to NEW PERSON file, field 125.nn.  Also sets value ofparameter [ORCH CONTEXT PROBLEMS], which controls the default status ofthe problems shown, as well as whether comments should be displayed.Preferences take effect for both GUI and List Manager, and can be changedfrom either interface.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPL UPDATE",
+    "desc": "Updates problem record",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPX SAVELVL",
+    "desc": "Saves Parameter Level settings.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPXRM MENTAL HEALTH SAVE",
+    "desc": "Stores test result responses from a reminder dialog.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPXRM MST UPDATE",
+    "desc": "Saves MST data",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORQQPXRM WOMEN HEALTH SAVE",
+    "desc": "Pass back data to be file in the Women’s Health Package file 790.1.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWCH SAVEALL",
+    "desc": "This RPC saves the sizing related CPRS GUI chart parameters for theuser.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWCH SAVECOL",
+    "desc": "This RPC saves the column width sizes for reports in CPRS for the user.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWCH SAVESIZ",
+    "desc": "This RPC saves the size (bounds) for a particular CPRS GUI control.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWCIRN WEBADDR",
+    "desc": "Get VistaWeb Web Address.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWD SAVE",
+    "desc": "Saves an order.  The order is passed in ORDIALOG format.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWD SAVEACT",
+    "desc": "Saves the action on a order in an unsigned/unreleased state.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDAL32 SAVE ALLERGY",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDBA2 ADDPDL",
+    "desc": "Add a new Clinician’s Personal DX List or add new ICD9 codes to an existing Clinician’s Personal DX List. The Personal DX list is stored in the CPRS Diagnosis Provider file, file # 5000017",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDFH ADDLATE",
+    "desc": "RPC to add a late tray diet order.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDPS33 GETADDFR",
+    "desc": "This RPC takes an Additive Orderable ITEM IEN and it returns the defaultadditive frequency defined to the additive file.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDX SAVE",
+    "desc": "Save the order by passing in the following information:        ORVP=DFN        ORNP=Provider        ORL=Location        DLG=Order Dialog,        ORDG=Display Group        ORIT=Quick Order Dialog,        ORIFN=null if new order        ORDIALOG=Response List",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDXC SAVECHK",
+    "desc": "Save order checks for session.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWDXQ DLGSAVE",
+    "desc": "Return IEN of new or existing quick order.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWPCE DELETE",
+    "desc": "Delete PCE information related to a note being deleted.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWPCE SAVE",
+    "desc": "Saves PCE information entered into CPRS GUI.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWPCE SAVEGAF",
+    "desc": "Saves a GAF Score.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWSR SAVE SURG CONTEXT",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTIU GET SAVED CP FIELDS",
+    "desc": "Given a TIU document of the clinical procedures class, return the author, title, cosigner, procedure summary code, date/time of procedure, and reference date, as stored on the server.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTIU SAVE DCSUMM CONTEXT",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTIU SAVE TIU CONTEXT",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVECD",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVECS",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVENOT",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVENOTO",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVEOC",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVEPLD",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVESURR",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVET",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU CREATE ADDENDUM RECORD",
+    "desc": "This Remote Procedure allows the creation of addenda to TIU Documents.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU CREATE RECORD",
+    "desc": "This remote procedure allows the creation of TIU DOCUMENT records.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU DELETE RECORD",
+    "desc": "Deletes TIU Document records…Evaluates authorization.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU FIELD DELETE",
+    "desc": "Deletes an entry in the Template Field (8927.1) file.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU FIELD SAVE",
+    "desc": "Saves a single Template Field",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU GET ADDITIONAL SIGNERS",
+    "desc": "Returns the list of additional signers currently identified for a givenTIU document.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU JUSTIFY DELETE?",
+    "desc": "BOOLEAN RPC that evaluates wheter a justification is required for deletion (e.g., deletion is authorized, but the document has been signed, etc.).",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU TEMPLATE CREATE/MODIFY",
+    "desc": "This remote procedure allows creation and update of Templates.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU TEMPLATE DELETE",
+    "desc": "This RPC will delete orphan entries in the Template file (i.e., onlythose entries that have been removed from any Groups, Classes, Personalor Shared Root entries).",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU UPDATE ADDITIONAL SIGNERS",
+    "desc": "This RPC accepts a list of persons, and adds them as additional signersfor the document identified by the first parameter.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU UPDATE RECORD",
+    "desc": "This API updates the record named in the TIUDA parameter, with theinformation contained in the TIUX(Field #) array.  The body of themodified TIU document should be passed in the TIUX(“TEXT”,i,0) subscript,where i is the line number (i.e., the “TEXT” node should be ready to MERGEwith a word processing field).  Any filing errors which may occur will bereturned in the single valued ERR parameter (which is passed byreference).",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "TIU WAS THIS SAVED?",
+    "desc": "This Boolean Remote Procedure will evaluate whether a given document wascommitted to the database, or whether the user who last edited it wasdisconnected.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "DG CHK BS5 XREF ARRAY",
+    "desc": "CHECKS IF OTHER PATIENTS ON ‘BS5’ XREF WITH SAME LAST NAMERETURN 1 OR 0 IN 1ST STRING (-1 IF BAD DFN OR NO ZERO NODE).RETURNS ARRAY NODES WHERE TEXT IS PRECEEDED BY 0 AND PATIENT DATAIS PRECEEDED BY 1.  PATIENT DATA WILL BE IN FOLLOWING FORMAT: 1^DFN^PATIENT NAME^DOB^SSN",
+    "category": "unknown"
+  },
+  {
+    "name": "DG CHK BS5 XREF Y/N",
+    "desc": "CHECKS IF OTHER PATIENTS ON “BS5” XREF WITH SAME LAST NAMERETURNS 1 OR 0 IN 1ST STRING (OR -1 IF BAD DFN OR NO ZERO NODE)IF 1 RETURNS TEXT TO BE DISPLAYED",
+    "category": "unknown"
+  },
+  {
+    "name": "DG CHK PAT/DIV MEANS TEST",
+    "desc": "CHECKS IF MEANS TEST REQUIRED FOR PATIENT ANDCHECKS IF MEANS TEST DISPLAY REQUIRED FOR USER’S DIVISIONRETURNS 1 IN 1ST STRING IF BOTH TRUE OTHERWISE 0IF BOTH TRUE RETURNS TEXT IN 2ND AND 3RD STRING (IF ANY)",
+    "category": "unknown"
+  },
+  {
+    "name": "DG SENSITIVE RECORD ACCESS",
+    "desc": "This Remote Procedure Call (RPC) will:         - Verify user is not accessing his/her own Patient file record ifthe Restrict Patient Record Access (#1201) field in the MAS parameters(#43) file is set to yes and the user does not hold the DG RECORD ACCESSsecurity key.  If parameter set to yes and user is not a key holder , asocial security number must be defined in the New Person file for the userto access any Patient file record.         - Determine if user accessing a sensitive record or an employee’srecord.",
+    "category": "utility"
+  },
+  {
+    "name": "DG SENSITIVE RECORD BULLETIN",
+    "desc": "This Remote Procedure Call (RPC) will add an entry to the DG SECURITY LOG(#38.1) file and/or generate the sensitive record access bulletindepending on the value in ACTION input parameter.  If ACTION parameter notdefined, defaults to update DG Security Log file and generate SensitiveRecord Access mail message.",
+    "category": "utility"
+  },
+  {
+    "name": "GMV ALLERGY",
+    "desc": "This remote procedure call retrieves the patient’s allergy information. This remote procedure call is documented in Integration Agreement 4350.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV CLOSEST READING",
+    "desc": "This remote procedure call returns the observation date/time and reading of the record closest to the date/time specified for the patient and vitaltype.",
+    "category": "unknown"
+  },
+  {
+    "name": "GMV CONVERT DATE",
+    "desc": "This remote procedure call converts a user-supplied date/time into VAFileMan’s internal and external date format. This remote procedure call is documented in Integration Agreement 4353.",
+    "category": "utility"
+  },
+  {
+    "name": "GMV DLL VERSION",
+    "desc": "Returns a YES or NO response to indicate if the Dynamic Link Library (DLL)file should be used. This remote procedure call is documented in Integration Agreement 4420.",
+    "category": "utility"
+  },
+  {
+    "name": "GMV EXTRACT REC",
+    "desc": "This remote procedure call retrieves vital records from the GMRV VitalMeasurement (#120.5) file for a selected patient within a given date span. This remote procedure call is documented in Integration Agreement 4416.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV GET CATEGORY IEN",
+    "desc": "Returns the IEN if the value is found in the GMRV VITAL CATEGORY (#120.53)file. This remote procedure call is documented in Integration Agreement 4354.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV GET CURRENT TIME",
+    "desc": "Gets the current date and time from the server. This remote procedure call is documented in Integration Agreement 4355.",
+    "category": "utility"
+  },
+  {
+    "name": "GMV GET VITAL TYPE IEN",
+    "desc": "Returns the IEN if the value is found in the GMRV VITAL TYPE (#120.51)file. This remote procedure call is documented in Integration Agreement 4357.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV LATEST VM",
+    "desc": "This remote procedure call retrieves the latest vital records for a givenpatient. This remote procedure call is documented in Integration Agreement 4358.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV LOCATION SELECT",
+    "desc": "Select a hospital location by name, from a patient appointment or from apatient admission. Can also generate a list of active clinics. This remote procedure is documented in Integration Agreement 4461.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV MANAGER",
+    "desc": "Performs many functions for the Manager module. This remote procedure call is documented in Integration Agreement 4360.",
+    "category": "user-preferences"
+  },
+  {
+    "name": "GMV MARK ERROR",
+    "desc": "This remote procedure call marks a selected vitals record in the GMRVVital Measurement (#120.5) file as entered-in-error. This remote procedure call is documented in Integration Agreement 4414.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "GMV PARAMETER",
+    "desc": "Sets and retrieves parameter values used by the graphical user interface. This remote procedure call is documented in Integration Agreement 4367.",
+    "category": "user-preferences"
+  },
+  {
+    "name": "GMV USER",
+    "desc": "Retrieves data about the user (e.g., parameter settings). This remote procedure call is documented in Integration Agreement 4366.",
+    "category": "user-preferences"
+  },
+  {
+    "name": "GMV V/M ALLDATA",
+    "desc": "This remote procedure call lists all vitals/measurements data for a givendate/time span. This remote procedure call is documented in Integration Agreement 4654.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV VITALS/CAT/QUAL",
+    "desc": "Returns all qualifier information for the vital types selected. This remote procedure call is documented in Integration Agreement 4359.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "MAG4 REMOTE IMPORT",
+    "desc": "Called from MS Windows Application.",
+    "category": "unknown"
+  },
+  {
+    "name": "OR GET COMBAT VET",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORALWORD ALLWORD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORB FOLLOW-UP ARRAY",
+    "desc": "This function returns an array of follow-up data.  Content of the datavaries by notification.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORB FOLLOW-UP STRING",
+    "desc": "This function returns a string of follow-up data.  Content of the data varies by notification.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORB FOLLOW-UP TYPE",
+    "desc": "Returns the follow-up action type for a notification as identified via thealert xqaid.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORB FORWARD ALERT",
+    "desc": "The rpc forwards an alert.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORB RENEW ALERT",
+    "desc": "This rpc renews an alert.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORB SORT METHOD",
+    "desc": "Returns the default sort method for notification display based on the precedence USER, DIVISION, SYSTEM, PACKAGE.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORBCMA5 GETUDID",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCDLR2 CHECK ALL LC TO WC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCDLR2 CHECK ONE LC TO WC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCHECK DELMONO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCHECK GETMONO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCHECK GETMONOL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCHECK GETXTRA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCHECK ISMONO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORCNOTE GET TOTAL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDDPAPI ADMTIME",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDDPAPI CLOZMSG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA CSVALUE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA DEATEXT",
+    "desc": "Returns the text to show on the signature dialog mandated by DEA for when a controlled substance order is selected to be signed.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA HASHINFO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA LNKMSG",
+    "desc": "Returns the text of the OR DEA PIV LINK MSG parameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA ORDHINFO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA PINLKCHK",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA PINLKSET",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA PNDHLD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORDEA SIGINFO",
+    "desc": "returns the provider/patient info that must be displayed when signing a controlled substance order(s)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORECS01 CHKESSO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORECS01 ECRPT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORECS01 GETDIV",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORECS01 SAVPATH",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORECS01 VSITID",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX ACTIVE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX PAT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 AUTHMREL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 CHGEVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 CMEVTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 COMP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 CPACT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 CURSPE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DEFLTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DELDFLT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DELPTEVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DFLTDLG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DFLTEVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DIV",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DIV1",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DLGIEN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 DONE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 EMPTY",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 EVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 EXISTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 GETDLG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 GETSTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 GTEVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 GTEVT1",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 HAVEPRT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 ISDCOD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 ISHDORD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 ISPASS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 ISPASS1",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 LOC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 LOC1",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 MATCH",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 MULTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 NAME",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 ODPTEVID",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 PRMPTID",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 PROMPT IDS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 PUTEVNT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 SETDFLT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 TYPEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "OREVNTX1 WRLSTED",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORIMO IMOLOC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORIMO IMOOD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORIMO ISCLOC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORIMO ISIVQO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORK TRIGGER",
+    "desc": "This function returns a list of order check messages.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORPRF CLEAR",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORPRF GETFLG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORPRF HASFLG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORPRF TRIGGER POPUP",
+    "desc": "Returns 1 if popup flag display should be triggered for given patient uponpatient selection. If not, returns 0. Does not require clean-up aftercalling it since it does not set arrays or globals.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQORB SORT",
+    "desc": "Returns the notification sort method for user/division/system/pkg.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT ATTENDING/PRIMARY",
+    "desc": "Returns a patient’s attending physician and primary provider.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT CLINIC PATIENTS",
+    "desc": "Returns patients with appointments at a clinic between start and stop dates",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT CLINICS",
+    "desc": "Function returns a list of clinics.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT DEFAULT CLINIC DATE RANG",
+    "desc": "Returns default start and stop dates for clinics in the form: start^stop.Start and stop are free text and are not in FM format.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT KILL RPL",
+    "desc": "This RPC is passed a ^TMP file root and $J(job number) and kills the ^TMP(“ORRPL”,$J globaldata based on the passed file root w/job number.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT MAKE RPL",
+    "desc": "Passes Team List IEN, creates a TMP file entry of patients based thereon, and receives a $J job number in return.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT PATIENT TEAM PROVIDERS",
+    "desc": "Function returns a list of providers linked to a patient via teams.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT PROVIDER PATIENTS",
+    "desc": "Function returns an array of patients linked to a provider/user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT PROVIDERS",
+    "desc": "Function returns an array of providers.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT READ RPL",
+    "desc": "Passes global reference and other parameters, and receives a list of patients (up to 44 maximum) with IENs, for use in scrolling a Long List Box (LLB) componenet.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT SPECIALTIES",
+    "desc": "Function returns an array of treating specialties.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT SPECIALTY PATIENTS",
+    "desc": "Function returns an array of patients linked to a treating specialty.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT TEAM PATIENTS",
+    "desc": "Function returns an array of patients on a team.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT TEAMS",
+    "desc": "Function returns a list of teams.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT WARD PATIENTS",
+    "desc": "Function returns a list of patients on a ward.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT WARDRMBED",
+    "desc": "Returns the ward, room-bed for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQPT WARDS",
+    "desc": "Function returns a list of wards.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN ADMIN COMPLETE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN ASSIGNABLE MED RESULTS",
+    "desc": "Returns a list of medicine results that can be attached to a procedure.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN ATTACH MED RESULTS",
+    "desc": "Allows a med result to be attached to a procedure request.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN CANEDIT",
+    "desc": "Returns indication of whether a consult/procedure request can beresubmitted.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN DEFAULT REQUEST REASON",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN DISCONTINUE",
+    "desc": "Discontinue a consult or deny a consult request.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN EDIT DEFAULT REASON",
+    "desc": "Return value (see details there) determines if and when the consults’reason for request’ can be edited.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN FIND CONSULT",
+    "desc": "Given a Consult IEN in file 123, return a formatted list item for thatsingle consult only, in the same format as returned by ORQQCN LIST.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN FORWARD",
+    "desc": "Forwards a consult to a subservice of the forwarding service, as definedin file 123.5",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN GET CONSULT",
+    "desc": "Given a Consult ID from file 123, return the zero node to the client forloading into a consult record in RESULTS[0].  If the consult has anyassociated TIU records (completion, addenda) these will be returned inRESULTS[i..j].",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN GET ORDER NUMBER",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN GET PROC IEN",
+    "desc": "Given orderable item IEN, return pointer to file 123.3",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN GET PROC SVCS",
+    "desc": "Given an orderable item from the S.PROC XREF in 101.43, return theConsults service from 123.5 that can perform the procedure.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN GET SERVICE IEN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN ISPROSVC",
+    "desc": "RPC will return 1 or 0 if the supplied file entry from 123.5 is marked as part of the Consults-Prosthetics interface.  This RPC is used to disable the Earliest Appropriate Date field and value when ordering Prosthetics requests via CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN LOAD FOR EDIT",
+    "desc": "Given a consult IEN, returns the current values of that record’s fields.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN MED RESULTS",
+    "desc": "Returns a display of Medicine Package results, followed by any TIUresults.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN PROVDX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN RECEIVE",
+    "desc": "Test version of RECEIVE CONSULT for use with GUI.  (REV - 8/22/97)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN REMOVABLE MED RESULTS",
+    "desc": "Returns list of medicine results that are currently attached to aprocedure.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN RESUBMIT",
+    "desc": "Allows resubmission of a cancelled consult or procedure request afterediting.  This is a backdoor resubmission, and CPRS will be notified viathe HL7 proocess.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN SET ACT MENUS",
+    "desc": "Based on the IEN of the consult passed in, returns a string representingvarious facets of the user’s access level for that consult and service.This allows dynamic enabling/disabling of GUI menus based on the user’sability to act on that particular consult.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN SHOW SF513",
+    "desc": "Returns text of consults standard form 513 for display in GUI application.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN SIGFIND",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN STATUS",
+    "desc": "Returns a list of consult statuses currently in use, as reflected in the”AC” XREF of ^GMR(123.1.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN SVC W/SYNONYMS",
+    "desc": "This is a modified version of ORQQCN GET SERVICE TREE that also includessynonyms for the services returned. It also allows passing of an optionalConsult IEN, for screening allowable services to forward the consult to,especially in the case of interfacility consults.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN SVCTREE",
+    "desc": "Returns a specially formatted list of consult services for use inpopulating a GUI TreeView control.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN UNRESOLVED",
+    "desc": "Returns 1 if current user has unresolved consults for current patient, 0 if not.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN URGENCIES",
+    "desc": "Returns a list of applicable urgencies from PROTOCOL file 101,given a ConsultIEN and type.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN2 GET CONTEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN2 GET PREREQUISITE",
+    "desc": "Returns resolved boilerplate form CONSULT SERIVCES file (123.5) reflectingthe service’s prerequisites for ordering a consult.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQCN2 SCHEDULE CONSULT",
+    "desc": "Changes status of consult to “Scheduled”, optionally adding a comment andsending alerts.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQLR SEARCH RANGE INPT",
+    "desc": "Returns the date search range in number of days (e.g. 2) to begin the search before today. For example, a value of 2 would indicate to limit thesearch between two days and today. Limited to inpatients.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQLR SEARCH RANGE OUTPT",
+    "desc": "Returns the date search range in number of days (e.g. 90) to begin the search before today.  For example, a value of 90 would indicate to limit thesearch between ninety day. Limited to Outpatients.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL AUDIT HIST",
+    "desc": "RETURN PROBLEM AUDIT HISTORY",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL CHECK DUP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL CLIN SRCH",
+    "desc": "Returns list of clinics for problem list. Should be replaced by CLIN^ORQPT",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL EDIT LOAD",
+    "desc": "Return array of default fields and original fields - GMPFLD() and GMPORIG()",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL INACTIVATE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL INIT PT",
+    "desc": "returns death indicator, sc and exposures",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL INIT USER",
+    "desc": "Returns user parameters for problem list",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL PROB COMMENTS",
+    "desc": "Returns a list of comments associated with a problem IEN.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL PROBLEM LEX SEARCH",
+    "desc": "Get a list from clinical lexicon for display in list or combo box",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL PROBLEM NTRT BULLETIN",
+    "desc": "This RPC generates a bulletin to the OR CAC Mail Group, indicating that an unresolved term needs to be requested using the New Term Rapid Turnaround website at http://hdrmul7.aac.va.gov:7151/ntrt/.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL REPLACE",
+    "desc": "REPLACES A PROBLEM THAT WAS PREVIOUSLY DELETED",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL SRVC SRCH",
+    "desc": "gET LIST OF AVAILABLE SERVICES",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL USER PROB CATS",
+    "desc": "rETURNS ARRAY OF CATEGORIES FOR USER TO SELECT FROM",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL VERIFY",
+    "desc": "VERIFY A TRANSCRIBED PROBLEM",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPL4 LEX",
+    "desc": "This RPC supports the Clinical Lexicon Search for Problem List. It will return an indefinite list of terms that match the user’s search string.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX GET DEF LOCATIONS",
+    "desc": "Returns the contents of the ORQQPX DEFAULT LOCATIONS parameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX GET FOLDERS",
+    "desc": "Returns the value of the ORQQPX REMINDER FOLDERS parameter for thecurrent user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX GET HIST LOCATIONS",
+    "desc": "Returns a list of historical locations from the LOCATION file(#9999999.06).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX GET NOT PURPOSE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX LVREMLST",
+    "desc": "Returns Cover Sheet reminder settings",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX NEW COVER SHEET ACTIVE",
+    "desc": "Returns TRUE if the new cover sheet parameters are to be used.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX NEW COVER SHEET REMS",
+    "desc": "Returns a list of reminders for cover sheet evaluation.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX NEW REMINDERS ACTIVE",
+    "desc": "Return 1 if Interactive Reminders are active, otherwise return 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX REM INSERT AT CURSOR",
+    "desc": "Returns TRUE if text generated from a reminder dialog, when processinga reminder, is to be inserted at the current cursor location, ratherthan at the bottom of the note.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPX SET FOLDERS",
+    "desc": "Sets the value of the ORQQPX REMINDER FOLDERS parameter for thecurrent user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM CHECK REM VERSION",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM DIALOG ACTIVE",
+    "desc": "For a list of reminders [#811.9] returns same list with status to indicateif an active dialog exists for the reminder.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM DIALOG PROMPTS",
+    "desc": "Additional prompts for a given dialog element",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM EDUCATION SUBTOPICS",
+    "desc": "Returns array of subtopics for any given education topic",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM EDUCATION SUMMARY",
+    "desc": "Returns list of education topics for a reminder",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM EDUCATION TOPIC",
+    "desc": "Detailed description of education topic",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM GEC DIALOG",
+    "desc": "This RPC will evaluate the Reminder Dialogs as the Finish button is clickfor the GEC Project. THis RPC will return an error messages if the fourGEC Reminder Dialogs are done out of order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM GEC FINISHED?",
+    "desc": "This RPC pass a boolean value to PXRMGECU",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM GEC STATUS PROMPT",
+    "desc": "This remote procedure will return the text value to display in CPRS of the status of the current GEC Referral.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM GET WH LETTER TEXT",
+    "desc": "Retrieve letter text for a WH letter",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM GET WH LETTER TYPE",
+    "desc": "Return value from file 790.403",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM GET WH PROC RESULT",
+    "desc": "Return correct values for a WH procedure populate a combo box in ReminderDialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM MENTAL HEALTH",
+    "desc": "Returns array for given mental health instrument",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM MENTAL HEALTH RESULTS",
+    "desc": "Returns progress note text based on the results of the test.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM MHDLL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM MHV",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM PROGRESS NOTE HEADER",
+    "desc": "Returns header text to be inserted in each progress note.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDER CATEGORIES",
+    "desc": "Returns list of all CPRS lookup categories and associated reminders",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDER DIALOG",
+    "desc": "Dialog for a given reminder",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDER EVALUATION",
+    "desc": "Allows evaluation of a list of reminders. Returns a list of clinicalreminders due/applicable or not applicable to the patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDER INQUIRY",
+    "desc": "Detailed description of reminder",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDER WEB",
+    "desc": "Web addresses for selected reminder",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDERS APPLICABLE",
+    "desc": "Returns a list of clinical reminders due/applicable or not applicable tothe patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQPXRM REMINDERS UNEVALUATED",
+    "desc": "Returns list of CPRS reminders for patient/location (no evaluation isdone)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI NOTEVIT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI VITALS",
+    "desc": "Array of patient most recent vitals within start and stop date/times.  Ifno start and stop dates are indicated, the most recent are returned. If no start date is passed then the start date is 1 (i.e. before anydates). If no stop date is passed then the start date is also the stop date and ifthere is not start date then 9999999 is used as the stop date.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI VITALS FOR DATE RANGE",
+    "desc": "Function returns a patient’s vital measurements between start date and stop date.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI1 GRID",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI2 VITALS HELP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI2 VITALS RATE CHECK",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI2 VITALS VAL &amp; STORE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI2 VITALS VALIDATE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVI2 VITALS VALIDATE TYPE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQVS VISITS/APPTS",
+    "desc": "Returns a list of patient appointments and visits for a date/time range.location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQXMB MAIL GROUPS",
+    "desc": "Returns mail groups in a system.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQXQA PATIENT",
+    "desc": "Function returns a list of notifications for a patient for the current user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORQQXQA USER",
+    "desc": "Function returns notifications for current user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORRHCQ QRYITR",
+    "desc": "Executes the query for a patient.  An iterator is passed in, in the format:   ListSource Subscript ^ DFN ^ Item# The value returned includes the records found and the next iterator:   PtSearched ^ RecordCount ^ ListSource Subscript ^ NextDFN ^ Next Item#",
+    "category": "unknown"
+  },
+  {
+    "name": "ORVAA VAA",
+    "desc": "Returns the policy name for a veteran with VA Advantage. If the veteran does not have VA Advantage the return value will be 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCH LDFONT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCH LOADALL",
+    "desc": "This RPC returns the sizing related CPRS GUI chart parameters for theuser.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCH LOADSIZ",
+    "desc": "This RPC loads the size (bounds) for a particular CPRS GUI control.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCH SAVFONT",
+    "desc": "Saves the user’s preferred font.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCIRN AUTORDV",
+    "desc": "Get parameter value for ORWRP CIRN AUTOMATIC.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCIRN CHECKLINK",
+    "desc": "Check to see if HL7 TCP link is active.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCIRN HDRON",
+    "desc": "Get parameter value for ORWRP HDR ON",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCOM GETOBJS",
+    "desc": "Returns a list of all active COM objects",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCOM ORDEROBJ",
+    "desc": "Returns COM Objects for order accept",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCOM PTOBJ",
+    "desc": "Returns COM Object entries from  different parameters.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCV DTLVST",
+    "desc": "This API returns the text of a progress note or discharge summary relatedto a visit/appointment.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCV LAB",
+    "desc": "Returns a list of labs to display on the CPRS GUI cover sheet for apatient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCV POLL",
+    "desc": "This RPC is a process to poll the cover sheet tasks for completion anddisplay the information in the appropriate CPRS GUI cover sheet location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCV START",
+    "desc": "Checks the value of the ORWOR COVER RETRIEVAL parameter and queuesprocesses to build CPRS GUI cover sheet lists as specified in theparameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCV STOP",
+    "desc": "RPC to stop retrieval of cover sheet information for CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWCV VST",
+    "desc": "This RPC returns a list of appointments and admissions for a patient basedon parameters that define the beginning and ending range for CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD DEF",
+    "desc": "Returns the formatting definition for an ordering dialog from the ORDERDIALOG file (101.41).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD DT",
+    "desc": "Returns a date in internal Fileman format.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD FORMID",
+    "desc": "Returns the Form ID (mapping to a windows form) for an ordering dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD GET4EDIT",
+    "desc": "Returns the responses for an already existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD KEY",
+    "desc": "RPC which receives a key name and returns a 1 if the user holds the key,otherwise a 0 is returned.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD OI",
+    "desc": "Returns a group of orderable items to be used in the OnNeedData event fora long list box.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD PROVKEY",
+    "desc": "Returns 1 if the users possesses the PROVIDER key.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD SIGN",
+    "desc": "Changes signature status on a list of orders and optionally releases theorders to their respective services.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD VALIDACT",
+    "desc": "Returns 1 if action is valid for an order, otherwise 0^error.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD1 COMLOC",
+    "desc": "Returns true if all orders in a list have a common ordering location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD1 PARAM",
+    "desc": "Returns the prompt and device parameters for Automated order prints",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD1 SIG4ANY",
+    "desc": "Returns true if any orders in the list require a signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD1 SIG4ONE",
+    "desc": "Returns true if an order requires a signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD1 SVONLY",
+    "desc": "Prints service copies only (used when user says “Don’t Print” for theother copies).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD2 DEVINFO",
+    "desc": "Returns device information related to a location/nature of order when anorder is signed or released via CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWD2 MANUAL",
+    "desc": "Returns device information for manual prints done via CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 ALLERGY MATCH",
+    "desc": "Given a text string, return a list of possible matches from severaldifferent sources.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 CLINUSER",
+    "desc": "Determine if user can perform cover sheet allergy actions.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 DEF",
+    "desc": "Returns default values and list sets for Allergy ordering dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 LOAD FOR EDIT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 SEND BULLETIN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 SITE PARAMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDAL32 SYMPTOMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA1 BASTATUS",
+    "desc": "Billing Awareness RPC.Returns 0 if BA functionality is off or 1 if BA functionality is on.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA1 GETORDX",
+    "desc": "ARRAY OF DIAGNOSES ASSOCIATED WITH AN ORDER",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA1 ORPKGTYP",
+    "desc": "Array of Order Package Types",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA1 RCVORCI",
+    "desc": "Receive Order Entry Billing Aware data from CPRS.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA1 SCLST",
+    "desc": "Array of Order ID’s and SC.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA2 DELPDL",
+    "desc": "Delete a selected diagnosis code from a Clinician’s Personal DX List. The personal dx list is stored in CPRS Diagnosis Provider file, file # 5000017.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA2 GETDUDC",
+    "desc": "This returns a list of unique ICD9 diagnoses codes and their descriptions on orders placed by a clinician for a patient for today. This will be used to help in filling out the encounter form.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA2 GETPDL",
+    "desc": "Returns a clinician’s personal diagnosis codes.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA3 HINTS",
+    "desc": "Returns an array of ‘Hints’ for Treatment Factors for CPRS CI/BA Project.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA4 GETBAUSR",
+    "desc": "Gets the value of the Enable Billing Awareness By User parameter. The value returned will be 1 for Yes, Billing Awareness Enabled, and 0 for No, Billing Awareness Disabled.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA4 GETTFCI",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA7 GETIEN9",
+    "desc": "Receive external ICD9 number and return IEN",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDBA7 ISWITCH",
+    "desc": "CIDC RPCRETURNS 1 IF PATIENT HAS BILLABLE INSURANCERETURNS 0 IF PATIENT DOES NOT HAVE BILLABLE INSURANCE",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDCN32 DEF",
+    "desc": "Load dialog data (lists &amp; defaults) for a consult order. (32-BIT)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDCN32 NEWDLG",
+    "desc": "Returns dialog information when NEW CONSULT/PROCEDURE is selected fromthe consults tab.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDCN32 ORDRMSG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDCN32 PROCEDURES",
+    "desc": "Returns a list of orderable procedures.  Same as ORDITM^ORWDX except: 1.  Checks inactive date in file 101.43 against NOW instead of DT.2.  Checks for at least one service that can perform the procedure.3.  Returns variable pointer to procedure in 4th piece of each item.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDCSLT DEF",
+    "desc": "Load dialog data (lists &amp; defaults) for a consult order. (16-BIT)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDCSLT LOOK200",
+    "desc": "Validates Attn: field of a consult order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH ATTR",
+    "desc": "For a diet order, this RPC returns:  Orderable Item^Text^Type^Precedence^AskExpire",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH CURISO",
+    "desc": "Return a patient’s current isolation.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH CURRENT MEALS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH DIETS",
+    "desc": "Returns active diets (including NPO) in the format:      IEN^NAME   or IEN^SYNONYM ",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH FINDTYP",
+    "desc": "Return type of dietetics order based on display group.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH ISOIEN",
+    "desc": "Returns the IEN for the Isolation/Precaution orderable item.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH NFSLOC READY",
+    "desc": "Return ‘1’ if hospital location has been entered in NUTRITION LOCATION file for outpatient meal ordering.Return ‘0’ if not yet entered.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH OPDIETS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH PARAM",
+    "desc": "Returns dietetics parameters for a patient at a location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH QTY2CC",
+    "desc": "Returns cc’s given a product, strength, and quantity.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH TFPROD",
+    "desc": "Returns a list of active tubefeeding products.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDFH TXT",
+    "desc": "RPC to return the text of the current and any future diets for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDGX LOAD",
+    "desc": "Loads a list of activities for an activity order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDGX VMDEF",
+    "desc": "Loads dialog data (lists &amp; defaults) for a vitals order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR ABBSPEC",
+    "desc": "Returns lab specimens that have an abbreviation (used as default list).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR ALLSAMP",
+    "desc": "Returns a list of collection samples for a lab order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR DEF",
+    "desc": "Loads dialog data (lists &amp; defaults) for a lab order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR LOAD",
+    "desc": "Loads sample, specimen, and urgency information for a given lab test.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR OIPARAM",
+    "desc": "No longer used.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR STOP",
+    "desc": "Calculates a stop date (for lab orders with schedules).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 ABBSPEC",
+    "desc": "Returns a list of lab specimens with abbreviations.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 ALLSAMP",
+    "desc": "Returns all collection samples in the format:   n^SampIEN^SampName^SpecPtr^TubeTop^^^LabCollect^^SpecName",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 ALLSPEC",
+    "desc": "Returns a list of specimens from the TOPOGRAPHY FIELD file (#61).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 DEF",
+    "desc": "Get lab order dialog definition.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 GET LAB TIMES",
+    "desc": "Returns a list of lab collect times for a date and location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 IC DEFAULT",
+    "desc": "Returns default immediate collect time for the user’s division.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 IC VALID",
+    "desc": "Determines whether the suplied time is a valid lab immediate collect time.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 IMMED COLLECT",
+    "desc": "Returns help text showing lab immediate collect times for the user’sdivision.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 LAB COLL TIME",
+    "desc": "Is the given time a routine lab collection time for the given location?",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 LOAD",
+    "desc": "Return sample, specimen, &amp; urgency info about a lab test.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 MAXDAYS",
+    "desc": "Returns the maximum number of days for a continuous lab order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 ONE SAMPLE",
+    "desc": "Returns data for one collection sample in the format:     n^SampIEN^SampName^SpecPtr^TubeTop^^^LabCollect^^SpecName",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 ONE SPECIMEN",
+    "desc": "Returns IEN^NAME of requested a TOPOGRAPHY FIELD (file #61) entry.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR32 STOP",
+    "desc": "Returns a calculated stop date for a lab order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR33 FUTURE LAB COLLECTS",
+    "desc": "Returns the number of days in the future to allow Lab Collects.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR33 LASTTIME",
+    "desc": "When entering quick orders from an order menu, the ^TMP(“ORECALL”,$J)array contains the last responses entered.  This RPC allows retrieval ofthe previous order’s collection time from that array.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDLR33 LC TO WC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDOR LKSCRN",
+    "desc": "Does a lookup similar to GENERIC^ORWU.  Also allows passing of a referenceto a screen in the Order Dialog file to screen to lookup.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDOR VALNUM",
+    "desc": "Validates a numeric entry.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDOR VMSLCT",
+    "desc": "Returns the default list for the vitals order dialog in CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 CHK94",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 DFLTSPLY",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 DOSEALT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 DOWSCH",
+    "desc": "This RPC returns a list of schedule that have a frequency defined and the frequency is less then or equal to 1440 minutes",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 FAILDEA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 FORMALT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 HASOIPI",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 HASROUTE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 IVDEA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 LOCPICK",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 ODSLCT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 QOMEDALT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS1 SCHALL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 ADMIN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 CHKGRP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 CHKPI",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 DAY2QTY",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 MAXREF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 OISLCT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 QOGRP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 QTY2DAY",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 REQST",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS2 SCHREQ",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 ALLIVRTE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 ALLROUTE",
+    "desc": "Returns a list of all available medication routes.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 AUTH",
+    "desc": "Checks restrictions for entering inpatient meds.  If no restrictions, a 0is returned.  If there is a restriction, it is returned in the format:     1^restriction text",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 AUTHNVA",
+    "desc": "Checks restrictions for entering non-VA meds.  If no restrictions, a 0 isreturned.  If there is a restriction, it is returned in the format:1^restriction text",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 DLGSLCT",
+    "desc": "Returns default lists for order dialogs in CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 DOSES",
+    "desc": "Return doses for an orderable item.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 DRUGMSG",
+    "desc": "Return message text that is associated with a dispense drug.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 FORMALT",
+    "desc": "Return a list of formulary alternatives.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 ISSPLY",
+    "desc": "Return 1 if orderable item is a supply, otherwise return 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 IVAMT",
+    "desc": "Returns return UNITS^AMOUNT |^AMOUNT^AMOUNT…| for IV solutions.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 MEDISIV",
+    "desc": "Return 1 if orderable item is an IV medication, otherwise return 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 OISLCT",
+    "desc": "Returns defaults for pharmacy orderable items.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 SCSTS",
+    "desc": "Return pharmacy-related service connected eligibility for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 VALQTY",
+    "desc": "Validate a medication quantity and return a 1 if it is valid, otherwisereturn 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 VALRATE",
+    "desc": "Return a 1 if IV rate text is valid, otherwise return 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 VALROUTE",
+    "desc": "Returns the IEN for a route if the name is valid.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS32 VALSCH",
+    "desc": "Validate a schedule and return a 1 if it is valid, otherwise return 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS33 COMPLOC",
+    "desc": "This RPC will return a 0 if the patient location is the same location as the original order. It will return a 1 if the location is different.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS33 IVDOSFRM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS4 CPINFO",
+    "desc": "Save outpatient med order co-pay information.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS4 CPLST",
+    "desc": "Get co-pay ralated questions",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS4 IPOD4OP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS4 ISUDIV",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS4 UPDTDG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS5 ISVTP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS5 LESAPI",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDPS5 LESGRP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA DEF",
+    "desc": "Loads dialog data (lists &amp; defaults) for a radiology order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 APPROVAL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 DEF",
+    "desc": "Loads dialog data (lists &amp; defaults) for a radiology order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 IMTYPSEL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 ISOLATN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 LOCTYPE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 PROCMSG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 RADSRC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDRA32 RAORDITM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX AGAIN",
+    "desc": "Returns a 1 if the dialog should be kept for another order, otherwise 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX CHANGE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX DGNM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX DGRP",
+    "desc": "Returns the display group pointer for an order dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX DISMSG",
+    "desc": "Returns disabled message for an ordering dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX DLGDEF",
+    "desc": "Return format information for an order dialog in the format:   LST(n): PrmtID^PrmtIEN^FmtSeq^Fmt^Omit^Lead^Trail^NwLn^Wrap^Chld^IsChld",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX DLGID",
+    "desc": "Returns the dialog IEN for an order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX DLGQUIK",
+    "desc": "Return responses for a quick order (no longer used).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX FORMID",
+    "desc": "Returns the base dialog FormID for an order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX LOADRSP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX LOCK",
+    "desc": "RPC to attempt to lock patient for ordering (returns 1 if successful or 0if unsuccessful).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX LOCK ORDER",
+    "desc": "RPC to attempt to lock a specific order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX MSG",
+    "desc": "Return message text for an orderable item.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX ORDITM",
+    "desc": "Returns an array of orderable items in the format:   Y(n)=IEN^.01 Name^.01 Name  -or-  IEN^Synonym &lt;.01 Name&gt;^.01 Name",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX SEND",
+    "desc": "RPC to sign a list of orders with input as follows:        DFN=Patient        ORNP=Provider        ORL=Location        ES=Encrypted ES code         ORWREC(n)=ORIFN;Action^Signature Sts^Release Sts^Nature of Order",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX SENDED",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX SENDP",
+    "desc": "Same as ORWDX SEND, but allows print devices as parameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX UNLKOTH",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX UNLOCK",
+    "desc": "Unlocks the patient for ordering purposes.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX UNLOCK ORDER",
+    "desc": "RPC to unlock a specific order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX WRLST",
+    "desc": "Return list of dialogs for writing orders in format:        Y(n)=DlgName^ListBox Text",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX1 DCORIG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX1 DCREN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX1 ORDMATCH",
+    "desc": "This RPC will accept a list of orders and each order status, if one of the order does not have a status it will return a false value.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX1 PATWARD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX1 STCHANGE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX1 UNDCORIG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDX2 DCREASON",
+    "desc": "RPC to return a list of valid discontinuation reasons.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA ALERT",
+    "desc": "Set order to send an alert when the order is resulted.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA COMPLETE",
+    "desc": "Complete an order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA DC",
+    "desc": "RPC to discontinue, cancel, or delete an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA DCREQIEN",
+    "desc": "Return the IEN for Requesting Physician Cancelled reason.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA FLAG",
+    "desc": "Flag an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA FLAGTXT",
+    "desc": "Return text associated with a particular flagged order (reason for flag).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA HOLD",
+    "desc": "RPC to place an existing order on hold.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA ISACTOI",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA OFCPLX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA UNFLAG",
+    "desc": "Unflag an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA UNHOLD",
+    "desc": "RPC to remove a particular order from hold status.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA VALID",
+    "desc": "Returns an error message if the selected action is not valid for aparticular CPRS GUI order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA VERIFY",
+    "desc": "Verify an order via CPRS GUI.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA WCGET",
+    "desc": "Return ward comments for an order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXA WCPUT",
+    "desc": "Set ward comments for an order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC ACCEPT",
+    "desc": "Return list of Order Checks on Accept Order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC DELAY",
+    "desc": "Return list or order checks on accept delayed orders.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC DELORD",
+    "desc": "Delete order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC DISPLAY",
+    "desc": "Return list of Order Checks for a FillerID (namespace).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC FILLID",
+    "desc": "Return the FillerID (namespace) for a dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC ON",
+    "desc": "Returns E if order checking enabled, otherwise D.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXC SESSION",
+    "desc": "Return list of order checks on release of order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM AUTOACK",
+    "desc": "Place a quick order in CPRS GUI without the verify step.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM DLGNAME",
+    "desc": "Return name(s) of dialog &amp; base dialog given IEN in format:        VAL=InternalName^DisplayName^BaseDialogIEN^BaseDialogName",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM FORMID",
+    "desc": "Return the FormID for a dialog entry.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM LOADSET",
+    "desc": "Return the contents of an order set in the following format:   LST(0): SetDisplayText^Key Variables   LST(n): DlgIEN^DlgType^DisplayText",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM MENU",
+    "desc": "Returns menu contents for an order dialog in the following format:    LST(0)=name^# cols^path switch^^^ Key Variables (pieces 6-20)    LST(n)=col^row^type^ien^formid^autoaccept^display text^mnemonic           ^displayonly",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM MSTYLE",
+    "desc": "Return the menu style for the system.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM PROMPTS",
+    "desc": "Return prompting information for a generic dialog in the format:    LST(n)=ID^REQ^HID^PROMPT^TYPE^DOMAIN^DEFAULT^IDFLT^HELP",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM1 BLDQRSP",
+    "desc": "Build responses for an order Input:      1   2    3    4   5   6    7    8        11-20FLDS=DFN^LOC^ORNP^INPT^SEX^AGE^EVENT^SC%^^^Key Variables…ORIT=+ORIT: ptr to 101.41, $E(ORIT)=C: copy $E(ORIT)=X: change Output:LST=QuickLevel^ResponseID(ORIT;$H)^Dialog^Type^FormID^DGrpLST(n)=verify text or rejection text",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM1 SVRPC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM2 CLRRCL",
+    "desc": "Clear ORECALL.  Used by CPRS GUI to clean up ^TMP(“ORECALL”,$J) and^TMP(“ORWDXMQ”,$J).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXM3 ISUDQO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXQ DLGNAME",
+    "desc": "Return display name for a dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXQ GETQLST",
+    "desc": "Return quick list for a display group.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXQ GETQNAM",
+    "desc": "Return current quick order name.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXQ PUTQLST",
+    "desc": "Save quick order list.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXQ PUTQNAM",
+    "desc": "Save display name for quick order dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR CANRN",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR GETPKG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR GTORITM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR ISCPLX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR ISNOW",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR ISREL",
+    "desc": "Return 1 if an order has been released, otherwise return 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR ORCPLX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR RENEW",
+    "desc": "Renew an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR RNWFLDS",
+    "desc": "Return fields for renew action in format:    LST(0)=RenewType^Start^Stop^Refills^Pickup  LST(n)=Comments",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR01 CANCHG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR01 ISSPLY",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR01 OXDATA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXR01 SAVCHG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB COMPORD",
+    "desc": "Get sequence order of Blood Components for selection.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB GETALL",
+    "desc": "Return patient’s Blood Bank information.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB NURSADMN",
+    "desc": "This procedure checks the parameter OR VBECS SUPPRESS NURS ADMIN to seeif the Nursing Administration Order prompt/pop-up should be supressedafter a VBECS Blood Bank order has been created.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB RAW",
+    "desc": "Return raw Lab Test Results associated with Blood Bank orderrequest.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB RESULTS",
+    "desc": "Return patient’s Lab Test Results associated with Blood Bank orderrequest.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB STATALOW",
+    "desc": "Check to see if user is allowed to order STAT orders through VBECS.Checks users with parameter: OR VBECS STAT USER",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB SUBCHK",
+    "desc": "Check to see if selected test is a Blood Component or a Diagnostic Test.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB VBTNS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB3 COLLTIM",
+    "desc": "This RPC checks the value of the parameter OR VBECS REMOVE COLL TIMEto determine if a default collection time should be presented on theVBECS order dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB3 DIAGORD",
+    "desc": "Get sequence order of Diagnostic Tests for selection.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWDXVB3 SWPANEL",
+    "desc": "This RPC checks the value of the parameter OR VBECS DIAGNOSTIC PANEL 1STto determine the location of the Diagnostic and Component panels on theVBECS order dialog.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGEPT CLINRNG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGN AUTHUSR",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGN GNLOC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGN IDTVALID",
+    "desc": "Returns the implementation date of the coding system passed in",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGN MAXFRQ",
+    "desc": "This RPC checks if the frequency of an ICD-10 search term is than the maximum allowed ICD-10 return values.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC ALLITEMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC ALLVIEWS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC CLASS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC DATEITEM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC DELVIEWS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC FASTDATA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC FASTITEM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC FASTLABS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC FASTTASK",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC GETDATES",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC GETPREF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC GETSIZE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC GETVIEWS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC ITEMDATA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC ITEMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC LOOKUP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC PUBLIC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC RPTPARAM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC SETPREF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC SETSIZE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC SETVIEWS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC TAX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC TESTING",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC TESTSPEC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWGRPC TYPES",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLEX GETFREQ",
+    "desc": "This call wraps the Lexicon API $$FREQ^LEXU to satisfy the requirements of the ICD-10-CM diagnosis search.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLEX GETI10DX",
+    "desc": "This call wraps the Lexicon API $$DIAGSRCH^LEX10CS to satisfy the requirements of the ICD-10-CM diagnosis search.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLR CUMULATIVE SECTION",
+    "desc": "This rpc retrieves the part of the lab cumulative report selected by the user on the Labs tab.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR ALLTESTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR ATESTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR ATG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR ATOMICS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR CHART",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR CHEMTEST",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR GRID",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR INFO",
+    "desc": "Return lab test description information.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR INTERIM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR INTERIMG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR INTERIMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR MICRO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR NEWOLD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR PARAM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR SPEC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR TG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR USERS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR UTGA",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR UTGD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWLRR UTGR",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWMC PATIENT PROCEDURES",
+    "desc": "This remote procedure call returns a list of patient procedures for a specific patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWMC PATIENT PROCEDURES1",
+    "desc": "This remote procedure call returns a list of patient procedures for a specific patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWMHV MHV",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWNSS CHKSCH",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWNSS NSSMSG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWNSS QOSCH",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWNSS VALSCH",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR ACTION TEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR EXPIRED",
+    "desc": "Returns the Fileman Date/Time to begin searching for expired orders.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR PKISITE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR PKIUSE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR RESULT",
+    "desc": "Returns results of a CPRS order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR RESULT HISTORY",
+    "desc": "Returns a result history of a CPRS order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR SHEETS",
+    "desc": "Returns order sheets for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR TSALL",
+    "desc": "Returns a list of valid treating specialities.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR UNSIGN",
+    "desc": "Returns outstanding unsigned orders.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR VWGET",
+    "desc": "Retrieves the user’s default view for the orders tab.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR VWSET",
+    "desc": "Sets the default view on the orders tab for the user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 CHKDIG",
+    "desc": "Returns true if an order requires a digital signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 GETDEA",
+    "desc": "Returns a users DEA number.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 GETDSCH",
+    "desc": "Returns the schedule of the drug.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 GETDSIG",
+    "desc": "Returns the digital signature of an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 GETDTEXT",
+    "desc": "Returns the external text of an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 SETDTEXT",
+    "desc": "Sets/updates the external text of an order.The updated text is also returned.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWOR1 SIG",
+    "desc": "Returns 1 if signature gets stored.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB AUTOUNFLAG ORDERS",
+    "desc": "Auto unflag orders/delete alert.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB FASTUSER",
+    "desc": "Function returns notifications for current user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB GET TIU ALERT INFO",
+    "desc": "Given a TIU XQAID, return the patient and document type for the item beingalerted.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB GETDATA",
+    "desc": "Given an XQAID, return XQADATA for an alert.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB GETSORT",
+    "desc": "Returns the method for sorting GUI alert display.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB KILL EXPIR MED ALERT",
+    "desc": "Evaluate expiring med orders.  If none remain, kill current alert forcurrent user.  Kill for other users if alert so defined.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB KILL EXPIR OI ALERT",
+    "desc": "Evaluate expiring flagged orderable item orders. If none remain, killcurrent alert for current user.  Kill for other users if alert so defined.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB KILL UNSIG ORDERS ALERT",
+    "desc": "Check patient’s unsigned orders, and kill unsigned orders alert for thisuser if no unsigned orders remain for his/her signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB KILL UNVER MEDS ALERT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB KILL UNVER ORDERS ALERT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB SETSORT",
+    "desc": "Sets the GUI alert sort method for the user.  This is set when a user clicks on the GUI alert columns to change the display sorting.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB TEXT FOLLOWUP",
+    "desc": "Returns text for notifications/alerts with a simple text message follow-upaction.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORB UNSIG ORDERS FOLLOWUP",
+    "desc": "After viewing unsigned orders for a patient via an alert, evaluateswhether the alert should be deleted for the current user. The following two exception conditions exist when determining how alertdeletion will occur.  In all other cases, alert deletion will occur whenthe patient has no unsigned orders. 1)      If the recipient of this alert does NOT have the ORES key, thealert will be deleted for that recipient after he reviews the unsignedorders.  2)      If the recipient has the ORES key and is NOT linked to the patientas attending, inpatient primary provider or via OE/RR teams, his alertwill be deleted when his unsigned orders are signed.  (If unsigned orderswritten by other providers for the patient remain, alerts for these other providers will not be deleted.)  For example, a consulting surgeon (withORES) places three unsigned orders for a patient.  He then receives an”Order requires electronic signature” alert for the patient.  He uses the View Alerts follow-up action and is presented with ten unsigned orders forthe patient.  Only three of the ten orders are his.  The surgeon signs histhree unsigned orders.  If the surgeon is not linked to the patient asattending, inpatient primary providers or via OE/RR teams, the alert will be deleted (for him only.)   In most cases alert deletion will occur when the patient has no unsignedorders.  For example, if a recipient has the ORES key and is linked to thepatient as attending, inpatient primary provider or via OE/RR teams, allunsigned orders for the patient must be signed before his alert isdeleted.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORDG ALLTREE",
+    "desc": "Returns the tree for all display groups.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORDG GRPSEQB",
+    "desc": "Returns expanded list of display groups.for the current site/user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORDG IEN",
+    "desc": "Returns IEN of a display group.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORDG MAPSEQ",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORDG REVSTS",
+    "desc": "Returns the status flags available for review orders action.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORR AGET",
+    "desc": "Get an abbreviated order list for a patient in the format:     ^TMP(“ORR”,$J,ORLIST,n)=IFN^DGrp^ActTm",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORR GET",
+    "desc": "Returns a list of orders &amp; and associated fields and text.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORR GET4LST",
+    "desc": "Returns the order fields for a list of orders.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORR GETBYIFN",
+    "desc": "Returns the fields for a single order in the format:       1   2    3     4      5     6   7   8   9   10     11    12 .LST=~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORR GETTXT",
+    "desc": "Returns the text of an existing order.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWORR RGET",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ACTIVE CODE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ACTIVE PROV",
+    "desc": "This calls the PCE API $$ACTIVPRV^PXAPI(provider ien, encounter d/t) tosee if the provider can be stored by PCE.   Returns a 1 if provider is good and 0 if the provider is not active or does not have an active person class.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ACTPROB",
+    "desc": "Build list of active problems for patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ALWAYS CHECKOUT",
+    "desc": "Returns TRUE if encounters should be automatically checked out.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ANYTIME",
+    "desc": "Returns TRUE if encounters can be entered at any time",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ASKPCE",
+    "desc": "Returns the value of the ORWPCE ASK ENCOUNTER UPDATE parameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE AUTO VISIT TYPE SELECT",
+    "desc": "Returns TRUE if visit type should be automatically selected.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE CPTMODS",
+    "desc": "Returns a list of CPT Modifiers for a given CPT Code.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE CPTREQD",
+    "desc": "Returns 1 if TIU DOCUMENT file entry needs a CPT code.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE CXNOSHOW",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE DIAG",
+    "desc": "Returns a list of diagnosis codes for a clinic location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE FORCE",
+    "desc": "Returns the value of the ORWPCE FORCE GUI PCE ENTRY parameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GAFOK",
+    "desc": "Returns TRUE if supporting mental health code exists to read and writeGAF scores.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GAFURL",
+    "desc": "Returns the GAF Scale Rating Form URL",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET DX TEXT",
+    "desc": "Resolves the preferred expanded form of the Diagnosis text for the encounter pane on the notes tab.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET EDUCATION TOPICS",
+    "desc": "Returns a list of active education topics.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET EXAM TYPE",
+    "desc": "Returns the list of active exam types.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET EXCLUDED",
+    "desc": "Returns a list of excluded PCE entries",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET HEALTH FACTORS TY",
+    "desc": "Returns a list of active health factor types.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET IMMUNIZATION TYPE",
+    "desc": "Returns a list of active immunizations.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET SET OF CODES",
+    "desc": "Returns values for a set of codes given a file and field number.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET SKIN TEST TYPE",
+    "desc": "Returns a list of the active skin test codes.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET TREATMENT TYPE",
+    "desc": "Returns the list of active treatments.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GET VISIT",
+    "desc": "Returns the visit IEN.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GETMOD",
+    "desc": "Returns information for a specific CPT Code.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE GETSVC",
+    "desc": "Calculates the correct service category.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE HASCPT",
+    "desc": "Returns the passed array with the second piece set to 0 or 1.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE HASVISIT",
+    "desc": "Returns the visit status of the visit associated with a note:1 if the visit is being pointed to by an appointment0 if the visit is NOT being pointed to by an appointment-1 if the visit is invalid or could not be determined",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE HF",
+    "desc": "Returns a list of health factors for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE HNCOK",
+    "desc": "Returns TRUE if the Head and/or Neck Cancer patches have been installed",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE I10IMPDT",
+    "desc": "This RPC returns the ICD-10 implementation date in FM Date/Time format.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ICDVER",
+    "desc": "Returns the ICD coding system version to be used for diagnosis look-up, asof a particular date of interest.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE IMM",
+    "desc": "Returns a list of immunizations for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE ISCLINIC",
+    "desc": "Returns TRUE if location is a Clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE LEX",
+    "desc": "Returns list based on lexicon look-up.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE LEXCODE",
+    "desc": "Returns a code associated with a lexicon entry.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE LOADGAF",
+    "desc": "Returns a list of GAF Scores",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE MH TEST AUTHORIZED",
+    "desc": "Indicates if a given mental health test can be given by the given user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE MHCLINIC",
+    "desc": "Returns TRUE of the indicated clinic is a mental health clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE MHTESTOK",
+    "desc": "Returns TRUE if all supporing code is in place for Mental Health Tests.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE NOTEVSTR",
+    "desc": "Returns VISIT LOCATION;EPISODE BEGIN DATE;VISIT TYPE from the TIU DOCUMENTfile.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE PCE4NOTE",
+    "desc": "Returns the encounter information for an associated note in the format: LST(1)=HDR^AllowEdit^CPTRequired^VStr^Author^hasCPTLST(n)=TYP+^CODE^CAT^NARR^QUAL1^QUAL2 (QUAL1=Primary!Qty, QUAL2=Prv)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE PED",
+    "desc": "Returns list of education topics for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE PROC",
+    "desc": "Returns a list of procedures for a clinic location.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE SCDIS",
+    "desc": "Returns service connected percentage and rated disabilities for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE SCSEL",
+    "desc": "Returns a list of service connected conditions that may be selected.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE SK",
+    "desc": "Returns a list of skin tests for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE TRT",
+    "desc": "Returns a list of treatments for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE VISIT",
+    "desc": "Returns a list of visit types for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE XAM",
+    "desc": "Returns a list of exams for a clinic.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE1 NONCOUNT",
+    "desc": "Is a given HOSPITAL LOCATION (file 44) a non-count clinic?  (DBIA #964)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPCE4 LEX",
+    "desc": "Returns list of coded elements based on lexicon look-up. Introduced with CPRS v29 to maintain compatibility of older call ORWPCE LEX.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPFSS IS PFSS ACTIVE?",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS ACTIVE",
+    "desc": "Returns listing of a patient’s active inpatient and outpatientmedications.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS COVER",
+    "desc": "Returns a list of medications to display on the CPRS GUI cover sheet for apatient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS MEDHIST",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS REASON",
+    "desc": "Returns list of Statement/Reasons for Non-VA medication orders.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS1 NEWDLG",
+    "desc": "Returns order dialog information for a new medication.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS1 PICKUP",
+    "desc": "Returns default for refill location (mail or window).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPS1 REFILL",
+    "desc": "RPC to submit a request for a refill.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT ADMITLST",
+    "desc": "Returns a list of admissions for a patient (for visit selection).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT APPTLST",
+    "desc": "Returns a list of appointments for a patient (for visit selection).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT BYWARD",
+    "desc": "Returns a list of patients currently residing on a specified wardlocation.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT CLINRNG",
+    "desc": "Returns a list of selectable options from which a user can choose a daterange for appointments.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT CWAD",
+    "desc": "Returns the CWAD flag(s) for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT DFLTSRC",
+    "desc": "Return user’s default patient list source.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT DIEDON",
+    "desc": "Returns date of death if patient has expired.  Otherwise returns 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT DISCHARGE",
+    "desc": "Given a patient and an admission date, return the discharge date/time.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT ENCTITL",
+    "desc": "Returns external values to display for encounter in format:     LOCNAME^LOCABBR^ROOMBED^PROVNAME",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT FULLSSN",
+    "desc": "Given an SSN in the format 999999999(P), return a list of matchingpatients.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT FULLSSN RPL",
+    "desc": "Given an SSN in the format 999999999(P), return a list of matching patients based on Restricted Patient List.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT ID INFO",
+    "desc": "Returns identifying information for a patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT INPLOC",
+    "desc": "Returns the patient’s current location if an inpatient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT LAST5",
+    "desc": "Returns a list of patients matching the string of Last Name Initial_Last 4SSN (Initial/Last 4 look-up to PATIENT file).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT LAST5 RPL",
+    "desc": "Returns a list of patients matching the string of Last Name Initial_Last 4 SSN (Initial/Last 4 look-up based on Restricted Patient List).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT LEGACY",
+    "desc": "Returns message if patient has data on a legacy system.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT PTINQ",
+    "desc": "Returns formatted patient inquiry text for display in GUI environment.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT SAVDFLT",
+    "desc": "Saves user’s preference for default list source.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT SELCHK",
+    "desc": "Returns a 1 if the patient record is flagged as senstive, otherwisereturns 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT SELECT",
+    "desc": "RPC to return key information on a patient as follows: 1    2   3   4    5      6    7    8       9       10      11   12 13NAME^SEX^DOB^SSN^LOCIEN^LOCNM^RMBD^CWAD^SENSITIVE^ADMITTED^CONV^SC^SC%^ 14  15  16  17ICN^AGE^TS^TSSVC",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT SHARE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT TOP",
+    "desc": "Returns the last selected patient by the defined user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT1 PRCARE",
+    "desc": "Return primary care information for a patient in the format:  VAL=Primary Care Team^Primary Care Provider^Attending^MH Treatment      Coordinator",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 ADMITLST",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 APPTLST",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 DEMOG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 GETVSIT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 ID INFO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 LOOKUP",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWPT16 PSCNVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRA DEFAULT EXAM SETTINGS",
+    "desc": "This RPC returns the default settings for the display of imaging exams onthe reports tab.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRA IMAGING EXAMS",
+    "desc": "This remote procedure call returns a list on imaging exams for aspecific patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRA IMAGING EXAMS1",
+    "desc": "This remote procedure call returns a list on imaging exams for aspecific patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP COLUMN HEADERS",
+    "desc": "Get list of Column headers for a ListView type report from file 101.24.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 COMPABV",
+    "desc": "This RPC returns an array of the ADHOC Health Summary components by abbreviation.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 COMPDISP",
+    "desc": "This RPC returns an array of the ADHOC Health Summary components by display name.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 GETLKUP",
+    "desc": "This gets the last Adhoc Health Summary lookup used by a user in CPRS.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 HS COMP FILES",
+    "desc": "This RPC gets a list of files to select from for the ADHOC Health Summary.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 HS COMPONENT SUBS",
+    "desc": "This RPC returns an array of ADHOC Health Summary subcomponents.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 HS COMPONENTS",
+    "desc": "This RPC returns an array of the ADHOC Health Summary components.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 HS FILE LOOKUP",
+    "desc": "This RPC gets the list of file entries for the file defined for a specificHealth Summary component on the ADHOC Health Summary.  Current choicesinclude files 60, 9999999.64, 811.9, 8925.1, 81, and possibly others(handled generically).  The file entries are used to populate a combo boxon the form.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 HS SUBITEMS",
+    "desc": "This RPC expands a Laboratory Test panel to all it’s sub-components forselection in the ADHOC Health Summary.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP2 SAVLKUP",
+    "desc": "This saves the last Adhoc Health Summary lookup used by a user in CPRS.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP3 EXPAND COLUMNS",
+    "desc": "This RPC loads and expands nested reports defined in the OE/RR Reportsfile (#101.24) for use on the Reports Tab in CPRS.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWRP4 HDR MODIFY",
+    "desc": "This RPC looks at data returned from the HDR and makes any modificationsnecessary to make the data compatible with CPRS Reports.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWSR GET SURG CONTEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWSR IS NON-OR PROCEDURE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWSR ONECASE",
+    "desc": "Given a TIU document IEN, return the surgical case record and all otherdocuments related to the case, for display in the GUI treeview.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWSR SHOW OPTOP WHEN SIGNING",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWSR SHOW SURG TAB",
+    "desc": "Check for presence of SR",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTIU CANLINK",
+    "desc": "Given a title, call CANLINK^TIULP to determine whether this title can use linked as an Interdisciplinary child note. dbia #2322",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTIU CHKTXT",
+    "desc": "Check for existence of text in TIU(8925,TIUDA, either in “TEXT” or “TEMP” nodes, before allowing signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTIU GET DCSUMM CONTEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTIU GET TIU CONTEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTIU IDNOTES INSTALLED",
+    "desc": "Returns “1” if TIU",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD ACTDF",
+    "desc": "Make default time/occ setting take action on each report",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD DELDFLT",
+    "desc": "Delete user level’s specific health summary component setting( date range and max occurences)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD GETDFLT",
+    "desc": "get default setting for all reports(time/occ limits)",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD GETIMG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD GETOCM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD GETSETS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD PUTOCM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD RSDFLT",
+    "desc": "get system or package level default setting for all repors.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD SUDF",
+    "desc": "Set user level default time/occ limits for all reports",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD SUINDV",
+    "desc": "set user level individual report’s time/occ setting",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 GETCSDEF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 GETCSRNG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 GETEAFL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 GETEDATS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 GETEFDAT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 PUTCSRNG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPD1 PUTEDATS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPN GETCLASS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPN GETTC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPO CSARNGD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPO CSLABD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPO GETIMGD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPO GETTABS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP CHKSURR",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP CLDAYS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP CLEARNOT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP CLRANGE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP CSARNG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP CSLAB",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETCOMBO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETCOS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETDCOS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETIMG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETNOT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETNOTO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETOC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETOTHER",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETREM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETSUB",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETSURR",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETTD",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP GETTU",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP LSDEF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP PLTEAMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SETCOMBO",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SETDCOS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SETIMG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SETOTHER",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SETREM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SETSUB",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP SORTDEF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPP TEAMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPR NOTDESC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPR OCDESC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPT ATEAMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWTPT GETTEAM",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU CLINLOC",
+    "desc": "Returns a list of clinics from the HOSPITAL LOCATION file (#44).",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU DEFAULT DIVISION",
+    "desc": "Returns True or False for a user depending on default division information.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU DEVICE",
+    "desc": "Returns a list of print devices.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU DT",
+    "desc": "Returns date in internal VA FileMan format.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU EXTNAME",
+    "desc": "Returns the external form of a pointer value given the IEN and filenumber.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU GBLREF",
+    "desc": "Returns the global reference for a particular file number.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU GENERIC",
+    "desc": "Returns a list of entries from a cross-reference passed in.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU HAS OPTION ACCESS",
+    "desc": "Returns true if the user has access to the specified menu option.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU HASKEY",
+    "desc": "Returns 1 if a user holds a security key, otherwise 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU HOSPLOC",
+    "desc": "Returns a set of hospital locations for use in a long list box.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU INPLOC",
+    "desc": "Returns a list of wards from the HOSPITAL LOCATION file.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU NEWPERS",
+    "desc": "Returns a set of New Person file entries for use in a long list box.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU NPHASKEY",
+    "desc": "Returns a 1 if a specified user holds a specified key, otherwise returns0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU PARAM",
+    "desc": "Simple call to return a parameter value.  The call assumes the currentuser, ‘defaultable’ entities, and one instance.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU PARAMS",
+    "desc": "Simple call to return a list of parameter values such as:         INST1^VALUE1        INST2^VALUE2        …        INSTN^VALUEN The call assumes the current user, ‘defaultable’ entities and multiple instances.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU PATCH",
+    "desc": "Returns a 1 if the specified patch is installed on the system, otherwisereturns a 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU TOOLMENU",
+    "desc": "Returns a list of items for the CPRS GUI Tools menu.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU USERINFO",
+    "desc": "Returns preferences for the current user.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU VALDT",
+    "desc": "Validates date/time entry and returns value of Y from %DT call.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU VALIDSIG",
+    "desc": "Validates a broker encrypted electronic signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU VERSION",
+    "desc": "Returns current version of package or namespace",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU VERSRV",
+    "desc": "Returns the server version of a particular option.  This is specificallyused by CPRS GUI to determine the current server version of the associatedsoftware.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU1 NAMECVT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU1 NEWLOC",
+    "desc": "Returns a list of Clinics, Wards, and “Other” category entries from the HOSPITAL LOCATION (#44) file.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU16 DEVICE",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU16 HOSPLOC",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU16 NEWPERS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU16 USERINFO",
+    "desc": "Returns information about the current user in the format:     DUZ^NAME^USRCLS^CANSIGN^ISPROVIDER^ORDERROLE^NOORDER^DTIME^CD",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU16 VALDT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU16 VALIDSIG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWU2 COSIGNER",
+    "desc": "Returns a set of New Person file entries for use in a long list box.The set is limited to USR PROVIDERS who do not require cosignature.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUH POPUP",
+    "desc": "Retrieves the “What’s This” text for a given control.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUL FV4DG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUL FVIDX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUL FVSUB",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUL QV4DG",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUL QVIDX",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUL QVSUB",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUX SYMTAB",
+    "desc": "Returns the contents of the current session’s symbol table.",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUXT LST",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUXT REF",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORWUXT VAL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "PXRM REMINDER CATEGORY",
+    "desc": "List reminders and categories in display order for a reminder category.",
+    "category": "unknown"
+  },
+  {
+    "name": "PXRM REMINDER DIALOG (TIU)",
+    "desc": "Dialog for a given dialog ien.",
+    "category": "unknown"
+  },
+  {
+    "name": "PXRM REMINDERS AND CATEGORIES",
+    "desc": "Returns list of reminders and categories.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU AUTHORIZATION",
+    "desc": "This RPC allows the calling application to evaluate privilege to performany ASU-mediated action on a TIU document.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU CAN CHANGE COSIGNER?",
+    "desc": "BOOLEAN RPC to evaluate user’s privilege to modify the expected cosigner, given the current status of the document, and the user’s role with respect to it.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU DIV AND CLASS INFO",
+    "desc": "Returns a list of Divisions and User Classes for a specific User.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU DOCUMENTS BY CONTEXT",
+    "desc": "Returns lists of TIU Documents that satisfy the following search criteria: 1 - signed documents (all)   2 - unsigned documents  3 - uncosigned documents4 - signed documents/author5 - signed documents/date range",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD CAN EDIT",
+    "desc": "Returns TRUE if the current user is allowed to edit template fields.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD CHECK",
+    "desc": "Very similar to IMPORT^TIUSRVF, except does not save template fields.Resolves self referencing loops, and takes into account fields withthe same name already saved.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD DOLMTEXT",
+    "desc": "Reads through an array of text and converts all entries of templatefields to their assocaited List Manager text values.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD EXPORT",
+    "desc": "Exports Template Fields in XML format",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD IMPORT",
+    "desc": "Imports Template Fields from XML format",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD LOAD",
+    "desc": "Returns a single Template Field object",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD LOAD BY IEN",
+    "desc": "Returns a single Template Field object.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD LOCK",
+    "desc": "Locks a template field record for editing",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD NAME IS UNIQUE",
+    "desc": "Returns TRUE if the template field name is unique",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU FIELD UNLOCK",
+    "desc": "Unlock Template Field",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET ALERT INFO",
+    "desc": "Given a TIU XQAID, return the patient and document type for the item beingalerted.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET BOILERPLATE",
+    "desc": "Returns a titles boilerplate.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DEFAULT PROVIDER",
+    "desc": "This RPC returns the default provider as specified by the TIU Site ParameterDEFAULT PRIMARY PROVIDER, which has the following allowable values:0      NONE, DON’T PROMTIn which case the call will return 0^1      DEFAULT, BY LOCATIONIn this case, the call will return the default provider for a given HospitalLocation, as specified in the set-up for the Clinic in MAS. If a defaultprovider is specified for the location in question, that person will bereturned. If the Clinic set-up specifies use of the Primary Provider (if defined) for the patient, then that person will be returned. The returnformat will be DUZ^LASTNAME,FIRSTNAME.2      AUTHOR (IF PROVIDER)In this case, the call will return the current user (if they are a known Provider). If their not a known Provider, then the call will return 0^.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DOCUMENT PARAMETERS",
+    "desc": "This Remote Procedure returns the parameters by which a given documentor document type is to be processed.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DOCUMENT STATUS",
+    "desc": "This RPC is used to retrieve the Status (8925.6 IEN) of a TIU DOCUMENT.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DOCUMENT TITLE",
+    "desc": "This remote procedure returns the pointer to the TIU DOCUMENT DEFINITIONFILE that corresponds to the TITLE of the document identified in the TIUDAparameter.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DOCUMENTS FOR REQUEST",
+    "desc": "This Remote Procedure returns the list of documents associated with agiven Request (e.g., Consult Request, or Surgical Case).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DS TITLES",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET DS URGENCIES",
+    "desc": "Returns a set of discharge summary urgencies for use in a long list box.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET LINKED PRF NOTES",
+    "desc": "Returns list of SIGNED, LINKED PRF notes for given patient, for givenPRF Title",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET PERSONAL PREFERENCES",
+    "desc": "Returns Users personal preferences for TIU in the following format: TIUY = USER [1P] ^ DEFAULT LOCATION [2P] ^ REVIEW SCREEN SORT FIELD [3S] ^    ==&gt;REVIEW SCREEN SORT ORDER [4S] ^ DISPLAY MENUS [5S] ^ PATIENT    ==&gt;SELECTION PREFERENCE [6S] ^ ASK ‘Save changes?’ AFTER EDIT [7S] ^    ==&gt;ASK SUBJECT FOR PROGRESS NOTES [8S] ^",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET PN TITLES",
+    "desc": "This API returns a list of Progress Notes Titles, including a SHORT LISTof preferred titles as defined by the user, and a LONG LIST of all titlesdefined at the site.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET PRF ACTIONS",
+    "desc": "This RPC gets the Patient Record Flag History Assignments/Actions for a Patient/Title Combination.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET PRF TITLE",
+    "desc": "Returns IEN of the TIU Note Title in file 8925.1 which is associatedwith given flag for given patient.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET RECORD TEXT",
+    "desc": "This RPC will get the textual portion of a TIU Document Record.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET REQUEST",
+    "desc": "This Remote Procedure returns the variable pointer to the REQUESTINGPACKAGE REFERENCE (File #8925, Field #1405). This would be the record inthe Requesting Package (e.g., Consult/Request Tracking or Surgery) forwhich the resulting document has been entered in TIU.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU GET SITE PARAMETERS",
+    "desc": "This RPC returns the TIU Parameters for the Division the user is logged in to.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU HAS AUTHOR SIGNED?",
+    "desc": "Boolean RPC returns a value of 0 if the author has not signed and the user attempting to sign is the expected co-signer.  Returns a 1 if the author has signed or the user attempting to sign is NOT the expected co-signer.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU ID ATTACH ENTRY",
+    "desc": "This RPC will attach a a document as an Interdisciplinary (ID) entry to anID Parent document.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU ID CAN ATTACH",
+    "desc": "This BOOLEAN RPC evaluates the question of whether a particular documentmay be attached as an entry to an Interdisciplinary Note (i.e., can thisdocument be an ID Child?).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU ID CAN RECEIVE",
+    "desc": "This BOOLEAN RPC evaluates the question of whether a particular documentmay receive an entry as an Interdisciplinary Parent Note (i.e., can thisdocument be an ID Parent?).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU ID DETACH ENTRY",
+    "desc": "This call will remove an ID Entry from an Interdisciplinary Note.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IDENTIFY CLINPROC CLASS",
+    "desc": "This RPC gets the CLINICAL PROCEDURES TIU Document Definitionfile (#8925.1) IEN.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IDENTIFY CONSULTS CLASS",
+    "desc": "This RPC returns the record number of the class CONSULTS in the TIUDOCUMENT DEFINITION file (#8925.1).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IDENTIFY SURGERY CLASS",
+    "desc": "This RPC returns the record number of the class identified by the CLNAMEparameter in the TIU DOCUMENT DEFINITION file (#8925.1).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IS THIS A CLINPROC?",
+    "desc": "This RPC evaluates whether or not a Title is under theCLINICAL PROCEDURES Class.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IS THIS A CONSULT?",
+    "desc": "BOOLEAN RPC which evaluates whether the title indicated is that of aconsult.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IS THIS A SURGERY?",
+    "desc": "BOOLEAN RPC which evaluates whether the title indicated is that of aSURGICAL REPORT or PROCEDURE REPORT (NON-O.R.).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IS USER A PROVIDER?",
+    "desc": "This Boolean RPC returns TRUE if the user was a known provider on the date specified.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU IS USER A USR PROVIDER",
+    "desc": "This Boolean RPC returns TRUE if the user was a member of USR CLASS PROVIDER on the date specified.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU ISPRF",
+    "desc": "This RPC is to check to see if the passed in TIU DOCUMENT TITLE IEN is a Patient Record Flag TITLE.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU LINK TO FLAG",
+    "desc": "This RPC is used to link a Progress Note to a Patient Record Flag",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU LOAD BOILERPLATE TEXT",
+    "desc": "This RPC will load the boilerplate text associated with the selectedtitle, and execute the methods for any objects embedded in the boilerplatetext.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU LOAD RECORD FOR EDIT",
+    "desc": "This RPC loads the return array with data in a format consistent with thatrequired by the TIU UPDATE RECORD API.  It should be invoked when the userinvokes the Edit action, to load the dialog for editing the document.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU LOCK RECORD",
+    "desc": "This RPC will issue an incremental LOCK on the record identified by theTIUDA parameter, returning an integer truth value indicating successor failure in obtaining the LOCK.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU NOTES",
+    "desc": "This API gets lists of progress notes for a patient, with optional parameters for STATUS, EARLY DATE/TIME, and LATE DATE/TIME.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU NOTES 16 BIT",
+    "desc": "This API gets lists of progress notes for a patient, with optional parameters for STATUS, EARLY DATE/TIME, and LATE DATE/TIME.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU NOTES BY VISIT",
+    "desc": "This API gets lists of Progress Notes by visit from TIU.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU ONE VISIT NOTE?",
+    "desc": "Boolean RPC to evaulate if note has a corresponding visit.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU REM DLG OK AS TEMPLATE",
+    "desc": "Returns TRUE is the passed in reminder dialog is allowed to be used ina TIU Template.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU REMINDER DIALOGS",
+    "desc": "Returns a list of reminder dialogs allowed for use as Templates.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU REQUIRES COSIGNATURE",
+    "desc": "This Boolean RPC simply evaluates whether the current user requirescosignature for TIU DOCUMENTS, and returns a 1 if true, or a 0 if false.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU SET ADMINISTRATIVE CLOSURE",
+    "desc": "This remote procedure sets the file attributes necessary to close adocument by administrative action (either manually or by scanning a paperdocument that doesn’t require the signature of an author as a typical TIUDocument would).",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU SET DOCUMENT TEXT",
+    "desc": "This RPC buffers the transmittal of text (i.e., the body of TIU Documents)from the Client to the Server. It allows documents of indefinite size tobe filed, without risk of an allocate error on the M Server.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU SIGN RECORD",
+    "desc": "This API Supports the application of the user’s electronic signature to aTIU document while evaluating authorization, and validating the user’selectronic signature.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU SUMMARIES",
+    "desc": "This API gets lists of Discharge Summaries for a patient, with optional parameters for STATUS, EARLY DATE/TIME, and LATE DATE/TIME.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU SUMMARIES BY VISIT",
+    "desc": "This API returns lists of Discharge Summaries by visit.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE ACCESS LEVEL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE ALL TITLES",
+    "desc": "Returns a long list of all active titles.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE CHECK BOILERPLATE",
+    "desc": "This RPC will evaluate boilerplate passed in the input array, checking tosee whether any of the embedded objects are inactive, faulty, orambiguous.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GET DEFAULTS",
+    "desc": "Returns Default Template Settings",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GET DESCRIPTION",
+    "desc": "Returns a Template’s Description",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GETBOIL",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GETITEMS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GETLINK",
+    "desc": "Returns template linked to a specific title or reason for request.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GETPROOT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GETROOTS",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE GETTEXT",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE ISEDITOR",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE LOCK",
+    "desc": "Locks Template",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE PERSONAL OBJECTS",
+    "desc": "Returns a list or Patient Data Objects allowed in Personal Templates.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE SET DEFAULTS",
+    "desc": "Saves Template Default Settings",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE SET ITEMS",
+    "desc": "This RPC will create or update the items for a Group, Class, or Root.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU TEMPLATE UNLOCK",
+    "desc": "Unlocks a template.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU UNLOCK RECORD",
+    "desc": "This RPC will decrement the lock on a given TIU Document Record, identifiedby the TIUDA input parameter. The return value will always be 0.",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU USER INACTIVE?",
+    "desc": "RPC evaluates user’s DIUSER status and termination status when selected.Returns 0 if active        1 if inactive",
+    "category": "unknown"
+  },
+  {
+    "name": "TIU WHICH SIGNATURE ACTION",
+    "desc": "This RPC infers whether the user is trying to sign or cosign the docuementin question, and indicates which ASU ACTION the GUI should pass to the TIUAUTHORIZATION RPC.",
+    "category": "unknown"
+  },
+  {
+    "name": "VAFCTFU CONVERT ICN TO DFN",
+    "desc": "Given a patient Integration Control Number (ICN), this will returnthe patient Internal Entry Number (IEN) from the PATIENT file (#2).",
+    "category": "unknown"
+  },
+  {
+    "name": "YS GAF API",
+    "desc": "",
+    "category": "unknown"
+  },
+  {
+    "name": "ORECS01 ECPRINT",
+    "desc": "",
+    "category": "utility"
+  },
+  {
+    "name": "ORQQCN PRINT SF513",
+    "desc": "",
+    "category": "utility"
+  },
+  {
+    "name": "ORQQCN SF513 WINDOWS PRINT",
+    "desc": "Print consults Standard Form 513 to Windows device from GUI application.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWCS PRINT REPORT",
+    "desc": "This rpc is used to print a consult report on the Consult tabin CPRS.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWD1 PRINTGUI",
+    "desc": "RPC used by CPRS GUI to print orders to a designated print device.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWD1 RVPRINT",
+    "desc": "RPC used by CPRS GUI to print orders to a designated print device afterthe review or sign actions were used.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRA PRINT REPORT",
+    "desc": "This rpc is used to print an imaging report on the Imaging tabin CPRS.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP GET DEFAULT PRINTER",
+    "desc": "Returns default printer.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT LAB REMOTE",
+    "desc": "This rpc is used to print a remote report on the Labs tab in CPRS. RETURN PARAMETER DESCRIPTION: If the print request was successfully queued then the Task manager task number is return. Otherwise, and error code and error description are returned. Error Code Table:       Code            Text      —-            —-        0             ",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT LAB REPORTS",
+    "desc": "This rpc is used to print a report on the Labs tabin CPRS.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT REMOTE REPORT",
+    "desc": "This rpc is used to print a remote report on the Report tab in CPRS.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT REPORT",
+    "desc": "This rpc is used to print a report on the Report tabin CPRS.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT V REPORT",
+    "desc": "This rpc is used to print a V type report on the Reports tab in CPRS",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT WINDOWS LAB REMOTE",
+    "desc": "Prints remote CPRS GUI information to windows printer.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT WINDOWS REMOTE",
+    "desc": "Prints CPRS GUI information to windows printer.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP PRINT WINDOWS REPORT",
+    "desc": "Prints CPRS GUI information to windows printer.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP SAVE DEFAULT PRINTER",
+    "desc": "Saves printer as user’s default printer.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP WINPRINT DEFAULT",
+    "desc": "Returns whether the Windows printer is set as the default for the user.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWRP WINPRINT LAB REPORTS",
+    "desc": "Prints text from CPRS GUI to a windows printer.",
+    "category": "utility"
+  },
+  {
+    "name": "ORWTIU WINPRINT NOTE",
+    "desc": "Returns a formatted global of a TIU document for output to a Windows printdevice.",
+    "category": "utility"
+  },
+  {
+    "name": "TIU GET PRINT NAME",
+    "desc": "This Remote Procedure receives a pointer to the TIU DOCUMENT DEFINITIONFILE (#8925.1) and returns a string containing the Print Name of thecorresponding Document Definition.",
+    "category": "utility"
+  },
+  {
+    "name": "TIU PRINT RECORD",
+    "desc": "Allows Printing of TIU Documents on demand.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB CREATE CONTEXT",
+    "desc": "Establishes context on the server, which will be checked by the Broker beforeexecuting any other remote procedure.  Since context is nothing more than aclient/server “B”-type option in the OPTION file (#19), standard MenuMansecurity is applied in establishing a context.  Therefore, a context optioncan be granted to user(s) exactly the same way as regular options are doneusing MenuMan.A context can not be established for the following reasons:        The user has no access to that option        The option is temporarily out of orderAn application can switch from one context to another as often as it needs to.Each time a context is created the previous context is overwritten.For more information on creating a context and the overall Broker securitysee Broker on-line help documentation.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB DEFERRED CLEARALL",
+    "desc": "This RPC is used to CLEAR all the data known to this job in the ^XTMPglobal.  Makes use of the list in ^TMP(“XWBHDL”,$J,handle).",
+    "category": "utility"
+  },
+  {
+    "name": "XWB DIRECT RPC",
+    "desc": "This is the Broker RPC that is called to request that a RPC be run on aremote system.  The data is passed by HL7 to the remote system as is thereturn value.  The difference between this and the XWB REMOTE RPC is thisis a blocking call meaning the user’s workstation will not processanything else until the data returns from the remote system.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB GET BROKER INFO",
+    "desc": "Returns info regarding setup and parameters of the Broker.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB GET VARIABLE VALUE",
+    "desc": "This RPC accepts the name of a variable which will be evaluated and itsvalue returned to the server.  For example, this RPC may be called witha parameter like DUZ which will be returned as 123456.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB IM HERE",
+    "desc": "Returns a simple value to the client.  Used to establish continued existence of the client to the server: resets the server READ timeout.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB REMOTE CLEAR",
+    "desc": "This RPC is used to CLEAR the data under a HANDLE in the ^XTMP global.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB REMOTE GETDATA",
+    "desc": "This RPC will return an ARRAY with what ever data has been sent back fromthe remote site.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB REMOTE RPC",
+    "desc": "This is the RPC that is called to request that an application RPCbe run on a remote system.  The data is passed by HL7 to the remote systemas is the return value.   This RPC will return a HANDLE that can be used to check if the data hasbeen sent back from the remote system.  The HANDLE can be used in anotherRPC to check the status of the RPC.",
+    "category": "utility"
+  },
+  {
+    "name": "XWB REMOTE STATUS CHECK",
+    "desc": "This RPC will return the status of a remote RPC.",
+    "category": "utility"
+  }
+]
