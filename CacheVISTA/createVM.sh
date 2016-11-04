@@ -32,7 +32,8 @@ else
 fi
 
 # Delegate the requested action to vagrant
-vagrant up 2>&1 | tee cache_vista_vm_provision.log
+vagrant halt > /dev/null 2>&1
+vagrant up --provision 2>&1 | tee cache_vista_vm_provision.log
 
 # Clean up what we just installed
 # TODO: Clean up

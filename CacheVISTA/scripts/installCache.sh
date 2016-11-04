@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 # Installs Intersystems Caché in an automated way
+checkSuccess() {
+    if [ $? != 0 ]; then
+        echo "*** $1 failed with an error (code $?) ***"
+        exit $?
+    else
+        echo "$1 successful!"
+    fi
+}
 
 # This utility requires root privliges
 if [[ $EUID -ne 0 ]]; then
@@ -17,6 +25,12 @@ echo "Red Hat Enterprise Linux (Santiago) release 6" > /etc/redhat-release
 instance=cache
 scriptdir=`dirname $0`
 cache_home=/opt/cachesys/$instance
+
+# Check to see if the CACHE.DAT file exists...if it does, then we exit out
+if [[ -f $cache_home/mgr/VistA/CACHE.DAT ]]; then
+    echo "Cache already installed!"
+    exit 0
+fi
 
 # Check to see if the Cache RHEL x64 installer is present in the "resources" directory
 echo "Checking for Caché installer..."
@@ -40,6 +54,7 @@ tar xzf $cache_package_file
 # Install Caché using the silent installer, per the Caché documentation
 echo "Installing Caché to $cache_home..."
 ISC_PACKAGE_INSTANCENAME="$instance" ISC_PACKAGE_INSTALLDIR="$cache_home" ./cinstall_silent
+checkSuccess "Caché installation"
 
 # Copy init scripts to $cache_home
 echo "Setting up Caché service scripts..."
@@ -93,6 +108,7 @@ else
 
     fresh_install=true
     unzip $cache_dat_file
+    checkSuccess "CACHE.DAT archive retrieval"
 fi
 
 # Backup the existing CACHE.DAT file, just to be safe
