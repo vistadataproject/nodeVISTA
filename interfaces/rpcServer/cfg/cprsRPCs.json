@@ -70,6 +70,46 @@
     "category": "mvdm-read"
   },
   {
+    "name": "GMV ALLERGY",
+    "desc": "This remote procedure call retrieves the patient’s allergy information. This remote procedure call is documented in Integration Agreement 4350.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV EXTRACT REC",
+    "desc": "This remote procedure call retrieves vital records from the GMRV VitalMeasurement (#120.5) file for a selected patient within a given date span. This remote procedure call is documented in Integration Agreement 4416.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV GET CATEGORY IEN",
+    "desc": "Returns the IEN if the value is found in the GMRV VITAL CATEGORY (#120.53)file. This remote procedure call is documented in Integration Agreement 4354.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV GET VITAL TYPE IEN",
+    "desc": "Returns the IEN if the value is found in the GMRV VITAL TYPE (#120.51)file. This remote procedure call is documented in Integration Agreement 4357.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV LATEST VM",
+    "desc": "This remote procedure call retrieves the latest vital records for a givenpatient. This remote procedure call is documented in Integration Agreement 4358.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV LOCATION SELECT",
+    "desc": "Select a hospital location by name, from a patient appointment or from apatient admission. Can also generate a list of active clinics. This remote procedure is documented in Integration Agreement 4461.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV V/M ALLDATA",
+    "desc": "This remote procedure call lists all vitals/measurements data for a givendate/time span. This remote procedure call is documented in Integration Agreement 4654.",
+    "category": "mvdm-read"
+  },
+  {
+    "name": "GMV VITALS/CAT/QUAL",
+    "desc": "Returns all qualifier information for the vital types selected. This remote procedure call is documented in Integration Agreement 4359.",
+    "category": "mvdm-read"
+  },
+  {
     "name": "OREVNTX LIST",
     "desc": "",
     "category": "mvdm-read"
@@ -380,11 +420,6 @@
     "category": "mvdm-read"
   },
   {
-    "name": "ORWTPP ADDLIST",
-    "desc": "",
-    "category": "mvdm-read"
-  },
-  {
     "name": "ORWTPP DELLIST",
     "desc": "",
     "category": "mvdm-read"
@@ -405,11 +440,6 @@
     "category": "mvdm-read"
   },
   {
-    "name": "ORWTPP SAVELIST",
-    "desc": "",
-    "category": "mvdm-read"
-  },
-  {
     "name": "TIU DETAILED DISPLAY",
     "desc": "Gets details for display of a given record.",
     "category": "mvdm-read"
@@ -417,11 +447,6 @@
   {
     "name": "TIU FIELD LIST",
     "desc": "Returns long list array of template fields",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "TIU FIELD LIST ADD",
-    "desc": "Takes in the XML string, in the format XMLSET(1)=” ",
     "category": "mvdm-read"
   },
   {
@@ -475,48 +500,13 @@
     "category": "mvdm-read"
   },
   {
-    "name": "GMV ALLERGY",
-    "desc": "This remote procedure call retrieves the patient’s allergy information. This remote procedure call is documented in Integration Agreement 4350.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV EXTRACT REC",
-    "desc": "This remote procedure call retrieves vital records from the GMRV VitalMeasurement (#120.5) file for a selected patient within a given date span. This remote procedure call is documented in Integration Agreement 4416.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV GET CATEGORY IEN",
-    "desc": "Returns the IEN if the value is found in the GMRV VITAL CATEGORY (#120.53)file. This remote procedure call is documented in Integration Agreement 4354.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV GET VITAL TYPE IEN",
-    "desc": "Returns the IEN if the value is found in the GMRV VITAL TYPE (#120.51)file. This remote procedure call is documented in Integration Agreement 4357.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV LATEST VM",
-    "desc": "This remote procedure call retrieves the latest vital records for a givenpatient. This remote procedure call is documented in Integration Agreement 4358.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV LOCATION SELECT",
-    "desc": "Select a hospital location by name, from a patient appointment or from apatient admission. Can also generate a list of active clinics. This remote procedure is documented in Integration Agreement 4461.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV V/M ALLDATA",
-    "desc": "This remote procedure call lists all vitals/measurements data for a givendate/time span. This remote procedure call is documented in Integration Agreement 4654.",
-    "category": "mvdm-read"
-  },
-  {
-    "name": "GMV VITALS/CAT/QUAL",
-    "desc": "Returns all qualifier information for the vital types selected. This remote procedure call is documented in Integration Agreement 4359.",
-    "category": "mvdm-read"
-  },
-  {
     "name": "GMV ADD VM",
     "desc": "This remote procedure call is used to enter a new Vital/Measurement recordin the GMRV Vital Measurement file (#120.5). This remote procedure call is documented in Integration Agreement 3996.",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "GMV MARK ERROR",
+    "desc": "This remote procedure call marks a selected vitals record in the GMRVVital Measurement (#120.5) file as entered-in-error. This remote procedure call is documented in Integration Agreement 4414.",
     "category": "mvdm-write"
   },
   {
@@ -685,12 +675,22 @@
     "category": "mvdm-write"
   },
   {
+    "name": "ORWTPP ADDLIST",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
     "name": "ORWTPP SAVECD",
     "desc": "",
     "category": "mvdm-write"
   },
   {
     "name": "ORWTPP SAVECS",
+    "desc": "",
+    "category": "mvdm-write"
+  },
+  {
+    "name": "ORWTPP SAVELIST",
     "desc": "",
     "category": "mvdm-write"
   },
@@ -745,6 +745,11 @@
     "category": "mvdm-write"
   },
   {
+    "name": "TIU FIELD LIST ADD",
+    "desc": "Takes in the XML string, in the format XMLSET(1)=” ",
+    "category": "mvdm-write"
+  },
+  {
     "name": "TIU FIELD SAVE",
     "desc": "Saves a single Template Field",
     "category": "mvdm-write"
@@ -785,9 +790,14 @@
     "category": "mvdm-write"
   },
   {
-    "name": "GMV MARK ERROR",
-    "desc": "This remote procedure call marks a selected vitals record in the GMRVVital Measurement (#120.5) file as entered-in-error. This remote procedure call is documented in Integration Agreement 4414.",
-    "category": "mvdm-write"
+    "name": "DG SENSITIVE RECORD ACCESS",
+    "desc": "This Remote Procedure Call (RPC) will:         - Verify user is not accessing his/her own Patient file record ifthe Restrict Patient Record Access (#1201) field in the MAS parameters(#43) file is set to yes and the user does not hold the DG RECORD ACCESSsecurity key.  If parameter set to yes and user is not a key holder , asocial security number must be defined in the New Person file for the userto access any Patient file record.         - Determine if user accessing a sensitive record or an employee’srecord.",
+    "category": "mvdmRead"
+  },
+  {
+    "name": "DG SENSITIVE RECORD BULLETIN",
+    "desc": "This Remote Procedure Call (RPC) will add an entry to the DG SECURITY LOG(#38.1) file and/or generate the sensitive record access bulletindepending on the value in ACTION input parameter.  If ACTION parameter notdefined, defaults to update DG Security Log file and generate SensitiveRecord Access mail message.",
+    "category": "mvdmWrite"
   },
   {
     "name": "DG CHK BS5 XREF ARRAY",
@@ -802,11 +812,6 @@
   {
     "name": "DG CHK PAT/DIV MEANS TEST",
     "desc": "CHECKS IF MEANS TEST REQUIRED FOR PATIENT ANDCHECKS IF MEANS TEST DISPLAY REQUIRED FOR USER’S DIVISIONRETURNS 1 IN 1ST STRING IF BOTH TRUE OTHERWISE 0IF BOTH TRUE RETURNS TEXT IN 2ND AND 3RD STRING (IF ANY)",
-    "category": "unknown"
-  },
-  {
-    "name": "GMV CLOSEST READING",
-    "desc": "This remote procedure call returns the observation date/time and reading of the record closest to the date/time specified for the patient and vitaltype.",
     "category": "unknown"
   },
   {
@@ -5065,13 +5070,8 @@
     "category": "user-preferences"
   },
   {
-    "name": "DG SENSITIVE RECORD ACCESS",
-    "desc": "This Remote Procedure Call (RPC) will:         - Verify user is not accessing his/her own Patient file record ifthe Restrict Patient Record Access (#1201) field in the MAS parameters(#43) file is set to yes and the user does not hold the DG RECORD ACCESSsecurity key.  If parameter set to yes and user is not a key holder , asocial security number must be defined in the New Person file for the userto access any Patient file record.         - Determine if user accessing a sensitive record or an employee’srecord.",
-    "category": "utility"
-  },
-  {
-    "name": "DG SENSITIVE RECORD BULLETIN",
-    "desc": "This Remote Procedure Call (RPC) will add an entry to the DG SECURITY LOG(#38.1) file and/or generate the sensitive record access bulletindepending on the value in ACTION input parameter.  If ACTION parameter notdefined, defaults to update DG Security Log file and generate SensitiveRecord Access mail message.",
+    "name": "GMV CLOSEST READING",
+    "desc": "This remote procedure call returns the observation date/time and reading of the record closest to the date/time specified for the patient and vitaltype.",
     "category": "utility"
   },
   {
