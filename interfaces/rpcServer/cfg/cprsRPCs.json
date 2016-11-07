@@ -78,6 +78,12 @@
     "locked": false
   },
   {
+    "name": "DG SENSITIVE RECORD ACCESS",
+    "desc": "This Remote Procedure Call (RPC) will:         - Verify user is not accessing his/her own Patient file record ifthe Restrict Patient Record Access (#1201) field in the MAS parameters(#43) file is set to yes and the user does not hold the DG RECORD ACCESSsecurity key.  If parameter set to yes and user is not a key holder , asocial security number must be defined in the New Person file for the userto access any Patient file record.         - Determine if user accessing a sensitive record or an employee’srecord.",
+    "category": "mvdm-read",
+    "locked": false
+  },
+  {
     "name": "GMRC LIST CONSULT REQUESTS",
     "desc": "This RPC will return a list of active and pending consult requests toassociate a result with.",
     "category": "mvdm-read",
@@ -130,6 +136,12 @@
     "desc": "Returns all qualifier information for the vital types selected. This remote procedure call is documented in Integration Agreement 4359.",
     "category": "mvdm-read",
     "locked": false
+  },
+  {
+    "name": "OR GET COMBAT VET",
+    "desc": "",
+    "category": "mvdm-read",
+    "locked": true
   },
   {
     "name": "OREVNTX LIST",
@@ -318,6 +330,12 @@
     "locked": false
   },
   {
+    "name": "ORQQVI VITALS",
+    "desc": "Array of patient most recent vitals within start and stop date/times.  Ifno start and stop dates are indicated, the most recent are returned. If no start date is passed then the start date is 1 (i.e. before anydates). If no stop date is passed then the start date is also the stop date and ifthere is not start date then 9999999 is used as the stop date.",
+    "category": "mvdm-read",
+    "locked": true
+  },
+  {
     "name": "ORQQVI1 DETAIL",
     "desc": "",
     "category": "mvdm-read",
@@ -408,10 +426,22 @@
     "locked": false
   },
   {
+    "name": "ORWPT ID INFO",
+    "desc": "Returns identifying information for a patient.",
+    "category": "mvdm-read",
+    "locked": true
+  },
+  {
     "name": "ORWPT LIST ALL",
     "desc": "Returns a set of patient names for use with a long list box.",
     "category": "mvdm-read",
     "locked": false
+  },
+  {
+    "name": "ORWPT PTINQ",
+    "desc": "Returns formatted patient inquiry text for display in GUI environment.",
+    "category": "mvdm-read",
+    "locked": true
   },
   {
     "name": "ORWPT1 PCDETAIL",
@@ -600,6 +630,12 @@
     "locked": false
   },
   {
+    "name": "DG SENSITIVE RECORD BULLETIN",
+    "desc": "This Remote Procedure Call (RPC) will add an entry to the DG SECURITY LOG(#38.1) file and/or generate the sensitive record access bulletindepending on the value in ACTION input parameter.  If ACTION parameter notdefined, defaults to update DG Security Log file and generate SensitiveRecord Access mail message.",
+    "category": "mvdm-write",
+    "locked": false
+  },
+  {
     "name": "GMV ADD VM",
     "desc": "This remote procedure call is used to enter a new Vital/Measurement recordin the GMRV Vital Measurement file (#120.5). This remote procedure call is documented in Integration Agreement 3996.",
     "category": "mvdm-write",
@@ -650,6 +686,12 @@
   {
     "name": "ORQQPL EDIT SAVE",
     "desc": "sAVES EDITED PROBLEM RECORD",
+    "category": "mvdm-write",
+    "locked": true
+  },
+  {
+    "name": "ORQQPL REPLACE",
+    "desc": "REPLACES A PROBLEM THAT WAS PREVIOUSLY DELETED",
     "category": "mvdm-write",
     "locked": true
   },
@@ -945,18 +987,6 @@
     "name": "TIU WAS THIS SAVED?",
     "desc": "This Boolean Remote Procedure will evaluate whether a given document wascommitted to the database, or whether the user who last edited it wasdisconnected.",
     "category": "mvdm-write",
-    "locked": false
-  },
-  {
-    "name": "DG SENSITIVE RECORD ACCESS",
-    "desc": "This Remote Procedure Call (RPC) will:         - Verify user is not accessing his/her own Patient file record ifthe Restrict Patient Record Access (#1201) field in the MAS parameters(#43) file is set to yes and the user does not hold the DG RECORD ACCESSsecurity key.  If parameter set to yes and user is not a key holder , asocial security number must be defined in the New Person file for the userto access any Patient file record.         - Determine if user accessing a sensitive record or an employee’srecord.",
-    "category": "mvdmRead",
-    "locked": false
-  },
-  {
-    "name": "DG SENSITIVE RECORD BULLETIN",
-    "desc": "This Remote Procedure Call (RPC) will add an entry to the DG SECURITY LOG(#38.1) file and/or generate the sensitive record access bulletindepending on the value in ACTION input parameter.  If ACTION parameter notdefined, defaults to update DG Security Log file and generate SensitiveRecord Access mail message.",
-    "category": "mvdmWrite",
     "locked": false
   },
   {
@@ -2304,12 +2334,6 @@
     "locked": false
   },
   {
-    "name": "ORWPT ID INFO",
-    "desc": "Returns identifying information for a patient.",
-    "category": "read",
-    "locked": true
-  },
-  {
     "name": "ORWPT INPLOC",
     "desc": "Returns the patient’s current location if an inpatient.",
     "category": "read",
@@ -2332,12 +2356,6 @@
     "desc": "Returns message if patient has data on a legacy system.",
     "category": "read",
     "locked": false
-  },
-  {
-    "name": "ORWPT PTINQ",
-    "desc": "Returns formatted patient inquiry text for display in GUI environment.",
-    "category": "read",
-    "locked": true
   },
   {
     "name": "ORWPT SELCHK",
@@ -2650,12 +2668,6 @@
     "desc": "Called from MS Windows Application.",
     "category": "unknown",
     "locked": false
-  },
-  {
-    "name": "OR GET COMBAT VET",
-    "desc": "",
-    "category": "unknown",
-    "locked": true
   },
   {
     "name": "ORALWORD ALLWORD",
@@ -3360,12 +3372,6 @@
     "locked": false
   },
   {
-    "name": "ORQQPL REPLACE",
-    "desc": "REPLACES A PROBLEM THAT WAS PREVIOUSLY DELETED",
-    "category": "unknown",
-    "locked": true
-  },
-  {
     "name": "ORQQPL SRVC SRCH",
     "desc": "gET LIST OF AVAILABLE SERVICES",
     "category": "unknown",
@@ -3478,12 +3484,6 @@
     "desc": "",
     "category": "unknown",
     "locked": false
-  },
-  {
-    "name": "ORQQVI VITALS",
-    "desc": "Array of patient most recent vitals within start and stop date/times.  Ifno start and stop dates are indicated, the most recent are returned. If no start date is passed then the start date is 1 (i.e. before anydates). If no stop date is passed then the start date is also the stop date and ifthere is not start date then 9999999 is used as the stop date.",
-    "category": "unknown",
-    "locked": true
   },
   {
     "name": "ORQQVI VITALS FOR DATE RANGE",
