@@ -22,7 +22,8 @@ _.forEach(masterList, function(result) {
    rpc.category = 'unknown';
    rpc.locked = false;
 
-   //apply heuristics in priority order (high to low)
+   // apply heuristics in order of priority with 1 being the highest priority
+   // smallest value applied last (i.e 1), larger values applied first
    var heuristics = _.sortBy(config.heuristics, 'priority').reverse();
    _.forEach(heuristics, function(heuristic) {
       var regExp = new RegExp(heuristic.regExp);
