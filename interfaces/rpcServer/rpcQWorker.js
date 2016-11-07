@@ -5,7 +5,7 @@ var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 
-var parser = require('./../rpcParser/rpcParser.js');
+var parser = require('nodevista-rpcparser/rpcParser.js');
 
 var uuid = require('uuid');
 var $ = require('jquery');
@@ -14,21 +14,23 @@ var _ = require('underscore');
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('../../../VDM/prototypes/rpcFacade');
-var RPCContexts = require('../../../VDM/prototypes/rpcRunner').RPCContexts;
+var RPCFacade = require('vdm-prototypes/rpcFacade');
+var RPCContexts = require('vdm-prototypes/rpcRunner').RPCContexts;
 
 var db, rpcFacade, rpcContexts;
 var userId = '';
 var facilityId = '';
 //need for user and facility lookup
-var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
-var MVDM = require('../../../VDM/prototypes/mvdm');
+var MVDM = require('vdm-prototypes/mvdm');
+var vdmUtils = require('vdm-prototypes/vdmUtils');
 var mvdmHandlersSet = false;
 
 var fromName = CONFIG.client.defaultName;
 
 process.on('uncaughtException', function(err) {
-    db.close();
+    if (db !== undefined) {
+        db.close();
+    }
 
     console.trace('Uncaught Exception:\n', err.stack);
 
@@ -36,7 +38,9 @@ process.on('uncaughtException', function(err) {
 });
 
 function connectVistaDatabase() {
-    process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
+    process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
+    console.log("process.env.gtmroutines: " + process.env.gtmroutines);
+
     db = new nodem.Gtm();
     db.open();
 

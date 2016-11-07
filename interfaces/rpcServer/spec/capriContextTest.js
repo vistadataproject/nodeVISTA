@@ -2,7 +2,7 @@
 
 var net = require('net');
 var CONFIG = require('../cfg/testconfig.js');
-var rpcFormatter = require('../../rpcParser/rpcFormatter.js');
+var rpcFormatter = require('nodevista-rpcparser/rpcFormatter.js');
 var Clients = new require('../TestClientFramework').Clients(2, CONFIG.rpcServer.port, CONFIG.rpcServer.host);
 
 var NEW_LINE = '\r\n';
