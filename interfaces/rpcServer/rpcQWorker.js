@@ -5,7 +5,7 @@ var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 
-var parser = require('./../rpcParser/rpcParser.js');
+var parser = require('nodevista-rpcparser/rpcParser.js');
 
 var uuid = require('uuid');
 var $ = require('jquery');
@@ -14,20 +14,23 @@ var _ = require('underscore');
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('../../../VDM/prototypes/rpcFacade');
+var RPCFacade = require('vdm-prototypes/rpcFacade');
+var RPCContexts = require('vdm-prototypes/rpcRunner').RPCContexts;
 
-var db, rpcFacade;
+var db, rpcFacade, rpcContexts;
 var userId = '';
 var facilityId = '';
 //need for user and facility lookup
-var vdmUtils = require('../../../VDM/prototypes/vdmUtils');
-var MVDM = require('../../../VDM/prototypes/mvdm');
+var MVDM = require('vdm-prototypes/mvdm');
+var vdmUtils = require('vdm-prototypes/vdmUtils');
 var mvdmHandlersSet = false;
 
 var fromName = CONFIG.client.defaultName;
 
 process.on('uncaughtException', function(err) {
-    db.close();
+    if (db !== undefined) {
+        db.close();
+    }
 
     console.trace('Uncaught Exception:\n', err.stack);
 
@@ -35,12 +38,16 @@ process.on('uncaughtException', function(err) {
 });
 
 function connectVistaDatabase() {
-    process.env.gtmroutines = process.env.gtmroutines + ' ../../../VDM/prototypes'; // make VDP MUMPS available
+    process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
+    console.log("process.env.gtmroutines: " + process.env.gtmroutines);
+
     db = new nodem.Gtm();
     db.open();
 
     rpcFacade = new RPCFacade(db);
     rpcFacade.setLocking(true); //default is to utilize mvdm locking
+
+    rpcContexts = new RPCContexts(db);
 }
 
 function generateTransactionId() {
@@ -237,6 +244,9 @@ module.exports = function() {
 
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
+            // set the context (user, facility of the runner)
+            rpcContexts.setContext(messageObj.contextId);
+
             var res = callRPC(messageObj, send);
 
             LOGGER.debug('rpcQWorker: in on(\'message\') res = %j', res);
@@ -248,6 +258,10 @@ module.exports = function() {
             // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcFacade)
             if (rpcFacade !== undefined) {
                 rpcFacade.reinit();
+            }
+            // also clear the contexts
+            if (rpcContexts !== undefined) {
+                rpcContexts.clearAll();
             }
             finished();
         }

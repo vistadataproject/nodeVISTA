@@ -20,30 +20,6 @@ define([
 ], function ($, _, Backbone, Handlebars, Moment, EventsParentView, EventCollection, EventCounter, AppState, EventsTemplate, EventModalTemplate, EventBus, RPCRecord) {
    'use strict';
 
-   /**
-    HtmlCell renders any html code
-    @class Backgrid.HtmlCell
-    @extends Backgrid.Cell
-    */
-   var HtmlCell = Backgrid.HtmlCell = Backgrid.Cell.extend({
-
-      /** @property */
-      className: "html-cell",
-
-      initialize: function () {
-         Backgrid.Cell.prototype.initialize.apply(this, arguments);
-      },
-
-      render: function () {
-         this.$el.empty();
-         var rawValue = this.model.get(this.column.get("name"));
-         var formattedValue = this.formatter.fromRaw(rawValue, this.model);
-         this.$el.append(formattedValue);
-         this.delegateEvents();
-         return this;
-      }
-   });
-
    var RPCEventsView = EventsParentView.extend({
 
       initialize: function (options) {
@@ -63,19 +39,9 @@ define([
 
          this.rpcRecord = new RPCRecord();
 
-         var formatAsHtml = function(rawValue, model) {
-
-            //mvdmLocked runner events are displayed as bold
-            if (model.get('runner') === 'mvdmLocked') {
-               return '<strong>' + rawValue + '</strong>';
-            }
-
-            return rawValue;
-         };
-
          var htmlFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
             fromRaw: function (rawValue, model) {
-               return formatAsHtml(rawValue, model);
+               return Backgrid.HtmlCell.formatAsHtml(rawValue, model);
             }
          });
 
@@ -105,23 +71,23 @@ define([
                name: 'timestamp',
                label: 'Date',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-                     return formatAsHtml(Moment(rawValue).format("MMM Do YYYY @ h:mm:ss a"), model);
+                     return Backgrid.HtmlCell.formatAsHtml(Moment(rawValue).format("MMM Do YYYY @ h:mm:ss a"), model);
                   }
                })
             }, {
                name: 'rpcName',
                label: 'RPC Name',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: htmlFormatter
             }, {
                name: 'runner',
                label: 'Path',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
                      var retVal = rawValue;
@@ -134,26 +100,26 @@ define([
                         retVal = 'Server';
                      }
 
-                     return formatAsHtml(retVal, model);
+                     return Backgrid.HtmlCell.formatAsHtml(retVal, model);
                   }
                })
             }, {
                name: 'transactionId',
                label: 'Transaction Id',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: htmlFormatter
             }, {
                name: 'ipAddress',
                label: 'IP Address',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: htmlFormatter
             }, {
                name: 'user',
                label: 'User',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
 
@@ -163,14 +129,14 @@ define([
 
                      var retVal = rawValue.name + ' (' + rawValue.id + ')';
 
-                     return formatAsHtml(retVal, model);
+                     return Backgrid.HtmlCell.formatAsHtml(retVal, model);
                   }
                })
             }, {
                name: 'facility',
                label: 'Facility',
                editable: false,
-               cell: HtmlCell,
+               cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
 
@@ -180,7 +146,7 @@ define([
 
                      var retVal = rawValue.name + ' (' + rawValue.id + ' / ' + rawValue.stationNumber + ')';
 
-                     return formatAsHtml(retVal, model);
+                     return Backgrid.HtmlCell.formatAsHtml(retVal, model);
                   }
                })
             }]

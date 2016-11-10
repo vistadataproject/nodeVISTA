@@ -28,15 +28,15 @@ define([
       return new Handlebars.SafeString(selectHtml);
    });
 
-   Handlebars.registerHelper('show-runner', function(event) {
+   Handlebars.registerHelper('show-runner', function(runner) {
 
-      if (event.runner === 'rpcRunner') {
+      if (runner === 'rpcRunner') {
          return 'RPC Runner';
-      } else if (event.runner === 'mvdmLocked') {
+      } else if (runner === 'mvdmLocked') {
          return 'MVDM Locked';
-      } else if (event.runner === 'server') {
+      } else if (runner === 'server') {
          return 'Server';
-      } else return event.runner;
+      } else return runner;
    });
 
    Handlebars.registerHelper('jsBeautify', function(obj) {

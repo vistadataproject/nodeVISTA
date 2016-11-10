@@ -1,20 +1,19 @@
 'use strict';
 
 var net = require('net');
-var CONFIG = require('../cfg/config.js');
-var rpcFormatter = require('../../rpcParser/rpcFormatter.js');
+var CONFIG = require('../cfg/testconfig.js');
+var rpcFormatter = require('nodevista-rpcparser/rpcFormatter.js');
 var Clients = new require('../TestClientFramework').Clients(2, CONFIG.rpcServer.port, CONFIG.rpcServer.host);
 
 var NEW_LINE = '\r\n';
 
 
 // change for local VistA
-var robertSSN = '000000029';
-var robertName = "ALEXANDER,ROBERT";
-var robertIEN = '58';
-var robertAccess = 'fakedoc1';
-var robertVerify = '1Doc!@#$';
-
+var robertSSN = CONFIG.robertSSN;
+var robertName = CONFIG.robertName;
+var robertIEN = CONFIG.robertIEN;
+var robertAccess = CONFIG.robertAccess;
+var robertVerify = CONFIG.robertVerify;
 
 function test1() {
     Clients.sendRpc(0, rpcFormatter.buildRpcGreetingString(Clients.getClient(0).localAddress, 'testClient'))
@@ -34,7 +33,7 @@ function test1() {
         .then(function (response) {
             var signonSetupResponseArray = response.split(NEW_LINE);
 
-            if (signonSetupResponseArray.length > 8 && signonSetupResponseArray[5] == 1) {
+            if (signonSetupResponseArray.length > 7 && signonSetupResponseArray[5] == 1) {
                 console.log('XUS SIGNON SETUP OK, trying XWB CREATE CONTEXT DVBA CAPRI GUI');
 
                 // build next rpc

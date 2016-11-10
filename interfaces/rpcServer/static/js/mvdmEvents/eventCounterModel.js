@@ -16,6 +16,10 @@ define([
          remove: 0,
          unremoved: 0,
          delete: 0
+      },
+      consumeEvent: function(eventModel) {
+         this.set('total', this.get('total') + 1);
+         this.set(eventModel.get('type'), this.get(eventModel.get('type')) + 1);
       }
    });
 

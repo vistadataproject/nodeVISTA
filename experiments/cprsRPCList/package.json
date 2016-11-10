@@ -1,0 +1,10 @@
+{
+  "name": "cprsRPCList",
+  "description": "Generates cprsRPCs.json that is used by the rpcServer stats display",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "underscore": "latest"
+  }
+}
