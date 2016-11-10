@@ -124,9 +124,9 @@ function handleConnection(conn) {
 
                 if (!responseObject.finished) {
                     // send() from worker handler
-                    if (responseObject.message.type === 'emitRpcEvent') {
+                    if (responseObject.type === 'emitRpcEvent') {
                         EventManager.emit('rpcCall', responseObject.message.event);
-                    } else if (responseObject.message.type === 'emitMvdmEvent') {
+                    } else if (responseObject.type === 'emitMvdmEvent') {
                         EventManager.emit(responseObject.message.eventType, responseObject.message.event);
                     }
                 } else {
