@@ -45,8 +45,8 @@
     "util": "latest",
     "uuid": "^2.0.2",
 
-    "ewd-qoper8": "file:../ewd-qoper8",
-    "nodevista-rpcparser": "file:../rpcParser",
+    "ewd-qoper8": "file:../lib/ewd-qoper8",
+    "nodevista-rpcparser": "file:../lib/rpcParser",
     "vdm-prototypes": "file:../../../VDM/prototypes"
   }
 }

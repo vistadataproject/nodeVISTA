@@ -2,8 +2,8 @@ var net = require('net');
 var async = require('async');
 var fs = require('fs');
 var util = require('util');
-var parser = require('./../rpcParser/rpcParser.js');
-var parserUtils = require('./../rpParser/rpcParserUtils.js');
+var parser = require('nodevista-rpcparser/rpcParser.js');
+var parserUtils = require('nodevista-rpcparser/rpcParserUtils.js');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./config.js');
 

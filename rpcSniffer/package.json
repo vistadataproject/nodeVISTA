@@ -11,6 +11,8 @@
         "util": "latest",
         "async": "latest",
         "underscore.string": "latest",
-        "bunyan": "latest"
+        "bunyan": "latest",
+
+        "nodevista-rpcparser": "file:../lib/rpcParser"
     }
 }

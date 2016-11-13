@@ -1,7 +1,10 @@
 
 This is a copy of ewd-qoper8 for use in nodeVISTA for specific use in nodeVISTA with changes to the code for compatibility issues in packaging.
 The use of this copy of ewd-qoper8 is not intended to be long term and will be removed from nodeVISTA if and when ewd-qoper8 is updated in a way that eliminates the need for the modifications required for packaging compatibility with nodeVISTA.
+Also the as the versions change in ewd-qoper8, the interface can change. For example in lib/worker/proto/messageHandler.js, the send() and finished() wrappers were changed. When once the results were returned in the messageObj unaltered, the current version deletes "type". These types of unexpected changes to API's, along with hard file paths necessitate the modified copy in nodeVISTA.
 The copy was made from github: https://github.com/robtweed/ewd-qoper8 (build 3.10, Nov 7, 2016).
+
+
 
 # ewd-qoper8: High-performance Node.js Message Queue
 
