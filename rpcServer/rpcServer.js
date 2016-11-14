@@ -6,7 +6,7 @@ var fs = require('fs');
 var util = require('util');
 var _ = require('underscore');
 var LOGGER = require('./logger.js');
-
+var CONFIG = require('./cfg/config.js');
 var mvdmClient = require('./mvdmClient');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
@@ -23,24 +23,28 @@ var EOT = '\u0004';
 var ENQ = '\u0005';
 
 
-console.log("__dirname: %j, __filename: %j", __dirname, __filename);
-// check if config file is in current (operating) directory.
-try {
-    fs.accessSync(__dirname + '/config.js', fs.F_OK);
-    console.log('using existing config.js');
-
-} catch (e) {
-    console.log('config.js does not exist, copying default. Please configure config.js');
-
-    var conf = fs.readFileSync(__dirname + '/cfg/config.js');
-    fs.writeFileSync(__dirname + '/config.js', conf);
-
-    process.exit();
-
-
+// check for command line overrides
+if (process.argv.length > 2) {
+    for (var argnum = 2; argnum < process.argv.length; argnum++) {
+        if (process.argv[argnum].indexOf("from=") > -1) {
+            // from=something
+            fromName = process.argv[argnum].substring(5);
+            LOGGER.info("Using '%s' as the from in the capture", fromName);
+        } else if (process.argv[argnum].indexOf("captureFile=") > -1) {
+            // captureFile=path
+            capturePath = process.argv[argnum].substring(12);
+            LOGGER.info("Capture file being written to %s", capturePath);
+        } else if (process.argv[argnum].indexOf("snifferPort=") > -1) {
+            // snifferPort=port
+            port = parseInt(process.argv[argnum].substring(12));
+            if (isNaN(port)) {
+                port = CONFIG.rpcServer.port;
+            }
+            LOGGER.info("Setting sniffer port to %s", port);
+        }
+    }
 }
 
-var CONFIG = require(__dirname + '/config.js');
 var fromName = CONFIG.client.defaultName;
 var capturePath = CONFIG.FILE.defaultCaptureFile;
 var port = CONFIG.rpcServer.port;
@@ -180,34 +184,4 @@ function handleConnection(conn) {
 
 }
 
-function copyFile(source, target, cb) {
-    console.log('copying config.js source: %j, target: %j', source, target);
-
-    var cbCalled = false;
-
-    var rd = fs.createReadStream(source);
-    rd.on("error", function(err) {
-        console.log("read file error");
-        done(err);
-    });
-    var wr = fs.createWriteStream(target);
-    wr.on("error", function(err) {
-        console.log("read file error");
-        done(err);
-    });
-    wr.on("close", function(ex) {
-        console.log("close");
-        done();
-    });
-    console.log("BEFORE PIPE rd: %j, wr: %j", rd, wr);
-    rd.pipe(wr);
-
-    function done(err) {
-        console.log("done? error: %j", err);
-        if (!cbCalled) {
-            cb(err);
-            cbCalled = true;
-        }
-    }
-}
 
