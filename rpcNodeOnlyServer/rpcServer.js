@@ -12,8 +12,12 @@ var mvdmClient = require('./mvdmClient');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 var parser = require('nodevista-rpcparser/rpcParser.js');
+var rpcFormatter = require('nodevista-rpcparser/rpcFormatter.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
 var vdmUtils = require('vdm-prototypes/vdmUtils');
+
+var utilityRpcLModel = require('vdm-prototypes/utilityRPCs/rpcLRemoteUtilitiesModel').rpcLModel;
+var utilityRpcLClassesByName = utilityRpcLModel.reduce(function(obj, val) {obj[val["name"]] = val; return obj;  }, {});
 
 // imports for RPCService
 var nodem = require('nodem');
@@ -199,6 +203,20 @@ function handleConnection(conn) {
         var facilityId = '';
 
         var rpcObject = parser.parseRawRPC(messageObject.rpcPacket);
+
+        if (utilityRpcLClassesByName[rpcObject.name] !== undefined) {
+            // run the RPC by the model
+            LOGGER.debug('rpcServer.js trying to run utilityRPC: %j', rpcObject);
+
+            var rpcModel = utilityRpcLClassesByName[rpcObject.name];
+            var invokeResult = rpcModel.processRPCInvocation(rpcObject.args);
+            response = rpcModel.toReturnValue(invokeResult);
+            response = rpcFormatter.encapsulate(response);
+
+            rpcObject.to = "server";
+
+        } else
+
 
         if (unsupportedRPCs.has(rpcObject.name)) {
             // Check if it is a connection RPC, for now we will just catch these and return hard coded responses
