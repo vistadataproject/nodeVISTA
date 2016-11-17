@@ -44,5 +44,7 @@ Two more steps:
   1. FMQL also runs as a service. Follow [fmql](/fmql) to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
 
   2. To develop inside the VM, git clone the [VDM](https://github.com/vistadataproject/VDM) git and go into _prototypes_. There you'll find the existing VDP VDM prototypes and this is also where we develop new prototypes. 
+  
+  3. To run the official CPRS, you need to change the VISTA file that holds a cypher. [Follow this instruction](https://github.com/vistadataproject/nodeVISTA/wiki/Replacing-OSEHRA-VistA-Encryption-Ciper)
 
 Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
