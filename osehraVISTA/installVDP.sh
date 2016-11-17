@@ -4,6 +4,10 @@
 # ... one issue: why npm install for fmqlServer doesn't reuse top level node_modules nodem
 # ... another: recheck FMQL MUMPS copying
 
+#
+# TODO: move over to new form of nodeVISTA and VDM + extra steps like osehra vista key change
+#
+
 vdpid=vdp
 test -d /home/$vdpid &&
 { echo "VISTA Data Project user $vdpid already Installed. Aborting."; exit 0; }
