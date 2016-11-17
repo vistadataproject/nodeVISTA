@@ -1,0 +1,52 @@
+{
+  "name": "nodevista-rpcserver",
+  "description": "nodeVISTA RPC Broker replacement Server",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "files": [
+    "cfg",
+    "spec",
+    "static",
+    "eventManager.js",
+    "logger.js",
+    "mvdmClient.js",
+    "mvdmManagement.js",
+    "package.json",
+    "README.md",
+    "rpcQWorker.js",
+    "rpcServer.js",
+    "TestClientFramework.js",
+    "unsupportedRPCs.js"
+  ],
+  "main": "rpcServer.js",
+  "dependencies": {
+    "backbone": "^1.3.3",
+    "backbone.paginator": "^2.0.5",
+    "backgrid": "^0.3.7",
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "bunyan": "latest",
+    "express": "^4.14.0",
+    "express-ws": "^2.0.0",
+
+    "fs": "latest",
+    "handlebars": "^4.0.5",
+    "hashmap": "latest",
+    "jquery": "^3.1.0",
+    "js-beautify": "^1.6.3",
+    "moment": "^2.14.1",
+    "net": "latest",
+    "nodem": "latest",
+    "promise": "latest",
+    "requirejs": "^2.2.0",
+    "text": "requirejs/text",
+    "underscore": "latest",
+    "util": "latest",
+    "uuid": "^2.0.2",
+
+    "ewd-qoper8": "file:../lib/ewd-qoper8",
+    "nodevista-rpcparser": "file:../lib/rpcParser",
+    "vdm-prototypes": "file:../../VDM/prototypes"
+  }
+}
