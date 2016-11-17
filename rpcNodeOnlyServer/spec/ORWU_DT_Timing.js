@@ -15,6 +15,14 @@ var robertIEN = CONFIG.robertIEN;
 var robertAccess = CONFIG.robertAccess;
 var robertVerify = CONFIG.robertVerify;
 
+var startTime, endTime;
+
+// build ORWU DT RPC
+var dtRpcName = "ORWU DT";
+var dtRpcArgs = [rpcFormatter.buildLiteralParamString("NOW")];
+var dtRpc = rpcFormatter.buildRpcString(dtRpcName, dtRpcArgs);
+
+
 function test1() {
     Clients.sendRpc(0, rpcFormatter.buildRpcGreetingString(Clients.getClient(0).localAddress, 'testClient'))
         .then(function (response) {
@@ -76,29 +84,138 @@ function test1() {
         .then(function (response) {
 
             if (response === rpcFormatter.encapsulate('1')) {
-                console.log('XWB CREATE CONTEXT OK, running  ORWU_DT');
-
-                // build next rpc
-                var rpcName = "ORWU DT";
-                var rpcArgs = [rpcFormatter.buildLiteralParamString("NOW")];
-                var rpc = rpcFormatter.buildRpcString(rpcName, rpcArgs);
+                console.log('XWB CREATE CONTEXT OK, running  ORWU DT');
 
                 // send the rpc and wait on the promise of the response
-                return Clients.sendRpc(0, rpc);
+                startTime = new Date().getTime();
+
+                return Clients.sendRpc(0, dtRpc);
             } else Clients.throwError('XWB CREATE CONTEXT', response);
         })
 
 
 
+        .then(function (response) {
 
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
 
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
 
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
 
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
 
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
+        .then(function (response) {
+
+            if (response !== undefined && response.length > 3) {
+                return Clients.sendRpc(0, dtRpc);
+            } else Clients.throwError('ORWU DT', response);
+        })
 
 
         .then(function (response) {
             if (response !== undefined && response.length > 3) {
+
+                endTime = new Date().getTime();
+                console.log("\n\nExecution time of ORWU DT: %j ms\n\n", endTime - startTime);
 
                 console.log('ORWU DT OK: %j, trying #BYE#', response);
 
