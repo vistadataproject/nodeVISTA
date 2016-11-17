@@ -42,28 +42,25 @@ echo "Installing 'nodem' for $vdpid - slowest piece"
 su $vdpid -c "mkdir logs"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> logs/nodemInstall.log"
 
-# git clone nodeVISTA into /tmp and take parts
-echo "Cloning nodeVISTA client code for use by $vdpid"
+echo "Cloning nodeVISTA and VDM for use by $vdpid"
 git clone -q https://github.com/vistadataproject/nodeVISTA.git
-su $vdpid -c "cp -r nodeVISTA/nodemExamples ."
-su $vdpid -c "cp -r nodeVISTA/interfaces/fmql ."
-su $vdpid -c "cp -r nodeVISTA/Commands ."
-rm -rf nodeVISTA
+git clone -q https://github.com/vistadataproject/VDM.git
 
 # Add FMQL x 2
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
 # echo "Adding FMQL (MUMPS) to osehraVISTA"
 su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
-su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
-echo "Adding FMQL one pagers to fmql server copied from nodeVISTA"
-su $vdpid -c "mkdir fmql/static"
-su $vdpid -c "cp FMQL/webclients/* fmql/static"
+echo "... further FMQL steps need to be done manually - will be automated by Dec 16th"
+# su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
+# echo "Adding FMQL one pagers to fmql server copied from nodeVISTA"
+# su $vdpid -c "mkdir fmql/static"
+# su $vdpid -c "cp FMQL/webclients/* fmql/static"
 # TODO: check if this removes NPM install step from fmql server setup
 # cd fmql
 # su $vdpid npm install
 # Note: took fmqlServer above from the copy in nodeVISTA git
-rm -r FMQL
+# rm -r FMQL
 
 #
 # NOTE: for now, not installing the FMQL server app. Go into $vdphome/fmql and follow the 
