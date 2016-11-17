@@ -39,29 +39,6 @@ Now let's go inside and add _VDP Development_ to the VM ...
 ...
 ```
 
-Switch to become _vdp_ user and run some basic clients ...
-
-```text
->> su vdp
-password: vistaisdata
->> cd
->> cd nodemExamples
->> node basic.js 
-Basic nodem calls ...
-	db.open returns: {"ok":1,"result":"1"}
-	...
->> node patterns.js
-...
->> node fmql.js
-Return from FMQL: {"ok":1,"function":"QUERY^FMQLQP","result":"^TMP(29852,\"FMQLJSON\")","arguments":["DESCRIBE 2-1"]}
-{ results: 
-   [ { name: 
-        { fmId: '.01',
-          fmType: '4',
-          value: 'CARTER,DAVID JR',
-          type: 'literal' },
-```
-
 Two more steps:
 
   1. FMQL also runs as a service. Follow [fmql](/fmql) to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
