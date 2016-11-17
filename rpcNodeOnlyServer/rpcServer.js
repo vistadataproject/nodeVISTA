@@ -164,12 +164,13 @@ function handleConnection(conn) {
 
     function onConnectedClose() {
 
-        var messageObject = {};
-        messageObject.method = 'dbReinit';
-        processQueue.handleMessage(messageObject, function(responseObject) {
-            LOGGER.debug("in rpcServer onConnectedClose after reinit");
-
-        });
+        if (rpcFacade !== undefined) {
+            rpcFacade.reinit();
+        }
+        // also clear the contexts
+        if (rpcContexts !== undefined) {
+            rpcContexts.clearAll();
+        }
 
         //loggedIn = false;
         //USER = null;
