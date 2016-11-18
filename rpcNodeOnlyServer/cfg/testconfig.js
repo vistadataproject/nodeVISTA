@@ -2,7 +2,7 @@ var config = {};
 
 config.rpcServer = {};
 config.rpcServer.host = '10.2.2.100';
-config.rpcServer.port = 9430;
+config.rpcServer.port = 9010;
 
 
 // change for local VistA
