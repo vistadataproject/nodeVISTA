@@ -204,7 +204,7 @@ function handleConnection(conn) {
 
         var rpcObject = parser.parseRawRPC(messageObject.rpcPacket);
 
-        if (utilityRpcLClassesByName[rpcObject.name] !== undefined) {
+        if (mvdmManagement.isNodeOnly && utilityRpcLClassesByName[rpcObject.name] !== undefined) {
             // run the RPC by the model
             LOGGER.debug('rpcServer.js trying to run utilityRPC: %j', rpcObject);
 

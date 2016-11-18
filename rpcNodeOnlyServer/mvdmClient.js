@@ -43,7 +43,12 @@ function init() {
       if (_.has(settings, 'isMvdmLocked')) {
          mvdmManagement.isMvdmLocked = settings.isMvdmLocked;
       }
-      
+
+      if (_.has(settings, 'isNodeOnly')) {
+         mvdmManagement.isNodeOnly = settings.isNodeOnly;
+      }
+
+
       return res.sendStatus(200);
    });
 

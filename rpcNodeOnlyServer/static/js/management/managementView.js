@@ -20,10 +20,13 @@ define([
          this.management.on('change', _.bind(function() {
            this.render();
          }, this));
+
       },
 
       events: {
-         "change .mvdm-lock-select": "onMvdmLockChange"
+         "change .mvdm-lock-select": "onMvdmLockChange",
+         "change .node-only-select": "onNodeOnlyChange"
+
       },
 
       render: function() {
@@ -56,6 +59,31 @@ define([
 
          this.management.sync('update', this.management);
       },
+
+      onNodeOnlyChange: function(event) {
+         if (!event.currentTarget || !event.currentTarget.value) {
+            return;
+         }
+
+         var isNodeOnlySet = undefined;
+         if (event.currentTarget.value.toLowerCase() === 'on') {
+            isNodeOnlySet = true;
+         } else if (event.currentTarget.value.toLowerCase() === 'off') {
+            isNodeOnlySet = false;
+         } else {
+            return;
+         }
+
+         //no change
+         if (isNodeOnlySet === this.management.get('isNodeOnly')) {
+            return;
+         }
+
+         this.management.set('isNodeOnly', isNodeOnlySet);
+
+         this.management.sync('update', this.management);
+      },
+
 
       onClose: function () {
 

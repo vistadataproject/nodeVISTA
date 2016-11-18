@@ -28,6 +28,29 @@ define([
       return new Handlebars.SafeString(selectHtml);
    });
 
+   Handlebars.registerHelper('node-only-select', function(management) {
+
+      if (!management) {
+         return;
+      }
+
+      function setSelected(management, optionValue) {
+         if ((management.isNodeOnly && optionValue === 'on') ||
+             (!management.isNodeOnly && optionValue === 'off')) {
+            return ' selected';
+         }
+
+         return '';
+      }
+
+      var selectHtml = '<select class="form-control node-only-select">';
+      selectHtml += '<option value="on"' + setSelected(management, 'on') + '>On</option>';
+      selectHtml += '<option value="off"' + setSelected(management, 'off') + '>Off</option>';
+      selectHtml += '</select>';
+
+      return new Handlebars.SafeString(selectHtml);
+   });
+
    Handlebars.registerHelper('show-runner', function(runner) {
 
       if (runner === 'rpcRunner') {
