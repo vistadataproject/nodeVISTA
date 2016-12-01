@@ -47,6 +47,6 @@
 
     "ewd-qoper8": "file:../lib/ewd-qoper8",
     "nodevista-rpcparser": "file:../lib/rpcParser",
-    "vdm-prototypes": "file:../../VDM/prototypes"
+    "vdm-prototypes": "git+https://github.com/vistadataproject/MVDM.git"
   }
 }
