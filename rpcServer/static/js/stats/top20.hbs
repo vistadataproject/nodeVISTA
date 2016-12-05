@@ -1,0 +1,16 @@
+<table class="table table-condensed table-striped table-bordered">
+    <thead>
+    <th>RPC</th>
+    <th>Path</th>
+    <th># of Calls</th>
+    </thead>
+    <tbody>
+    {{#each topList}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{show-runner runner}}</td>
+            <td>{{count}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

@@ -1,36 +1,34 @@
 <div class="stats">
     <h3>RPC Stats</h3>
-    <table class="table table-condensed">
-        <thead>
-        <th>Total</th>
-        <th>Distinct</th>
-        <th>Locked</th>
-        <th>Distinct Locked</th>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{{total}}</td>
-            <td>{{distinct}}</td>
-            <td>{{locked}}</td>
-            <td>{{distinctLocked}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <h3>Top 20</h3>
-    <table class="table table-condensed table-striped table-bordered">
-        <thead>
-            <th>RPC</th>
-            <th>Path</th>
-            <th># of Calls</th>
-        </thead>
-        <tbody>
-            {{#each topList}}
-                <tr>
-                    <td>{{name}}</td>
-                    <td>{{show-runner runner}}</td>
-                    <td>{{count}}</td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
+    <div class="keyStats"></div>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTop20">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTop20" aria-expanded="true" aria-controls="collapseTop20">
+                        Top 20
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTop20" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTop20">
+                <div class="panel-body">
+                    <div class="top20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingLockedRPCs">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseLockedRPCs" aria-expanded="false" aria-controls="collapseLockedRPCs">
+                        Locked RPC List
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseLockedRPCs" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLockedRPCs">
+                <div class="panel-body">
+                    <div class="lockedRPCs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
