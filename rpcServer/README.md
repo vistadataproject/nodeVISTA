@@ -39,7 +39,7 @@ http://<mvdmClient.host>:<mvdmClient.port>
 i.e. http://10.2.2.100:9020
 ```
 
-![](https://github.com/vistadataproject/nodeVISTA/blob/master/interfaces/rpcServer/screenshots/mvdmEvents.jpg)
+![](https://github.com/vistadataproject/nodeVISTA/blob/master/interfaces/rpcServer/screenshots/mvdmEvents.jpeg)
 
 **Launching the RPC Client**
 
