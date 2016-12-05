@@ -55,7 +55,6 @@ processQueue.on('started', function() {
 
 processQueue.on('start', function() {
     this.setWorkerPoolSize(CONFIG.workerQ.size);
-
 });
 
 
@@ -75,6 +74,11 @@ captureFile.on("open", function (fd) {
 
         //start up mvdm client
         mvdmClient.init();
+
+       //get locked rpc list
+       processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
+          EventManager.emit(responseObject.message.eventType, responseObject.message.event);
+       });
     });
 });
 
@@ -180,8 +184,6 @@ function handleConnection(conn) {
         conn.end();
         conn.destroy();
     }
-
-
 }
 
 

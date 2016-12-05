@@ -13,6 +13,8 @@ var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 
+var lockedRPCList = [];
+
 function init() {
    // parse application/x-www-form-urlencoded
    app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,6 +49,11 @@ function init() {
       return res.sendStatus(200);
    });
 
+   app.get('/lockedRPCList', function(req, res) {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(lockedRPCList));
+   });
+
    var mvdmClients = [];
 
    //mvdm events socket
@@ -73,6 +80,11 @@ function init() {
 
    initMVDMEventListeners(mvdmClients);
    initRPCEventListeners(rpcClients);
+
+   //listen for locked RPC List
+   EventManager.on('lockedRPCList', function(event) {
+      lockedRPCList = event.list;
+   });
 
    var port = CONFIG.mvdmClient.port;
    app.listen(port, function () {

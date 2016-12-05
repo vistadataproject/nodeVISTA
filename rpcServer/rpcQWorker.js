@@ -264,8 +264,16 @@ module.exports = function() {
                 rpcContexts.clearAll();
             }
             finished();
-        }
+        } else if (messageObj.method === 'lockedRPCList') {
 
+           finished({
+              type: 'rpcL',
+              event: {
+                list: rpcFacade.getLockedRPCList().map(function(item) {return {rpc: item};})
+              },
+              eventType: 'lockedRPCList'
+           });
+        }
     });
 
     this.on('stop', function() {

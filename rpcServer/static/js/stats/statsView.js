@@ -24,13 +24,16 @@ define([
    'backgrid',
    'stats/rpcStatModel',
    'stats/rpcStatCollection',
+   'stats/lockedRPCCollection',
    'text!stats/stats.hbs',
    'text!stats/keyStats.hbs',
    'text!stats/top20.hbs',
    'eventBus',
    'templateHelpers',
+   'backbone.paginator',
+   'backgrid.paginator',
    'backgridCustomCells'
-], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, statsTemplate, keyStatsTemplate, top20Template, EventBus) {
+], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, statsTemplate, keyStatsTemplate, top20Template, EventBus) {
    'use strict';
    var StatsView = Backbone.View.extend({
 
@@ -43,8 +46,25 @@ define([
          this.listenTo(EventBus, 'statsEvent', function(statsModel) {
             this.renderKeyStats();
             this.renderTop20();
-
          });
+
+         LockedRPCCollection.fetch();
+
+         this.grid = new Backgrid.Grid({
+            columns: [{
+               name: 'rpc',
+               label: 'RPC',
+               editable: false,
+               cell: 'String'
+            }],
+            collection: LockedRPCCollection
+         });
+
+         this.paginator = new Backgrid.Extension.Paginator({
+            collection: LockedRPCCollection,
+            goBackFirstOnSort: false
+         });
+
       },
 
       render: function() {
@@ -58,6 +78,11 @@ define([
 
          this.renderKeyStats();
          this.renderTop20();
+
+         this.$el.find('#locked-rpc-table').append(this.grid.render().el);
+
+         //render paginator
+         this.$el.find('#locked-rpc-table').append(this.paginator.render().el);
 
          return this;
       },
