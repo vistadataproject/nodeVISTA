@@ -48,14 +48,17 @@ define([
             this.renderTop20();
          });
 
-         LockedRPCCollection.fetch();
-
          this.grid = new Backgrid.Grid({
             columns: [{
-               name: 'rpc',
+               name: 'rpcName',
                label: 'RPC',
                editable: false,
                cell: 'String'
+            }, {
+               name: 'count',
+               label: '# of Calls',
+               editable: false,
+               cell: 'integer'
             }],
             collection: LockedRPCCollection
          });

@@ -83,7 +83,7 @@ function init() {
 
    //listen for locked RPC List
    EventManager.on('lockedRPCList', function(event) {
-      lockedRPCList = event.list;
+      lockedRPCList = event.list.map(function(item) {return {rpcName: item, count: 0};});
    });
 
    var port = CONFIG.mvdmClient.port;

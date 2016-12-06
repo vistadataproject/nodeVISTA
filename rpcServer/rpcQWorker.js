@@ -269,7 +269,7 @@ module.exports = function() {
            finished({
               type: 'rpcL',
               event: {
-                list: rpcFacade.getLockedRPCList().map(function(item) {return {rpc: item};})
+                list: rpcFacade.getLockedRPCList()
               },
               eventType: 'lockedRPCList'
            });

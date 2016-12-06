@@ -15,7 +15,25 @@ define([
       state: {
          pageSize: 20,
          firstPage: 0,
-         currentPage: 0
+         currentPage: 0,
+         sortKey: 'rpcName',
+      },
+      consumeEvent: function(eventModel) {
+         if (eventModel.get('runner') !== 'mvdmLocked') {
+            return;
+         }
+
+         var model = this.fullCollection.findWhere({
+            rpcName: eventModel.get('rpcName')
+         });
+
+         if (!model) {
+            return;
+         }
+
+         var count = model.get('count');
+
+         model.set('count', count + 1);
       }
    });
 
