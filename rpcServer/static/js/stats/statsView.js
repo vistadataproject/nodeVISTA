@@ -94,7 +94,6 @@ define([
 
          var self = this;
          var renderChart = function() {
-            var unlockedRPCCount = rpcsCategorized.length - LockedRPCCollection.fullCollection.size();
 
             var data = {
                labels: [
@@ -103,7 +102,7 @@ define([
                ],
                datasets: [
                   {
-                     data: [unlockedRPCCount, LockedRPCCollection.fullCollection.size()],
+                     data: [rpcsCategorized.length - LockedRPCCollection.fullCollection.size(), LockedRPCCollection.fullCollection.size()],
                      backgroundColor: [
                         "#FF6384",
                         "#36A2EB"
@@ -127,7 +126,7 @@ define([
          };
 
          if (LockedRPCCollection.fullCollection.size() < 1) {
-            this.listenTo(LockedRPCCollection.fullCollection, 'reset', function() {
+            this.listenToOnce(LockedRPCCollection.fullCollection, 'reset', function() {
                renderChart();
             });
          } else {
