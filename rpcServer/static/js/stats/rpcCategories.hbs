@@ -1,0 +1,14 @@
+<table class="table table-condensed table-striped table-bordered">
+    <thead>
+    <th>Category</th>
+    <th>Count</th>
+    </thead>
+    <tbody>
+    {{#each rpcCategories}}
+        <tr>
+            <td>{{{category}}}</td>
+            <td>{{count}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

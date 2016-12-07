@@ -62,7 +62,7 @@ define([
             }
          });
 
-         this.grid = new Backgrid.Grid({
+         this.lockedGrid = new Backgrid.Grid({
             row: row,
             columns: options.columns,
             collection: this.eventCollection
@@ -85,7 +85,7 @@ define([
 
          this.gridFilter = new Backgrid.Extension.SelectFilter(filterConfig);
 
-         this.paginator = new Backgrid.Extension.Paginator({
+         this.lockedPaginator = new Backgrid.Extension.Paginator({
             collection: this.eventCollection,
             goBackFirstOnSort: false
          });
@@ -119,10 +119,10 @@ define([
             this.renderEventCounter();
          }
 
-         this.$el.find('#events-table').append(this.grid.render().el);
+         this.$el.find('#events-table').append(this.lockedGrid.render().el);
 
          //render paginator
-         this.$el.find('#events-table').append(this.paginator.render().el);
+         this.$el.find('#events-table').append(this.lockedPaginator.render().el);
 
          //render filter
          if (this.gridFilter) {

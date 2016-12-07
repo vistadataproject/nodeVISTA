@@ -10,8 +10,9 @@ define([
    'rpcEvents/eventCounterModel',
    'stats/rpcStatCollection',
    'stats/lockedRPCCollection',
+   'stats/rpcCategoryStatCollection',
    'config'
-], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCStatCollection, LockedRPCCollection) {
+], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCStatCollection, LockedRPCCollection, RPCCategoryStatCollection) {
    'use strict';
 
    var EventBus = function() {
@@ -58,8 +59,10 @@ define([
             RPCEventCounter.consumeEvent(eventModel);
             RPCStatCollection.consumeEvent(eventModel);
             LockedRPCCollection.consumeEvent(eventModel);
+            RPCCategoryStatCollection.consumeEvent(eventModel);
 
             self.trigger('statsEvent', RPCStatCollection);
+            self.trigger('statsCategoryEvent', RPCCategoryStatCollection);
             self.trigger('newRpcEvent', eventModel, RPCEventCounter);
          }
       }

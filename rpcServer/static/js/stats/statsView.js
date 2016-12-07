@@ -25,9 +25,11 @@ define([
    'stats/rpcStatModel',
    'stats/rpcStatCollection',
    'stats/lockedRPCCollection',
+   'stats/rpcCategoryStatCollection',
    'text!stats/stats.hbs',
    'text!stats/keyStats.hbs',
    'text!stats/top20.hbs',
+   'text!stats/rpcCategories.hbs',
    'eventBus',
    'Chart',
    'rpcsCategorized',
@@ -35,13 +37,14 @@ define([
    'backbone.paginator',
    'backgrid.paginator',
    'backgridCustomCells'
-], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, statsTemplate, keyStatsTemplate, top20Template, EventBus, Chart) {
+], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, RPCCategoryStatCollection, statsTemplate, keyStatsTemplate, top20Template, categoriesTemplate, EventBus, Chart) {
    'use strict';
    var StatsView = Backbone.View.extend({
 
       template: Handlebars.compile(statsTemplate),
       keyStatsTemplate: Handlebars.compile(keyStatsTemplate),
       top20Template: Handlebars.compile(top20Template),
+      categoriesTemplate: Handlebars.compile(categoriesTemplate),
 
       initialize: function () {
 
@@ -50,7 +53,11 @@ define([
             this.renderTop20();
          });
 
-         this.grid = new Backgrid.Grid({
+         this.listenTo(EventBus, 'statsCategoryEvent', function(statsCategoryModel) {
+            this.renderRPCCategories();
+         });
+
+         this.lockedGrid = new Backgrid.Grid({
             columns: [{
                name: 'name',
                label: 'RPC',
@@ -65,7 +72,7 @@ define([
             collection: LockedRPCCollection
          });
 
-         this.paginator = new Backgrid.Extension.Paginator({
+         this.lockedPaginator = new Backgrid.Extension.Paginator({
             collection: LockedRPCCollection,
             goBackFirstOnSort: false
          });
@@ -82,12 +89,13 @@ define([
          }));
 
          this.renderKeyStats();
+         this.renderRPCCategories();
          this.renderTop20();
 
-         this.$el.find('#locked-rpc-table').append(this.grid.render().el);
+         this.$el.find('#locked-rpc-table').append(this.lockedGrid.render().el);
 
          //render paginator
-         this.$el.find('#locked-rpc-table').append(this.paginator.render().el);
+         this.$el.find('#locked-rpc-table').append(this.lockedPaginator.render().el);
 
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
@@ -164,6 +172,27 @@ define([
 
          this.$el.find('.top20').html(this.top20Template({
             topList: top20
+         }));
+      },
+      renderRPCCategories: function() {
+         //populate empty spaces
+         var categories = RPCCategoryStatCollection.toJSON();
+
+         if (!categories || categories.length < 5) {
+            if (!categories) {
+               categories = [];
+            }
+
+            var len = categories.length;
+            for(var i = len; i < 5; i++) {
+               categories[i] = {
+                  category: '&nbsp;'
+               };
+            }
+         }
+
+         this.$el.find('.rpcCategories').html(this.categoriesTemplate({
+            rpcCategories: categories
          }));
       },
       onClose: function () {

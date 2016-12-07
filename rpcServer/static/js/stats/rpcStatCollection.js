@@ -3,7 +3,8 @@ define([
    'jquery',
    'underscore',
    'backbone',
-   'stats/rpcStatModel'
+   'stats/rpcStatModel',
+   'rpcsCategorized'
 ], function ($, _, Backbone, RPCStatModel) {
    'use strict';
 
@@ -37,11 +38,15 @@ define([
          var rpc = this.find(function(model) {return model.get('name') === rpcName});
 
          if (!rpc) {
-            this.add(new RPCStatModel({
+            var data = {
                name: rpcName,
                count: 1,
                runner: runner
-            }));
+            };
+
+            data = _.extend(data, rpcsCategorized[rpcName]);
+
+            this.add(new RPCStatModel(data));
          } else {
             rpc.set('count', rpc.get('count') + 1);
          }
