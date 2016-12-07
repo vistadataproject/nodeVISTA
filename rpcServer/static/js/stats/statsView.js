@@ -102,7 +102,7 @@ define([
                ],
                datasets: [
                   {
-                     data: [rpcsCategorized.length - LockedRPCCollection.fullCollection.size(), LockedRPCCollection.fullCollection.size()],
+                     data: [Object.keys(rpcsCategorized).length - LockedRPCCollection.fullCollection.size(), LockedRPCCollection.fullCollection.size()],
                      backgroundColor: [
                         "#FF6384",
                         "#36A2EB"

@@ -1,4 +1,4 @@
-var rpcs = {
+var rpcsCategorized = {
     "DG CHK BS5 XREF ARRAY": {
         "mn": "DG", 
         "catag": "READ STRUCTURED"
@@ -7078,15 +7078,6 @@ var rpcs = {
         ]
     }
 };
-
-var rpcsCategorized = [];
-
-Object.keys(rpcs).forEach(function(key) {
-   var entry = _.extend(rpcs[key]);
-   entry.name = key;
-
-   rpcsCategorized.push(entry);
-});
 
 try {
    module.exports = rpcsCategorized;
