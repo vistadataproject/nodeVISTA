@@ -15,16 +15,6 @@ var EventManager = require('./eventManager');
 
 var lockedRPCList = [];
 
-var rpcsCategorized = require('./cfg/rpcsCategorized');
-var rpcList = [];
-
-Object.keys(rpcsCategorized).forEach(function(key) {
-   var entry = _.extend(rpcsCategorized[key]);
-   entry.name = key;
-
-   rpcList.push(entry);
-});
-
 function init() {
    // parse application/x-www-form-urlencoded
    app.use(bodyParser.urlencoded({ extended: false }));

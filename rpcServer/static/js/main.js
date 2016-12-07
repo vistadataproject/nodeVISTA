@@ -75,6 +75,9 @@ require.config({
    moment: {
       noGlobal: true
    },
+   chart: {
+      noGlobal: true
+   },
    paths: {
       jquery: '../jquery/dist/jquery.min',
       underscore: '../underscore/underscore-min',
@@ -90,6 +93,8 @@ require.config({
       backgridMomentCell: 'lib/backgrid-moment-cell.min',
       backgridSelectFilter: 'lib/backgrid-select-filter',
       backgridCustomCells: 'lib/backgrid-custom-cells',
+      Chart: 'lib/Chart.bundle.min',
+      rpcsCategorized: '../rpcsCategorized',
       config: '../config'
    }
 });

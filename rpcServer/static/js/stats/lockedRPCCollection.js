@@ -16,7 +16,7 @@ define([
          pageSize: 20,
          firstPage: 0,
          currentPage: 0,
-         sortKey: 'rpcName',
+         sortKey: 'rpcName'
       },
       consumeEvent: function(eventModel) {
          if (eventModel.get('runner') !== 'mvdmLocked') {

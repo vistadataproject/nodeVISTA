@@ -1,4 +1,4 @@
-{
+var rpcs = {
     "DG CHK BS5 XREF ARRAY": {
         "mn": "DG", 
         "catag": "READ STRUCTURED"
@@ -7077,4 +7077,20 @@
             "DFN"
         ]
     }
+};
+
+var rpcsCategorized = [];
+
+Object.keys(rpcs).forEach(function(key) {
+   var entry = _.extend(rpcs[key]);
+   entry.name = key;
+
+   rpcsCategorized.push(entry);
+});
+
+try {
+   module.exports = rpcsCategorized;
+}
+catch(exception) {
+   //will fail in browser - config is referenced by browser client for convenience
 }
