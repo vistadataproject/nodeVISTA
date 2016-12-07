@@ -128,3 +128,7 @@ nav {
 .stats .pie-chart {
     margin-top: 100px;
 }
+
+.stats .keys-stats {
+    padding: 0;
+}
