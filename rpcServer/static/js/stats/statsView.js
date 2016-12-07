@@ -73,12 +73,12 @@ define([
       },
 
       render: function() {
+
          this.$el.html(this.template({
             total: RPCStatCollection.total(),
             distinct: RPCStatCollection.distinctTotal(),
             distinctLocked: RPCStatCollection.distinctLockedTotal(),
-            locked: RPCStatCollection.lockedTotal(),
-            topList: RPCStatCollection.top(20)
+            locked: RPCStatCollection.lockedTotal()
          }));
 
          this.renderKeyStats();
@@ -92,6 +92,7 @@ define([
          //apply bootstrap table styles to grid
          this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
 
+         var self = this;
          var renderChart = function() {
             var unlockedRPCCount = rpcsCategorized.length - LockedRPCCollection.fullCollection.size();
 
@@ -114,8 +115,7 @@ define([
                   }]
             };
             _.delay(function() {
-               var ctx = document.getElementById("pie-chart");
-               var myPieChart = new Chart(ctx,{
+               new Chart(self.$el.find("#pie-chart")[0],{
                   type: 'pie',
                   data: data,
                   options: {
@@ -127,7 +127,7 @@ define([
          };
 
          if (LockedRPCCollection.fullCollection.size() < 1) {
-            this.listenTo(LockedRPCCollection, 'reset', function() {
+            this.listenTo(LockedRPCCollection.fullCollection, 'reset', function() {
                renderChart();
             });
          } else {
@@ -146,8 +146,25 @@ define([
          }));
       },
       renderTop20: function() {
+
+         //populate empty top 20 spaces
+         var top20 = RPCStatCollection.top(20);
+
+         if (!top20 || top20.length < 20) {
+            if (!top20) {
+               top20 = [];
+            }
+
+            var len = top20.length;
+            for(var i = len; i < 20; i++) {
+               top20[i] = {
+                  name: '&nbsp;'
+               };
+            }
+         }
+
          this.$el.find('.top20').html(this.top20Template({
-            topList: RPCStatCollection.top(20)
+            topList: top20
          }));
       },
       onClose: function () {

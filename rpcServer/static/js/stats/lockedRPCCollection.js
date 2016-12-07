@@ -16,7 +16,7 @@ define([
          pageSize: 20,
          firstPage: 0,
          currentPage: 0,
-         sortKey: 'rpcName'
+         sortKey: 'name'
       },
       consumeEvent: function(eventModel) {
          if (eventModel.get('runner') !== 'mvdmLocked') {
@@ -24,7 +24,7 @@ define([
          }
 
          var model = this.fullCollection.findWhere({
-            rpcName: eventModel.get('rpcName')
+            name: eventModel.get('rpcName')
          });
 
          if (!model) {

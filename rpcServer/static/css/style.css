@@ -119,3 +119,8 @@ nav {
 .stats th, td {
     text-align: center;
 }
+
+.stats th {
+    background-color: #f9f9f9;
+    color: #3399f3;
+}
