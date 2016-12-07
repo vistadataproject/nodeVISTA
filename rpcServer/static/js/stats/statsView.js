@@ -25,6 +25,7 @@ define([
    'stats/rpcStatModel',
    'stats/rpcStatCollection',
    'stats/lockedRPCCollection',
+   'stats/rpcCollection',
    'text!stats/stats.hbs',
    'text!stats/keyStats.hbs',
    'text!stats/top20.hbs',
@@ -32,8 +33,9 @@ define([
    'templateHelpers',
    'backbone.paginator',
    'backgrid.paginator',
-   'backgridCustomCells'
-], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, statsTemplate, keyStatsTemplate, top20Template, EventBus) {
+   'backgridCustomCells',
+   "https://www.gstatic.com/charts/loader.js" //google charts
+], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, RPCCollection, statsTemplate, keyStatsTemplate, top20Template, EventBus) {
    'use strict';
    var StatsView = Backbone.View.extend({
 
@@ -50,7 +52,7 @@ define([
 
          this.grid = new Backgrid.Grid({
             columns: [{
-               name: 'rpcName',
+               name: 'name',
                label: 'RPC',
                editable: false,
                cell: 'String'
@@ -67,6 +69,39 @@ define([
             collection: LockedRPCCollection,
             goBackFirstOnSort: false
          });
+
+         // Load the Visualization API and the corechart package.
+         google.charts.load('current', {'packages':['corechart']});
+
+         // Set a callback to run when the Google Visualization API is loaded.
+         google.charts.setOnLoadCallback(drawChart);
+
+         // Callback that creates and populates a data table,
+         // instantiates the pie chart, passes in the data and
+         // draws it.
+         function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Locked RPCs');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+               ['Unlocked', RPCCollection.size() - LockedRPCCollection.fullCollection.size()],
+               ['Locked', LockedRPCCollection.fullCollection.size()]
+            ]);
+
+            // Set chart options
+            var options = {
+               'title':'Locked RPC Coverage',
+               'width':512,
+               'height':512,
+               "is3D": true
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.PieChart(document.getElementById('locked-rpc-chart'));
+            chart.draw(data, options);
+         }
 
       },
 

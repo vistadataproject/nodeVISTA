@@ -15,6 +15,16 @@ var EventManager = require('./eventManager');
 
 var lockedRPCList = [];
 
+var rpcsCategorized = require('./cfg/rpcsCategorized');
+var rpcList = [];
+
+Object.keys(rpcsCategorized).forEach(function(key) {
+   var entry = _.extend(rpcsCategorized[key]);
+   entry.name = key;
+
+   rpcList.push(entry);
+});
+
 function init() {
    // parse application/x-www-form-urlencoded
    app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,6 +64,11 @@ function init() {
       res.end(JSON.stringify(lockedRPCList));
    });
 
+   app.get('/rpcList', function(req, res) {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(rpcList));
+   });
+
    var mvdmClients = [];
 
    //mvdm events socket
@@ -83,7 +98,7 @@ function init() {
 
    //listen for locked RPC List
    EventManager.on('lockedRPCList', function(event) {
-      lockedRPCList = event.list.map(function(item) {return {rpcName: item, count: 0};});
+      lockedRPCList = event.list.map(function(rpcName) {return {name: rpcName, count: 0};});
    });
 
    var port = CONFIG.mvdmClient.port;

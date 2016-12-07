@@ -10,8 +10,9 @@ define([
    'rpcEvents/eventCounterModel',
    'stats/rpcStatCollection',
    'stats/lockedRPCCollection',
+   'stats/rpcCollection',
    'config'
-], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCStatCollection, LockedRPCCollection) {
+], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCStatCollection, LockedRPCCollection, RPCCollection) {
    'use strict';
 
    var EventBus = function() {
@@ -24,6 +25,7 @@ define([
       var rpcEventCollection = new Backbone.Collection();
 
       LockedRPCCollection.fetch();
+      RPCCollection.fetch();
 
       this.getMvdmEventCollection = function() {
          return mvdmCollection;
