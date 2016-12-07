@@ -115,7 +115,7 @@ define([
                   }]
             };
             _.delay(function() {
-               new Chart(self.$el.find("#pie-chart")[0],{
+               new Chart(self.$el.find(".pie-chart")[0],{
                   type: 'pie',
                   data: data,
                   options: {

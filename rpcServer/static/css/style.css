@@ -124,3 +124,7 @@ nav {
     background-color: #f9f9f9;
     color: #3399f3;
 }
+
+.stats .pie-chart {
+    margin-top: 100px;
+}
