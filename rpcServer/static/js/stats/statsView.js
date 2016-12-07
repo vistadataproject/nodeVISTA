@@ -81,65 +81,12 @@ define([
 
       render: function() {
 
-         this.$el.html(this.template({
-            total: RPCStatCollection.total(),
-            distinct: RPCStatCollection.distinctTotal(),
-            distinctLocked: RPCStatCollection.distinctLockedTotal(),
-            locked: RPCStatCollection.lockedTotal()
-         }));
+         this.$el.html(this.template());
 
          this.renderKeyStats();
          this.renderRPCCategories();
          this.renderTop20();
-
-         this.$el.find('#locked-rpc-table').append(this.lockedGrid.render().el);
-
-         //render paginator
-         this.$el.find('#locked-rpc-table').append(this.lockedPaginator.render().el);
-
-         //apply bootstrap table styles to grid
-         this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
-
-         var self = this;
-         var renderChart = function() {
-
-            var data = {
-               labels: [
-                  "Unlocked",
-                  "Locked"
-               ],
-               datasets: [
-                  {
-                     data: [Object.keys(rpcsCategorized).length - LockedRPCCollection.fullCollection.size(), LockedRPCCollection.fullCollection.size()],
-                     backgroundColor: [
-                        "#FF6384",
-                        "#36A2EB"
-                     ],
-                     hoverBackgroundColor: [
-                        "#FF6384",
-                        "#36A2EB"
-                     ]
-                  }]
-            };
-            _.delay(function() {
-               new Chart(self.$el.find(".pie-chart")[0],{
-                  type: 'pie',
-                  data: data,
-                  options: {
-                     responsive: false
-                  }
-               });
-
-            }, 200);
-         };
-
-         if (LockedRPCCollection.fullCollection.size() < 1) {
-            this.listenToOnce(LockedRPCCollection.fullCollection, 'reset', function() {
-               renderChart();
-            });
-         } else {
-            renderChart();
-         }
+         this.renderLockedRPC();
 
          return this;
       },
@@ -194,6 +141,56 @@ define([
          this.$el.find('.rpcCategories').html(this.categoriesTemplate({
             rpcCategories: categories
          }));
+      },
+      renderLockedRPC: function() {
+         this.$el.find('#locked-rpc-table').append(this.lockedGrid.render().el);
+
+         //render paginator
+         this.$el.find('#locked-rpc-table').append(this.lockedPaginator.render().el);
+
+         //apply bootstrap table styles to grid
+         this.$el.find('.backgrid').addClass('table table-condensed table-striped table-bordered table-hover');
+
+         var self = this;
+         var renderChart = function() {
+
+            var data = {
+               labels: [
+                  "Unlocked",
+                  "Locked"
+               ],
+               datasets: [
+                  {
+                     data: [Object.keys(rpcsCategorized).length - LockedRPCCollection.fullCollection.size(), LockedRPCCollection.fullCollection.size()],
+                     backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB"
+                     ],
+                     hoverBackgroundColor: [
+                        "#FF6384",
+                        "#36A2EB"
+                     ]
+                  }]
+            };
+            _.delay(function() {
+               new Chart(self.$el.find(".pie-chart")[0],{
+                  type: 'pie',
+                  data: data,
+                  options: {
+                     responsive: false
+                  }
+               });
+
+            }, 200);
+         };
+
+         if (LockedRPCCollection.fullCollection.size() < 1) {
+            this.listenToOnce(LockedRPCCollection.fullCollection, 'reset', function() {
+               renderChart();
+            });
+         } else {
+            renderChart();
+         }
       },
       onClose: function () {
 
