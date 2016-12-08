@@ -172,8 +172,8 @@ define([
                datasets: [
                   {
                      data: [],
-                     backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#a4f442", "#f142f4", "#f49842"],
-                     hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#a4f442", "#f142f4", "#f49842"]
+                     backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#a4f442", "#f142f4", "#59300a"],
+                     hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#a4f442", "#f142f4", "#59300a"]
                   }]
             };
 
