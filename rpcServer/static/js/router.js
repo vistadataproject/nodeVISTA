@@ -5,9 +5,9 @@ define([
    'mvdmEvents/mvdmEventsView',
    'rpcEvents/rpcEventsView',
    'management/managementView',
-   'stats/statsView',
+   'rpcCounts/rpcCountsView',
    'eventBus'
-], function ($, Backbone, MVDMEventsView, RPCEventsView, ManagementView, StatsView, EventBus) {
+], function ($, Backbone, MVDMEventsView, RPCEventsView, ManagementView, RPCCountsView, EventBus) {
    'use strict';
 
    var AppRouter = Backbone.Router.extend({
@@ -20,7 +20,7 @@ define([
          "mvdmEvents": "mvdmEvents",
          "rpcEvents": "rpcEvents",
          "management": "management",
-         "stats": "stats",
+         "rpcCounts": "rpcCounts",
          "": "mvdmEvents" //mvdmEvents is default view
       },
       mvdmEvents: function() {
@@ -42,10 +42,10 @@ define([
          setActiveNavItem('management');
          this.viewManager.showView(this.managementView);
       },
-      stats: function() {
-         this.statsView = new StatsView();
-         setActiveNavItem('stats');
-         this.viewManager.showView(this.statsView);
+      rpcCounts: function() {
+         this.rpcCountsView = new RPCCountsView();
+         setActiveNavItem('rpcCounts');
+         this.viewManager.showView(this.rpcCountsView);
       }
    });
 
@@ -57,12 +57,12 @@ define([
       var mvdmEventsEl = $('#nav-mvdm-events');
       var rpcEventsEl = $('#nav-rpc-events');
       var managementEl = $('#nav-management');
-      var statsEl= $('#nav-stats');
+      var rpcCountsEl = $('#nav-rpc-counts');
 
       mvdmEventsEl.removeClass('active');
       rpcEventsEl.removeClass('active');
       managementEl.removeClass('active');
-      statsEl.removeClass('active');
+      rpcCountsEl.removeClass('active');
 
       if (navItem === 'mvdmEvents') {
          mvdmEventsEl.addClass('active');
@@ -70,8 +70,8 @@ define([
          rpcEventsEl.addClass('active');
       } else if (navItem === 'management') {
          managementEl.addClass('active');
-      } else if (navItem === 'stats') {
-         statsEl.addClass('active');
+      } else if (navItem === 'rpcCounts') {
+         rpcCountsEl.addClass('active');
       }
    }
 

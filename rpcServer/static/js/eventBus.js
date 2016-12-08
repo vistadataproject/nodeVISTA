@@ -8,11 +8,11 @@ define([
    'rpcEvents/eventCollection',
    'mvdmEvents/eventCounterModel',
    'rpcEvents/eventCounterModel',
-   'stats/rpcStatCollection',
-   'stats/lockedRPCCollection',
-   'stats/rpcCategoryStatCollection',
+   'rpcCounts/rpcCountCollection',
+   'rpcCounts/lockedRPCCollection',
+   'rpcCounts/rpcCategoryCollection',
    'config'
-], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCStatCollection, LockedRPCCollection, RPCCategoryStatCollection) {
+], function ($, _, Backbone, EventModel, MVDMEventCollection, RPCEventCollection, MVDMEventCounter, RPCEventCounter, RPCCountCollection, LockedRPCCollection, RPCCategoryCollection) {
    'use strict';
 
    var EventBus = function() {
@@ -48,7 +48,7 @@ define([
          var eventModel = new EventModel(event.data);
          eventCollection.unshift(new EventModel(event.data));
 
-         //counters & stats consume events
+         //counter consume events
          if (eventType === 'mvdm') {
 
             MVDMEventCounter.consumeEvent(eventModel);
@@ -57,12 +57,12 @@ define([
          } else if (eventType === 'rpc') {
 
             RPCEventCounter.consumeEvent(eventModel);
-            RPCStatCollection.consumeEvent(eventModel);
+            RPCCountCollection.consumeEvent(eventModel);
             LockedRPCCollection.consumeEvent(eventModel);
-            RPCCategoryStatCollection.consumeEvent(eventModel);
+            RPCCategoryCollection.consumeEvent(eventModel);
 
-            self.trigger('statsEvent', RPCStatCollection);
-            self.trigger('statsCategoryEvent', RPCCategoryStatCollection);
+            self.trigger('countEvent', RPCCountCollection);
+            self.trigger('rpcCategoryEvent', RPCCategoryCollection);
             self.trigger('newRpcEvent', eventModel, RPCEventCounter);
          }
       }

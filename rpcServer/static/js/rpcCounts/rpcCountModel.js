@@ -6,7 +6,7 @@ define([
 ], function ($, _, Backbone) {
    'use strict';
 
-   var RPCStatModel = Backbone.Model.extend();
+   var RPCCountModel = Backbone.Model.extend();
 
-   return RPCStatModel;
+   return RPCCountModel;
 });

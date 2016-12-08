@@ -12,6 +12,7 @@ var CONFIG = require('./cfg/config.js');
 var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
+var rpcsCategorized = require('./cfg/rpcsCategorized');
 
 var lockedRPCList = [];
 
@@ -89,6 +90,13 @@ function init() {
    //listen for locked RPC List
    EventManager.on('lockedRPCList', function(event) {
       lockedRPCList = event.list.map(function(rpcName) {return {name: rpcName, count: 0};});
+      lockedRPCList.forEach(function(rpc) {
+         var category = rpcsCategorized[rpc.name];
+         if (category) {
+            rpc = _.extend(rpc, category);
+         }
+      });
+
    });
 
    var port = CONFIG.mvdmClient.port;

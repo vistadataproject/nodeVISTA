@@ -1,12 +1,16 @@
 <table class="table table-condensed table-striped table-bordered">
     <thead>
+    <th>RPC</th>
+    <th>Path</th>
     <th>Category</th>
-    <th>Count</th>
+    <th># Received</th>
     </thead>
     <tbody>
-    {{#each rpcCategories}}
+    {{#each topList}}
         <tr>
-            <td>{{{category}}}</td>
+            <td>{{{name}}}</td>
+            <td>{{show-runner runner}}</td>
+            <td>{{catag}}</td>
             <td>{{count}}</td>
         </tr>
     {{/each}}

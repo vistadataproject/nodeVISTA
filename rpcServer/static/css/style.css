@@ -116,19 +116,41 @@ nav {
     text-align: center;
 }
 
-.stats th, td {
+.rpc-counts th, td {
     text-align: center;
 }
 
-.stats th {
+.rpc-counts th {
     background-color: #f9f9f9;
     color: #3399f3;
 }
 
-.stats .locked-pie-chart {
-    margin-top: 100px;
+.rpc-counts .rpc-received {
+    height: 150px;
+    margin-top: 85%;
 }
 
-.stats .rpc-counts {
-    padding: 0;
+.rpc-counts .received-label {
+    font-style: italic;
+    font-weight:bold;
+    font-size: 200%;
+    text-align: center;
 }
+
+.rpc-counts .received-value {
+    font-weight:bold;
+    font-size: 300%;
+    text-align: center;
+}
+
+.rpc-counts .tables {
+    margin-top: 50px;
+}
+
+.rpc-counts .table-label {
+    font-weight: bold;
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+

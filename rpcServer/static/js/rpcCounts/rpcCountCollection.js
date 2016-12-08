@@ -3,13 +3,13 @@ define([
    'jquery',
    'underscore',
    'backbone',
-   'stats/rpcStatModel',
+   'rpcCounts/rpcCountModel',
    'rpcsCategorized'
-], function ($, _, Backbone, RPCStatModel) {
+], function ($, _, Backbone, RPCCountModel) {
    'use strict';
 
-   var RPCStatCollection = Backbone.Collection.extend({
-      model: RPCStatModel,
+   var RPCCountCollection = Backbone.Collection.extend({
+      model: RPCCountModel,
       mode: 'client',
       comparator: function(a, b) {
          var aCount = a.get('count');
@@ -46,7 +46,7 @@ define([
 
             data = _.extend(data, rpcsCategorized[rpcName]);
 
-            this.add(new RPCStatModel(data));
+            this.add(new RPCCountModel(data));
          } else {
             rpc.set('count', rpc.get('count') + 1);
          }
@@ -98,5 +98,5 @@ define([
       }
    });
 
-   return new RPCStatCollection;
+   return new RPCCountCollection;
 });
