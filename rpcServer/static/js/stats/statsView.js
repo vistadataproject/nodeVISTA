@@ -10,7 +10,7 @@ define([
    'stats/lockedRPCCollection',
    'stats/rpcCategoryStatCollection',
    'text!stats/stats.hbs',
-   'text!stats/keyStats.hbs',
+   'text!stats/rpcCounts.hbs',
    'text!stats/top20.hbs',
    'text!stats/rpcCategories.hbs',
    'eventBus',
@@ -20,19 +20,19 @@ define([
    'backbone.paginator',
    'backgrid.paginator',
    'backgridCustomCells'
-], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, RPCCategoryStatCollection, statsTemplate, keyStatsTemplate, top20Template, categoriesTemplate, EventBus, Chart) {
+], function ($, _, Backbone, Handlebars, Backgrid, RPCStatModel, RPCStatCollection, LockedRPCCollection, RPCCategoryStatCollection, statsTemplate, rpcCountsTemplate, top20Template, categoriesTemplate, EventBus, Chart) {
    'use strict';
    var StatsView = Backbone.View.extend({
 
       template: Handlebars.compile(statsTemplate),
-      keyStatsTemplate: Handlebars.compile(keyStatsTemplate),
+      rpcCountsTemplate: Handlebars.compile(rpcCountsTemplate),
       top20Template: Handlebars.compile(top20Template),
       categoriesTemplate: Handlebars.compile(categoriesTemplate),
 
       initialize: function () {
 
          this.listenTo(EventBus, 'statsEvent', function(statsModel) {
-            this.renderKeyStats();
+            this.renderRPCCounts();
             this.renderTop20();
          });
 
@@ -66,7 +66,7 @@ define([
 
          this.$el.html(this.template());
 
-         this.renderKeyStats();
+         this.renderRPCCounts();
          this.renderRPCCategories();
          this.renderTop20();
          this.renderLockedRPC();
@@ -77,7 +77,7 @@ define([
          }, 100);
 
          //check if chart needs to be redrawn every five seconds
-         setInterval(function() {
+         this.categoryChartIntervalId = setInterval(function() {
             if (self.isRenderCategoryChart) {
                self.renderCategoryChart();
 
@@ -88,8 +88,8 @@ define([
          return this;
       },
 
-      renderKeyStats: function() {
-         this.$el.find('.keyStats').html(this.keyStatsTemplate({
+      renderRPCCounts: function() {
+         this.$el.find('.rpc-counts').html(this.rpcCountsTemplate({
             total: RPCStatCollection.total(),
             distinct: RPCStatCollection.distinctTotal(),
             distinctLocked: RPCStatCollection.distinctLockedTotal(),
@@ -249,7 +249,7 @@ define([
          }
       },
       onClose: function () {
-
+         clearInterval(this.categoryChartIntervalId);
       }
    });
 
