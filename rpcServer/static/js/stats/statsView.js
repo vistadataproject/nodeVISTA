@@ -88,6 +88,20 @@ define([
          this.renderTop20();
          this.renderLockedRPC();
 
+         var self = this;
+         _.delay(function() {
+            self.renderCategoryChart();
+         }, 100);
+
+         //check if chart needs to be redrawn every five seconds
+         setInterval(function() {
+            if (self.isRenderCategoryChart) {
+               self.renderCategoryChart();
+
+               self.isRenderCategoryChart = false;
+            }
+         }, 5000);
+
          return this;
       },
 
@@ -141,6 +155,64 @@ define([
          this.$el.find('.rpcCategories').html(this.categoriesTemplate({
             rpcCategories: categories
          }));
+
+         this.isRenderCategoryChart = true;
+
+      },
+      renderCategoryChart: function() {
+         var self = this;
+         var renderChart = function() {
+
+            var categoryMap = {
+               "AUTHENTICATION": 0,
+               "CHANGE": 0,
+               "NOT OSEHRA": 0,
+               "READ STRUCTURED": 0,
+               "READ UNSTRUCTURED": 0,
+               "UTILITY": 0
+            };
+
+            RPCCategoryStatCollection.models.forEach(function(model) {
+               categoryMap[model.get('category')] = model.get('count');
+            });
+
+            var data = {
+               animation: false,
+               labels: [
+                  "AUTHENTICATION",
+                  "CHANGE",
+                  "NOT OSEHRA",
+                  "READ STRUCTURED",
+                  "READ UNSTRUCTURED",
+                  "UTILITY"
+               ],
+               datasets: [
+                  {
+                     data: [],
+                     backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#a4f442", "#f142f4", "#f49842"],
+                     hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#a4f442", "#f142f4", "#f49842"]
+                  }]
+            };
+
+            Object.keys(categoryMap).forEach(function(category) {
+               data.datasets[0].data.push(categoryMap[category]);
+            });
+
+            self.$el.find('.category-pie-chart').remove();
+            var pieChartContainer = self.$el.find('.category-pie-chart-container');
+            pieChartContainer.append('<canvas class="category-pie-chart" width=300 height=300></canvas>');
+
+            new Chart($('.category-pie-chart')[0], {
+               type: 'pie',
+               data: data,
+               options: {
+                  responsive: false,
+                  animation: false
+               }
+            });
+         };
+
+         renderChart();
       },
       renderLockedRPC: function() {
          this.$el.find('#locked-rpc-table').append(this.lockedGrid.render().el);
@@ -173,11 +245,12 @@ define([
                   }]
             };
             _.delay(function() {
-               new Chart(self.$el.find(".pie-chart")[0],{
+               new Chart(self.$el.find(".locked-pie-chart")[0], {
                   type: 'pie',
                   data: data,
                   options: {
-                     responsive: false
+                     responsive: false,
+                     animation: false
                   }
                });
 
