@@ -40,6 +40,10 @@ define([
             this.isRenderCategoryChart = true;
          });
 
+         this.listenToOnce(LockedRPCCollection, 'reset', function(model) {
+            this.$el.find('.locked-total').html(LockedRPCCollection.fullCollection.size());
+         });
+
          this.lockedGrid = new Backgrid.Grid({
             columns: [{
                name: 'name',
@@ -69,7 +73,10 @@ define([
 
       render: function() {
 
-         this.$el.html(this.template());
+         this.$el.html(this.template({
+            lockedRPCCount: LockedRPCCollection.fullCollection.size(),
+            total: Object.keys(rpcsCategorized).length
+         }));
 
          this.renderRPCTotal();
          this.renderTop20();
