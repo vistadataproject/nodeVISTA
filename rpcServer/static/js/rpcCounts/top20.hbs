@@ -1,5 +1,6 @@
 <table class="table table-condensed table-striped table-bordered">
     <thead>
+    <th>Rank</th>
     <th>RPC</th>
     <th>Path</th>
     <th>Category</th>
@@ -8,6 +9,7 @@
     <tbody>
     {{#each topList}}
         <tr>
+            <td>{{rank}}</td>
             <td>{{{name}}}</td>
             <td>{{show-runner runner}}</td>
             <td>{{catag}}</td>

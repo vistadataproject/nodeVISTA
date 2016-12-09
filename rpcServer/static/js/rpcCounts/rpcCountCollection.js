@@ -94,7 +94,14 @@ define([
             throw new Error('Number parameter must be greater than zero.')
          }
 
-         return this.toJSON().reverse().splice(0, num);
+         var top20 = this.toJSON().reverse().splice(0, num);
+
+         var rank = 1;
+         top20.forEach(function(entry) {
+            entry.rank = rank++;
+         });
+
+         return top20;
       }
    });
 
