@@ -188,7 +188,7 @@ define([
                "UTILITY": 0
             };
 
-            var colors = ["#36A2EB", "#a4f442", "#FF6384", "#FFCE56", "#f142f4"];
+            var colors = ["#36A2EB", "b56355", "#a4f442", "#FF6384", "#FFCE56"];
 
             RPCCategoryCollection.models.forEach(function(model) {
                categoryMap[model.get('category')] = model.get('count');
