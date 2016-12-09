@@ -129,10 +129,10 @@ function callRPC(messageObject, send) {
         //include user if
         var userAndFacility = rpcFacade.getUserAndFacility();
         userId = userAndFacility.userId;
-        var USER = vdmUtils.userFromId(db, '200-' + userId);
+        var USER = vdmUtils.entityFromId(db, '200-' + userId);
 
         facilityId = userAndFacility.facilityId;
-        var FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityId);
+        var FACILITY = vdmUtils.entityFromId(db, '4-' + facilityId);
 
         if (USER) {
             rpcCallEvent.user = {
