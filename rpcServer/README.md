@@ -26,6 +26,7 @@ SSH into the nodeVista machine and login as the vdp user:
 
 ```
 $ cd ~/dev/nodeVista/interfaces/rpcServer
+$ npm install bower -g <--- installs bower on machine, this only needs to be executed once 
 $ npm install  <--- installs node_modules
 $ bower install <--- install client/bower_components
 $ node rpcServer.js
