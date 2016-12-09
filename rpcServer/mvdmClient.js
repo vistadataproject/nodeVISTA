@@ -26,7 +26,7 @@ function init() {
 
    //default path goes to index.html
    app.get('/', function(req, res){
-      res.sendFile(path.join(__dirname + '/static/index.html'));
+      res.sendFile(path.join(__dirname + '/client/index.html'));
    });
 
    //get management settings
@@ -105,7 +105,7 @@ function init() {
    });
 
    //static files
-   app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
+   app.use(express.static(__dirname + "/client")); //use web client files in ROOT/public folder
    app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
    app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }

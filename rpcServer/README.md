@@ -26,6 +26,8 @@ SSH into the nodeVista machine and login as the vdp user:
 
 ```
 $ cd ~/dev/nodeVista/interfaces/rpcServer
+$ npm install  <--- installs node_modules
+$ bower install <--- install client/bower_components
 $ node rpcServer.js
 ```
 The RPC Server should be listening for incoming RPC connections on the configured rpcServer port (9010). 
