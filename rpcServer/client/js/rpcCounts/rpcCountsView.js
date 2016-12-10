@@ -13,14 +13,16 @@ define([
    'text!rpcCounts/top20.hbs',
    'eventBus',
    'Chart',
+   'd3',
+   'pie',
    'rpcsCategorized',
    'templateHelpers',
    'backbone.paginator',
    'backgrid.paginator',
    'backgridCustomCells'
-], function ($, _, Backbone, Handlebars, Backgrid, RPCCountCollection, LockedRPCCollection, RPCCategoryCollection, rpcCountsTemplate, rpcReceivedTemplate, top20Template, EventBus, Chart) {
+], function ($, _, Backbone, Handlebars, Backgrid, RPCCountCollection, LockedRPCCollection, RPCCategoryCollection, rpcCountsTemplate, rpcReceivedTemplate, top20Template, EventBus, Chart, d3) {
    'use strict';
-   var StatsView = Backbone.View.extend({
+   var RPCCounts = Backbone.View.extend({
 
       template: Handlebars.compile(rpcCountsTemplate),
       rpcReceivedTemplate: Handlebars.compile(rpcReceivedTemplate),
@@ -144,41 +146,40 @@ define([
          var self = this;
          var renderChart = function() {
 
-            var colors = ["#FF6384", "#36A2EB"];
+            self.$el.find('#distinct-svg').remove();
+            var container = self.$el.find('.distinct-pie-chart-container');
+            container.append('<div id="distinct-svg" class="pie-chart">');
 
-            var data = {
-               animation: false,
-               labels: [
-                  "Distinct Unlocked",
-                  "Distinct Locked"
-               ],
-               datasets: [
+            IFG.displayPie({
+               divId: 'distinct-svg',
+               data: [
                   {
-                     data: [RPCCountCollection.distinctTotal(), RPCCountCollection.distinctLockedTotal()],
-                     backgroundColor: colors,
-                     hoverBackgroundColor: colors
-                  }]
-            };
-
-            self.$el.find('.distinct-pie-chart').remove();
-            var pieChartContainer = self.$el.find('.distinct-pie-chart-container');
-            pieChartContainer.append('<canvas class="distinct-pie-chart" width="300" height="300"></canvas>');
-
-            new Chart($('.distinct-pie-chart')[0], {
-               type: 'pie',
-               data: data,
-               options: {
-                  responsive: false,
-                  animation: false
-               }
+                     "LABEL": "Distinct Unlocked",
+                     "COUNT": RPCCountCollection.distinctTotal()
+                  },
+                  {
+                     "LABEL": "Distinct Locked",
+                     "COUNT": RPCCountCollection.distinctLockedTotal()
+                  }
+               ],
+               categoryTitle: 'LABEL',
+               valueTitle: 'COUNT',
+               width: 400,
+               height: 400,
+               innerCircleRadius: 50
             });
          };
 
          renderChart();
       },
       renderCategoryChart: function() {
+
          var self = this;
          var renderChart = function() {
+
+            self.$el.find('#category-svg').remove();
+            var container = self.$el.find('.category-pie-chart-container');
+            container.append('<div id="category-svg" class="pie-chart">');
 
             var categoryMap = {
                "AUTHENTICATION": 0,
@@ -188,74 +189,55 @@ define([
                "UTILITY": 0
             };
 
-            var colors = ["#36A2EB", "b56355", "#a4f442", "#FF6384", "#FFCE56"];
-
             RPCCategoryCollection.models.forEach(function(model) {
                categoryMap[model.get('category')] = model.get('count');
             });
 
-            var data = {
-               animation: false,
-               labels: Object.keys(categoryMap),
-               datasets: [
-                  {
-                     data: [],
-                     backgroundColor: colors,
-                     hoverBackgroundColor: colors
-                  }]
-            };
+            var data = [];
 
             Object.keys(categoryMap).forEach(function(category) {
-               data.datasets[0].data.push(categoryMap[category]);
+               data.push({"LABEL": category, "COUNT": categoryMap[category]});
             });
 
-            self.$el.find('.category-pie-chart').remove();
-            var pieChartContainer = self.$el.find('.category-pie-chart-container');
-            pieChartContainer.append('<canvas class="category-pie-chart" width="500" height="300"></canvas>');
-
-            new Chart($('.category-pie-chart')[0], {
-               type: 'pie',
+            IFG.displayPie({
+               divId: 'category-svg',
                data: data,
-               options: {
-                  responsive: false,
-                  animation: false
-               }
+               categoryTitle: 'LABEL',
+               valueTitle: 'COUNT',
+               width: 400,
+               height: 400,
+               innerCircleRadius: 50
             });
          };
 
          renderChart();
       },
       renderLockedChart: function() {
+
          var self = this;
          var renderChart = function() {
 
-            var colors = ["#FF6384", "#36A2EB"];
+            self.$el.find('#locked-svg').remove();
+            var container = self.$el.find('.locked-pie-chart-container');
+            container.append('<div id="locked-svg" class="pie-chart">');
 
-            var data = {
-               animation: false,
-               labels: [
-                  "Unlocked",
-                  "Locked"
-               ],
-               datasets: [
+            IFG.displayPie({
+               divId: 'locked-svg',
+               data: [
                   {
-                     data: [RPCCountCollection.total(), RPCCountCollection.lockedTotal()],
-                     backgroundColor: colors,
-                     hoverBackgroundColor: colors
-                  }]
-            };
-
-            self.$el.find('.locked-pie-chart').remove();
-            var pieChartContainer = self.$el.find('.locked-pie-chart-container');
-            pieChartContainer.append('<canvas class="locked-pie-chart" width="300" height="300"></canvas>');
-
-            new Chart($('.locked-pie-chart')[0], {
-               type: 'pie',
-               data: data,
-               options: {
-                  responsive: false,
-                  animation: false
-               }
+                     "LABEL": "Unlocked",
+                     "COUNT": RPCCountCollection.total()
+                  },
+                  {
+                     "LABEL": "Locked",
+                     "COUNT": RPCCountCollection.lockedTotal()
+                  }
+               ],
+               categoryTitle: 'LABEL',
+               valueTitle: 'COUNT',
+               width: 400,
+               height: 400,
+               innerCircleRadius: 50
             });
          };
 
@@ -276,7 +258,7 @@ define([
       }
    });
 
-   return StatsView;
+   return RPCCounts;
 });
 
 

@@ -70,6 +70,11 @@ require.config({
             'backbone',
             'backgrid'
          ]
+      },
+      pie: {
+         deps: [
+            'd3'
+         ]
       }
    },
    moment: {
@@ -90,6 +95,8 @@ require.config({
       jsBeautify: '../bower_components/js-beautify/js/lib/beautify',
       backgrid: '../bower_components/backgrid/lib/backgrid',
       Chart: '../bower_components/chart.js/dist/Chart.bundle',
+      d3: "../bower_components/d3/d3.min",
+      pie: 'lib/pie',
       'backgrid.paginator': 'lib/backgrid-paginator.min',
       backgridMomentCell: 'lib/backgrid-moment-cell.min',
       backgridSelectFilter: 'lib/backgrid-select-filter',
