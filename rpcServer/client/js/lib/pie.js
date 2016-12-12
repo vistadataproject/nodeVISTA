@@ -82,7 +82,7 @@ IFG.displayPie = function(options) {
       .style("fill", function(d, i) {
          if (colorsByCategory) return color(d.data[categoryTitle]);
          else {
-            console.log(color(i));
+            //console.log(color(i));
             return color(i);
          }
       })

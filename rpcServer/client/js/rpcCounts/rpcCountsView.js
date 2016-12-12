@@ -12,7 +12,6 @@ define([
    'text!rpcCounts/rpcReceived.hbs',
    'text!rpcCounts/top20.hbs',
    'eventBus',
-   'Chart',
    'd3',
    'pie',
    'rpcsCategorized',
@@ -20,7 +19,7 @@ define([
    'backbone.paginator',
    'backgrid.paginator',
    'backgridCustomCells'
-], function ($, _, Backbone, Handlebars, Backgrid, RPCCountCollection, LockedRPCCollection, RPCCategoryCollection, rpcCountsTemplate, rpcReceivedTemplate, top20Template, EventBus, Chart, d3) {
+], function ($, _, Backbone, Handlebars, Backgrid, RPCCountCollection, LockedRPCCollection, RPCCategoryCollection, rpcCountsTemplate, rpcReceivedTemplate, top20Template, EventBus, d3) {
    'use strict';
    var RPCCounts = Backbone.View.extend({
 

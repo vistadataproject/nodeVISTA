@@ -23,7 +23,6 @@
     "text": "^2.0.15",
     "js-beautify": "^1.6.4",
     "backgrid": "^0.3.7",
-    "chart.js": "chartjs#^2.4.0",
     "bootstrap": "^3.3.7",
     "d3": "https://github.com/mbostock-bower/d3-bower.git#3.5.17"
   }
