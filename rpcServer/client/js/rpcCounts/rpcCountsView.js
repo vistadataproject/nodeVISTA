@@ -164,8 +164,8 @@ define([
                ],
                categoryTitle: 'LABEL',
                valueTitle: 'COUNT',
-               width: 400,
-               height: 400,
+               width: 300,
+               height: 300,
                innerCircleRadius: 50
             });
          };
@@ -204,8 +204,8 @@ define([
                data: data,
                categoryTitle: 'LABEL',
                valueTitle: 'COUNT',
-               width: 400,
-               height: 400,
+               width: 300,
+               height: 300,
                innerCircleRadius: 50
             });
          };
@@ -235,8 +235,8 @@ define([
                ],
                categoryTitle: 'LABEL',
                valueTitle: 'COUNT',
-               width: 400,
-               height: 400,
+               width: 300,
+               height: 300,
                innerCircleRadius: 50
             });
          };
