@@ -38,6 +38,6 @@
     "underscore": "latest",
     "util": "latest",
     "uuid": "^2.0.2",
-    "vdm-prototypes": "git+https://github.com/vistadataproject/MVDM.git"
+    "mvdm": "git+https://github.com/vistadataproject/MVDM.git"
   }
 }

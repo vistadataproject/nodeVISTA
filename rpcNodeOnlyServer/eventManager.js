@@ -4,7 +4,7 @@
 var _ = require('underscore');
 var util = require('util');
 var EventEmitter = require('events');
-var MVDM = require('vdm-prototypes/mvdm');
+var MVDM = require('mvdm/mvdm');
 
 function EventHandler() {
    EventEmitter.call(this);

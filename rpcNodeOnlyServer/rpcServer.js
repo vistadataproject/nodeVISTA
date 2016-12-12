@@ -14,15 +14,15 @@ var EventManager = require('./eventManager');
 var parser = require('nodevista-rpcparser/rpcParser.js');
 var rpcFormatter = require('nodevista-rpcparser/rpcFormatter.js');
 var unsupportedRPCs = require('./unsupportedRPCs.js');
-var vdmUtils = require('vdm-prototypes/vdmUtils');
+var vdmUtils = require('mvdm/vdmUtils');
 
-var utilityRpcLModel = require('vdm-prototypes/utilityRPCs/rpcLRemoteUtilitiesModel').rpcLModel;
+var utilityRpcLModel = require('mvdm/utilityRPCs/rpcLRemoteUtilitiesModel').rpcLModel;
 var utilityRpcLClassesByName = utilityRpcLModel.reduce(function(obj, val) {obj[val["name"]] = val; return obj;  }, {});
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('vdm-prototypes/rpcFacade');
-var RPCContexts = require('vdm-prototypes/rpcRunner').RPCContexts;
+var RPCFacade = require('mvdm/rpcFacade');
+var RPCContexts = require('mvdm/rpcRunner').RPCContexts;
 var db, rpcFacade, rpcContexts;
 
 
@@ -199,8 +199,6 @@ function handleConnection(conn) {
         var response = '';
         var transactionId;
         var runResult;
-        var userId = '';
-        var facilityId = '';
 
         var rpcObject = parser.parseRawRPC(messageObject.rpcPacket);
 
@@ -262,26 +260,17 @@ function handleConnection(conn) {
 
             //include user if
             var userAndFacility = rpcFacade.getUserAndFacility();
-            userId = userAndFacility.userId;
-            var USER = vdmUtils.userFromId(db, '200-' + userId);
 
-            facilityId = userAndFacility.facilityId;
-            var FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityId);
-
-            if (USER) {
-                rpcCallEvent.user = {
-                    id: '200-' + userId,
-                    name: USER.name.value
-                }
+            rpcCallEvent.user = {
+                id: '200-' + userAndFacility.userId,
+                name: userAndFacility.userName
             }
 
             //include facility if available
-            if (FACILITY) {
-                rpcCallEvent.facility = {
-                    id: '4-' + facilityId,
-                    name: FACILITY.name.value,
-                    stationNumber:  FACILITY['station_number'].value
-                }
+            rpcCallEvent.facility = {
+                id: '4-' + userAndFacility.facilityId,
+                name: userAndFacility.facilityName,
+                stationNumber:  userAndFacility.facilityStationNumber
             }
 
             EventManager.emit('rpcCall', rpcCallEvent);
