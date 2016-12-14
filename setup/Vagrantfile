@@ -7,8 +7,7 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "Official Ubuntu 12.04 current daily Cloud Image amd64"
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -49,35 +48,12 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "./", "/vagrant"
 
   #share VDM development directory
-  #config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
+  config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
 
   # Define primary box name for all VM providers
   # More VMs could be added here to build a multi-box install and provision
   # accordingly
   config.vm.define "OSEHRA VistA - Ubuntu", primary: true do |vista|
-  end
-
-  # Amazon EC2 configuration
-  config.vm.provider :aws do |aws, override|
-    aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
-    aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-    aws.keypair_name = ENV['AWS_KEYPAIR_NAME']
-    aws.ami = "ami-d9a98cb0"
-    aws.instance_type = "t1.micro"
-    override.vm.box = "dummy"
-    override.ssh.username = "ubuntu"
-    override.ssh.private_key_path = ENV['AWS_PRIVATE_KEY']
-  end
-
-  # Rackspace Cloud configuration
-  config.vm.provider :rackspace do |rs, override|
-    rs.username = ENV['RS_USERNAME']
-    rs.api_key = ENV['RS_API_KEY']
-    rs.flavor = /512MB/
-    rs.image = /Ubuntu 12.04/
-    rs.rackspace_region = :ord
-    rs.public_key_path = ENV['RS_PUBLIC_KEY']
-    override.ssh.private_key_path = ENV['RS_PRIVATE_KEY']
   end
 
   # Provider-specific configuration so you can fine-tune various
