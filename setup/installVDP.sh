@@ -33,7 +33,7 @@ echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
 # Copy unique end of .profile of osehra
 echo "source $osehrahome/.nvm/nvm.sh" >> $vdphome/.profile
 # Set nodever ala EWD/ewd.js. Otherwise $nodever .profile won't exist and npm install below will fail
-nodever="0.12"
+nodever="4.7.0"
 echo "nvm use $nodever" >> $vdphome/.profile
 
 cd $vdphome
@@ -41,7 +41,7 @@ cd $vdphome
 # install nodem in node_modules in $HOME
 echo "Installing 'nodem' for $vdpid - slowest piece"
 su $vdpid -c "mkdir logs"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> logs/nodemInstall.log"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> $vdphome/nodemInstall.log"
 
 echo "Cloning nodeVISTA and VDM for use by $vdpid"
 git clone -q https://github.com/vistadataproject/nodeVISTA.git
@@ -50,23 +50,36 @@ git clone -q https://github.com/vistadataproject/VDM.git
 # Add FMQL x 2
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
+
+#change ownership of git clones to vdp
+chown -R vdp:vdp nodeVISTA
+chown -R vdp:vdp VDM
+chown -R vdp:vdp FMQL
+
 # echo "Adding FMQL (MUMPS) to osehraVISTA"
 su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
 echo "... further FMQL steps need to be done manually - will be automated by Dec 16th"
-# su $vdpid -c "chown osehra:osehra $osehrahome/p/FMQL*"
-# echo "Adding FMQL one pagers to fmql server copied from nodeVISTA"
-# su $vdpid -c "mkdir fmql/static"
-# su $vdpid -c "cp FMQL/webclients/* fmql/static"
-# TODO: check if this removes NPM install step from fmql server setup
-# cd fmql
-# su $vdpid npm install
-# Note: took fmqlServer above from the copy in nodeVISTA git
-# rm -r FMQL
 
-#
-# NOTE: for now, not installing the FMQL server app. Go into $vdphome/fmql and follow the 
-# instructions in the README. Will change when put app under an init.d
-#
+#install pm2 (production process manager for node see pm2.keymetrics.io)
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
+
+#install FMQL node package
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/FMQL/webservice && nvm use $nodever && npm install --quiet >> $vdphome/logs/fmqlInstall.log"
+
+#copy in webclient files, rename to directory to static
+cd $vdphome/FMQL/webservice
+cp -r ../webclients .
+mv webclients static
+chown -R vdp:vdp static
+
+cd $vdphome
+
+#start up fmqlServer using pm2 and save settings
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
+
+#make pm2 startup automatically
+sudo su -c "env PATH=$PATH:/home/osehra/.nvm/versions/node/v4.7.0/bin /home/osehra/.nvm/versions/node/v4.7.0/lib/node_modules/pm2/bin/pm2 startup systemd -u vdp --hp /home/vdp"
+
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
