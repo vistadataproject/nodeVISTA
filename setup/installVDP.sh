@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # After 'vagrant up' first but want in post hook of osehra setup
 # and want -s to skip testing, -p for post hook, -e (ewd) as want npm for now
 # and leave instance as osehra ... go 2 can change it

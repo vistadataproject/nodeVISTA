@@ -239,7 +239,7 @@ fi
 # Install EWD.js
 if $installEWD; then
     cd $scriptdir/EWD
-    ./ewdjs.sh -v 0.12
+    ./ewdjs.sh -v 4.7.0
     cd $basedir
 fi
 

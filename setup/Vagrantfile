@@ -17,11 +17,6 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 9430, host: 9430 # RPC Broker
-  config.vm.network :forwarded_port, guest: 8001, host: 8001 # VistALink
-  config.vm.network :forwarded_port, guest: 8080, host: 8080 # EWD.js
-  config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWD.js Webservices
-  config.vm.network :forwarded_port, guest: 8081, host: 8081 # EWD VistA Term
-  # New Forward VDP
   config.vm.network :forwarded_port, guest: 9000, host: 9000 # For FMQL Server
   config.vm.network :forwarded_port, guest: 9001, host: 9001 # For RPC Server
   config.vm.network :forwarded_port, guest: 9002, host: 9002 # For MVDM Server
@@ -48,7 +43,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "./", "/vagrant"
 
   #share VDM development directory
-  config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
+  #config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
 
   # Define primary box name for all VM providers
   # More VMs could be added here to build a multi-box install and provision
