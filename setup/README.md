@@ -49,7 +49,7 @@
         
         $ cd problems
         
-        $ npm install <--- install problem test dependencies (only need to do this once per domain)
+        $ npm install <-- install problem test dependencies (only need to do this once per domain)
         
         $ npm test <-- kicks off the problem domain tests
         ```
