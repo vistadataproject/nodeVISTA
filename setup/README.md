@@ -21,17 +21,17 @@
 * git clone the [VDM](https://github.com/vistadataproject/VDM) git and go into _prototypes_. There you'll find the existing VDP VDM prototypes and this is also where we develop new prototypes.
 * Uncomment line 46 inside __Vagrantfile__ and share the VDM folder with your VistA instance.
 
-```text
-config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
-```
+    ```text
+    config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
+    ```
 
 You may need modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
 
 * Reload/restart VistA instance to bring up shared folder.
 
-```text
-$ vagrant reload
-```
+    ```text
+    $ vagrant reload
+    ```
 
 * cd to vdp/dev/VDM/proptypes
 
