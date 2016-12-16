@@ -252,7 +252,7 @@ echo "Installing FMQL"
 su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
 
 #install pm2 (production process manager for node see pm2.keymetrics.io)
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/logs/pm2Install.log"
 
 #make pm2 startup automatically
 sudo su -c "env PATH=$PATH:/home/osehra/.nvm/versions/node/v4.7.0/bin /home/osehra/.nvm/versions/node/v4.7.0/lib/node_modules/pm2/bin/pm2 startup systemd -u vdp --hp /home/vdp"
