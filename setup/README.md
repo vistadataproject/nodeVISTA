@@ -25,7 +25,7 @@
     config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
     ```
 
-You may need modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
+    You may need modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
 
 * Reload/restart VistA instance to bring up shared folder.
 
@@ -33,6 +33,25 @@ You may need modify "../../" so it points to your development folder (i.e. /User
     $ vagrant reload
     ```
 
-* cd to vdp/dev/VDM/proptypes
+* Navigate to VDM prototypes directory and run tests for the problems domain. 
+    * Open up a terminal and SSH into the VistA instance:
+
+        ```text
+        $ vagrant ssh <-- ssh vagrant@10.2.2.100 will also work (password is vagrant)
+        
+        $ su vdp <-- password is vdp
+        
+        $ cd
+        
+        $ cd dev/VDM/prototypes
+        
+        $ npm install <-- install prototype dependencies (only need to do this once)
+        
+        $ cd problems
+        
+        $ npm install <-- install problem test dependencies (only need to do this once per domain)
+        
+        $ npm test <-- kicks off the problem domain tests
+        ```
 
 Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
