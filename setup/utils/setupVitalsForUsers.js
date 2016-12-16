@@ -15,7 +15,8 @@ var nodem = require('nodem');
 var os = require("os");
 var _ = require('underscore');
 
-process.env.gtmroutines = process.env.gtmroutines + ' .' + " .." + " ../..";
+// process.env.gtmroutines = process.env.gtmroutines + ' .' + " .." + " ../..";
+process.env.gtmroutines = process.env.gtmroutines + ' .' + ' ../../../VDM/prototypes/';
 
 process.on('uncaughtException', function(err) {
   db.close();
