@@ -1,51 +1,34 @@
 # osehraVISTA to nodeVISTA
 
-The following outlines how to install osehraVISTA and enable nodeVISTA development.
+### The following outlines how to install osehraVISTA and enable nodeVISTA development.
 
-[OSEHRA's Vagrant VistA setup instructions](https://github.com/OSEHRA/VistA/blob/master/Documentation/Install/Vagrant.rst) are very clear. 
+* Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
+* Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
+
+Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory and run the following:
+
+```text
+$ vagrant up
+```
+The initial Vagrant up process will invoke the "setup.sh" script. This script will take about 45-60 minutes to finish. Subsequent calls to vagrant up will not take this long.
 
 Note: Virtual Box VMs go under _/home/{user}/VirtualBox VMs/
 
-Once you have Vagrant and VirtualBox and Git setup, you git clone ...
+Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
 
-```text
->> git clone https://github.com/OSEHRA/VistA.git
-```
+### To develop inside the VM: 
 
-and copy the script _installVDP.sh_ and a changed _VagrantFile_ inside ...
-
-```text
->> cp installVDP.sh VistA/Scripts/Install/.
->> cp VagrantFile VistA/Scripts/Install/Ubuntu/. 
-```
-
-Then install _osehraVISTA_ ...
-
-```text
->> cd VistA/Scripts/Install/Ubuntu
->> vagrant up
-Bringing machine 'OSEHRA VistA - Ubuntu' up with 'virtualbox' provider...
-[OSEHRA VistA - Ubuntu] Box 'Official Ubuntu 12.04 current daily Cloud Image amd64' was not found. Fetching box from specified URL for
-the provider 'virtualbox'. Note that if the URL does not have
-... lot's of stuff that's takes 20+ minutes
-```
-
-Now let's go inside and add _VDP Development_ to the VM ...
-
-```text
->> vagrant ssh <------ go into the VM
->> cp /vagrant/installVDP.sh .
->> sudo ./installVDP.sh
-...
-```
-
-Two more steps:
-
-  1. FMQL also runs as a service. Follow [fmql](/fmql) to setup the _fmqlServer.js_ for remote access to FMQL and its applications.
-
-  2. To develop inside the VM, git clone the [VDM](https://github.com/vistadataproject/VDM) git and go into _prototypes_. There you'll find the existing VDP VDM prototypes and this is also where we develop new prototypes. 
+1. git clone the [VDM](https://github.com/vistadataproject/VDM) git and go into _prototypes_. There you'll find the existing VDP VDM prototypes and this is also where we develop new prototypes.
+2. Uncomment line 46 inside __Vagrantfile__ and share the VDM folder with your VistA instance.
   
-  3. To run the official CPRS, you need to change the VISTA file that holds a cypher. [Follow this instruction](https://github.com/vistadataproject/nodeVISTA/wiki/Replacing-OSEHRA-VistA-Encryption-Ciper)
+  ```text
+  config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp" <--- you may need modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
+  ```
+ 3. Reload/restart VistA instance to bring up shared folder.
+ 
+  ```text
+  $ vagrant reload
+  ```
+4. cd to vdp/dev/VDM/proptypes
 
 Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
-
