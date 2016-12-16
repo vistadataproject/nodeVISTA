@@ -278,19 +278,19 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nv
 echo "Installing Bower"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
 
+#overwrite osehra cipher with VA cipher
+echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
+sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
+sudo cp /vagrant/mFixes/XUSRB1.m /home/osehra/r/.
+
+#Copy DGRPD.m to mumps directory
+echo "Copy DGRPD.m to mumps directory (fixes space character issue)"
+sudo cp /vagrant/mFixes/DGRPD.m /home/osehra/r/.
+
 #copy over /vagrant/utils
 cd $vdphome
 cp -r /vagrant/utils .
 chown -R vdp:vdp utils
-
-#overwrite osehra cipher with VA cipher
-echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
-sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
-sudo cp mFixes/XUSRB1.m /home/osehra/r/.
-
-#Copy DGRPD.m to mumps directory
-echo "Copy DGRPD.m to mumps directory (fixes space character issue)"
-sudo cp mFixes/DGRPD.m /home/osehra/r/.
 
 #run VDM/prototypes/sysSetup npm install
 echo "Running npm install on /vagrant/utils"
@@ -299,6 +299,8 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd
 #apply problem data dictionary fix
 echo "Applying problem data dictionary fix (fixProblemAuditDD.js)"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
+
+rm -rf utils/
 
 ##apply fix that allows users to input vital data
 #echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
