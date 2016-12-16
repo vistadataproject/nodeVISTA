@@ -38,12 +38,19 @@
 
         ```text
         $ vagrant ssh <-- ssh vagrant@10.2.2.100 will also work (password is vagrant)
+        
         $ su vdp <-- password is vdp
+        
         $ cd
+        
         $ cd dev/VDM/prototypes
+        
         $ npm install <-- install prototype dependencies (only need to do this once)
+        
         $ cd problems
+        
         $ npm install <--- install problem test dependencies (only need to do this once per domain)
+        
         $ npm test <-- kicks off the problem domain tests
         ```
 
