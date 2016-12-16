@@ -286,23 +286,27 @@ chown -R vdp:vdp utils
 #overwrite osehra cipher with VA cipher
 echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
 sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
-sudo cp utils/XUSRB1.m /home/osehra/r/.
+sudo cp mFixes/XUSRB1.m /home/osehra/r/.
+
+#Copy DGRPD.m to mumps directory
+echo "Copy DGRPD.m to mumps directory (fixes space character issue)"
+sudo cp mFixes/DGRPD.m /home/osehra/r/.
 
 #run VDM/prototypes/sysSetup npm install
 echo "Running npm install on /vagrant/utils"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/sysSetupInstall.log"
 
 #apply problem data dictionary fix
-echo "Applying problem data dictionary fix (fixDD.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixDD.js >> $vdphome/logs/fixDD.log"
+echo "Applying problem data dictionary fix (fixProblemAuditDD.js)"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
 
-#apply fix that allows users to input vital data
-echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
-
-#apply fix that setups CAPRI which is controlled in parameter XU522
-echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupVitalsForUsers.log"
+##apply fix that allows users to input vital data
+#echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
+#su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
+#
+##apply fix that setups CAPRI which is controlled in parameter XU522
+#echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
+#su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupCarpi.log"
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
