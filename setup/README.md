@@ -5,7 +5,7 @@
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
 
-Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory and run the following:
+* Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory and run the following:
 
 ```text
 $ vagrant up
@@ -14,7 +14,7 @@ The initial Vagrant up process will invoke the "setup.sh" script. This script wi
 
 Note: Virtual Box VMs go under _/home/{user}/VirtualBox VMs/
 
-Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
+* Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
 
 ### To develop inside the VM: 
 
