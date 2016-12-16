@@ -20,15 +20,18 @@ Check that FMQL was installed successfully by navigating your browser to [http:/
 
 1. git clone the [VDM](https://github.com/vistadataproject/VDM) git and go into _prototypes_. There you'll find the existing VDP VDM prototypes and this is also where we develop new prototypes.
 2. Uncomment line 46 inside __Vagrantfile__ and share the VDM folder with your VistA instance.
-  
-  ```text
-  config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp" <--- you may need modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
-  ```
- 3. Reload/restart VistA instance to bring up shared folder.
+
+```text
+config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
+```
+
+You may need modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
+
+3. Reload/restart VistA instance to bring up shared folder.
  
-  ```text
-  $ vagrant reload
-  ```
+```text
+$ vagrant reload
+```
 4. cd to vdp/dev/VDM/proptypes
 
 Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
