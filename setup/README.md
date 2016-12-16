@@ -7,12 +7,12 @@
 
 * Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory and run the following:
 
-```text
-$ vagrant up
-```
-The initial Vagrant up process will invoke the "setup.sh" script. This script will take about 45-60 minutes to finish. Subsequent calls to vagrant up will not take this long.
+    ```text
+    $ vagrant up
+    ```
+    The initial Vagrant up process will invoke the "setup.sh" script. This script will take about 45-60 minutes to finish. Subsequent calls to vagrant up will not take this long.
 
-Note: Virtual Box VMs go under _/home/{user}/VirtualBox VMs/
+    Note: Virtual Box VMs go under _/home/{user}/VirtualBox VMs/
 
 * Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
 
