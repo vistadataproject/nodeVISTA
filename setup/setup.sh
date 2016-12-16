@@ -247,6 +247,29 @@ chown -R vdp:vdp nodeVISTA
 chown -R vdp:vdp VDM
 chown -R vdp:vdp FMQL
 
+echo "Installing FMQL"
+# echo "Adding FMQL (MUMPS) to osehraVISTA"
+su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
+
+#install pm2 (production process manager for node see pm2.keymetrics.io)
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
+
+#make pm2 startup automatically
+sudo su -c "env PATH=$PATH:/home/osehra/.nvm/versions/node/v4.7.0/bin /home/osehra/.nvm/versions/node/v4.7.0/lib/node_modules/pm2/bin/pm2 startup systemd -u vdp --hp /home/vdp"
+
+#install FMQL node package
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/FMQL/webservice && nvm use $nodever && npm install --quiet >> $vdphome/logs/fmqlInstall.log"
+
+#copy in webclient files, rename to directory to static
+cd $vdphome/FMQL/webservice
+cp -r ../webclients .
+mv webclients static
+chown -R vdp:vdp static
+
+#start up fmqlServer using pm2 and save settings
+echo "Running FMQL as a service via pm2"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
+
 #install jasmine
 echo "Installing Jasmine"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/nodemInstall.log"
