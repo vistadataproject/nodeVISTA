@@ -77,8 +77,11 @@ fi
 
 # Get kernel.shmmax to determine if we can use 32k strings
 shmmax=$(sysctl -n kernel.shmmax)
-
-if [ $shmmax -ge 67108864 ]; then
+sshmax_size=${#shmmax}
+if [ $sshmax_size -ge 9 ]; then #length check need to fix max integer issue
+    echo "Current shared memory maximum is equal to or greater than 64MB"
+    echo "Current shmmax is: " $shmmax
+elif [ $shmmax -ge 67108864 ]; then
     echo "Current shared memory maximum is equal to or greater than 64MB"
     echo "Current shmmax is: " $shmmax
 else

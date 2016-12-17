@@ -185,10 +185,6 @@ su $instance -c "source $basedir/etc/env"
 cd $basedir
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet nodem >> $basedir/log/nodemInstall.log"
 
-# Copy the right mumps$shortnodever.node_$arch
-su $instance -c "cp $basedir/node_modules/nodem/lib/mumps"$nodever".node_$arch $basedir/ewdjs/mumps.node"
-su $instance -c "mv $basedir/node_modules/nodem/lib/mumps"$nodever".node_$arch $basedir/ewdjs/node_modules/nodem/lib/mumps.node"
-
 # Setup GTM C Callin
 # with nodem 0.3.3 the name of the ci has changed. Determine using ls -1
 calltab=$(ls -1 $basedir/node_modules/nodem/resources/*.ci)
