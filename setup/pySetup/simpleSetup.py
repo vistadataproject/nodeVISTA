@@ -28,20 +28,24 @@ ConnectToMUMPS relies on environment:
 
 LOGFILE = 'logs/importDemoSetup.txt'
 
-try:
-    VistA=ConnectToMUMPS(LOGFILE)
-    VistA.wait(PROMPT,60)
+def simpleSetup():
+    try:
+        VistA=ConnectToMUMPS(LOGFILE)
+        VistA.wait(PROMPT,60)
 
-    postImportSetupBasics(VistA)
+        print "Setting up basics ..."
+        postImportSetupBasics(VistA)
 
-    postImportSetupUsers(VistA)
+        print "Now setting up Users ..."
+        postImportSetupUsers(VistA)
 
-    postImportSetupPatients(VistA)
+        print "Finally setting up Patients ..."
+        postImportSetupPatients(VistA)
  
-except Exception as e:
-    print e
-finally:
-    pass
+    except Exception as e:
+        print e
+    finally:
+        pass
 
 def postImportSetupBasics(VistA):
     """
@@ -160,3 +164,8 @@ def postImportSetupPatients(VistA):
     # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
     OSEHRASetup.addPatient(VistA,'dataFiles/patdata0.csv')
 
+def main():
+    simpleSetup()
+
+if __name__ == "__main__":
+    main()

@@ -345,12 +345,10 @@ class ConnectLinuxGTM(ConnectMUMPS):
     super(ConnectMUMPS, self).__init__()
     gtm_command = os.getenv('gtm_dist')+'/mumps -dir'
     self.connection = pexpect.spawn(gtm_command, timeout=None)
-    """
     # CG: namespace doesn't matter in GTM. Neither does instance
     self.prompt = os.getenv("gtm_prompt")
     if self.prompt == None:
         self.prompt = "GTM>"
-    """
     if len(namespace) == 0:
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:
