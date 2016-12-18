@@ -1,4 +1,15 @@
-from OSEHRAHelper import ConnectToMUMPS,PROMPT
+import os
+import sys
+import logging
+sys.path = ['rasUtilities'] + sys.path
+
+import OSEHRASetup
+from OSEHRAHelper import ConnectToMUMPS, PROMPT
+
+logging.basicConfig(level=logging.INFO,
+                    #filename='debug.log',
+                    #format='%(asctime)s %(levelname)s: %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
 
 # -------------------------------------------------------------------------
 #
@@ -38,10 +49,10 @@ def ZTMGRSET():
     VistA.write('8') 
     # MANAGER's
     VistA.wait('NAME OF')
-    VistA.write(TEST_VISTA_SETUP_UCI_NAME, TEST_VISTA_SETUP_VOLUME_SET)
+    VistA.write(TEST_VISTA_SETUP_UCI_NAME + "," + TEST_VISTA_SETUP_VOLUME_SET)
     # PRODUCTION SIGN ON
     VistA.wait('PRODUCTION')
-    VistA.write(TEST_VISTA_SETUP_UCI_NAME, TEST_VISTA_SETUP_VOLUME_SET)
+    VistA.write(TEST_VISTA_SETUP_UCI_NAME + "," + TEST_VISTA_SETUP_VOLUME_SET)
     # VOLUME SET must match one used in PRODUCTION
     VistA.wait('NAME OF')
     VistA.write(TEST_VISTA_SETUP_VOLUME_SET)
@@ -52,3 +63,9 @@ def ZTMGRSET():
     VistA.wait('Want to rename the FileMan routines: No//')
     VistA.write('YES')
     VistA.wait(PROMPT, 200)
+
+def main():
+    ZTMGRSET()
+
+if __name__ == "__main__":
+    main()
