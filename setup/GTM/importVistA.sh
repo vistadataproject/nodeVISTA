@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
+#
+# Changed for nodeVISTA to copy in mFixes
+# 
 # Copyright 2011-2012 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +33,13 @@ for routine in $(cd /usr/local/src/VistA-Source && git ls-files -- \*.m); do
     cp /usr/local/src/VistA-Source/${routine} $basedir/r
 done
 echo "Done copying routines"
+
+# Copy mFixes (before compilation) - for nodeVISTA
+# ... note: in OSEHRA, some of this was done in the test.cmake pass
+for routine in $(cd mFixes && git ls-files -- \*.m); do
+    cp mFixes/${routine} $basedir/r
+done
+echo "Done copying fixed (for GT.M and otherwise) routines"
 
 # Compile routines
 echo "Compiling routines"
