@@ -96,11 +96,16 @@ echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 # Clone VistA-M repo
 cd /usr/local/src
 git clone --depth 1 $repoPath VistA-Source
+git clone https://github.com/vistadataproject/nodeVISTA.git
 cd $basedir
 # Perform the import (NB: key different path from Test/Dashboard in OSEHRA original)
 # ... import revised to import fixed ZTLOAD1
-su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVist.sh"
-# TODO: put python driven changes here when ready but for now do manually
+su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
+# Python and RAS driven changes
+cd /usr/local/src/nodeVISTA/setup/pySetup 
+mkdir /usr/local/src/nodeVISTA/setup/logs
+su $instance -c "python ZTMGRSET.py" 
+su $instance -c "python simpleSetup.py"
 
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
@@ -280,25 +285,25 @@ cp -r /vagrant/utils .
 chown -R vdp:vdp utils
 
 #overwrite osehra cipher with VA cipher
-echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
-sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
-sudo cp utils/XUSRB1.m /home/osehra/r/.
+#echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
+#sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
+#sudo cp utils/XUSRB1.m /home/osehra/r/.
 
 #run VDM/prototypes/sysSetup npm install
-echo "Running npm install on /vagrant/utils"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/sysSetupInstall.log"
+#echo "Running npm install on /vagrant/utils"
+#su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/sysSetupInstall.log"
 
 #apply problem data dictionary fix
-echo "Applying problem data dictionary fix (fixDD.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixDD.js >> $vdphome/logs/fixDD.log"
+#echo "Applying problem data dictionary fix (fixDD.js)"
+# su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixDD.js >> $vdphome/logs/fixDD.log"
 
 #apply fix that allows users to input vital data
-echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
+#echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
+# su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
 
 #apply fix that setups CAPRI which is controlled in parameter XU522
-echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupVitalsForUsers.log"
+#echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
+# su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupVitalsForUsers.log"
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
