@@ -103,7 +103,7 @@ cd $basedir
 su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
 # Python and RAS driven changes
 cd /usr/local/src/nodeVISTA/setup/pySetup 
-mkdir /usr/local/src/nodeVISTA/setup/logs
+mkdir /usr/local/src/nodeVISTA/setup/pySetup/logs
 su $instance -c "python ZTMGRSET.py" 
 su $instance -c "python simpleSetup.py"
 
