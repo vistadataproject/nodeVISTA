@@ -6,7 +6,7 @@ The second difference is that, there are utilityRPCs that are implemented direct
 
 
 ## Timing of XWB IM HERE
- 
+### Methodology 
 There is also a RPC called XWB IM HERE. This is essentially a ping to VistA and a "1" is returned. This RPC is also implemented in utilityRPCs as pure javascript.
 
 rpcNodeOnlyServer adds a third path besides the Locker or Runner. If the called RPC is in utilityRPCs, the javascript is executed instead of the call going through the Locker and database. This allows a full bypass of crossing the JS/MUMPS boundary. The results from timing tests help to investigate areas that may cause slowdowns.
@@ -17,7 +17,7 @@ The first column shows the trial running directly against the VistA RPC Broker. 
 
 The Emitter is the mvdm monitor. The logging is 3-4 lines of writing to the bunyan logger. The data shows the differences with these lines commented out or in place.
 
-### Test commands:
+### Test commands
 Start rpcNodeOnlyServer
 ```
 node rpcNodeOnlyServer.js
@@ -31,7 +31,7 @@ Five trials, bash script
 ./spec/runIMHERETiming.sh
 ```
 
-
+### Results
 | XWB IM HERE (1000 times in milliseconds) |                      |                      |                   |                      |                    |                     |                     |
 |--------------------------|----------------------|----------------------|-------------------|----------------------|--------------------|---------------------|----------------------|
 | Native Broker            | Node Only            |                      |                   | Locker               |                    | Runner                    |               |
