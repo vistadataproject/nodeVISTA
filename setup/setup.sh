@@ -277,11 +277,11 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nv
 #overwrite osehra cipher with VA cipher
 echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
 sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
-sudo cp /vagrant/mFixes/XUSRB1.m /home/osehra/r/.
+sudo cp /vagrant/GTM/mFixes/XUSRB1.m /home/osehra/r/.
 
 #Copy DGRPD.m to mumps directory
 echo "Copy DGRPD.m to mumps directory (fixes space character issue)"
-sudo cp /vagrant/mFixes/DGRPD.m /home/osehra/r/.
+sudo cp /vagrant/GTM/mFixes/DGRPD.m /home/osehra/r/.
 
 #copy over /vagrant/utils
 cd $vdphome
