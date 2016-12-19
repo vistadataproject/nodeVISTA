@@ -12,7 +12,7 @@
     ```
     The initial Vagrant up process will invoke the "setup.sh" script. This script will take about 45-60 minutes to finish. Subsequent calls to vagrant up will not take this long.
 
-    Note: Virtual Box VMs go under _/home/{user}/VirtualBox VMs/
+    Note: Virtual Box VMs go under /Users/{user}/VirtualBox VMs/
 
 * Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
 
@@ -25,7 +25,7 @@
     config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
     ```
 
-    You may need to modify "../../" so it points to your development folder (i.e. /Users/username/projects/vistadata/VDM/) 
+    You may need to modify "../../" so it points to your development folder (i.e. /Users/{user}/projects/vistadata/VDM/) 
 
 * Reload/restart VistA instance to bring up shared folder.
 
