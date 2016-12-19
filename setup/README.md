@@ -25,7 +25,7 @@
     config.vm.synced_folder "../../", "/home/vdp/dev", owner: "vdp", group: "vdp"
     ```
 
-    You may need to modify "../../" so it points to your development folder (i.e. /Users/<username>/projects/vistadata/VDM/) 
+    You may need to modify "../../" so it points to your development folder (i.e. /Users/username/projects/vistadata/VDM/) 
 
 * Reload/restart VistA instance to bring up shared folder.
 
