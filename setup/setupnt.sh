@@ -31,9 +31,7 @@ test -d /home/$instance/g &&
 export DEBIAN_FRONTEND="noninteractive"
 
 # extra utils - used for cmake and dashboards and initial clones
-# Note: Amazon EC2 requires two apt-get update commands to get everything
 echo "Updating operating system"
-apt-get update -qq > /dev/null
 apt-get update -qq > /dev/null
 apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon > /dev/null
 
@@ -50,7 +48,6 @@ scriptdir=/vagrant
 
 # Fix line endings
 find /vagrant -name \"*.sh\" -type f -print0 | xargs -0 dos2unix > /dev/null 2>&1
-dos2unix /vagrant/EWD/etc/init.d/ewdjs > /dev/null 2>&1
 dos2unix /vagrant/GTM/etc/init.d/vista > /dev/null 2>&1
 dos2unix /vagrant/GTM/etc/xinetd.d/vista-rpcbroker > /dev/null 2>&1
 dos2unix /vagrant/GTM/etc/xinetd.d/vista-vistalink > /dev/null 2>&1
@@ -96,17 +93,19 @@ echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 # Clone VistA-M repo
 cd /usr/local/src
 git clone --depth 1 $repoPath VistA-Source
+# Not Ideal - cloning nodeVISTA for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
 git clone https://github.com/vistadataproject/nodeVISTA.git
 cd $basedir
-# Perform the import (NB: key different path from Test/Dashboard in OSEHRA original)
-# ... import revised to import fixed ZTLOAD1
 su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
-# Python and RAS driven changes
+
+# Python and RAS driven changes (note: some JS parameters settings below. Should combine)
 cd /usr/local/src/nodeVISTA/setup/pySetup 
 mkdir /usr/local/src/nodeVISTA/setup/pySetup/logs
+chmod a+w /usr/local/src/nodeVISTA/setup/pySetup
 chmod a+w /usr/local/src/nodeVISTA/setup/pySetup/logs
-su $instance -c "python ZTMGRSET.py" 
-su $instance -c "python simpleSetup.py"
+# NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
+su $instance -c "source $basedir/etc/env && python ZTMGRSET.py" 
+su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
@@ -187,10 +186,6 @@ su $instance -c "source $basedir/etc/env"
 cd $basedir
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet nodem >> $basedir/log/nodemInstall.log"
 
-# Copy the right mumps$shortnodever.node_$arch
-su $instance -c "cp $basedir/node_modules/nodem/lib/mumps"$nodever".node_$arch $basedir/ewdjs/mumps.node"
-su $instance -c "mv $basedir/node_modules/nodem/lib/mumps"$nodever".node_$arch $basedir/ewdjs/node_modules/nodem/lib/mumps.node"
-
 # Setup GTM C Callin
 # with nodem 0.3.3 the name of the ci has changed. Determine using ls -1
 calltab=$(ls -1 $basedir/node_modules/nodem/resources/*.ci)
@@ -218,14 +213,14 @@ echo $vdpid:vdp | sudo chpasswd
 # Copy unique end of .bashrc of /home/osehra and add an extra
 echo "" >> $vdphome/.bashrc
 echo "source $osehrahome/etc/env" >> $vdphome/.bashrc
-# osehra uses Node Version Manager (EWD sets it up)
+# osehra uses Node Version Manager 
 echo "export NVM_DIR=\"$osehrahome/.nvm\"" >> $vdphome/.bashrc
 echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> $vdphome/.bashrc
 # VDP Extra: override 'gtm_tmp' to /tmp to avoid write/link errors"
 echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
 # Copy unique end of .profile of osehra
 echo "source $osehrahome/.nvm/nvm.sh" >> $vdphome/.profile
-# Set nodever ala EWD/ewd.js. Otherwise $nodever .profile won't exist and npm install below will fail
+# Set nodever. Otherwise $nodever .profile won't exist and npm install below will fail
 nodever="4.7.0"
 echo "nvm use $nodever" >> $vdphome/.profile
 

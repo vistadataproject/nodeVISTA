@@ -166,7 +166,7 @@ def postImportSetupPatients(VistA):
     # The patient can be a veteran but not service connected
     # Function arguments:
     # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-    OSEHRASetup.addPatient(VistA,'../dataFiles/patdata0.csv')
+    OSEHRASetup.addPatient(VistA,'/usr/local/src/nodeVISTA/setup/pySetup/dataFiles/patdata0.csv')
 
 def main():
     simpleSetup()
