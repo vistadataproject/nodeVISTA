@@ -31,9 +31,7 @@ test -d /home/$instance/g &&
 export DEBIAN_FRONTEND="noninteractive"
 
 # extra utils - used for cmake and dashboards and initial clones
-# Note: Amazon EC2 requires two apt-get update commands to get everything
 echo "Updating operating system"
-apt-get update -qq > /dev/null
 apt-get update -qq > /dev/null
 apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon > /dev/null
 
@@ -50,7 +48,6 @@ scriptdir=/vagrant
 
 # Fix line endings
 find /vagrant -name \"*.sh\" -type f -print0 | xargs -0 dos2unix > /dev/null 2>&1
-dos2unix /vagrant/EWD/etc/init.d/ewdjs > /dev/null 2>&1
 dos2unix /vagrant/GTM/etc/init.d/vista > /dev/null 2>&1
 dos2unix /vagrant/GTM/etc/xinetd.d/vista-rpcbroker > /dev/null 2>&1
 dos2unix /vagrant/GTM/etc/xinetd.d/vista-vistalink > /dev/null 2>&1
@@ -212,14 +209,14 @@ echo $vdpid:vdp | sudo chpasswd
 # Copy unique end of .bashrc of /home/osehra and add an extra
 echo "" >> $vdphome/.bashrc
 echo "source $osehrahome/etc/env" >> $vdphome/.bashrc
-# osehra uses Node Version Manager (EWD sets it up)
+# osehra uses Node Version Manager
 echo "export NVM_DIR=\"$osehrahome/.nvm\"" >> $vdphome/.bashrc
 echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> $vdphome/.bashrc
 # VDP Extra: override 'gtm_tmp' to /tmp to avoid write/link errors"
 echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
 # Copy unique end of .profile of osehra
 echo "source $osehrahome/.nvm/nvm.sh" >> $vdphome/.profile
-# Set nodever ala EWD/ewd.js. Otherwise $nodever .profile won't exist and npm install below will fail
+# Set nodever. Otherwise $nodever .profile won't exist and npm install below will fail
 nodever="4.7.0"
 echo "nvm use $nodever" >> $vdphome/.profile
 
@@ -277,11 +274,11 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nv
 #overwrite osehra cipher with VA cipher
 echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
 sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
-sudo cp /vagrant/mFixes/XUSRB1.m /home/osehra/r/.
+sudo cp /vagrant/GTM/mFixes/XUSRB1.m /home/osehra/r/.
 
 #Copy DGRPD.m to mumps directory
 echo "Copy DGRPD.m to mumps directory (fixes space character issue)"
-sudo cp /vagrant/mFixes/DGRPD.m /home/osehra/r/.
+sudo cp /vagrant/GTM/mFixes/DGRPD.m /home/osehra/r/.
 
 #copy over /vagrant/utils
 cd $vdphome
