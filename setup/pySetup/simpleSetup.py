@@ -36,8 +36,12 @@ def simpleSetup():
         print "Setting up basics ..."
         postImportSetupBasics(VistA)
 
-        print "Now setting up Users ..."
-        postImportSetupUsers(VistA)
+        try: 
+            print "Now setting up Users ..."
+            postImportSetupUsers(VistA)
+        except Exception as e:
+            print e
+            print "... going on as except verify msg and will suppress"
 
         print "Finally setting up Patients ..."
         postImportSetupPatients(VistA)
@@ -162,7 +166,7 @@ def postImportSetupPatients(VistA):
     # The patient can be a veteran but not service connected
     # Function arguments:
     # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-    OSEHRASetup.addPatient(VistA,'dataFiles/patdata0.csv')
+    OSEHRASetup.addPatient(VistA,'../dataFiles/patdata0.csv')
 
 def main():
     simpleSetup()
