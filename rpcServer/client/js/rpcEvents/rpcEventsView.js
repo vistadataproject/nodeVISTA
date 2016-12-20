@@ -122,8 +122,7 @@ define([
                cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-
-                     if (!rawValue) {
+                     if (!rawValue || !rawValue.name) {
                         return '';
                      }
 
@@ -139,8 +138,7 @@ define([
                cell: Backgrid.HtmlCell,
                formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                   fromRaw: function (rawValue, model) {
-
-                     if (!rawValue) {
+                     if (!rawValue || !rawValue.name) {
                         return '';
                      }
 
