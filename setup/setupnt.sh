@@ -105,6 +105,7 @@ chmod a+w /usr/local/src/nodeVISTA/setup/pySetup
 chmod a+w /usr/local/src/nodeVISTA/setup/pySetup/logs
 # NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
 su $instance -c "source $basedir/etc/env && python ZTMGRSET.py" 
+# TODO: should exit if simpleSetup.py fails
 su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 
 # Enable journaling
