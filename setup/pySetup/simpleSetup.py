@@ -54,6 +54,7 @@ def simpleSetup():
         postImportSetupUsers(VistA)
     except Exception as e:
         print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
+        VistA=ConnectToMUMPS(LOGFILE)
 
     try:
         print "Finally setting up Patients ..."
