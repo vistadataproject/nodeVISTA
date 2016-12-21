@@ -28,28 +28,41 @@ ConnectToMUMPS relies on environment:
 
 LOGFILE = 'logs/importDemoSetup.txt'
 
+"""
+Expect to be called from Shell - PRINT can be read with 
+     result=`python simpleSetup.py`
+     if [ "$result" != "OK" ]; then ... 
+"""
 def simpleSetup():
-    try:
-        VistA=ConnectToMUMPS(LOGFILE)
-        VistA.wait(PROMPT,60)
 
+    try:
+        print "Connecting to MUMPS roll n scroll ..."
+        VistA=ConnectToMUMPS(LOGFILE)
+    except:
+        print "EXIT_PYS_CANT_CONNECT_TO_MUMPS"
+        return
+
+    try:
         print "Setting up basics ..."
         postImportSetupBasics(VistA)
+    except:
+        print "EXIT_PYS_CANT_SETUP_BASICS"
+        return
 
-        try: 
-            print "Now setting up Users ..."
-            postImportSetupUsers(VistA)
-        except Exception as e:
-            print e
-            print "... going on as except verify msg and will suppress"
+    try:
+        print "Now setting up Users ..."
+        postImportSetupUsers(VistA)
+    except Exception as e:
+        print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
 
+    try:
         print "Finally setting up Patients ..."
         postImportSetupPatients(VistA)
- 
-    except Exception as e:
-        print e
-    finally:
-        pass
+    except:
+        print "EXIT_PYS_CANT_SETUP_PATIENTS"
+        return
+
+    print "OK"
 
 def postImportSetupBasics(VistA):
     """
@@ -62,6 +75,8 @@ def postImportSetupBasics(VistA):
     TEST_VISTA_SETUP_SITE_NAME = "DEMO.OSEHRA.ORG"
     TEST_VISTA_SETUP_VOLUME_SET = "PLA"
     VISTA_TCP_PORT = "9210" # but commented out in test.cmake
+
+    VistA.wait(PROMPT,60)
 
     # Default site name is 6161
     # ... sets (via ^ZUSET) ZUGTM to ZU and ^DINIT for MSC FileMan
