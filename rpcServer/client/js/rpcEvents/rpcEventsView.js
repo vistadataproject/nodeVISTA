@@ -68,15 +68,12 @@ define([
                };
             },
             columns: [{
-               name: 'timestamp',
-               label: 'Date',
-               editable: false,
-               cell: Backgrid.HtmlCell,
-               formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-                  fromRaw: function (rawValue, model) {
-                     return Backgrid.HtmlCell.formatAsHtml(Moment(rawValue).format("MMM Do YYYY @ h:mm:ss a"), model);
-                  }
-               })
+                name: 'timestamp',
+                label: 'Date',
+                editable: false,
+                cell: Backgrid.Extension.MomentCell.extend({
+                    displayFormat: "MMM Do YYYY @ h:mm:ss a"
+                })
             }, {
                name: 'rpcName',
                label: 'RPC Name',

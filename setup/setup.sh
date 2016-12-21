@@ -306,4 +306,12 @@ rm -rf utils/
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
 
+#cmake script overwrites files that GTM installation did search and replace on
+# Modify xinetd.d scripts to reflect $instance
+perl -pi -e 's/foia/'$instance'/g' $basedir/bin/*.sh
+perl -pi -e 's/foia/'$instance'/g' $basedir/etc/xinetd.d/vista-*
+
+# Modify init.d script to reflect $instance
+perl -pi -e 's/foia/'$instance'/g' $basedir/etc/init.d/vista
+
 echo "User $vdpid created"
