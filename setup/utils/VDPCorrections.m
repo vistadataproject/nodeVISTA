@@ -1,5 +1,7 @@
 VDPCorrections ;
  ;
+ ; NOTE: not run in nodeVISTA Vagrant 2016 - will use in 2017
+ ;
  ; Changes to be effected:
  ;
  ; 1. Piece number in error
