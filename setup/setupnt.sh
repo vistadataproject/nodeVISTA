@@ -289,10 +289,9 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd
 echo "Applying problem data dictionary fix (fixDD.js)"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
 
-# ... leads to syntax error so must fix
 #apply fix that allows users to input vital data
-#echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
-#su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
+echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
 
 #apply fix that setups CAPRI which is controlled in parameter XU522
 echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
