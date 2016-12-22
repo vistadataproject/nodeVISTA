@@ -102,7 +102,8 @@ function setupVitalsForSysAndUser(userDuz) {
     // TO TRY: value "@" for ADD will delete a setting
 }
 
-//hard coded to DUZ 55 which on some systems is Robert Alexander.
-setupVitalsForSysAndUser(55);
+// Lookup Robert Alexander the old fashioned way - B index in VA(200
+var raIEN = db.next({global: "VA", subscripts: [200, "B", "ALEXANDER,ROBERT", 0]}).result;
+setupVitalsForSysAndUser(raIEN);
 
 db.close();
