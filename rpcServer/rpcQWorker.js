@@ -170,7 +170,6 @@ function setMvdmHandlers(send) {
     });
 
     MVDM.on('list', function(mvdmData) {
-        console.log('\n\naaaaargghhh');
         var qMessage = {};
         qMessage.type = 'emitMvdmEvent';
         qMessage.event = mvdmData;
