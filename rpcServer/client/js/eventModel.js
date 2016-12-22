@@ -11,7 +11,7 @@ define([
       constructor: function() {
          var args = arguments[0];
 
-         args.dateTime = moment(args.timestamp).utc().format('MMM Do YYYY @ h:mm:ss a');
+         args.dateTime = moment(args.timestamp).format('MMM Do YYYY @ h:mm:ss a');
 
          Backbone.Model.apply(this, arguments);
       },
