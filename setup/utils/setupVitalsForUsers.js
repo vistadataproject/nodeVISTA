@@ -61,7 +61,7 @@ function setupVitalsForSysAndUser(userDuz) {
         console.log("SYS/GMV TEMPLATE has unexpected or no value - resetting");
         var res = db.function({function: "ADD^XPAR", arguments: ["SYS", "GMV TEMPLATE", "DAILY VITALS", EXPECTED_GMV_TEMPLATE_DAILY_VITALS]});
         if (res.ok !== 1)
-            throw new Error("ADD^XPAR failed");
+            throw new Error("ADD^XPAR failed: " + JSON.stringify(res));
         // Confirm result set
         res = db.function({function: "GET^XPAR", arguments: ["SYS", "GMV TEMPLATE", "DAILY VITALS"]});
         if (res.result !== EXPECTED_GMV_TEMPLATE_DAILY_VITALS)
@@ -91,7 +91,7 @@ function setupVitalsForSysAndUser(userDuz) {
         console.log("USR/GMV USER DEFAULTS/DefaultTemplate has unexpected or no value - resetting. %s" + JSON.stringify(res));
         res = db.function({function: "ADD^XPAR", arguments: ["USR","GMV USER DEFAULTS","DefaultTemplate",EXPECTED_USR_GMV_USER_DEFAULTS_DefaultTemplate]});
         if (res.ok !== 1)
-            throw new Error("ADD^XPAR failed");
+            throw new Error("ADD^XPAR failed: " + JSON.stringify(res));
         res = db.function({function: "GET^XPAR", arguments: getArgs});
         if (res.result !== EXPECTED_USR_GMV_USER_DEFAULTS_DefaultTemplate)
             throw new Error("Tried to reset USR/GMV USER DEFAULTS/DefaultTemplate and failed - " + JSON.stringify(res));
