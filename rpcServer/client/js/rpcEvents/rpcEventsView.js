@@ -72,7 +72,9 @@ define([
                 label: 'Date',
                 editable: false,
                 cell: Backgrid.Extension.MomentCell.extend({
-                    displayFormat: "MMM Do YYYY @ h:mm:ss a"
+                    displayFormat: "MMM Do YYYY @ h:mm:ss a",
+                    modelInUTC: true,
+                    displayInUTC: false
                 })
             }, {
                name: 'rpcName',
