@@ -142,9 +142,6 @@ fi
 
 echo "Installing node.js via NVM (node version manager)"
 
-# Copy init.d scripts to VistA etc directory
-su $instance -c "cp -R etc $basedir"
-
 # Download installer in tmp directory
 cd $basedir/tmp
 
