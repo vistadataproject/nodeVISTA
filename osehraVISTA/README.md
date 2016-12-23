@@ -48,3 +48,4 @@ Two more steps:
   3. To run the official CPRS, you need to change the VISTA file that holds a cypher. [Follow this instruction](https://github.com/vistadataproject/nodeVISTA/wiki/Replacing-OSEHRA-VistA-Encryption-Ciper)
 
 Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
+	
