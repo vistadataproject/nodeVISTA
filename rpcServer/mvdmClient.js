@@ -12,6 +12,9 @@ var CONFIG = require('./cfg/config.js');
 var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
+var rpcsCategorized = require('./cfg/rpcsCategorized');
+
+var lockedRPCList = [];
 
 function init() {
    // parse application/x-www-form-urlencoded
@@ -23,7 +26,7 @@ function init() {
 
    //default path goes to index.html
    app.get('/', function(req, res){
-      res.sendFile(path.join(__dirname + '/static/index.html'));
+      res.sendFile(path.join(__dirname + '/client/index.html'));
    });
 
    //get management settings
@@ -45,6 +48,16 @@ function init() {
       }
       
       return res.sendStatus(200);
+   });
+
+   app.get('/lockedRPCList', function(req, res) {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(lockedRPCList));
+   });
+
+   app.get('/rpcList', function(req, res) {
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(rpcList));
    });
 
    var mvdmClients = [];
@@ -74,13 +87,25 @@ function init() {
    initMVDMEventListeners(mvdmClients);
    initRPCEventListeners(rpcClients);
 
+   //listen for locked RPC List
+   EventManager.on('lockedRPCList', function(event) {
+      lockedRPCList = event.list.map(function(rpcName) {return {name: rpcName, count: 0};});
+      lockedRPCList.forEach(function(rpc) {
+         var category = rpcsCategorized[rpc.name];
+         if (category) {
+            rpc = _.extend(rpc, category);
+         }
+      });
+
+   });
+
    var port = CONFIG.mvdmClient.port;
    app.listen(port, function () {
       LOGGER.info('MVDM Client listening on port ' + port);
    });
 
    //static files
-   app.use(express.static(__dirname + "/static")); //use static files in ROOT/public folder
+   app.use(express.static(__dirname + "/client")); //use web client files in ROOT/public folder
    app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
    app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }

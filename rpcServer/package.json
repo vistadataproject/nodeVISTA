@@ -21,32 +21,23 @@
   ],
   "main": "rpcServer.js",
   "dependencies": {
-    "backbone": "^1.3.3",
-    "backbone.paginator": "^2.0.5",
-    "backgrid": "^0.3.7",
     "body-parser": "^1.15.2",
-    "bootstrap": "^3.3.7",
     "bunyan": "latest",
+    "ewd-qoper8": "file:../lib/ewd-qoper8",
     "express": "^4.14.0",
     "express-ws": "^2.0.0",
-
     "fs": "latest",
     "handlebars": "^4.0.5",
     "hashmap": "latest",
-    "jquery": "^3.1.0",
-    "js-beautify": "^1.6.3",
+    "jquery": "^3.1.1",
     "moment": "^2.14.1",
     "net": "latest",
     "nodem": "latest",
+    "nodevista-rpcparser": "file:../lib/rpcParser",
     "promise": "latest",
-    "requirejs": "^2.2.0",
-    "text": "requirejs/text",
     "underscore": "latest",
     "util": "latest",
     "uuid": "^2.0.2",
-
-    "ewd-qoper8": "file:../lib/ewd-qoper8",
-    "nodevista-rpcparser": "file:../lib/rpcParser",
-    "vdm-prototypes": "file:../../VDM/prototypes"
+    "mvdm": "git+https://github.com/vistadataproject/MVDM.git"
   }
 }

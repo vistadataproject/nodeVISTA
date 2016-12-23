@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>MVDM Client</title>
+    <meta name="description" content="MVDM Client">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <!-- Using theme from https://bootswatch.com/ -->
+    <link href="css/spacelab-theme.bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/backgrid/lib/backgrid.css" rel="stylesheet">
+    <link href="css/backgrid-moment-cell.min.css" rel="stylesheet">
+    <link href="css/backgrid-paginator.min.css" rel="stylesheet">
+    <link href="css/backgrid-custom-cells.css" rel="stylesheet">
+
+    <link href="css/pieChart.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- app navigation -->
+<div class="container-fluid">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#mvdmEvents">MVDM Client</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li id="nav-mvdm-events"><a href="#mvdmEvents">MVDM Events</span></a></li>
+                    <li id="nav-rpc-events"><a href="#rpcEvents">RPC Events</span></a></li>
+                    <li id="nav-rpc-counts"><a href="#rpcCounts">RPC Counts</a></li>
+                    <li id="nav-management"><a href="#management">Management</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="main-content"></section>
+</div>
+
+<script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+
+</body>
+</html>

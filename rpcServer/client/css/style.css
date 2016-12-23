@@ -1,0 +1,156 @@
+nav {
+    margin-top: 10px;
+}
+
+.management h4 {
+    display: inline-block;
+}
+
+.management select {
+    margin-left: 10px;
+    width: 10%;
+    display: inline-block;
+}
+
+.events a, u {
+    text-decoration: none;
+}
+
+.events .submenu .submenu-label {
+    display: inline-block;
+    margin:10px;
+}
+
+.events .submenu select.filter {
+    width: 10%;
+    margin: 10px;
+    display: inline-block;
+}
+
+.events .mvdm-events-status {
+    float:right;
+    margin: 15px 15px 0 0;
+}
+
+.events .submenu .glyphicon {
+    font-size: 130%;
+    top: 4px;
+}
+
+.events .submenu .glyphicon-filter {
+    color: #6495ed;
+}
+
+.events .submenu .glyphicon-ok-sign {
+    color: #008000;
+}
+
+.events .submenu .glyphicon-remove-sign {
+    color:#ff0000;
+}
+
+.events .submenu .glyphicon-ban-circle {
+    color:#808080;
+}
+
+.events .glyphicon-plus-sign {
+    color: #008000;
+}
+
+.events .glyphicon-minus-sign {
+    color:#ff0000;
+}
+
+
+.rpc-events.submenu {
+    margin: 10px;
+}
+
+.grid-rpcs-locked-status {
+    display: block;
+    text-align: center;
+}
+
+.modal-body pre {
+    max-height: 600px;
+}
+
+.rpc-events.modal-body pre {
+    max-height: 400px;
+}
+
+.backgrid .moment-cell,
+.backgrid .string-cell {
+    text-align: center;
+}
+
+.backgrid tr {
+    cursor: pointer;
+}
+
+.rpc-record {
+    margin-left: 15px;
+}
+
+.rpc-record a {
+    margin-right: 15px;
+}
+
+.rpc-record .glyphicon-record {
+    color: #008000;
+}
+
+.rpc-record .glyphicon-stop {
+    color: #ff0000;
+}
+
+.rpc-record .glyphicon-download-alt {
+    color: #404040;
+}
+
+.rpc-record .recording {
+    color: #404040;
+}
+
+.backgrid .integer-cell {
+    text-align: center;
+}
+
+.rpc-counts th, td {
+    text-align: center;
+}
+
+.rpc-counts th {
+    background-color: #f9f9f9;
+    color: #3399f3;
+}
+
+.rpc-counts .rpc-received {
+    height: 150px;
+    margin-top: 35%;
+}
+
+.rpc-counts .received-label {
+    font-style: italic;
+    font-weight:bold;
+    font-size: 200%;
+    text-align: center;
+}
+
+.rpc-counts .received-value {
+    font-weight:bold;
+    font-size: 300%;
+    text-align: center;
+}
+
+.rpc-counts .tables {
+    margin-top: 50px;
+}
+
+.rpc-counts .table-label {
+    font-weight: bold;
+    font-size: 150%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+

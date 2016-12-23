@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+project, db_type, db_name, instance = ENV.values_at("project", "db_type", "db_name", "instance")
+
+# vm_name = "#{project}::#{db_type}-#{db_name}"
+# hostname = "#{project.downcase}-#{db_type.downcase}-#{db_name.downcase}"
+# puts "Installing and provisioning #{vm_name} (hostname: #{hostname})"
+
+Vagrant.configure("2") do |config|
+
+    # Every Vagrant virtual environment requires a box to build off of.
+    config.vm.box = "CentOS 6.5 x86_64 Minimal"
+    config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.5-x86_64-v20140504.box/download"
+    config.vm.hostname = "cache-vista"
+
+    # Create a private network, which allows host-only access to the machine using a specific IP.
+    config.vm.network :private_network, ip: "10.2.2.201"
+
+    # Share additional folders to the guest VM.
+    config.vm.synced_folder "./", "/vagrant"
+
+    # Fix a CentOS SSH issue
+    config.ssh.insert_key = false
+
+    # Define primary box name for all VM providers
+    # More VMs could be added here to build a multi-box install and provision accordingly
+    config.vm.define "Cache_VistA", primary: true do |vista|
+    end
+
+    config.vm.provider :virtualbox do |vb|
+      vb.name = "Cache_VistA"
+    end
+
+    config.vm.provision :shell do |s|
+      s.path = "./scripts/provisionVM.sh"
+      s.args = "-p #{project} -d #{db_type} -n #{db_name} -i #{instance}"
+    end
+end

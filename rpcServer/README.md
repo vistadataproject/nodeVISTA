@@ -26,6 +26,9 @@ SSH into the nodeVista machine and login as the vdp user:
 
 ```
 $ cd ~/dev/nodeVista/interfaces/rpcServer
+$ npm install bower -g <--- installs bower on machine, this only needs to be executed once 
+$ npm install  <--- installs node_modules
+$ bower install <--- install client/bower_components
 $ node rpcServer.js
 ```
 The RPC Server should be listening for incoming RPC connections on the configured rpcServer port (9010). 
@@ -39,7 +42,7 @@ http://<mvdmClient.host>:<mvdmClient.port>
 i.e. http://10.2.2.100:9020
 ```
 
-![](https://github.com/vistadataproject/nodeVISTA/blob/master/interfaces/rpcServer/screenshots/mvdmEvents.jpg)
+![](https://github.com/vistadataproject/nodeVISTA/blob/master/rpcServer/screenshots/mvdmEvents.jpeg)
 
 **Launching the RPC Client**
 
@@ -96,3 +99,8 @@ Here's an example of its output:
 },
 ```
 The other log files are standard info, debug, and error outputs from the rpc and mvdm client.
+
+
+**Troubleshooting**
+  * Sometimes the dependencies can get behind. Try deleting node_modules/mvdm: ```rm -Rf node_modules/mvdm``` and re-running ```npm install```
+  * The same goes for bower: ```bower install```

@@ -14,15 +14,13 @@ var _ = require('underscore');
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('vdm-prototypes/rpcFacade');
-var RPCContexts = require('vdm-prototypes/rpcRunner').RPCContexts;
+var RPCFacade = require('mvdm/rpcFacade');
+var RPCContexts = require('mvdm/rpcRunner').RPCContexts;
 
 var db, rpcFacade, rpcContexts;
-var userId = '';
-var facilityId = '';
 //need for user and facility lookup
-var MVDM = require('vdm-prototypes/mvdm');
-var vdmUtils = require('vdm-prototypes/vdmUtils');
+var MVDM = require('mvdm/mvdm');
+var vdmUtils = require('mvdm/vdmUtils');
 var mvdmHandlersSet = false;
 
 var fromName = CONFIG.client.defaultName;
@@ -128,26 +126,17 @@ function callRPC(messageObject, send) {
 
         //include user if
         var userAndFacility = rpcFacade.getUserAndFacility();
-        userId = userAndFacility.userId;
-        var USER = vdmUtils.userFromId(db, '200-' + userId);
 
-        facilityId = userAndFacility.facilityId;
-        var FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityId);
-
-        if (USER) {
-            rpcCallEvent.user = {
-                id: '200-' + userId,
-                name: USER.name.value
-            }
+        rpcCallEvent.user = {
+            id: '200-' + userAndFacility.userId,
+            name: userAndFacility.userName
         }
 
         //include facility if available
-        if (FACILITY) {
-            rpcCallEvent.facility = {
-                id: '4-' + facilityId,
-                name: FACILITY.name.value,
-                stationNumber:  FACILITY['station_number'].value
-            }
+        rpcCallEvent.facility = {
+            id: '4-' + userAndFacility.facilityId,
+            name: userAndFacility.facilityName,
+            stationNumber:  userAndFacility.facilityStationNumber
         }
 
         var qMessage = {};
@@ -181,7 +170,6 @@ function setMvdmHandlers(send) {
     });
 
     MVDM.on('list', function(mvdmData) {
-        console.log('\n\naaaaargghhh');
         var qMessage = {};
         qMessage.type = 'emitMvdmEvent';
         qMessage.event = mvdmData;
@@ -264,8 +252,16 @@ module.exports = function() {
                 rpcContexts.clearAll();
             }
             finished();
-        }
+        } else if (messageObj.method === 'lockedRPCList') {
 
+           finished({
+              type: 'rpcL',
+              event: {
+                list: rpcFacade.getLockedRPCList()
+              },
+              eventType: 'lockedRPCList'
+           });
+        }
     });
 
     this.on('stop', function() {
