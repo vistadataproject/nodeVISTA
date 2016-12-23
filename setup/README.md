@@ -8,6 +8,7 @@
 * Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory (from this git repository) and run the following:
 
     ```text
+    $ vagrant init
     $ vagrant up
     ```
     The initial Vagrant up process will invoke the "setup.sh" script. This script will take about 45-60 minutes to finish. Subsequent calls to vagrant up will not take this long.
