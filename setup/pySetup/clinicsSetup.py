@@ -17,7 +17,9 @@
 ## Clinic Setup 
 ##
 
+##
 ## VDP - ideally should be in simpleSetup.py but OSEHRA had it separate from
+## ... adding addition clinics (44)
 ## postInstall. Leaving that way.
 ## ... from ClinicSetup.py in OSEHRA
 ## ... note NOT the addClinic in OSEHRAHelper called from simpleSetup
