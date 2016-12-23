@@ -46,6 +46,8 @@
         
         $ cd dev/VDM/prototypes
         
+        $ sudo apt install npm
+        
         $ npm install <-- install prototype dependencies (only need to do this once)
         
         $ cd problems
