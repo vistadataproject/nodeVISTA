@@ -107,6 +107,7 @@ chmod a+w /usr/local/src/nodeVISTA/setup/pySetup/logs
 su $instance -c "source $basedir/etc/env && python ZTMGRSET.py" 
 # TODO: should exit if simpleSetup.py fails
 su $instance -c "source $basedir/etc/env && python simpleSetup.py"
+su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
 
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
