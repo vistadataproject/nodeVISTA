@@ -5,7 +5,7 @@
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
 
-* Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory and run the following:
+* Once you have Vagrant and VirtualBox setup open a terminal and cd to the nodeVista/setup directory (the latest from this git repository) and run the following:
 
     ```text
     $ vagrant up
