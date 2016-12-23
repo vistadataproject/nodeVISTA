@@ -111,8 +111,8 @@ su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
-# Restart xinetd
-service xinetd restart
+# Restart xinetd as $instance
+su $instance -c "service xinetd restart"
 
 # Add p and s directories to gtmroutines environment variable
 su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
