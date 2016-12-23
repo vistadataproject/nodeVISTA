@@ -89,25 +89,30 @@ USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 # source env script during running user's login
 echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 
-# Build a dashboard and run the tests to verify installation
-# These use the Dashboard branch of the VistA repository
-# The dashboard will clone VistA and VistA-M repos
-# run this as the $instance user
+# Replace dashboard test with straight non test installation
+# Clone VistA-M repo
+cd /usr/local/src
+git clone --depth 1 $repoPath VistA-Source
+# Not Ideal - cloning nodeVISTA for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
+git clone https://github.com/vistadataproject/nodeVISTA.git
+cd $basedir
+su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
 
-# create random string for build identification
-# source: http://ubuntuforums.org/showthread.php?t=1775099&p=10901169#post10901169
-export buildid=`tr -dc "[:alpha:]" < /dev/urandom | head -c 8`
-
-# Import VistA and run tests using OSEHRA automated testing framework
-su $instance -c "source $basedir/etc/env && ctest -S $scriptdir/test.cmake -V"
-# Tell users of their build id
-echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"
+# Python and RAS driven changes (note: some JS parameters settings below. Should combine)
+cd /usr/local/src/nodeVISTA/setup/pySetup 
+mkdir /usr/local/src/nodeVISTA/setup/pySetup/logs
+chmod a+w /usr/local/src/nodeVISTA/setup/pySetup
+chmod a+w /usr/local/src/nodeVISTA/setup/pySetup/logs
+# NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
+su $instance -c "source $basedir/etc/env && python ZTMGRSET.py" 
+# TODO: should exit if simpleSetup.py fails
+su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 
 # Enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
-# Restart xinetd
-service xinetd restart
+# Restart xinetd as $instance
+su $instance -c "service xinetd restart"
 
 # Add p and s directories to gtmroutines environment variable
 su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
@@ -136,9 +141,6 @@ if [[ -z $basedir ]]; then
 fi
 
 echo "Installing node.js via NVM (node version manager)"
-
-# Copy init.d scripts to VistA etc directory
-su $instance -c "cp -R etc $basedir"
 
 # Download installer in tmp directory
 cd $basedir/tmp
@@ -209,7 +211,7 @@ echo $vdpid:vdp | sudo chpasswd
 # Copy unique end of .bashrc of /home/osehra and add an extra
 echo "" >> $vdphome/.bashrc
 echo "source $osehrahome/etc/env" >> $vdphome/.bashrc
-# osehra uses Node Version Manager
+# osehra uses Node Version Manager 
 echo "export NVM_DIR=\"$osehrahome/.nvm\"" >> $vdphome/.bashrc
 echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> $vdphome/.bashrc
 # VDP Extra: override 'gtm_tmp' to /tmp to avoid write/link errors"
@@ -245,7 +247,7 @@ echo "Installing FMQL"
 su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
 
 #install pm2 (production process manager for node see pm2.keymetrics.io)
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/logs/pm2Install.log"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
 
 #make pm2 startup automatically
 sudo su -c "env PATH=$PATH:/home/osehra/.nvm/versions/node/v4.7.0/bin /home/osehra/.nvm/versions/node/v4.7.0/lib/node_modules/pm2/bin/pm2 startup systemd -u vdp --hp /home/vdp"
@@ -271,47 +273,30 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nv
 echo "Installing Bower"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
 
-#overwrite osehra cipher with VA cipher
-echo "Replacing osehra cipher with va by overwriting XUSRB1.m (w/backup XUSRB1.m.bak)"
-sudo mv /home/osehra/r/XUSRB1.m /home/osehra/r/XUSRB1.m.bak
-sudo cp /vagrant/GTM/mFixes/XUSRB1.m /home/osehra/r/.
-
-#Copy DGRPD.m to mumps directory
-echo "Copy DGRPD.m to mumps directory (fixes space character issue)"
-sudo cp /vagrant/GTM/mFixes/DGRPD.m /home/osehra/r/.
-
-#copy over /vagrant/utils
+#copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
 cp -r /vagrant/utils .
 chown -R vdp:vdp utils
 
 #run VDM/prototypes/sysSetup npm install
 echo "Running npm install on /vagrant/utils"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/sysSetupInstall.log"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
 
 #apply problem data dictionary fix
-echo "Applying problem data dictionary fix (fixProblemAuditDD.js)"
+echo "Applying problem data dictionary fix (fixDD.js)"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
 
-rm -rf utils/
+#apply fix that allows users to input vital data
+echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
 
-##apply fix that allows users to input vital data
-#echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
-#su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
-#
-##apply fix that setups CAPRI which is controlled in parameter XU522
-#echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
-#su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupCarpi.log"
+#apply fix that setups CAPRI which is controlled in parameter XU522
+echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupCapri.log"
+
+rm -rf utils
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
-
-#cmake script overwrites files that GTM installation did search and replace on
-# Modify xinetd.d scripts to reflect $instance
-perl -pi -e 's/foia/'$instance'/g' $basedir/bin/*.sh
-perl -pi -e 's/foia/'$instance'/g' $basedir/etc/xinetd.d/vista-*
-
-# Modify init.d script to reflect $instance
-perl -pi -e 's/foia/'$instance'/g' $basedir/etc/init.d/vista
 
 echo "User $vdpid created"
