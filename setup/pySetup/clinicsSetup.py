@@ -40,7 +40,7 @@ Created on Jun 19, 2012
 
 import sys
 import time
-sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+sys.path = ['rasUtilities'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS, PROMPT
 
 class Clinic(object):
