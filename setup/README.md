@@ -15,7 +15,6 @@
     Note: Virtual Box VMs go under /Users/{user}/VirtualBox VMs/
 
 * Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
-* Username of the VM is 'vdp' and password is 'vdp'
 
 ### To develop inside the VM: 
 
