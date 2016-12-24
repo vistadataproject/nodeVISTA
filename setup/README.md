@@ -1,6 +1,6 @@
-# osehraVISTA to nodeVISTA
+# nodeVISTA
 
-### The following outlines how to install osehraVISTA and enable nodeVISTA development.
+### The following outlines how to install nodeVISTA
 
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
