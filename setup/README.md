@@ -1,6 +1,6 @@
-# osehraVISTA to nodeVISTA
+# nodeVISTA
 
-### The following outlines how to install osehraVISTA and enable nodeVISTA development.
+### The following outlines how to install nodeVISTA
 
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -15,7 +15,6 @@
     Note: Virtual Box VMs go under /Users/{user}/VirtualBox VMs/
 
 * Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
-* Username of the VM is 'vdp' and password is 'vdp'
 
 ### To develop inside the VM: 
 

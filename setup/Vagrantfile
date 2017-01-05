@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
   # Define primary box name for all VM providers
   # More VMs could be added here to build a multi-box install and provision
   # accordingly
-  config.vm.define "OSEHRA VistA - Ubuntu", primary: true do |vista|
+  config.vm.define "nodeVistA - Ubuntu", primary: true do |vista|
   end
 
   # Provider-specific configuration so you can fine-tune various
@@ -127,6 +127,11 @@ Vagrant.configure("2") do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
   #
+
+  config.vm.provider "virtualbox" do |v|
+    v.name = "nodeVISTA"
+  end
+
   config.vm.provision :shell do |s|
     s.path = "setup.sh"
   end
