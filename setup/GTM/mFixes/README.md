@@ -9,3 +9,9 @@ DPTLK7.m turns off "searching for MVI" which stops dialog-driven Patient insert 
 > certain routines are replaced during the run of the process.  This replacement
 > was used to eliminate platform-specific functionality from being
 > executed.
+
+Note on ORWORR1 and GT/M's use of &&
+
+https://groups.google.com/forum/#!topic/hardhats/R7dMGE1-PAU
+
+... so version here (that works) is the worldvista 2012 fix.
