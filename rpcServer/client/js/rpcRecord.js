@@ -17,7 +17,6 @@ define([
                {
                   name: event.get('rpcName'),
                   args: event.get('request').args,
-                  response: event.get('response'),
                   runner: event.get('runner'),
                   runResult: event.get('runResult'),
                   from: event.get('rpcObject').from,
