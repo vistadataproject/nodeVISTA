@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "nodem": "0.8.0",
+    "nodem": "0.8.1",
     "underscore": "^1.8.3"
   }
 }
