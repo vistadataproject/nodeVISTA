@@ -9,6 +9,7 @@ fi
 #set variables
 instance="osehra"
 repoPath="https://github.com/OSEHRA/VistA-M.git"
+nodemver="0.8.1"
 
 # Get primary username if using sudo, default to $username if not sudo'd
 if [[ -n "$SUDO_USER" ]]; then
@@ -183,10 +184,10 @@ su $instance -c "source $basedir/etc/env"
 
 # Install required node modules
 cd $basedir
-su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet nodem >> $basedir/log/nodemInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet nodem@$nodemver >> $basedir/log/nodemInstall.log"
 
 # Setup GTM C Callin
-# with nodem 0.3.3 the name of the ci has changed. Determine using ls -1
+# with nodem 0.8.1 the name of the ci has changed. Determine using ls -1
 calltab=$(ls -1 $basedir/node_modules/nodem/resources/*.ci)
 echo "export GTMCI=$calltab" >> $basedir/etc/env
 
@@ -228,7 +229,7 @@ cd $vdphome
 # install nodem in node_modules in $HOME
 echo "Installing 'nodem' for $vdpid - slowest piece"
 su $vdpid -c "mkdir logs"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem@$nodemver >> $vdphome/nodemInstall.log"
 
 echo "Cloning nodeVISTA and VDM for use by $vdpid"
 git clone -q https://github.com/vistadataproject/nodeVISTA.git
