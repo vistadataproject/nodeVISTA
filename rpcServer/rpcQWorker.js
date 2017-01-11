@@ -37,7 +37,7 @@ process.on('uncaughtException', function(err) {
 
 function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
-    console.log("process.env.gtmroutines: " + process.env.gtmroutines);
+    // console.log("process.env.gtmroutines: " + process.env.gtmroutines);
 
     db = new nodem.Gtm();
     db.open();
