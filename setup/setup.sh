@@ -144,23 +144,16 @@ fi
 
 echo "Installing node.js via NVM (node version manager)"
 
-# Download installer in tmp directory
-cd $basedir/tmp
+cd $basedir
 
 # Install node.js using NVM (node version manager)
-echo "Downloading NVM installer"
-curl -s -k --remote-name -L  https://raw.githubusercontent.com/creationix/nvm/master/install.sh
-echo "Done downloading NVM installer"
+echo "Installing NVM"
+su $instance -c  "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash"
+su $instance -c  "export NVM_DIR=\"$basedir/.nvm\""
+su $instance -c  "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"  # This loads nvm"
+echo "Done installing NVM"
 
-# Execute it
-chmod +x install.sh
-su $instance -c "./install.sh"
 
-# Remove it
-rm -f ./install.sh
-
-# move to $basedir
-cd $basedir
 
 # Install node
 su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default $nodever && nvm use default"
