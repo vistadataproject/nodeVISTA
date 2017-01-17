@@ -110,11 +110,12 @@ su $instance -c "source $basedir/etc/env && python ZTMGRSET.py"
 su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
 
-# Enable journaling
-su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
+# disable journaling
+su $instance -c "source $basedir/etc/env && $basedir/bin/disableJournal.sh"
 
-# Restart xinetd as $instance
-su $instance -c "service xinetd restart"
+echo "Restarting xinetd"
+service xinetd restart
+echo "Done restarting xinetd"
 
 # Add p and s directories to gtmroutines environment variable
 su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
@@ -152,8 +153,6 @@ su $instance -c  "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.3
 su $instance -c  "export NVM_DIR=\"$basedir/.nvm\""
 su $instance -c  "[ -s \"$NVM_DIR/nvm.sh\" ] && \. \"$NVM_DIR/nvm.sh\"  # This loads nvm"
 echo "Done installing NVM"
-
-
 
 # Install node
 su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default $nodever && nvm use default"
