@@ -7,9 +7,9 @@
 
 * From the command line, install the following Vagrant plugin(s):
 
-```text
-$ vagrant plugin install vagrant-timezone
-```
+    ```text
+    $ vagrant plugin install vagrant-timezone
+    ```
 
 * Once you have Vagrant and VirtualBox setup open a terminal and cd to the __nodeVista/setup/__ directory and run the following:
 
