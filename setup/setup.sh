@@ -110,8 +110,8 @@ su $instance -c "source $basedir/etc/env && python ZTMGRSET.py"
 su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
 
-# disable journaling
-su $instance -c "source $basedir/etc/env && $basedir/bin/disableJournal.sh"
+# enable journaling
+su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
 echo "Restarting xinetd"
 service xinetd restart
