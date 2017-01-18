@@ -299,4 +299,8 @@ echo "Restarting osehra vista"
 service osehravista restart
 echo "Done restarting osehra vista"
 
+#start up rpcServer using pm2 and save settings
+echo "Running rpcServer as a service via pm2"
+su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/nodeVISTA/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
+
 echo "Setup Complete"
