@@ -267,14 +267,12 @@ su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nv
 echo "Installing Bower"
 su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
 
-#start up rpcServer using pm2 and save settings
-echo "Running rpcServer as a service via pm2"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/nodeVISTA/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
-
 #copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
 cp -r /vagrant/utils .
 chown -R vdp:vdp utils
+
+echo "User $vdpid created"
 
 #run VDM/prototypes/sysSetup npm install
 echo "Running npm install on /vagrant/utils"
@@ -297,4 +295,8 @@ rm -rf utils
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
 
-echo "User $vdpid created"
+echo "Restarting osehra vista"
+service osehravista restart
+echo "Done restarting osehra vista"
+
+echo "Setup Complete"
