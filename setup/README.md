@@ -5,6 +5,12 @@
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
 
+* From the command line, install the following Vagrant plugin(s):
+
+    ```text
+    $ vagrant plugin install vagrant-timezone
+    ```
+
 * Once you have Vagrant and VirtualBox setup open a terminal and cd to the __nodeVista/setup/__ directory and run the following:
 
     ```text
