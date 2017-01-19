@@ -42,6 +42,7 @@ function ProblemService(db, serviceContext) {
 
    MVDM.setDefaultPatientId(this.context.patientId);
 
+   //forward MVDM events
    var onCreate = _.bind(function(event) {
       this.emit('create', event);
    }, this);
