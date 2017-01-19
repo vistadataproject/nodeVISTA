@@ -54,6 +54,12 @@ function ProblemService(db, serviceContext) {
    }, this);
 
    MVDM.on('update', onUpdate);
+
+   var onDescribe = _.bind(function(event) {
+      this.emit('describe', event);
+   }, this);
+
+   MVDM.on('describe', onDescribe);
 }
 
 //inherit behavior from EventEmitter
