@@ -71,7 +71,7 @@ util.inherits(ProblemService, EventEmitter);
  * @param {String} args.snomedCTConceptCode SNOMED CT concept code.
  * @param {String} args.snomedCTDesignationCode SNMOED CT designation code.
  * @param {String} args.codingSystem Coding system associated with the problem (e.g. 10D).
- * @param {String=} args.condition Problem condition. Possible values: TRANSCRIBED, PERMANENT, HIDDEN. Defaults to PERMANENT
+ * @param {String=} args.condition Problem condition. Possible values: TRANSCRIBED, PERMANENT, HIDDEN. Defaults to PERMANENT.
  * @param {String=} args.responsibleProvider Responsible provider identifier. Defaults to user.
  * @param {String=} args.priority Immediacy value. Possible values: ACUTE, CHRONIC.
  * @param {String=} args.onsetDate Date of problem onset.
@@ -225,6 +225,7 @@ ProblemService.prototype.create = function(args) {
  * @param {String} args.snomedCTConceptCode SNOMED CT concept code.
  * @param {String} args.snomedCTDesignationCode SNMOED CT designation code.
  * @param {String} args.codingSystem Coding system associated with the problem (e.g. 10D).
+ * @param {String=} args.condition Problem condition. Possible values: TRANSCRIBED, PERMANENT, HIDDEN. Defaults to PERMANENT
  * @param {String=} args.responsibleProvider Responsible provider identifier.
  * @param {String=} args.priority Immediacy value. Possible values: ACUTE, CHRONIC.
  * @param {String=} args.onsetDate Date of problem onset.
@@ -286,6 +287,10 @@ ProblemService.prototype.update = function(args) {
 
    if (args.codingSystem) {
       mvdmObj.codingSystem = args.codingSystem;
+   }
+
+   if (args.condition) {
+      mvdmObj.condition = args.condition;
    }
 
    if (args.responsibleProvider) {
