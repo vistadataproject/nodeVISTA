@@ -21,36 +21,12 @@ module.exports = function (db, userId, facilityId) {
          "id": "$ID-200",
          "label": "SMITH,MARY"
       },
-      "createInput": {
-         "type": "Problem",
-         "diagnosis": {
-            "id": "80-521774",
-            "label": "R69.",
-            "sameAs": "ICD9CM:R69."
-         },
-         "providerNarrative": {
-            "id": "9999999_27",
-            "label": "Diabetes mellitus",
-            "sameAs": "VA:757-7065392"
-         },
+      "createArgs": {
+         "diagnosis": "80-521774",
+         "providerNarrative": "Diabetes mellitus",
          "problemStatus": "ACTIVE",
-         "problem": {
-            "id": "757_01-7130783",
-            "label": "Diabetes mellitus",
-            "sameAs": "VA:757-7065392"
-         },
-         "condition": "PERMANENT",
-         "clinic": {
-            "id": "44-8",
-            "label": "CLInicB"
-         },
-         "isAgentOrangeExposure": false,
-         "isIonizingRadiationExposure": false,
-         "isPersianGulfExposure": false,
-         "isHeadAndOrNeckCancer": false,
-         "isMilitarySexualTrauma": false,
-         "isCombatVeteran": false,
-         "isShipboardHazardDefense": false,
+         "problem": "757_01-7130783",
+         "clinic": "44-8",
          "snomedCTConceptCode": "73211009",
          "snomedCTDesignationCode": "121589010",
          "codingSystem": "10D"
@@ -99,53 +75,17 @@ module.exports = function (db, userId, facilityId) {
 
    var activeProblemTwo = {
       "description":"active problem arthritis with two comments",
-      "createInput": {
+      "createArgs": {
          "type": "Problem",
-         "diagnosis": {
-            "id": "80-521774",
-            "label": "R69.",
-            "sameAs": "ICD9CM:R69."
-         },
-         "providerNarrative": {
-            "id": "9999999_27",
-            "label": "Arthritis",
-            "sameAs": "VA:757-7003201"
-         },
-         "facility": {
-            "id": "$FACILITYID"
-         },
+         "diagnosis": "80-521774",
+         "providerNarrative": "Arthritis",
          "problemStatus": "ACTIVE",
-         "onsetDate": {
-            "value": "2016-03-01",
-            "type": "xsd:date"
-         },
-         "problem": {
-            "id": "757_01-7006401",
-            "label": "Arthritis",
-            "sameAs": "VA:757-7003201"
-         },
-         "condition": "PERMANENT",
-         "clinic": {
-            "id": "44-7",
-            "label": "CLInicA"
-         },
-         "isAgentOrangeExposure": false,
-         "isIonizingRadiationExposure": false,
-         "isPersianGulfExposure": false,
-         "priority": "CHRONIC",
-         "isHeadAndOrNeckCancer": false,
-         "isMilitarySexualTrauma": false,
-         "isCombatVeteran": false,
-         "isShipboardHazardDefense": false,
+         "onsetDate": "2016-03-01",
+         "problem": "757_01-7006401",
+         "clinic": "44-7",
          "comments": [
-            {
-               "commentId": 1,
-               "commentText": "Test comment"
-            },
-            {
-               "commentId": 2,
-               "commentText": "Another test comment"
-            }
+           "Test comment",
+           "Another test comment"
          ],
          "snomedCTConceptCode": "3723001",
          "snomedCTDesignationCode": "7278014",
@@ -210,44 +150,14 @@ module.exports = function (db, userId, facilityId) {
 
    var activeProblemThree = {
       "description":"active problem Heart murmur",
-      "createInput": {
+      "createArgs": {
          "type": "Problem",
-         "diagnosis": {
-            "id": "80-521774",
-            "label": "R69.",
-            "sameAs": "ICD9CM:R69."
-         },
-         "providerNarrative": {
-            "id": "9999999_27",
-            "label": "Heart murmur",
-            "sameAs": "VA:757-7079165"
-         },
-         "facility": {
-            "id": "$FACILITYID"
-         },
+         "diagnosis": "80-521774",
+         "providerNarrative": "Heart murmur",
          "problemStatus": "ACTIVE",
-         "onsetDate": {
-            "value": "2016-03-01",
-            "type": "xsd:date"
-         },
-         "problem": {
-            "id": "757_01-7158329",
-            "label": "Heart murmur",
-            "sameAs": "VA:757-7079165"
-         },
-         "condition": "PERMANENT",
-         "clinic": {
-            "id": "44-7",
-            "label": "CLInicA"
-         },
-         "isAgentOrangeExposure": false,
-         "isIonizingRadiationExposure": false,
-         "isPersianGulfExposure": false,
-         "priority": "CHRONIC",
-         "isHeadAndOrNeckCancer": false,
-         "isMilitarySexualTrauma": false,
-         "isCombatVeteran": false,
-         "isShipboardHazardDefense": false,
+         "onsetDate": "2016-03-01",
+         "problem": "757_01-7158329",
+         "clinic": "44-7",
          "snomedCTConceptCode": "88610006",
          "snomedCTDesignationCode": "146919019",
          "codingSystem": "10D"
@@ -256,44 +166,14 @@ module.exports = function (db, userId, facilityId) {
 
    var activeProblemFour = {
       "description":"active problem Morbid obesity",
-      "createInput": {
+      "createArgs": {
          "type": "Problem",
-         "diagnosis": {
-            "id": "80-521774",
-            "label": "R69.",
-            "sameAs": "ICD9CM:R69."
-         },
-         "providerNarrative": {
-            "id": "9999999_27",
-            "label": "Morbid obesity",
-            "sameAs": "VA:757-7181025"
-         },
-         "facility": {
-            "id": "$FACILITYID"
-         },
+         "diagnosis": "80-521774",
+         "providerNarrative": "Morbid obesity",
          "problemStatus": "ACTIVE",
-         "onsetDate": {
-            "value": "2016-03-01",
-            "type": "xsd:date"
-         },
-         "problem": {
-            "id": "757_01-7362049",
-            "label": "Morbid obesity",
-            "sameAs": "VA:757-7181025"
-         },
-         "condition": "PERMANENT",
-         "clinic": {
-            "id": "44-7",
-            "label": "CLInicA"
-         },
-         "isAgentOrangeExposure": false,
-         "isIonizingRadiationExposure": false,
-         "isPersianGulfExposure": false,
-         "priority": "CHRONIC",
-         "isHeadAndOrNeckCancer": false,
-         "isMilitarySexualTrauma": false,
-         "isCombatVeteran": false,
-         "isShipboardHazardDefense": false,
+         "onsetDate": "2016-03-01",
+         "problem": "757_01-7362049",
+         "clinic": "44-7",
          "snomedCTConceptCode": "238136002",
          "snomedCTDesignationCode": "356968010",
          "codingSystem": "10D"
