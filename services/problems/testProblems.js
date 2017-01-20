@@ -10,7 +10,7 @@
  * (c) VISTA Data Project 2016
  */
 
-var testUtils = require("./testUtils");
+var testUtils = require("./../testUtils");
 
 module.exports = function (db, userId, facilityId) {
 
