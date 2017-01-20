@@ -39,14 +39,8 @@ class AbstractService extends EventEmitter {
             throw new Error('Missing patientId in service context');
         }
 
+        this.VDM = VDM;
         this.MVDM = MVDM;
-
-        VDM.setDBAndModel(db, require('mvdm/problems/vdmProblemsModel').vdmModel);
-        VDM.setUserAndFacility(this.context.userId, this.context.facilityId);
-
-        this.MVDM.setModel(require('mvdm/problems/mvdmProblemsModel').mvdmModel);
-
-        this.MVDM.setDefaultPatientId(this.context.patientId);
 
         //forward MVDM events
         var onCreate = _.bind(function (event) {

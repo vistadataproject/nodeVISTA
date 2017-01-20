@@ -23,6 +23,13 @@ class ProblemService extends AbstractService {
      */
     constructor(db, serviceContext) {
         super(db, serviceContext);
+
+        this.VDM.setDBAndModel(db, require('mvdm/problems/vdmProblemsModel').vdmModel);
+        this.VDM.setUserAndFacility(this.context.userId, this.context.facilityId);
+
+        this.MVDM.setModel(require('mvdm/problems/mvdmProblemsModel').mvdmModel);
+
+        this.MVDM.setDefaultPatientId(this.context.patientId);
     }
 
     /**
