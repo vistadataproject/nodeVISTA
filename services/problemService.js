@@ -23,49 +23,67 @@ var nodem = require('nodem');
  */
 function ProblemService(db, serviceContext) {
 
-   EventEmitter.call(this);
+    EventEmitter.call(this);
 
-   this.context = serviceContext;
+    this.context = serviceContext;
 
-   if (!this.context.userId) {
-      throw new Error('Missing userId in service context');
-   } else if (!this.context.facilityId) {
-      throw new Error('Missing facilityId in service context');
-   } else if (!this.context.patientId) {
-      throw new Error('Missing patientId in service context');
-   }
+    if (!this.context.userId) {
+        throw new Error('Missing userId in service context');
+    } else if (!this.context.facilityId) {
+        throw new Error('Missing facilityId in service context');
+    } else if (!this.context.patientId) {
+        throw new Error('Missing patientId in service context');
+    }
 
-   VDM.setDBAndModel(db, require('mvdm/problems/vdmProblemsModel').vdmModel);
-   VDM.setUserAndFacility(this.context .userId, this.context .facilityId);
+    VDM.setDBAndModel(db, require('mvdm/problems/vdmProblemsModel').vdmModel);
+    VDM.setUserAndFacility(this.context.userId, this.context.facilityId);
 
-   MVDM.setModel(require('mvdm/problems/mvdmProblemsModel').mvdmModel);
+    MVDM.setModel(require('mvdm/problems/mvdmProblemsModel').mvdmModel);
 
-   MVDM.setDefaultPatientId(this.context.patientId);
+    MVDM.setDefaultPatientId(this.context.patientId);
 
-   //forward MVDM events
-   var onCreate = _.bind(function(event) {
-      this.emit('create', event);
-   }, this);
+    //forward MVDM events
+    var onCreate = _.bind(function (event) {
+        this.emit('create', event);
+    }, this);
 
-   MVDM.on('create', onCreate);
+    MVDM.on('create', onCreate);
 
-   var onUpdate = _.bind(function(event) {
-      this.emit('update', event);
-   }, this);
+    var onUpdate = _.bind(function (event) {
+        this.emit('update', event);
+    }, this);
 
-   MVDM.on('update', onUpdate);
+    MVDM.on('update', onUpdate);
 
-   var onDescribe = _.bind(function(event) {
-      this.emit('describe', event);
-   }, this);
+    var onDescribe = _.bind(function (event) {
+        this.emit('describe', event);
+    }, this);
 
-   MVDM.on('describe', onDescribe);
+    MVDM.on('describe', onDescribe);
 
-   var onList = _.bind(function(event) {
-       this.emit('list', event);
-   }, this);
+    var onList = _.bind(function (event) {
+        this.emit('list', event);
+    }, this);
 
-   MVDM.on('list', onList);
+    MVDM.on('list', onList);
+
+    var onRemove = _.bind(function (event) {
+        this.emit('remove', event);
+    }, this);
+
+    MVDM.on('remove', onRemove);
+
+    var onUnremove = _.bind(function (event) {
+        this.emit('unremove', event);
+    }, this);
+
+    MVDM.on('unremove', onUnremove);
+
+    var onDelete = _.bind(function (event) {
+        this.emit('delete', event);
+    }, this);
+
+    MVDM.on('delete', onDelete);
 }
 
 //inherit behavior from EventEmitter
@@ -94,133 +112,134 @@ util.inherits(ProblemService, EventEmitter);
  *                            IONIZING_RADIATION, PERSIAN_GULF, HEAD_AND_OR_NECK_CANCER,
  *                            MILITARY_SEXUAL_TRAUMA, COMBAT_VETERAN, SHIPBOARD_HAZARD_DEFENSE.
  * @param {Array=} args.comments Problem comments.
+ * @returns MVDM create response.
  */
-ProblemService.prototype.create = function(args) {
-   var mvdmObj = {
-      type: "Problem",
-      condition: "PERMANENT" //default to PERMANENT
-   };
+ProblemService.prototype.create = function (args) {
+    var mvdmObj = {
+        type: "Problem",
+        condition: "PERMANENT" //default to PERMANENT
+    };
 
-   if (args.diagnosis) {
-      mvdmObj.diagnosis = {
-         id: args.diagnosis
-      }
-   }
+    if (args.diagnosis) {
+        mvdmObj.diagnosis = {
+            id: args.diagnosis
+        }
+    }
 
-   if (args.providerNarrative) {
-      mvdmObj.providerNarrative = {
-         id: '9999999_27',
-         label: args.providerNarrative
-      };
-   }
+    if (args.providerNarrative) {
+        mvdmObj.providerNarrative = {
+            id: '9999999_27',
+            label: args.providerNarrative
+        };
+    }
 
-   if (args.problem) {
-      mvdmObj.problem = {
-         id: args.problem
-      };
-   }
+    if (args.problem) {
+        mvdmObj.problem = {
+            id: args.problem
+        };
+    }
 
-   if (args.clinic) {
-      mvdmObj.clinic = {
-         id: args.clinic
-      };
-   }
+    if (args.clinic) {
+        mvdmObj.clinic = {
+            id: args.clinic
+        };
+    }
 
-   if (args.problemStatus) {
-      mvdmObj.problemStatus = args.problemStatus;
-   }
+    if (args.problemStatus) {
+        mvdmObj.problemStatus = args.problemStatus;
+    }
 
-   if (args.snomedCTConceptCode) {
-      mvdmObj.snomedCTConceptCode = args.snomedCTConceptCode;
-   }
+    if (args.snomedCTConceptCode) {
+        mvdmObj.snomedCTConceptCode = args.snomedCTConceptCode;
+    }
 
-   if (args.snomedCTDesignationCode) {
-      mvdmObj.snomedCTDesignationCode = args.snomedCTDesignationCode;
-   }
+    if (args.snomedCTDesignationCode) {
+        mvdmObj.snomedCTDesignationCode = args.snomedCTDesignationCode;
+    }
 
-   if (args.codingSystem) {
-      mvdmObj.codingSystem = args.codingSystem;
-   }
+    if (args.codingSystem) {
+        mvdmObj.codingSystem = args.codingSystem;
+    }
 
-   if (args.condition) {
-      mvdmObj.condition = args.condition;
-   }
+    if (args.condition) {
+        mvdmObj.condition = args.condition;
+    }
 
-   if (args.responsibleProvider) {
-      mvdmObj.responsibleProvider = {
-         id: args.responsibleProvider
-      };
-   }
+    if (args.responsibleProvider) {
+        mvdmObj.responsibleProvider = {
+            id: args.responsibleProvider
+        };
+    }
 
-   if (args.priority) {
-      mvdmObj.priority = args.priority;
-   }
+    if (args.priority) {
+        mvdmObj.priority = args.priority;
+    }
 
-   if (args.onsetDate) {
-      mvdmObj.onsetDate = {
-         value: args.onsetDate,
-         type: 'xsd:date'
-      };
-   }
+    if (args.onsetDate) {
+        mvdmObj.onsetDate = {
+            value: args.onsetDate,
+            type: 'xsd:date'
+        };
+    }
 
-   if (args.interestDate) {
-      mvdmObj.interestDate = {
-         value: args.interestDate,
-         type: 'xsd:date'
-      };
-   }
+    if (args.interestDate) {
+        mvdmObj.interestDate = {
+            value: args.interestDate,
+            type: 'xsd:date'
+        };
+    }
 
-   if (args.uniqueTermRequested) {
-      mvdmObj.uniqueTermRequested = args.uniqueTermRequested;
-   }
+    if (args.uniqueTermRequested) {
+        mvdmObj.uniqueTermRequested = args.uniqueTermRequested;
+    }
 
-   if (args.uniqueTermRequestComment) {
-      mvdmObj.uniqueTermRequestComment = args.uniqueTermRequestComment;
-   }
+    if (args.uniqueTermRequestComment) {
+        mvdmObj.uniqueTermRequestComment = args.uniqueTermRequestComment;
+    }
 
-   if (args.treatmentFactors) {
-      args.treatmentFactors.forEach(function(treatmentFactor) {
-         switch (treatmentFactor) {
-            case 'SERVICE_CONNECTED':
-               mvdmObj.isServiceConnected = true;
-               break;
-            case 'AGENT_ORANGE':
-               mvdmObj.isAgentOrangeExposure = true;
-               break;
-            case 'IONIZING_RADIATION':
-               mvdmObj.isIonizingRadiationExposure = true;
-               break;
-            case 'PERSIAN_GULF':
-               mvdmObj.isPersianGulfExposure = true;
-               break;
-            case 'HEAD_AND_OR_NECK_CANCER':
-               mvdmObj.isHeadAndOrNeckCancer = true;
-               break;
-            case 'MILITARY_SEXUAL_TRAUMA':
-               mvdmObj.isMilitarySexualTrauma = true;
-               break;
-            case 'COMBAT_VETERAN':
-               mvdmObj.isCombatVeteran = true;
-               break;
-            case 'SHIPBOARD_HAZARD_DEFENSE':
-               mvdmObj.isShipboardHazardDefense = true;
-               break;
-         }
-      });
-   }
+    if (args.treatmentFactors) {
+        args.treatmentFactors.forEach(function (treatmentFactor) {
+            switch (treatmentFactor) {
+                case 'SERVICE_CONNECTED':
+                    mvdmObj.isServiceConnected = true;
+                    break;
+                case 'AGENT_ORANGE':
+                    mvdmObj.isAgentOrangeExposure = true;
+                    break;
+                case 'IONIZING_RADIATION':
+                    mvdmObj.isIonizingRadiationExposure = true;
+                    break;
+                case 'PERSIAN_GULF':
+                    mvdmObj.isPersianGulfExposure = true;
+                    break;
+                case 'HEAD_AND_OR_NECK_CANCER':
+                    mvdmObj.isHeadAndOrNeckCancer = true;
+                    break;
+                case 'MILITARY_SEXUAL_TRAUMA':
+                    mvdmObj.isMilitarySexualTrauma = true;
+                    break;
+                case 'COMBAT_VETERAN':
+                    mvdmObj.isCombatVeteran = true;
+                    break;
+                case 'SHIPBOARD_HAZARD_DEFENSE':
+                    mvdmObj.isShipboardHazardDefense = true;
+                    break;
+            }
+        });
+    }
 
-   if (args.comments) {
-      mvdmObj.comments = [];
-      var commentId = 0;
-      args.comments.forEach(function(comment) {
-         mvdmObj.comments.push({
-            commentId: ++commentId,
-            commentText: comment
-         });
-      });
-   }
+    if (args.comments) {
+        mvdmObj.comments = [];
+        var commentId = 0;
+        args.comments.forEach(function (comment) {
+            mvdmObj.comments.push({
+                commentId: ++commentId,
+                commentText: comment
+            });
+        });
+    }
 
-   return MVDM.create(mvdmObj);
+    return MVDM.create(mvdmObj);
 };
 
 
@@ -248,154 +267,157 @@ ProblemService.prototype.create = function(args) {
  *                            IONIZING_RADIATION, PERSIAN_GULF, HEAD_AND_OR_NECK_CANCER,
  *                            MILITARY_SEXUAL_TRAUMA, COMBAT_VETERAN, SHIPBOARD_HAZARD_DEFENSE.
  * @param {Array=} args.comments Problem comments.
- * @param {String} args.comments.comment.id Comment identifier.
+ * @param {String} args.comments.comment.id Comment index.
  * @param {String} args.comments.comment.text Comment text.
+ * @returns MVDM update response.
  */
-ProblemService.prototype.update = function(args) {
-   var mvdmObj = {
-      type: "Problem"
-   };
+ProblemService.prototype.update = function (args) {
+    var mvdmObj = {
+        type: "Problem"
+    };
 
-   if (args.id) {
-      mvdmObj.id = args.id;
-   }
+    if (args.id) {
+        mvdmObj.id = args.id;
+    }
 
-   if (args.diagnosis) {
-      mvdmObj.diagnosis = {
-         id: args.diagnosis
-      }
-   }
+    if (args.diagnosis) {
+        mvdmObj.diagnosis = {
+            id: args.diagnosis
+        }
+    }
 
-   if (args.providerNarrative) {
-      mvdmObj.providerNarrative = {
-         id: '9999999_27',
-         label: args.providerNarrative
-      };
-   }
+    if (args.providerNarrative) {
+        mvdmObj.providerNarrative = {
+            id: '9999999_27',
+            label: args.providerNarrative
+        };
+    }
 
-   if (args.problem) {
-      mvdmObj.problem = {
-         id: args.problem
-      };
-   }
+    if (args.problem) {
+        mvdmObj.problem = {
+            id: args.problem
+        };
+    }
 
-   if (args.clinic) {
-      mvdmObj.clinic = {
-         id: args.clinic
-      };
-   }
+    if (args.clinic) {
+        mvdmObj.clinic = {
+            id: args.clinic
+        };
+    }
 
-   if (args.problemStatus) {
-      mvdmObj.problemStatus = args.problemStatus;
-   }
+    if (args.problemStatus) {
+        mvdmObj.problemStatus = args.problemStatus;
+    }
 
-   if (args.snomedCTConceptCode || args.snomedCTConceptCode == '') {
-      mvdmObj.snomedCTConceptCode = args.snomedCTConceptCode;
-   }
+    if (args.snomedCTConceptCode || args.snomedCTConceptCode == '') {
+        mvdmObj.snomedCTConceptCode = args.snomedCTConceptCode;
+    }
 
-   if (args.snomedCTDesignationCode || args.snomedCTConceptCode == '') {
-      mvdmObj.snomedCTDesignationCode = args.snomedCTDesignationCode;
-   }
+    if (args.snomedCTDesignationCode || args.snomedCTConceptCode == '') {
+        mvdmObj.snomedCTDesignationCode = args.snomedCTDesignationCode;
+    }
 
-   if (args.codingSystem) {
-      mvdmObj.codingSystem = args.codingSystem;
-   }
+    if (args.codingSystem) {
+        mvdmObj.codingSystem = args.codingSystem;
+    }
 
-   if (args.condition) {
-      mvdmObj.condition = args.condition;
-   }
+    if (args.condition) {
+        mvdmObj.condition = args.condition;
+    }
 
-   if (args.responsibleProvider) {
-      mvdmObj.responsibleProvider = {
-         id: args.responsibleProvider
-      };
-   }
+    if (args.responsibleProvider) {
+        mvdmObj.responsibleProvider = {
+            id: args.responsibleProvider
+        };
+    }
 
-   if (args.priority) {
-      mvdmObj.priority = args.priority;
-   }
+    if (args.priority) {
+        mvdmObj.priority = args.priority;
+    }
 
-   if (args.onsetDate) {
-      mvdmObj.onsetDate = {
-         value: args.onsetDate,
-         type: 'xsd:date'
-      };
-   }
+    if (args.onsetDate) {
+        mvdmObj.onsetDate = {
+            value: args.onsetDate,
+            type: 'xsd:date'
+        };
+    }
 
-   if (args.interestDate) {
-      mvdmObj.interestDate = {
-         value: args.interestDate,
-         type: 'xsd:date'
-      };
-   }
+    if (args.interestDate) {
+        mvdmObj.interestDate = {
+            value: args.interestDate,
+            type: 'xsd:date'
+        };
+    }
 
-   if (args.uniqueTermRequested) {
-      mvdmObj.uniqueTermRequested = args.uniqueTermRequested;
-   }
+    if (args.uniqueTermRequested) {
+        mvdmObj.uniqueTermRequested = args.uniqueTermRequested;
+    }
 
-   if (args.uniqueTermRequestComment) {
-      mvdmObj.uniqueTermRequestComment = args.uniqueTermRequestComment;
-   }
+    if (args.uniqueTermRequestComment) {
+        mvdmObj.uniqueTermRequestComment = args.uniqueTermRequestComment;
+    }
 
-   if (args.treatmentFactors) {
-      args.treatmentFactors.forEach(function(treatmentFactor) {
-         switch (treatmentFactor) {
-            case 'SERVICE_CONNECTED':
-               mvdmObj.isServiceConnected = true;
-               break;
-            case 'AGENT_ORANGE':
-               mvdmObj.isAgentOrangeExposure = true;
-               break;
-            case 'IONIZING_RADIATION':
-               mvdmObj.isIonizingRadiationExposure = true;
-               break;
-            case 'PERSIAN_GULF':
-               mvdmObj.isPersianGulfExposure = true;
-               break;
-            case 'HEAD_AND_OR_NECK_CANCER':
-               mvdmObj.isHeadAndOrNeckCancer = true;
-               break;
-            case 'MILITARY_SEXUAL_TRAUMA':
-               mvdmObj.isMilitarySexualTrauma = true;
-               break;
-            case 'COMBAT_VETERAN':
-               mvdmObj.isCombatVeteran = true;
-               break;
-            case 'SHIPBOARD_HAZARD_DEFENSE':
-               mvdmObj.isShipboardHazardDefense = true;
-               break;
-         }
-      });
-   }
+    if (args.treatmentFactors) {
+        args.treatmentFactors.forEach(function (treatmentFactor) {
+            switch (treatmentFactor) {
+                case 'SERVICE_CONNECTED':
+                    mvdmObj.isServiceConnected = true;
+                    break;
+                case 'AGENT_ORANGE':
+                    mvdmObj.isAgentOrangeExposure = true;
+                    break;
+                case 'IONIZING_RADIATION':
+                    mvdmObj.isIonizingRadiationExposure = true;
+                    break;
+                case 'PERSIAN_GULF':
+                    mvdmObj.isPersianGulfExposure = true;
+                    break;
+                case 'HEAD_AND_OR_NECK_CANCER':
+                    mvdmObj.isHeadAndOrNeckCancer = true;
+                    break;
+                case 'MILITARY_SEXUAL_TRAUMA':
+                    mvdmObj.isMilitarySexualTrauma = true;
+                    break;
+                case 'COMBAT_VETERAN':
+                    mvdmObj.isCombatVeteran = true;
+                    break;
+                case 'SHIPBOARD_HAZARD_DEFENSE':
+                    mvdmObj.isShipboardHazardDefense = true;
+                    break;
+            }
+        });
+    }
 
-   if (args.comments) {
-      mvdmObj.comments = [];
-      args.comments.forEach(function(comment) {
-         mvdmObj.comments.push({
-            commentId: comment.id,
-            commentText: comment.text
-         });
-      });
-   }
+    if (args.comments) {
+        mvdmObj.comments = [];
+        args.comments.forEach(function (comment) {
+            mvdmObj.comments.push({
+                commentId: comment.id,
+                commentText: comment.text
+            });
+        });
+    }
 
-   return MVDM.update(mvdmObj);
+    return MVDM.update(mvdmObj);
 };
 
 /**
  * Describes a problem.
  *
  * @param {String} problemId Problem identifier.
+ * @returns MVDM describe response.
  */
-ProblemService.prototype.describe = function(problemId) {
-   return MVDM.describe(problemId);
+ProblemService.prototype.describe = function (problemId) {
+    return MVDM.describe(problemId);
 };
 
 /**
  * List of problems.
  *
- * @param filter Problem list status filter. Possible values: active, inactive, both, removed.
+ * @param {String} filter Problem list status filter. Possible values: active, inactive, both, removed.
+ * @returns MVDM list response.
  */
-ProblemService.prototype.list = function(filter) {
+ProblemService.prototype.list = function (filter) {
 
     if (filter) {
         filter = filter.toLowerCase();
@@ -431,6 +453,47 @@ ProblemService.prototype.list = function(filter) {
     res.results = filteredProblems;
 
     return res;
+};
+
+/**
+ * Removes a problem.
+ *
+ * @param {String} problemId Problem identifier.
+ * @returns MVDM remove response.
+ */
+ProblemService.prototype.remove = function (problemId) {
+    return MVDM.remove(problemId);
+};
+
+/**
+ * Unremoves a problem.
+ *
+ * @param {String} problemId Problem identifier.
+ *  @returns MVDM unremove response.
+ */
+ProblemService.prototype.unremove = function (problemId) {
+    return MVDM.unremove(problemId);
+};
+
+/**
+ * Deletes problem comments.
+ *
+ * @param {String} problemId Problem identifier.
+ * @param {Array} commentIds Comment indexes to delete (e.g. [1, 3, 5])
+ */
+ProblemService.prototype.deleteComments = function (problemId, commentIds) {
+    var mvdmComments = {
+        id: problemId,
+        comments: []
+    };
+
+    commentIds.forEach(function (commentId) {
+        mvdmComments.comments.push({
+            commentId: commentId
+        })
+    });
+
+    return MVDM.delete(mvdmComments);
 };
 
 module.exports = ProblemService;
