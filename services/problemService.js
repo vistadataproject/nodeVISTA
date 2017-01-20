@@ -60,6 +60,12 @@ function ProblemService(db, serviceContext) {
    }, this);
 
    MVDM.on('describe', onDescribe);
+
+   var onList = _.bind(function(event) {
+       this.emit('list', event);
+   }, this);
+
+   MVDM.on('list', onList);
 }
 
 //inherit behavior from EventEmitter
@@ -382,6 +388,49 @@ ProblemService.prototype.update = function(args) {
  */
 ProblemService.prototype.describe = function(problemId) {
    return MVDM.describe(problemId);
+};
+
+/**
+ * List of problems.
+ *
+ * @param filter Problem list status filter. Possible values: active, inactive, both, removed.
+ */
+ProblemService.prototype.list = function(filter) {
+
+    if (filter) {
+        filter = filter.toLowerCase();
+    }
+
+    var queryRemoved = false;
+
+    if (filter === 'removed') {
+        queryRemoved = true;
+    }
+
+    var res = MVDM.list("Problem", this.context.patientId, queryRemoved);
+
+    res.results = _.sortBy(res.results, 'lastModifiedDate');
+
+    if (!filter) {
+        return res;
+    }
+
+    var filteredProblems = [];
+    res.results.forEach(function (problem) {
+        if ((problem.condition !== 'HIDDEN' &&
+            ((filter === 'both' || filter === 'active') && problem.problemStatus === 'ACTIVE') ||      //both or just active
+            ((filter === 'both' || filter === 'inactive') && problem.problemStatus === 'INACTIVE')) || //both or just inactive
+            (filter === 'removed' && problem.condition === 'HIDDEN'))                                  //removed problems
+        {
+            filteredProblems.push(problem);
+        }
+    });
+
+    filteredProblems = _.sortBy(filteredProblems, 'problemStatus');
+
+    res.results = filteredProblems;
+
+    return res;
 };
 
 module.exports = ProblemService;

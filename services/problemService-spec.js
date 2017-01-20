@@ -523,6 +523,78 @@ describe('testProblemService', function() {
    //    expect(audit.reason).toEqual('Deleted Note');
    // });
 
+    // 2 problems setup above
+    it("List all problems - across patients", function() {
+
+        var res = problemService.list();
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(2);
+        for(var i = 0; i < res.results.length; i++) {
+            expect(res.results[i].type).toEqual("Problem");
+        }
+
+    });
+
+    it("Problem Service list event - list all problems", function(done) {
+
+        var listRes;
+
+        var SpyObj = { //dummy spy object
+            listSpy: function() {
+                //method used to test whether MVDM 'list' event was called.
+            }
+        };
+
+        spyOn(SpyObj, 'listSpy');
+
+        problemService.once('list', function(res) {
+            listRes = res.data;
+            SpyObj.listSpy();
+        });
+
+        problemService.list();
+
+        _.delay(function() {
+            expect(SpyObj.listSpy).toHaveBeenCalled();
+            expect(SpyObj.listSpy.calls.count()).toEqual(1);
+            expect(SpyObj.listSpy.calls.count()).not.toEqual(2);
+
+            expect(listRes).toBeDefined();
+            expect(listRes.results.length).toEqual(2);
+            done();
+        }, 100);
+    });
+
+    it('Problem filters', function() {
+        var res = problemService.update({
+            id: problemOneId,
+            problemStatus: 'INACTIVE'
+        });
+
+        expect(res).toBeDefined();
+        expect(res.updated).toBeDefined();
+        expect(res.updated.problemStatus).toEqual('INACTIVE');
+
+        //only list inactive problems
+        res = problemService.list('inactive');
+
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(1);
+        expect(res.results[0].problemStatus).toEqual('INACTIVE');
+
+        //only list active problems
+        res = problemService.list('active');
+
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(1);
+        expect(res.results[0].problemStatus).toEqual('ACTIVE');
+
+        //list both active and inactive problems
+        res = problemService.list('both');
+
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(2);
+    });
 
    afterAll(function() {
       db.close();
