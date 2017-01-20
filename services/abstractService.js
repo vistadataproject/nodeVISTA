@@ -12,14 +12,14 @@ var vdmUtils = require('mvdm/vdmUtils');
 var nodem = require('nodem');
 
 /**
- * Service abstract class.
+ * Abstract service class.
+ *
  */
 class AbstractService extends EventEmitter {
 
     /**
      * Abstract service constructor.
      *
-     * @class AbstractService
      * @param {Object} db VistA database instance.
      * @param {Object} serviceContext Contains service context data.
      * @param {String} serviceContext.userId User identifier.

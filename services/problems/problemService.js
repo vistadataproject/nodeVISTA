@@ -6,12 +6,15 @@ var _ = require('underscore');
 
 var AbstractService = require('../abstractService');
 
+/**
+ * Problem Service Class
+ *
+ */
 class ProblemService extends AbstractService {
 
     /**
      * Problem Service constructor.
      *
-     * @class ProblemService
      * @param {Object} db VistA database instance.
      * @param {Object} serviceContext Contains service context data.
      * @param {String} serviceContext.userId User identifier.
