@@ -254,13 +254,13 @@ module.exports = function() {
             finished();
         } else if (messageObj.method === 'lockedRPCList') {
 
-           finished({
-              type: 'rpcL',
-              event: {
-                list: rpcFacade.getLockedRPCList()
-              },
-              eventType: 'lockedRPCList'
-           });
+            finished({
+                type: 'rpcL',
+                event: {
+                    list: rpcFacade.getLockedRPCList()
+                },
+                eventType: 'lockedRPCList'
+            });
         }
     });
 

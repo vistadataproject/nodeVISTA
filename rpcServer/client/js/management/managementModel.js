@@ -1,14 +1,14 @@
 /*global define*/
 define([
-   'jquery',
-   'underscore',
-   'backbone'
+    'jquery',
+    'underscore',
+    'backbone'
 ], function ($, _, Backbone) {
-   'use strict';
+    'use strict';
 
-   var ManagementModel = Backbone.Model.extend({
-      urlRoot: '/management'
-   });
+    var ManagementModel = Backbone.Model.extend({
+        urlRoot: '/management'
+    });
 
-   return ManagementModel;
+    return ManagementModel;
 });

@@ -1,12 +1,12 @@
 /*global define*/
 define([
-   'jquery',
-   'underscore',
-   'backbone'
+    'jquery',
+    'underscore',
+    'backbone'
 ], function ($, _, Backbone) {
-   'use strict';
+    'use strict';
 
-   var RPCCountModel = Backbone.Model.extend();
+    var RPCCountModel = Backbone.Model.extend();
 
-   return RPCCountModel;
+    return RPCCountModel;
 });

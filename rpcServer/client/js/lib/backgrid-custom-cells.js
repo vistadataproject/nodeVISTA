@@ -5,35 +5,35 @@
  @extends Backgrid.Cell
  */
 (function () {
-   Backgrid.HtmlCell = Backgrid.Cell.extend({
+    Backgrid.HtmlCell = Backgrid.Cell.extend({
 
-      /** @property */
-      className: "html-cell",
+        /** @property */
+        className: "html-cell",
 
-      initialize: function () {
-         Backgrid.Cell.prototype.initialize.apply(this, arguments);
-      },
+        initialize: function () {
+            Backgrid.Cell.prototype.initialize.apply(this, arguments);
+        },
 
-      render: function () {
-         this.$el.empty();
-         var rawValue = this.model.get(this.column.get("name"));
-         var formattedValue = this.formatter.fromRaw(rawValue, this.model);
-         this.$el.append(formattedValue);
-         this.delegateEvents();
-         return this;
-      }
-   });
+        render: function () {
+            this.$el.empty();
+            var rawValue = this.model.get(this.column.get("name"));
+            var formattedValue = this.formatter.fromRaw(rawValue, this.model);
+            this.$el.append(formattedValue);
+            this.delegateEvents();
+            return this;
+        }
+    });
 
 
-   //HtmlCell formatting utility
-   Backgrid.HtmlCell.formatAsHtml = function (rawValue, model) {
+    //HtmlCell formatting utility
+    Backgrid.HtmlCell.formatAsHtml = function (rawValue, model) {
 
-      //mvdmLocked runner events are displayed as bold
-      if (model.get('runner') === 'mvdmLocked') {
-         rawValue = '<strong>' + rawValue + '</strong>';
-      }
+        //mvdmLocked runner events are displayed as bold
+        if (model.get('runner') === 'mvdmLocked') {
+            rawValue = '<strong>' + rawValue + '</strong>';
+        }
 
-      return '<span class="html-cell">' + rawValue + '</span>';
-   };
+        return '<span class="html-cell">' + rawValue + '</span>';
+    };
 
 })();
