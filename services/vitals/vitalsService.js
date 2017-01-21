@@ -2,9 +2,9 @@
 
 'use strict';
 
-var _ = require('underscore');
+let _ = require('underscore');
 
-var AbstractService = require('../abstractService');
+let AbstractService = require('../abstractService');
 
 /**
  * Vitals Class
@@ -49,7 +49,7 @@ class VitalsService extends AbstractService {
      * @returns MVDM create response.
      */
     create(args) {
-        var mvdmObj = {
+        let mvdmObj = {
             type: 'Vital'
         };
 

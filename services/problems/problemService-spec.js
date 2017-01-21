@@ -5,27 +5,27 @@
 /*
  * Basic setup
  */
-var _ = require('underscore');
-var testProblems;
-var moment = require('moment');
-var nodem = require('nodem');
-var fileman = require('mvdm/fileman');
-var vdmUtils = require('mvdm/vdmUtils');
-var problemUtils = require("mvdm/problems/problemRpcUtils");
+let _ = require('underscore');
+let testProblems;
+let moment = require('moment');
+let nodem = require('nodem');
+let fileman = require('mvdm/fileman');
+let vdmUtils = require('mvdm/vdmUtils');
+let problemUtils = require("mvdm/problems/problemRpcUtils");
 
-var ProblemService = require('./problemService');
+let ProblemService = require('./problemService');
 
-var DT_FORMAT = 'YYYY-MM-DD';
+let DT_FORMAT = 'YYYY-MM-DD';
 
-var NOW = moment().format(DT_FORMAT);
+let NOW = moment().format(DT_FORMAT);
 
 process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath();
 
-var db, problemService, userId, facilityId, patientId;
+let db, problemService, userId, facilityId, patientId;
 
-describe('testProblemService', function () {
+describe('testProblemService', () => {
 
-    beforeAll(function () {
+    beforeAll(() => {
 
         db = new nodem.Gtm();
         db.open();
@@ -55,7 +55,7 @@ describe('testProblemService', function () {
 
         //set comment defaults (enteredBy, enteredDate)
         if (res.comments) {
-            for (var i = 0; i < res.comments.length; i++) {
+            for (let i = 0; i < res.comments.length; i++) {
                 expectedResult.comments[i].enteredBy = res.comments[i].enteredBy;
                 expectedResult.comments[i].enteredDate = res.comments[i].enteredDate;
                 expectedResult.comments[i].facility = res.comments[i].facility;
@@ -64,45 +64,45 @@ describe('testProblemService', function () {
         return expectedResult;
     }
 
-    var problemOneId;
+    let problemOneId;
 
-    it("Create a new problem using service - expect MVDM create return", function () {
+    it("Create a new problem using service - expect MVDM create return", () => {
 
-        var res = problemService.create(_.clone(testProblems.active.one.createArgs));
+        let res = problemService.create(_.clone(testProblems.active.one.createArgs));
 
         problemOneId = res.created.id;
 
         expect(res.created).toBeDefined();
 
-        var mvdmResultForTest = _.omit(res.created, ["id", "uniqueId"]);
+        let mvdmResultForTest = _.omit(res.created, ["id", "uniqueId"]);
 
-        var expectedResult = setDefaultValues(testProblems.active.one.createResult, res.created);
+        let expectedResult = setDefaultValues(testProblems.active.one.createResult, res.created);
 
-        Object.keys(mvdmResultForTest).forEach(function (key) {
+        Object.keys(mvdmResultForTest).forEach(key => {
             expect(mvdmResultForTest[key]).toEqual(expectedResult[key]);
         });
 
         // Now let's get (DESCRIBE) the created MVDM Problem separately
-        var createdId = res.created.id; // here's its id
-        var res2 = problemService.describe(createdId);
+        let createdId = res.created.id; // here's its id
+        let res2 = problemService.describe(createdId);
 
         expect(res2.result).toEqual(res.created);
     });
 
-    it("Create problem with comments", function (done) {
+    it("Create problem with comments", done => {
 
         //listen for problemService MVDM create event
-        var createRes, _userId, _facilityId, eventTimestamp;
+        let createRes, _userId, _facilityId, eventTimestamp;
 
-        var SpyObj = { //dummy spy object
-            createSpy: function () {
+        let SpyObj = { //dummy spy object
+            createSpy: () => {
                 //method used to test whether problemService's MVDM 'create' event was called.
             }
         };
 
         spyOn(SpyObj, 'createSpy');
 
-        problemService.once('create', function (res) {
+        problemService.once('create', res => {
             createRes = res.data;
             _userId = res.user.id;
             _facilityId = res.facility.id;
@@ -112,7 +112,7 @@ describe('testProblemService', function () {
 
         problemService.create(_.clone(testProblems.active.two.createArgs));
 
-        _.delay(function () {
+        _.delay(() => {
             expect(SpyObj.createSpy).toHaveBeenCalled();
             expect(SpyObj.createSpy.calls.count()).toEqual(1);
             expect(SpyObj.createSpy.calls.count()).not.toEqual(2);
@@ -121,23 +121,23 @@ describe('testProblemService', function () {
             expect(_facilityId).toEqual(facilityId);
             expect(eventTimestamp).toMatch(/20\d\d-\d\d-\d\dT/);
 
-            var mvdmResultForTest = _.omit(createRes.created, ["id", "uniqueId"]);
+            let mvdmResultForTest = _.omit(createRes.created, ["id", "uniqueId"]);
 
-            var expectedResult = setDefaultValues(testProblems.active.two.createResult, createRes.created);
-            Object.keys(mvdmResultForTest).forEach(function (key) {
+            let expectedResult = setDefaultValues(testProblems.active.two.createResult, createRes.created);
+            Object.keys(mvdmResultForTest).forEach(key => {
                 expect(mvdmResultForTest[key]).toEqual(expectedResult[key]);
             });
 
-            var createdId = createRes.created.id;
-            var res2 = problemService.describe(createdId);
+            let createdId = createRes.created.id;
+            let res2 = problemService.describe(createdId);
             expect(res2.result).toEqual(createRes.created);
 
             done();
         }, 100);
     });
 
-    it('Update a problem - change immediacy value', function () {
-        var res = problemService.update({
+    it('Update a problem - change immediacy value', () => {
+        let res = problemService.update({
             id: problemOneId,
             priority: 'CHRONIC'
         });
@@ -147,18 +147,18 @@ describe('testProblemService', function () {
         expect(res.updated.priority).toEqual('CHRONIC');
 
         //confirm presence of audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(1);
-        var audit = descr.result.audits[0];
+        let audit = descr.result.audits[0];
         expect(audit.newValue).toEqual('C');
         expect(audit.oldValue).toBeUndefined();
     });
 
-    it('Update a problem - change set onset value', function () {
+    it('Update a problem - change set onset value', () => {
 
-        var res = problemService.update({
+        let res = problemService.update({
             id: problemOneId,
             onsetDate: "2016-03-01"
         });
@@ -168,17 +168,17 @@ describe('testProblemService', function () {
         expect(res.updated.onsetDate.value).toEqual('2016-03-01');
 
         //confirm presence of audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(2);
-        var audit = descr.result.audits[1];
+        let audit = descr.result.audits[1];
         expect(audit.newValue).toMatch(/\d+/);
         expect(audit.oldValue).toBeUndefined();
     });
 
-    it('Update a problem - change responsible provider', function () {
-        var res = problemService.update({
+    it('Update a problem - change responsible provider', () => {
+        let res = problemService.update({
             id: problemOneId,
             responsibleProvider: testProblems.active.one.otherProvider.id
         });
@@ -188,18 +188,18 @@ describe('testProblemService', function () {
         expect(res.updated.responsibleProvider.id).toEqual(testProblems.active.one.otherProvider.id);
 
         //confirm presence of audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(3);
-        var audit = descr.result.audits[2];
+        let audit = descr.result.audits[2];
         expect(audit.newValue).toMatch(/\d+/);
         expect(audit.oldValue).toMatch(/\d+/);
 
     });
 
-    it('Update a problem - change clinic', function () {
-        var res = problemService.update({
+    it('Update a problem - change clinic', () => {
+        let res = problemService.update({
             id: problemOneId,
             clinic: "44-4"
         });
@@ -209,17 +209,17 @@ describe('testProblemService', function () {
         expect(res.updated.clinic.id).toEqual('44-4');
 
         //confirm presence of audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(4);
-        var audit = descr.result.audits[3];
+        let audit = descr.result.audits[3];
         expect(audit.newValue).toMatch(/\d+/);
         expect(audit.oldValue).toMatch(/\d+/);
     });
 
-    it('Update a problem - change problem status', function () {
-        var res = problemService.update({
+    it('Update a problem - change problem status', () => {
+        let res = problemService.update({
             id: problemOneId,
             problemStatus: 'INACTIVE'
         });
@@ -229,11 +229,11 @@ describe('testProblemService', function () {
         expect(res.updated.problemStatus).toEqual('INACTIVE');
 
         //confirm presence of audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(5);
-        var audit = descr.result.audits[4];
+        let audit = descr.result.audits[4];
         expect(audit.newValue).toEqual('I')
         expect(audit.oldValue).toEqual('A');
 
@@ -248,15 +248,15 @@ describe('testProblemService', function () {
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(6);
-        var audit = descr.result.audits[5];
+        audit = descr.result.audits[5];
         expect(audit.newValue).toEqual('A');
         expect(audit.oldValue).toEqual('I');
     });
 
-    it('Update a problem - change treatment factors', function () {
+    it('Update a problem - change treatment factors', () => {
 
         //service connected
-        var res = problemService.update({
+        let res = problemService.update({
             id: problemOneId,
             treatmentFactors: [
                 "SERVICE_CONNECTED",
@@ -282,19 +282,19 @@ describe('testProblemService', function () {
         expect(res.updated.isShipboardHazardDefense).toBe(true);
 
         //confirm audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(14);
 
-        for (var i = 6; i < 14; i++) {
+        for (let i = 6; i < 14; i++) {
             expect(descr.result.audits[i].oldValue).toEqual('0');
             expect(descr.result.audits[i].newValue).toEqual('1');
         }
     });
 
-    it('Update a problem - change problem', function () {
-        var res = problemService.update({
+    it('Update a problem - change problem', () => {
+        let res = problemService.update({
             id: problemOneId,
             providerNarrative: "Hypertension",
             problem: "757_01-7647488",
@@ -310,12 +310,12 @@ describe('testProblemService', function () {
         expect(res.updated.snomedCTDesignationCode).toEqual('64176011');
 
         //confirm audits
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(18);
 
-        for (var i = 14; i < 18; i++) {
+        for (let i = 14; i < 18; i++) {
             if (descr.result.audits[i].fieldNumber === .05) {
                 //provider narrative
                 expect(descr.result.audits[i].oldValue).toEqual('1');
@@ -358,7 +358,7 @@ describe('testProblemService', function () {
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(22);
 
-        for (i = 18; i < 22; i++) {
+        for (let i = 18; i < 22; i++) {
             if (descr.result.audits[i].fieldNumber === .05) {
                 //provider narrative
                 expect(descr.result.audits[i].oldValue).toEqual('3');
@@ -392,8 +392,8 @@ describe('testProblemService', function () {
     // SNOMED terms are not mapped to ICD-10 codes as they were with ICD-9 codes.
     // The provider can associate a more specific ICD-10 code on the Encounter’s Diagnosis tab.
     // That term will then display back on the Problems tab in the detailed display.
-    it('Update a problem - Assign ICD10 CM to a problem', function () {
-        var res = problemService.update({
+    it('Update a problem - Assign ICD10 CM to a problem', () => {
+        let res = problemService.update({
             id: problemOneId,
             diagnosis: "80-503126",
             interestDate: NOW
@@ -404,18 +404,18 @@ describe('testProblemService', function () {
         expect(res.updated.diagnosis.id).toEqual('80-503126');
 
         //confirm audits
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(23);
 
-        var audit = descr.result.audits[22];
+        let audit = descr.result.audits[22];
         expect(audit.oldValue).toEqual('521774');
         expect(audit.newValue).toEqual('503126');
     });
 
-    it('Update a problem - change to a unique problem', function () {
-        var res = problemService.update({
+    it('Update a problem - change to a unique problem', () => {
+        let res = problemService.update({
             id: problemOneId,
             "providerNarrative": "A unique problem",
             problem: "757_01-1",
@@ -435,12 +435,12 @@ describe('testProblemService', function () {
         expect(res.updated.snomedCTDesignationCode).toEqual("");
 
         //confirm audits
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(28);
 
-        for (var i = 23; i < 28; i++) {
+        for (let i = 23; i < 28; i++) {
             if (descr.result.audits[i].fieldNumber === .05) {
                 //provider narrative
                 expect(descr.result.audits[i].oldValue).toEqual('1');
@@ -468,15 +468,15 @@ describe('testProblemService', function () {
         }
     });
 
-    it('Update a problem - add a comment', function () {
-        var addComment = {
+    it('Update a problem - add a comment', () => {
+        let addComment = {
             "id": problemOneId,
             "comments": [{
                 "id": 1,
                 "text": "A problem comment"
             }]
         };
-        var res = problemService.update(addComment);
+        let res = problemService.update(addComment);
 
         expect(res.updated.comments).toBeDefined();
         expect(res.updated.comments.length).toEqual(1);
@@ -484,20 +484,20 @@ describe('testProblemService', function () {
         expect(res.vdmUpdateds[0].note_facility[0].note[0].note_narrative).toEqual("A problem comment");
 
         //new comments are not audited
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(28);
     });
 
-    it('Update a problem - edit a comment', function () {
-        var editComment = {
+    it('Update a problem - edit a comment', () => {
+        let editComment = {
             "id": problemOneId,
             "comments": [{
                 "id": 1,
                 "text": "Editing a comment"
             }]
         };
-        var res = problemService.update(editComment);
+        let res = problemService.update(editComment);
 
         expect(res.updated.comments).toBeDefined();
         expect(res.updated.comments.length).toEqual(1);
@@ -505,30 +505,30 @@ describe('testProblemService', function () {
         expect(res.vdmUpdateds[0].note_facility[0].note[0].note_narrative).toEqual("Editing a comment");
 
         //confirm audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(29);
 
-        var audit = descr.result.audits[28];
+        let audit = descr.result.audits[28];
         expect(audit.oldValue).toEqual('C');
         expect(audit.newValue).toBeUndefined();
         expect(audit.oldProblemEntry).toEqual('A problem comment');
         expect(audit.reason).toEqual('Note Modified');
     });
 
-    it('Update a problem - remove a comment', function () {
+    it('Update a problem - remove a comment', () => {
 
         problemService.deleteComments(problemOneId, [1]);
 
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
         expect(descr.result.comments).toBeUndefined();
 
         //confirm audit
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(30);
 
-        var audit = descr.result.audits[29];
+        let audit = descr.result.audits[29];
         expect(audit.oldValue).toEqual('A');
         expect(audit.newValue).toBeUndefined();
         expect(audit.oldProblemEntry).toEqual('Editing a comment');
@@ -536,12 +536,12 @@ describe('testProblemService', function () {
     });
 
     // 2 problems setup above
-    it("List all problems - across patients", function () {
+    it("List all problems - across patients", () => {
 
-        var res = problemService.list();
+        let res = problemService.list();
         expect(res.results).toBeDefined();
         expect(res.results.length).toEqual(2);
-        for (var i = 0; i < res.results.length; i++) {
+        for (let i = 0; i < res.results.length; i++) {
             expect(res.results[i].type).toEqual("Problem");
         }
 
@@ -549,10 +549,10 @@ describe('testProblemService', function () {
 
     it("Problem Service list event - list all problems", function (done) {
 
-        var listRes;
+        let listRes;
 
-        var SpyObj = { //dummy spy object
-            listSpy: function () {
+        let SpyObj = { //dummy spy object
+            listSpy: () => {
                 //method used to test whether MVDM 'list' event was called.
             }
         };
@@ -566,7 +566,7 @@ describe('testProblemService', function () {
 
         problemService.list();
 
-        _.delay(function () {
+        _.delay(() => {
             expect(SpyObj.listSpy).toHaveBeenCalled();
             expect(SpyObj.listSpy.calls.count()).toEqual(1);
             expect(SpyObj.listSpy.calls.count()).not.toEqual(2);
@@ -577,8 +577,8 @@ describe('testProblemService', function () {
         }, 100);
     });
 
-    it('Problem filters', function () {
-        var res = problemService.update({
+    it('Problem filters', () => {
+        let res = problemService.update({
             id: problemOneId,
             problemStatus: 'INACTIVE'
         });
@@ -612,7 +612,7 @@ describe('testProblemService', function () {
     it("Remove only problem of patient 1", function() {
 
         // relying on default userId and dateTime
-        var removedRes = problemService.remove(problemOneId);
+        let removedRes = problemService.remove(problemOneId);
 
         // check that right VDM object was created
         expect(removedRes.removed).toBeDefined();
@@ -623,16 +623,16 @@ describe('testProblemService', function () {
         expect(removedRes.removed.removalDetails).toBeUndefined();
 
         //confirm presence of remove audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(32);
-        var audit = descr.result.audits[descr.result.audits.length-1];
+        let audit = descr.result.audits[descr.result.audits.length-1];
         expect(audit.reason).toEqual('Deleted');
         expect(audit.oldValue).toEqual('P');
         expect(audit.newValue).toEqual('H');
 
-        var listRemoveRes = problemService.list("removed");
+        let listRemoveRes = problemService.list("removed");
         expect(listRemoveRes.results).toBeDefined();
         expect(listRemoveRes.results.length).toEqual(1);
         expect(listRemoveRes.results[0].isRemoved).toEqual(true);
@@ -641,7 +641,7 @@ describe('testProblemService', function () {
 
     it("Can describe removed problem by id", function() {
 
-        var descrRes = problemService.describe(problemOneId);
+        let descrRes = problemService.describe(problemOneId);
 
         expect(descrRes.result.id).toEqual(problemOneId);
         expect(descrRes.result.isRemoved).toBeDefined();
@@ -655,25 +655,25 @@ describe('testProblemService', function () {
     it("Unremove problem of patient 1", function() {
 
         // relying on default userId and dateTime
-        var unremoveRes = problemService.unremove(problemOneId);
+        let unremoveRes = problemService.unremove(problemOneId);
 
         expect(unremoveRes.unremoved).toBeDefined();
         expect(unremoveRes.unremoved.id).toBeDefined();
         expect(unremoveRes.unremoved.id).toEqual(problemOneId);
 
         //confirm presence of unremove audit
-        var descr = problemService.describe(problemOneId);
+        let descr = problemService.describe(problemOneId);
 
         expect(descr.result.audits).toBeDefined();
         expect(descr.result.audits.length).toEqual(33);
-        var audit = descr.result.audits[descr.result.audits.length-1];
+        let audit = descr.result.audits[descr.result.audits.length-1];
         expect(audit.reason).toEqual('Replaced');
         expect(audit.oldValue).toEqual('H');
         expect(audit.newValue).toEqual('P');
 
     });
 
-    afterAll(function () {
+    afterAll(() => {
         db.close();
     });
 });
