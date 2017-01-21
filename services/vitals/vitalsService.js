@@ -106,7 +106,7 @@ class VitalsService extends AbstractService {
     }
 
     /**
-     * Describe a vital.
+     * Describes a vital.
      *
      * @param {String} vitalId Vital identifier.
      * @fires describe MVDM describe event.
