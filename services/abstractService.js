@@ -2,14 +2,14 @@
 
 'use strict';
 
-var util = require('util');
-var EventEmitter = require('events');
-var _ = require('underscore');
+let util = require('util');
+let EventEmitter = require('events');
+let _ = require('underscore');
 
-var MVDM = require('mvdm/mvdm');
-var VDM = require('mvdm/vdm');
-var vdmUtils = require('mvdm/vdmUtils');
-var nodem = require('nodem');
+let MVDM = require('mvdm/mvdm');
+let VDM = require('mvdm/vdm');
+let vdmUtils = require('mvdm/vdmUtils');
+let nodem = require('nodem');
 
 /**
  * Abstract service class.
@@ -43,43 +43,43 @@ class AbstractService extends EventEmitter {
         this.MVDM = MVDM;
 
         //forward MVDM events
-        var onCreate = _.bind(function (event) {
+        let onCreate = _.bind(function (event) {
             this.emit('create', event);
         }, this);
 
         this.MVDM.on('create', onCreate);
 
-        var onUpdate = _.bind(function (event) {
+        let onUpdate = _.bind(function (event) {
             this.emit('update', event);
         }, this);
 
         this.MVDM.on('update', onUpdate);
 
-        var onDescribe = _.bind(function (event) {
+        let onDescribe = _.bind(function (event) {
             this.emit('describe', event);
         }, this);
 
         this.MVDM.on('describe', onDescribe);
 
-        var onList = _.bind(function (event) {
+        let onList = _.bind(function (event) {
             this.emit('list', event);
         }, this);
 
         this.MVDM.on('list', onList);
 
-        var onRemove = _.bind(function (event) {
+        let onRemove = _.bind(function (event) {
             this.emit('remove', event);
         }, this);
 
         this.MVDM.on('remove', onRemove);
 
-        var onUnremove = _.bind(function (event) {
+        let onUnremove = _.bind(function (event) {
             this.emit('unremove', event);
         }, this);
 
         this.MVDM.on('unremove', onUnremove);
 
-        var onDelete = _.bind(function (event) {
+        let onDelete = _.bind(function (event) {
             this.emit('delete', event);
         }, this);
 

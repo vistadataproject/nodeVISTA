@@ -2,9 +2,9 @@
 
 'use strict';
 
-var _ = require('underscore');
+let _ = require('underscore');
 
-var AbstractService = require('../abstractService');
+let AbstractService = require('../abstractService');
 
 /**
  * Problem Service Class
@@ -30,6 +30,40 @@ class ProblemService extends AbstractService {
         this.MVDM.setModel(require('mvdm/problems/mvdmProblemsModel').mvdmModel);
 
         this.MVDM.setDefaultPatientId(this.context.patientId);
+
+        //private methods
+        this.setTreatmentFactors = function(treatmentFactors, mvdmObj) {
+            treatmentFactors.forEach(treatmentFactor => {
+                switch (treatmentFactor) {
+                    case 'SERVICE_CONNECTED':
+                        mvdmObj.isServiceConnected = true;
+                        break;
+                    case 'AGENT_ORANGE':
+                        mvdmObj.isAgentOrangeExposure = true;
+                        break;
+                    case 'IONIZING_RADIATION':
+                        mvdmObj.isIonizingRadiationExposure = true;
+                        break;
+                    case 'PERSIAN_GULF':
+                        mvdmObj.isPersianGulfExposure = true;
+                        break;
+                    case 'HEAD_AND_OR_NECK_CANCER':
+                        mvdmObj.isHeadAndOrNeckCancer = true;
+                        break;
+                    case 'MILITARY_SEXUAL_TRAUMA':
+                        mvdmObj.isMilitarySexualTrauma = true;
+                        break;
+                    case 'COMBAT_VETERAN':
+                        mvdmObj.isCombatVeteran = true;
+                        break;
+                    case 'SHIPBOARD_HAZARD_DEFENSE':
+                        mvdmObj.isShipboardHazardDefense = true;
+                        break;
+                }
+            });
+
+            return mvdmObj;
+        }
     }
 
     /**
@@ -59,7 +93,7 @@ class ProblemService extends AbstractService {
      * @returns MVDM create response.
      */
     create(args) {
-        var mvdmObj = {
+        let mvdmObj = {
             type: "Problem",
             condition: "PERMANENT" //default to PERMANENT
         };
@@ -142,40 +176,13 @@ class ProblemService extends AbstractService {
         }
 
         if (args.treatmentFactors) {
-            args.treatmentFactors.forEach(function (treatmentFactor) {
-                switch (treatmentFactor) {
-                    case 'SERVICE_CONNECTED':
-                        mvdmObj.isServiceConnected = true;
-                        break;
-                    case 'AGENT_ORANGE':
-                        mvdmObj.isAgentOrangeExposure = true;
-                        break;
-                    case 'IONIZING_RADIATION':
-                        mvdmObj.isIonizingRadiationExposure = true;
-                        break;
-                    case 'PERSIAN_GULF':
-                        mvdmObj.isPersianGulfExposure = true;
-                        break;
-                    case 'HEAD_AND_OR_NECK_CANCER':
-                        mvdmObj.isHeadAndOrNeckCancer = true;
-                        break;
-                    case 'MILITARY_SEXUAL_TRAUMA':
-                        mvdmObj.isMilitarySexualTrauma = true;
-                        break;
-                    case 'COMBAT_VETERAN':
-                        mvdmObj.isCombatVeteran = true;
-                        break;
-                    case 'SHIPBOARD_HAZARD_DEFENSE':
-                        mvdmObj.isShipboardHazardDefense = true;
-                        break;
-                }
-            });
+            this.setTreatmentFactors(args.treatmentFactors, mvdmObj);
         }
 
         if (args.comments) {
             mvdmObj.comments = [];
-            var commentId = 0;
-            args.comments.forEach(function (comment) {
+            let commentId = 0;
+            args.comments.forEach(comment => {
                 mvdmObj.comments.push({
                     commentId: ++commentId,
                     commentText: comment
@@ -217,7 +224,7 @@ class ProblemService extends AbstractService {
      * @returns MVDM update response.
      */
     update(args) {
-        var mvdmObj = {
+        let mvdmObj = {
             type: "Problem"
         };
 
@@ -303,39 +310,12 @@ class ProblemService extends AbstractService {
         }
 
         if (args.treatmentFactors) {
-            args.treatmentFactors.forEach(function (treatmentFactor) {
-                switch (treatmentFactor) {
-                    case 'SERVICE_CONNECTED':
-                        mvdmObj.isServiceConnected = true;
-                        break;
-                    case 'AGENT_ORANGE':
-                        mvdmObj.isAgentOrangeExposure = true;
-                        break;
-                    case 'IONIZING_RADIATION':
-                        mvdmObj.isIonizingRadiationExposure = true;
-                        break;
-                    case 'PERSIAN_GULF':
-                        mvdmObj.isPersianGulfExposure = true;
-                        break;
-                    case 'HEAD_AND_OR_NECK_CANCER':
-                        mvdmObj.isHeadAndOrNeckCancer = true;
-                        break;
-                    case 'MILITARY_SEXUAL_TRAUMA':
-                        mvdmObj.isMilitarySexualTrauma = true;
-                        break;
-                    case 'COMBAT_VETERAN':
-                        mvdmObj.isCombatVeteran = true;
-                        break;
-                    case 'SHIPBOARD_HAZARD_DEFENSE':
-                        mvdmObj.isShipboardHazardDefense = true;
-                        break;
-                }
-            });
+            this.setTreatmentFactors(args.treatmentFactors, mvdmObj);
         }
 
         if (args.comments) {
             mvdmObj.comments = [];
-            args.comments.forEach(function (comment) {
+            args.comments.forEach(comment => {
                 mvdmObj.comments.push({
                     commentId: comment.id,
                     commentText: comment.text
@@ -370,13 +350,13 @@ class ProblemService extends AbstractService {
             filter = filter.toLowerCase();
         }
 
-        var queryRemoved = false;
+        let queryRemoved = false;
 
         if (filter === 'removed') {
             queryRemoved = true;
         }
 
-        var res = this.MVDM.list("Problem", this.context.patientId, queryRemoved);
+        let res = this.MVDM.list("Problem", this.context.patientId, queryRemoved);
 
         res.results = _.sortBy(res.results, 'lastModifiedDate');
 
@@ -384,8 +364,8 @@ class ProblemService extends AbstractService {
             return res;
         }
 
-        var filteredProblems = [];
-        res.results.forEach(function (problem) {
+        let filteredProblems = [];
+        res.results.forEach(problem => {
             if ((problem.condition !== 'HIDDEN' &&
                 ((filter === 'both' || filter === 'active') && problem.problemStatus === 'ACTIVE') ||      //both or just active
                 ((filter === 'both' || filter === 'inactive') && problem.problemStatus === 'INACTIVE')) || //both or just inactive
@@ -433,12 +413,12 @@ class ProblemService extends AbstractService {
      * @returns MVDM delete response.
      */
     deleteComments(problemId, commentIds) {
-        var mvdmComments = {
+        let mvdmComments = {
             id: problemId,
             comments: []
         };
 
-        commentIds.forEach(function (commentId) {
+        commentIds.forEach(commentId => {
             mvdmComments.comments.push({
                 commentId: commentId
             })

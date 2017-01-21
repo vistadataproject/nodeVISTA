@@ -2,14 +2,14 @@
 
 'use strict';
 
-var testUtils = require("../testUtils");
-var moment = require('moment');
+let testUtils = require("../testUtils");
+let moment = require('moment');
 
 module.exports = function (db, userId, facilityId) {
 
-    var now = new Date().toISOString().substr(0,19);
+    let now = new Date().toISOString().substr(0,19);
 
-    var vitalOne = {
+    let vitalOne = {
 
         "description": "Basic active MVDM problem that can lead to two objects in VDM. MVDM should use existing objects.",
         "createArgs": {
@@ -38,7 +38,7 @@ module.exports = function (db, userId, facilityId) {
         }
     };
 
-    var vitalTwo = {
+    let vitalTwo = {
 
         "description": "Vital (blood pressure) with qualifiers",
         "createArgs": {

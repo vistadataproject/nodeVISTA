@@ -5,23 +5,23 @@
 /*
  * Basic setup
  */
-var _ = require('underscore');
-var testVitals;
-var moment = require('moment');
-var nodem = require('nodem');
-var fileman = require('mvdm/fileman');
-var vdmUtils = require('mvdm/vdmUtils');
-var vitalUtils = require("mvdm/vitals/vitalUtils");
+let _ = require('underscore');
+let testVitals;
+let moment = require('moment');
+let nodem = require('nodem');
+let fileman = require('mvdm/fileman');
+let vdmUtils = require('mvdm/vdmUtils');
+let vitalUtils = require("mvdm/vitals/vitalUtils");
 
-var VitalsService = require('./vitalsService');
+let VitalsService = require('./vitalsService');
 
 process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath();
 
-var db, vitalsService, userId, facilityId, patientId;
+let db, vitalsService, userId, facilityId, patientId;
 
-describe('testVitalsService', function () {
+describe('testVitalsService', () => {
 
-    beforeAll(function () {
+    beforeAll(() => {
 
         db = new nodem.Gtm();
         db.open();
@@ -41,8 +41,8 @@ describe('testVitalsService', function () {
         testVitals = require('./testVitals')(db, userId, facilityId);
     });
 
-    it("Create MVDM vital - expect VDM fan out and one MVDM", function() {
-        var res = vitalsService.create(testVitals.one.createArgs);
+    it("Create MVDM vital - expect VDM fan out and one MVDM", () => {
+        let res = vitalsService.create(testVitals.one.createArgs);
 
         expect(res.created).toBeDefined();
 
@@ -51,14 +51,14 @@ describe('testVitalsService', function () {
         expect(res.created.units).toEqual(testVitals.one.createResult.units);
 
         // Now let's get (DESCRIBE) the created MVDM vital separately
-        var createdId = res.created.id; // here's its id
-        var res2 = vitalsService.describe(createdId);
+        let createdId = res.created.id; // here's its id
+        let res2 = vitalsService.describe(createdId);
 
         expect(res2.result).toEqual(res.created);
     });
 
-    it("Create MVDM vital with qualifiers - expect VDM fan out and one MVDM", function() {
-        var res = vitalsService.create(testVitals.two.createArgs);
+    it("Create MVDM vital with qualifiers - expect VDM fan out and one MVDM", () => {
+        let res = vitalsService.create(testVitals.two.createArgs);
 
         expect(res.created).toBeDefined();
 
@@ -67,13 +67,13 @@ describe('testVitalsService', function () {
         expect(res.created.units).toEqual(testVitals.two.createResult.units);
 
         // Now let's get (DESCRIBE) the created MVDM vital separately
-        var createdId = res.created.id; // here's its id
-        var res2 = vitalsService.describe(createdId);
+        let createdId = res.created.id; // here's its id
+        let res2 = vitalsService.describe(createdId);
 
         expect(res2.result).toEqual(res.created);
     });
 
-    afterAll(function () {
+    afterAll(() => {
         db.close();
     });
 });

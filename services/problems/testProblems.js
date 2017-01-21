@@ -10,11 +10,11 @@
  * (c) VISTA Data Project 2016
  */
 
-var testUtils = require("./../testUtils");
+let testUtils = require("./../testUtils");
 
 module.exports = function (db, userId, facilityId) {
 
-   var activeProblemOne = {
+   let activeProblemOne = {
 
       "description": "Basic active MVDM problem that can lead to two objects in VDM. MVDM should use existing objects.",
       "otherProvider": {
@@ -73,7 +73,7 @@ module.exports = function (db, userId, facilityId) {
       }
    };
 
-   var activeProblemTwo = {
+   let activeProblemTwo = {
       "description":"active problem arthritis with two comments",
       "createArgs": {
          "type": "Problem",
@@ -148,7 +148,7 @@ module.exports = function (db, userId, facilityId) {
       }
    };
 
-   var activeProblemThree = {
+   let activeProblemThree = {
       "description":"active problem Heart murmur",
       "createArgs": {
          "type": "Problem",
@@ -164,7 +164,7 @@ module.exports = function (db, userId, facilityId) {
       }
    };
 
-   var activeProblemFour = {
+   let activeProblemFour = {
       "description":"active problem Morbid obesity",
       "createArgs": {
          "type": "Problem",
