@@ -2,8 +2,8 @@
 
 'use strict';
 
-let testUtils = require("../testUtils");
-let moment = require('moment');
+const testUtils = require("../testUtils");
+const moment = require('moment');
 
 module.exports = function (db, userId, facilityId) {
 

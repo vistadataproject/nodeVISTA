@@ -2,9 +2,9 @@
 
 'use strict';
 
-let _ = require('underscore');
+const _ = require('underscore');
 
-let AbstractService = require('../abstractService');
+const AbstractService = require('../abstractService');
 
 /**
  * Problem Service Class

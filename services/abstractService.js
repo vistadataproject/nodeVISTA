@@ -2,14 +2,14 @@
 
 'use strict';
 
-let util = require('util');
-let EventEmitter = require('events');
-let _ = require('underscore');
+const util = require('util');
+const EventEmitter = require('events');
+const _ = require('underscore');
 
-let MVDM = require('mvdm/mvdm');
-let VDM = require('mvdm/vdm');
-let vdmUtils = require('mvdm/vdmUtils');
-let nodem = require('nodem');
+const MVDM = require('mvdm/mvdm');
+const VDM = require('mvdm/vdm');
+const vdmUtils = require('mvdm/vdmUtils');
+const nodem = require('nodem');
 
 /**
  * Abstract service class.
@@ -43,43 +43,43 @@ class AbstractService extends EventEmitter {
         this.MVDM = MVDM;
 
         //forward MVDM events
-        let onCreate = _.bind(function (event) {
+        const onCreate = _.bind(function (event) {
             this.emit('create', event);
         }, this);
 
         this.MVDM.on('create', onCreate);
 
-        let onUpdate = _.bind(function (event) {
+        const onUpdate = _.bind(function (event) {
             this.emit('update', event);
         }, this);
 
         this.MVDM.on('update', onUpdate);
 
-        let onDescribe = _.bind(function (event) {
+        const onDescribe = _.bind(function (event) {
             this.emit('describe', event);
         }, this);
 
         this.MVDM.on('describe', onDescribe);
 
-        let onList = _.bind(function (event) {
+        const onList = _.bind(function (event) {
             this.emit('list', event);
         }, this);
 
         this.MVDM.on('list', onList);
 
-        let onRemove = _.bind(function (event) {
+        const onRemove = _.bind(function (event) {
             this.emit('remove', event);
         }, this);
 
         this.MVDM.on('remove', onRemove);
 
-        let onUnremove = _.bind(function (event) {
+        const onUnremove = _.bind(function (event) {
             this.emit('unremove', event);
         }, this);
 
         this.MVDM.on('unremove', onUnremove);
 
-        let onDelete = _.bind(function (event) {
+        const onDelete = _.bind(function (event) {
             this.emit('delete', event);
         }, this);
 

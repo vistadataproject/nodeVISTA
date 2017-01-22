@@ -5,23 +5,22 @@
 /*
  * Basic setup
  */
-let _ = require('underscore');
-let testProblems;
-let moment = require('moment');
-let nodem = require('nodem');
-let fileman = require('mvdm/fileman');
-let vdmUtils = require('mvdm/vdmUtils');
-let problemUtils = require("mvdm/problems/problemRpcUtils");
+const _ = require('underscore');
+const moment = require('moment');
+const nodem = require('nodem');
+const fileman = require('mvdm/fileman');
+const vdmUtils = require('mvdm/vdmUtils');
+const problemUtils = require("mvdm/problems/problemRpcUtils");
 
-let ProblemService = require('./problemService');
+const ProblemService = require('./problemService');
 
-let DT_FORMAT = 'YYYY-MM-DD';
+const DT_FORMAT = 'YYYY-MM-DD';
 
-let NOW = moment().format(DT_FORMAT);
+const NOW = moment().format(DT_FORMAT);
 
 process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath();
 
-let db, problemService, userId, facilityId, patientId;
+let db, problemService, userId, facilityId, patientId, testProblems;
 
 describe('testProblemService', () => {
 

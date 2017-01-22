@@ -6,11 +6,11 @@
 
 'use strict';
 
-let util = require('util');
-let _ = require('underscore');
+const util = require('util');
+const _ = require('underscore');
 
-let fileman = require('mvdm/fileman');
-let fmql = require('mvdm/fmql');
+const fileman = require('mvdm/fileman');
+const fmql = require('mvdm/fmql');
 
 /*
  * Template pointers take the forms: 

@@ -5,19 +5,18 @@
 /*
  * Basic setup
  */
-let _ = require('underscore');
-let testVitals;
-let moment = require('moment');
-let nodem = require('nodem');
-let fileman = require('mvdm/fileman');
-let vdmUtils = require('mvdm/vdmUtils');
-let vitalUtils = require("mvdm/vitals/vitalUtils");
+const _ = require('underscore');
+const moment = require('moment');
+const nodem = require('nodem');
+const fileman = require('mvdm/fileman');
+const vdmUtils = require('mvdm/vdmUtils');
+const vitalUtils = require("mvdm/vitals/vitalUtils");
 
-let VitalsService = require('./vitalsService');
+const VitalsService = require('./vitalsService');
 
 process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath();
 
-let db, vitalsService, userId, facilityId, patientId;
+let db, vitalsService, userId, facilityId, patientId, testVitals;
 
 describe('testVitalsService', () => {
 
