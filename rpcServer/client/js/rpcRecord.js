@@ -16,9 +16,9 @@ define([
                 this.rpcSession.sequence.push(
                     {
                         name: event.get('rpcName'),
-                        args: event.get('request').args,
+                        input: event.get('request').args,
                         runner: event.get('runner'),
-                        runResult: event.get('runResult'),
+                        result: event.get('runResult'),
                         from: event.get('rpcObject').from,
                         transactionId: event.get('transactionId'),
                         timestamp: event.get('timestamp')
