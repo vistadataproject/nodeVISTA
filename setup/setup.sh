@@ -295,9 +295,9 @@ rm -rf utils
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
 
-echo "Restarting nodevista vista"
+echo "Restarting nodevista"
 service nodevista restart
-echo "Done restarting nodevista vista"
+echo "Done restarting nodevista"
 
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
