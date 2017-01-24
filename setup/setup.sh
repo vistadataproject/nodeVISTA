@@ -296,7 +296,7 @@ rm -rf utils
 chmod -R g+rw /home/$vdpid
 
 echo "Restarting nodevista vista"
-service nodevistavista restart
+service nodevista restart
 echo "Done restarting nodevista vista"
 
 #start up rpcServer using pm2 and save settings
