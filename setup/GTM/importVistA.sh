@@ -36,8 +36,8 @@ echo "Done copying routines"
 
 # Copy mFixes (before compilation) - for nodeVISTA
 # ... note: in OSEHRA, some of this was done in the test.cmake pass
-for routine in $(cd /usr/local/src/nodeVISTA/setup/GTM/mFixes && git ls-files -- \*.m); do
-    cp /usr/local/src/nodeVISTA/setup/GTM/mFixes/${routine} $basedir/r
+for routine in $(cd /usr/local/src/nodevista/setup/GTM/mFixes && git ls-files -- \*.m); do
+    cp /usr/local/src/nodevista/setup/GTM/mFixes/${routine} $basedir/r
 done
 echo "Done copying fixed (for GT.M and otherwise) routines"
 

@@ -58,14 +58,14 @@ FixRoutine(name,find,replace) ;
  Quit
  ;
 FixGTMRoutine(name,find,replace) New done,found,i1,i2,line,max,new,newfile,ok,oldfile,oldfile1,oldfile2,savefile
- Set oldfile1="/home/osehra/r/"_name_".m"
- Set oldfile2="/home/osehra/p/"_name_".m"
- Set new="/home/osehra/p/"_name_".new"
+ Set oldfile1="/home/nodevista/r/"_name_".m"
+ Set oldfile2="/home/nodevista/p/"_name_".m"
+ Set new="/home/nodevista/p/"_name_".new"
  Set new="./"_name_".new" ; remove when done testing
  Set max=$Order(find(""),-1)
  For i1=1:1 Set newfile=new_i1 Quit:$$Search(newfile)=""
  Set savefile="" Do:$$Search(oldfile2)'=""
- . For i1=1:1 Set savefile="/home/osehra/p/"_name_".old"_i1 Quit:$$Search(savefile)=""
+ . For i1=1:1 Set savefile="/home/nodevista/p/"_name_".old"_i1 Quit:$$Search(savefile)=""
  . Quit
  Set oldfile=oldfile2 Set:$$Search(oldfile)="" oldfile=oldfile1
  If $$Search(oldfile)="" Write !,"Cannot find "_oldfile,! Quit

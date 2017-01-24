@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 #set variables
-instance="osehra"
+instance="nodevista"
 repoPath="https://github.com/OSEHRA/VistA-M.git"
 nodemver="0.8.1"
 
@@ -94,16 +94,16 @@ echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 # Clone VistA-M repo
 cd /usr/local/src
 git clone --depth 1 $repoPath VistA-Source
-# Not Ideal - cloning nodeVISTA for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
-git clone https://github.com/vistadataproject/nodeVISTA.git
+# Not Ideal - cloning nodevista for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
+git clone https://github.com/vistadataproject/nodevista.git
 cd $basedir
 su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
 
 # Python and RAS driven changes (note: some JS parameters settings below. Should combine)
-cd /usr/local/src/nodeVISTA/setup/pySetup 
-mkdir /usr/local/src/nodeVISTA/setup/pySetup/logs
-chmod a+w /usr/local/src/nodeVISTA/setup/pySetup
-chmod a+w /usr/local/src/nodeVISTA/setup/pySetup/logs
+cd /usr/local/src/nodevista/setup/pySetup
+mkdir /usr/local/src/nodevista/setup/pySetup/logs
+chmod a+w /usr/local/src/nodevista/setup/pySetup
+chmod a+w /usr/local/src/nodevista/setup/pySetup/logs
 # NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
 su $instance -c "source $basedir/etc/env && python ZTMGRSET.py" 
 # TODO: should exit if simpleSetup.py fails
@@ -194,24 +194,24 @@ test -d /home/$vdpid &&
 { echo "VISTA Data Project user $vdpid already Installed. Aborting."; exit 0; }
 echo "Creating VISTA Data Project user, $vdpid"
 vdphome=/home/$vdpid
-osehrahome=/home/osehra
+nodevistahome=/home/nodevista
 
-echo "Mimicing the .profile and .bashrc of user osehra"
+echo "Mimicing the .profile and .bashrc of user nodevista"
 
-# Create $vdpid user - make sure it is in the osehra group
-sudo useradd -c "VDP User" -m -U "$vdpid" -s /bin/bash -G sudo,osehra
+# Create $vdpid user - make sure it is in the nodevista group
+sudo useradd -c "VDP User" -m -U "$vdpid" -s /bin/bash -G sudo,nodevista
 echo $vdpid:vdp | sudo chpasswd
 
-# Copy unique end of .bashrc of /home/osehra and add an extra
+# Copy unique end of .bashrc of /home/nodevista and add an extra
 echo "" >> $vdphome/.bashrc
-echo "source $osehrahome/etc/env" >> $vdphome/.bashrc
-# osehra uses Node Version Manager 
-echo "export NVM_DIR=\"$osehrahome/.nvm\"" >> $vdphome/.bashrc
+echo "source $nodevistahome/etc/env" >> $vdphome/.bashrc
+# nodevista uses Node Version Manager 
+echo "export NVM_DIR=\"$nodevistahome/.nvm\"" >> $vdphome/.bashrc
 echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> $vdphome/.bashrc
 # VDP Extra: override 'gtm_tmp' to /tmp to avoid write/link errors"
 echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
-# Copy unique end of .profile of osehra
-echo "source $osehrahome/.nvm/nvm.sh" >> $vdphome/.profile
+# Copy unique end of .profile of nodevista
+echo "source $nodevistahome/.nvm/nvm.sh" >> $vdphome/.profile
 # Set nodever. Otherwise $nodever .profile won't exist and npm install below will fail
 nodever="4.7.0"
 echo "nvm use $nodever" >> $vdphome/.profile
@@ -221,10 +221,10 @@ cd $vdphome
 # install nodem in node_modules in $HOME
 echo "Installing 'nodem' for $vdpid - slowest piece"
 su $vdpid -c "mkdir logs"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet nodem@$nodemver >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet nodem@$nodemver >> $vdphome/nodemInstall.log"
 
-echo "Cloning nodeVISTA and VDM for use by $vdpid"
-git clone -q https://github.com/vistadataproject/nodeVISTA.git
+echo "Cloning nodevista and VDM for use by $vdpid"
+git clone -q https://github.com/vistadataproject/nodevista.git
 git clone -q https://github.com/vistadataproject/VDM.git
 
 # Add FMQL x 2
@@ -232,22 +232,22 @@ echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
 
 #change ownership of git clones to vdp
-chown -R vdp:vdp nodeVISTA
+chown -R vdp:vdp nodevista
 chown -R vdp:vdp VDM
 chown -R vdp:vdp FMQL
 
 echo "Installing FMQL"
-# echo "Adding FMQL (MUMPS) to osehraVISTA"
-su $vdpid -c "cp FMQL/MUMPS/*.m $osehrahome/p"
+# echo "Adding FMQL (MUMPS) to nodevistaVISTA"
+su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
 
 #install pm2 (production process manager for node see pm2.keymetrics.io)
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
 
 #make pm2 startup automatically
-sudo su -c "env PATH=$PATH:/home/osehra/.nvm/versions/node/v4.7.0/bin /home/osehra/.nvm/versions/node/v4.7.0/lib/node_modules/pm2/bin/pm2 startup systemd -u vdp --hp /home/vdp"
+sudo su -c "env PATH=$PATH:/home/nodevista/.nvm/versions/node/v4.7.0/bin /home/nodevista/.nvm/versions/node/v4.7.0/lib/node_modules/pm2/bin/pm2 startup systemd -u vdp --hp /home/vdp"
 
 #install FMQL node package
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/FMQL/webservice && nvm use $nodever && npm install --quiet >> $vdphome/logs/fmqlInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/FMQL/webservice && nvm use $nodever && npm install --quiet >> $vdphome/logs/fmqlInstall.log"
 
 #copy in webclient files, rename to directory to static
 cd $vdphome/FMQL/webservice
@@ -257,15 +257,15 @@ chown -R vdp:vdp static
 
 #start up fmqlServer using pm2 and save settings
 echo "Running FMQL as a service via pm2"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
 
 #install jasmine
 echo "Installing Jasmine"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/nodemInstall.log"
 
 #install bower
 echo "Installing Bower"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
 
 #copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
@@ -276,31 +276,31 @@ echo "User $vdpid created"
 
 #run VDM/prototypes/sysSetup npm install
 echo "Running npm install on /vagrant/utils"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
 
 #apply problem data dictionary fix
 echo "Applying problem data dictionary fix (fixDD.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
 
 #apply fix that allows users to input vital data
 echo "Applying fix that allow users to input vital data (setupVitalsForUsers.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupVitalsForUsers.js >> $vdphome/logs/setupVitalsForUsers.log"
 
 #apply fix that setups CAPRI which is controlled in parameter XU522
 echo "Applying fix setups CAPRI which is controlled in parameter XU522 (setupCapri.js)"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupCapri.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node setupCapri.js >> $vdphome/logs/setupCapri.log"
 
 rm -rf utils
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
 
-echo "Restarting osehra vista"
-service osehravista restart
-echo "Done restarting osehra vista"
+echo "Restarting nodevista vista"
+service nodevistavista restart
+echo "Done restarting nodevista vista"
 
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
-su $vdpid -c "source $osehrahome/.nvm/nvm.sh && source $osehrahome/etc/env && cd $vdphome/nodeVISTA/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
 
 echo "Setup Complete"
