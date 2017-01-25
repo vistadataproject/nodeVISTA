@@ -49,47 +49,21 @@ class VitalsService extends AbstractService {
      * @returns MVDM create response.
      */
     create(args) {
-        let mvdmObj = {
-            type: 'Vital'
-        };
 
-        if (args.vitalsTakenDateTime) {
-            mvdmObj.vitalsTakenDateTime = {
-                value: args.vitalsTakenDateTime
-            }
-        }
+        let mvdmObj = _.pick(args, 'value', 'supplementalO2');
 
-        if (args.vitalType) {
-            mvdmObj.vitalType = {
-                id: args.vitalType
-            }
-        }
+        mvdmObj.type = 'Vital';
 
-        if (args.vitalsEnteredDateTime) {
-            mvdmObj.vitalsEnteredDateTime = {
-                value: args.vitalsEnteredDateTime
-            }
-        }
+        mvdmObj = this.toPointer([
+            'vitalType',
+            'hospitalLocation',
+            'enteredBy'],
+            args, mvdmObj);
 
-        if (args.hospitalLocation) {
-            mvdmObj.hospitalLocation = {
-                id: args.hospitalLocation
-            }
-        }
-
-        if (args.enteredBy) {
-            mvdmObj.enteredBy = {
-                id: args.enteredBy
-            }
-        }
-
-        if (args.value) {
-            mvdmObj.value = args.value;
-        }
-
-        if (args.supplementalO2) {
-            mvdmObj.supplementalO2 = args.supplementalO2;
-        }
+        mvdmObj = this.toDateTime([
+            'vitalsTakenDateTime',
+            'vitalsEnteredDateTime'],
+            args, mvdmObj);
 
         if (args.qualifiers) {
 

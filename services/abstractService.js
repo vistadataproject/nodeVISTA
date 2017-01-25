@@ -87,51 +87,57 @@ class AbstractService extends EventEmitter {
     };
 
     /**
-     * Takes a map of pointer ids and applies them to a MVDM object.
-     * @param {Object} map Map of pointer ids.
-     * @param {Object} mvdmObj MVDM Object instance.
-     * @returns {Object} MVDM Object with applied pointer ids.
+     * Assigns pointer id arguments and their values as pointer objects in a MVDM object.
+     *
+     * @param {Array} args List of arguments to assign.
+     * @param {Object} argsObj Object containing argument values.
+     * @param {Object} mvdmObj MVDM Object.
+     * @returns {Object} MVDM Object with assigned pointer objects.
      */
-    toPointer(map, mvdmObj) {
-        for(let prop in map) {
-            if (map[prop]) {
-                mvdmObj[prop] = {
-                    id: map[prop]
+    toPointer(args, argsObj, mvdmObj) {
+        args.forEach(arg => {
+            if (argsObj[arg]) {
+                mvdmObj[arg] = {
+                    id: argsObj[arg]
                 };
             }
-        }
+        });
 
         return mvdmObj;
     };
 
     /**
-     * Takes a map of datetime values and applies them to a MVDM object.
-     * @param {Object} map Map of datetime values.
-     * @param {Object} mvdmObj MVDM Object instance.
-     * @param {Object} type datetime type. Defaults to xsd:datetime.
-     * @returns {Object} MVDM Object with applied datetime values.
+     * Assigns datetime arguments and their values as datetime objects in a MVDM object.
+     *
+     * @param args {Array} args List of arguments to assign.
+     * @param argsObj {Object} argsObj Object containing argument values.
+     * @param mvdmObj {Object} mvdmObj MVDM Object.
+     * @param type {String} Date object type. Defaults to 'xsd:datetime'.
+     * @returns {Object} MVDM Object with assigned datetime objects.
      */
-    toDateTime(map, mvdmObj, type) {
-        for(let prop in map) {
-            if (map[prop]) {
-                mvdmObj[prop] = {
-                    value: map[prop],
+    toDateTime(args, argsObj, mvdmObj, type) {
+        args.forEach(arg => {
+            if (argsObj[arg]) {
+                mvdmObj[arg] = {
+                    value: argsObj[arg],
                     type: type || 'xsd:datetime'
                 };
             }
-        }
+        });
 
         return mvdmObj;
     };
 
     /**
-     * Takes a map of date values and applies them to a MVDM object.
-     * @param {Object} map Map of date values.
-     * @param {Object} mvdmObj MVDM Object instance.
-     * @returns {Object} MVDM Object with applied date values.
+     * Assigns datetime arguments and their values as date objects in a MVDM object.
+     *
+     * @param args {Array} args List of arguments to assign.
+     * @param argsObj {Object} argsObj Object containing argument values.
+     * @param mvdmObj {Object} mvdmObj MVDM Object.
+     * @returns {Object} MVDM Object with assigned date object.
      */
-    toDate(map, mvdmObj) {
-        return this.toDateTime(map, mvdmObj, 'xsd:date');
+    toDate(args, argsObj, mvdmObj) {
+        return this.toDateTime(args, argsObj, mvdmObj, 'xsd:date');
     };
 }
 

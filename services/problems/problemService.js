@@ -115,17 +115,17 @@ class ProblemService extends AbstractService {
             };
         }
 
-        mvdmObj = this.toPointer({
-            diagnosis: args.diagnosis,
-            problem: args.problem,
-            clinic: args.clinic,
-            responsibleProvider: args.responsibleProvider
-        }, mvdmObj);
+        mvdmObj = this.toPointer(
+            ['diagnosis',
+              'problem',
+              'clinic',
+              'responsibleProvider'],
+            args, mvdmObj);
 
-        mvdmObj = this.toDate({
-            onsetDate: args.onsetDate,
-            interestDate: args.interestDate
-        }, mvdmObj);
+        mvdmObj = this.toDate(
+            ['onsetDate',
+             'interestDate'],
+            args, mvdmObj);
 
         if (args.treatmentFactors) {
             this.setTreatmentFactors(args.treatmentFactors, mvdmObj);
@@ -197,17 +197,17 @@ class ProblemService extends AbstractService {
             };
         }
 
-        mvdmObj = this.toPointer({
-            diagnosis: args.diagnosis,
-            problem: args.problem,
-            clinic: args.clinic,
-            responsibleProvider: args.responsibleProvider
-        }, mvdmObj);
+        mvdmObj = this.toPointer(
+            ['diagnosis',
+             'problem',
+             'clinic',
+             'responsibleProvider'],
+            args, mvdmObj);
 
-        mvdmObj = this.toDate({
-            onsetDate: args.onsetDate,
-            interestDate: args.interestDate
-        }, mvdmObj);
+        mvdmObj = this.toDate(
+            ['onsetDate',
+             'interestDate'],
+            args, mvdmObj);
 
         if (args.treatmentFactors) {
             this.setTreatmentFactors(args.treatmentFactors, mvdmObj);
