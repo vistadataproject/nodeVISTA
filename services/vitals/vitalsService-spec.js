@@ -40,7 +40,7 @@ describe('testVitalsService', () => {
         testVitals = require('./testVitals')(db, userId, facilityId);
     });
 
-    it("Create MVDM vital - expect VDM fan out and one MVDM", () => {
+    it("Create vital", () => {
         let res = vitalsService.create(testVitals.one.createArgs);
 
         expect(res.created).toBeDefined();
@@ -49,21 +49,21 @@ describe('testVitalsService', () => {
         expect(res.created.value).toEqual(testVitals.one.createResult.value);
         expect(res.created.units).toEqual(testVitals.one.createResult.units);
 
-        // Now let's get (DESCRIBE) the created MVDM vital separately
+        // Now let's get (DESCRIBE) the created vital separately
         let createdId = res.created.id; // here's its id
         let res2 = vitalsService.describe(createdId);
 
         expect(res2.result).toEqual(res.created);
     });
 
-    it("Create MVDM vital with qualifiers - expect VDM fan out and one MVDM", done => {
+    it("Create vital with qualifiers", done => {
 
-        //listen for vitalsService MVDM create event
+        //listen for vitalsService create event
         let createRes, _userId, _facilityId, eventTimestamp;
 
         let SpyObj = { //dummy spy object
             createSpy: () => {
-                //method used to test whether vitalsService's MVDM 'create' event was called.
+                //method used to test whether vitalsService's 'create' event was called.
             }
         };
 
@@ -94,7 +94,7 @@ describe('testVitalsService', () => {
             expect(createRes.created.value).toEqual(testVitals.two.createResult.value);
             expect(createRes.created.units).toEqual(testVitals.two.createResult.units);
 
-            // Now let's get (DESCRIBE) the created MVDM vital separately
+            // Now let's get (DESCRIBE) the created vital separately
             let createdId = createRes.created.id; // here's its id
             let res2 = vitalsService.describe(createdId);
 

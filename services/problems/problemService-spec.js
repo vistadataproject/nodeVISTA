@@ -65,7 +65,7 @@ describe('testProblemService', () => {
 
     let problemOneId;
 
-    it("Create a new problem using service - expect MVDM create return", () => {
+    it("Create a new problem", () => {
 
         let res = problemService.create(_.clone(testProblems.active.one.createArgs));
 
@@ -81,7 +81,7 @@ describe('testProblemService', () => {
             expect(mvdmResultForTest[key]).toEqual(expectedResult[key]);
         });
 
-        // Now let's get (DESCRIBE) the created MVDM Problem separately
+        // Now let's get (DESCRIBE) the created Problem separately
         let createdId = res.created.id; // here's its id
         let res2 = problemService.describe(createdId);
 
@@ -90,12 +90,12 @@ describe('testProblemService', () => {
 
     it("Create problem with comments", done => {
 
-        //listen for problemService MVDM create event
+        //listen for problemService create event
         let createRes, _userId, _facilityId, eventTimestamp;
 
         let SpyObj = { //dummy spy object
             createSpy: () => {
-                //method used to test whether problemService's MVDM 'create' event was called.
+                //method used to test whether problemService's 'create' event was called.
             }
         };
 
@@ -552,7 +552,7 @@ describe('testProblemService', () => {
 
         let SpyObj = { //dummy spy object
             listSpy: () => {
-                //method used to test whether MVDM 'list' event was called.
+                //method used to test whether 'list' event was called.
             }
         };
 
