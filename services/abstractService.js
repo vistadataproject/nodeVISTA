@@ -84,60 +84,77 @@ class AbstractService extends EventEmitter {
         }, this);
 
         this.MVDM.on('delete', onDelete);
-    };
 
-    /**
-     * Assigns pointer id arguments and their values as pointer objects in a MVDM object.
-     *
-     * @param {Array} args List of arguments to assign.
-     * @param {Object} argsObj Object containing argument values.
-     * @param {Object} mvdmObj MVDM Object.
-     * @returns {Object} MVDM Object with assigned pointer objects.
-     */
-    toPointer(args, argsObj, mvdmObj) {
-        args.forEach(arg => {
-            if (argsObj[arg]) {
-                mvdmObj[arg] = {
-                    id: argsObj[arg]
-                };
-            }
-        });
+        //protected methods
 
-        return mvdmObj;
-    };
+        /**
+         * Assigns pointer id arguments and their values as pointer objects in a MVDM object.
+         *
+         * @param {Object} mvdmObj MVDM Object.
+         * @param {Object} argsObj Object containing argument values.
+         * @param *args Arguments to assign.
+         * @returns {Object} MVDM Object with assigned pointer objects.
+         */
+        this.toPointer = function(mvdmObj, argsObj) {
+            let args = Array.prototype.slice.call(arguments, 2);
 
-    /**
-     * Assigns datetime arguments and their values as datetime objects in a MVDM object.
-     *
-     * @param args {Array} args List of arguments to assign.
-     * @param argsObj {Object} argsObj Object containing argument values.
-     * @param mvdmObj {Object} mvdmObj MVDM Object.
-     * @param type {String} Date object type. Defaults to 'xsd:datetime'.
-     * @returns {Object} MVDM Object with assigned datetime objects.
-     */
-    toDateTime(args, argsObj, mvdmObj, type) {
-        args.forEach(arg => {
-            if (argsObj[arg]) {
-                mvdmObj[arg] = {
-                    value: argsObj[arg],
-                    type: type || 'xsd:datetime'
-                };
-            }
-        });
+            args.forEach(arg => {
+                if (argsObj[arg]) {
+                    mvdmObj[arg] = {
+                        id: argsObj[arg]
+                    };
+                }
+            });
 
-        return mvdmObj;
-    };
+            return mvdmObj;
+        };
 
-    /**
-     * Assigns datetime arguments and their values as date objects in a MVDM object.
-     *
-     * @param args {Array} args List of arguments to assign.
-     * @param argsObj {Object} argsObj Object containing argument values.
-     * @param mvdmObj {Object} mvdmObj MVDM Object.
-     * @returns {Object} MVDM Object with assigned date object.
-     */
-    toDate(args, argsObj, mvdmObj) {
-        return this.toDateTime(args, argsObj, mvdmObj, 'xsd:date');
+        /**
+         * Assigns datetime arguments and their values as datetime objects in a MVDM object.
+         *
+         * @param mvdmObj {Object} mvdmObj MVDM Object.
+         * @param argsObj {Object} argsObj Object containing argument values.
+         * @param *args Arguments to assign.
+         * @returns {Object} MVDM Object with assigned datetime objects.
+         */
+        this.toDateTime = function(mvdmObj, argsObj) {
+
+            let args = Array.prototype.slice.call(arguments, 2);
+
+            args.forEach(arg => {
+                if (argsObj[arg]) {
+                    mvdmObj[arg] = {
+                        value: argsObj[arg],
+                        type: 'xsd:datetime'
+                    };
+                }
+            });
+
+            return mvdmObj;
+        };
+
+        /**
+         * Assigns datetime arguments and their values as date objects in a MVDM object.
+         *
+         * @param mvdmObj {Object} mvdmObj MVDM Object.
+         * @param argsObj {Object} argsObj Object containing argument values.
+         * @param *args Arguments to assign.
+         * @returns {Object} MVDM Object with assigned date object.
+         */
+        this.toDate = function(mvdmObj, argsObj) {
+            let args = Array.prototype.slice.call(arguments, 2);
+
+            args.forEach(arg => {
+                if (argsObj[arg]) {
+                    mvdmObj[arg] = {
+                        value: argsObj[arg],
+                        type: 'xsd:date'
+                    };
+                }
+            });
+
+            return mvdmObj;
+        };
     };
 }
 

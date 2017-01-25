@@ -54,22 +54,24 @@ class VitalsService extends AbstractService {
 
         mvdmObj.type = 'Vital';
 
-        mvdmObj = this.toPointer([
+        mvdmObj = this.toPointer(
+            mvdmObj,
+            args,
             'vitalType',
             'hospitalLocation',
-            'enteredBy'],
-            args, mvdmObj);
+            'enteredBy');
 
-        mvdmObj = this.toDateTime([
+        mvdmObj = this.toDateTime(
+            mvdmObj,
+            args,
             'vitalsTakenDateTime',
-            'vitalsEnteredDateTime'],
-            args, mvdmObj);
+            'vitalsEnteredDateTime');
 
         if (args.qualifiers) {
 
             mvdmObj.qualifier = [];
 
-            args.qualifiers.forEach(function(qualifer) {
+            args.qualifiers.forEach(function (qualifer) {
                 mvdmObj.qualifier.push({
                     id: qualifer
                 });
