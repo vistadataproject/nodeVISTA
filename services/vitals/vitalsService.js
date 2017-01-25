@@ -43,9 +43,9 @@ class VitalsService extends AbstractService {
      * @param {String} args.vitalsTakenDateTime Vitals taken date time.
      * @param {String} args.vitalType Vital type identifier.
      * @param {String} args.hospitalLocation Hospital location identifier.
-     * @param {String} args.enteredBy Entered by identifier.
      * @param {String} args.value Vital value.
      * @param {String} args.units Units value.
+     * @param {String=} args.enteredBy Entered by identifier. Defaults to user.
      * @param {String=} args.vitalsEnteredDateTime Vitals entered date time. Defaults to T.
      * @param {String=} args.supplementalO2 Supplemental O2.
      * @param {Array=} args.qualifiers List of qualifier identifiers.
