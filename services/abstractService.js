@@ -5,11 +5,24 @@
 const util = require('util');
 const EventEmitter = require('events');
 const _ = require('underscore');
+const moment = require('moment');
 
 const MVDM = require('mvdm/mvdm');
 const VDM = require('mvdm/vdm');
 const vdmUtils = require('mvdm/vdmUtils');
 const nodem = require('nodem');
+
+//supported VDM models
+const vdmModels = [].concat(
+    require('mvdm/problems/vdmProblemsModel').vdmModel,
+    require('mvdm/vitals/vdmVitalsModel').vdmModel
+);
+
+//supported MVDM models
+const mvdmModels = [].concat(
+    require('mvdm/problems/mvdmProblemsModel').mvdmModel,
+    require('mvdm/vitals/mvdmVitalsModel').mvdmModel
+);
 
 /**
  * Abstract service class.
@@ -29,63 +42,50 @@ class AbstractService extends EventEmitter {
     constructor(db, serviceContext) {
         super();
 
-        this.context = serviceContext;
-
-        if (!this.context.userId) {
+        if (!serviceContext.userId) {
             throw new Error('Missing userId in service context');
-        } else if (!this.context.facilityId) {
+        } else if (!serviceContext.facilityId) {
             throw new Error('Missing facilityId in service context');
-        } else if (!this.context.patientId) {
-            throw new Error('Missing patientId in service context');
         }
 
         this.VDM = VDM;
         this.MVDM = MVDM;
 
-        //forward MVDM events
-        const onCreate = _.bind(function (event) {
-            this.emit('create', event);
-        }, this);
+        this.VDM.setDBAndModel(db, vdmModels);
+        this.VDM.setUserAndFacility(serviceContext.userId, serviceContext.facilityId);
 
-        this.MVDM.on('create', onCreate);
+        this.MVDM.setModel(mvdmModels);
 
-        const onUpdate = _.bind(function (event) {
-            this.emit('update', event);
-        }, this);
+        this.context = {
+            user:  {
+                id: VDM.userId(),
+                name: VDM.user().name.value
+            },
+            facility: {
+                id: VDM.facilityId(),
+                name: VDM.facility().name.value,
+                stationNumber: VDM.facility().station_number.value
+            }
+        };
 
-        this.MVDM.on('update', onUpdate);
-
-        const onDescribe = _.bind(function (event) {
-            this.emit('describe', event);
-        }, this);
-
-        this.MVDM.on('describe', onDescribe);
-
-        const onList = _.bind(function (event) {
-            this.emit('list', event);
-        }, this);
-
-        this.MVDM.on('list', onList);
-
-        const onRemove = _.bind(function (event) {
-            this.emit('remove', event);
-        }, this);
-
-        this.MVDM.on('remove', onRemove);
-
-        const onUnremove = _.bind(function (event) {
-            this.emit('unremove', event);
-        }, this);
-
-        this.MVDM.on('unremove', onUnremove);
-
-        const onDelete = _.bind(function (event) {
-            this.emit('delete', event);
-        }, this);
-
-        this.MVDM.on('delete', onDelete);
+        if (serviceContext.patientId) {
+            this.MVDM.setDefaultPatientId(serviceContext.patientId);
+            this.context.patientId = serviceContext.patientId;
+        }
 
         //protected methods
+
+        this._emitEvent = function(eventName, domain, data) {
+            this.emit(eventName, {
+                type: eventName,
+                timestamp: moment().format('YYYY-MM-DDTHH:mm:ss') + 'Z',
+                domain: domain,
+                user: this.context.user,
+                facility: this.context.facility,
+                patient: this.MVDM.context().patient,
+                data: data
+            });
+        };
 
         /**
          * Assigns pointer id arguments and their values as pointer objects in a MVDM object.

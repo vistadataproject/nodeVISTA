@@ -24,12 +24,11 @@ class VitalsService extends AbstractService {
     constructor(db, serviceContext) {
         super(db, serviceContext);
 
-        this.VDM.setDBAndModel(db, require('mvdm/vitals/vdmVitalsModel').vdmModel);
-        this.VDM.setUserAndFacility(this.context.userId, this.context.facilityId);
+        //private methods
 
-        this.MVDM.setModel(require('mvdm/vitals/mvdmVitalsModel').mvdmModel);
-
-        this.MVDM.setDefaultPatientId(this.context.patientId);
+        this.emitEvent = function(eventName, data) {
+            this._emitEvent(eventName, 'Vital', data);
+        };
     }
 
     /**
@@ -78,7 +77,11 @@ class VitalsService extends AbstractService {
             });
         }
 
-        return this.MVDM.create(mvdmObj);
+        let res = this.MVDM.create(mvdmObj);
+
+        this.emitEvent('create', res);
+
+        return res;
     }
 
     /**
@@ -89,7 +92,11 @@ class VitalsService extends AbstractService {
      * @returns MVDM vital response.
      */
     describe(vitalId) {
-        return this.MVDM.describe(vitalId);
+        let res = this.MVDM.describe(vitalId);
+
+        this.emitEvent('describe', res);
+
+        return res;
     }
 }
 

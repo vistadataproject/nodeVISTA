@@ -3,6 +3,7 @@
 'use strict';
 
 const _ = require('underscore');
+const moment = require('moment');
 
 const AbstractService = require('../abstractService');
 
@@ -24,14 +25,12 @@ class ProblemService extends AbstractService {
     constructor(db, serviceContext) {
         super(db, serviceContext);
 
-        this.VDM.setDBAndModel(db, require('mvdm/problems/vdmProblemsModel').vdmModel);
-        this.VDM.setUserAndFacility(this.context.userId, this.context.facilityId);
-
-        this.MVDM.setModel(require('mvdm/problems/mvdmProblemsModel').mvdmModel);
-
-        this.MVDM.setDefaultPatientId(this.context.patientId);
-
         //private methods
+
+        this.emitEvent = function(eventName, data) {
+            this._emitEvent(eventName, 'Problem', data);
+        };
+
         this.setTreatmentFactors = function(treatmentFactors, mvdmObj) {
             treatmentFactors.forEach(treatmentFactor => {
                 switch (treatmentFactor) {
@@ -64,7 +63,7 @@ class ProblemService extends AbstractService {
 
             return mvdmObj;
         }
-    }
+    };
 
     /**
      * Creates a new problem
@@ -144,7 +143,11 @@ class ProblemService extends AbstractService {
             });
         }
 
-        return this.MVDM.create(mvdmObj);
+        let res = this.MVDM.create(mvdmObj);
+
+        this.emitEvent('create', res);
+
+        return res;
     };
 
 
@@ -227,7 +230,11 @@ class ProblemService extends AbstractService {
             });
         }
 
-        return this.MVDM.update(mvdmObj);
+        let res = this.MVDM.update(mvdmObj);
+
+        this.emitEvent('update', res);
+
+        return res;
     };
 
     /**
@@ -238,7 +245,11 @@ class ProblemService extends AbstractService {
      * @returns MVDM describe response.
      */
     describe(problemId) {
-        return this.MVDM.describe(problemId);
+        let res = this.MVDM.describe(problemId);
+
+        this.emitEvent('describe', res);
+
+        return res;
     };
 
     /**
@@ -260,28 +271,35 @@ class ProblemService extends AbstractService {
             queryRemoved = true;
         }
 
+        let filterResults = function (results) {
+
+            results = _.sortBy(results, 'lastModifiedDate');
+
+            if (!filter) {
+                return results;
+            }
+
+            let filteredProblems = [];
+            results.forEach(problem => {
+                if ((problem.condition !== 'HIDDEN' &&
+                    ((filter === 'both' || filter === 'active') && problem.problemStatus === 'ACTIVE') ||      //both or just active
+                    ((filter === 'both' || filter === 'inactive') && problem.problemStatus === 'INACTIVE')) || //both or just inactive
+                    (filter === 'removed' && problem.condition === 'HIDDEN'))                                  //removed problems
+                {
+                    filteredProblems.push(problem);
+                }
+            });
+
+            filteredProblems = _.sortBy(filteredProblems, 'problemStatus');
+
+            return filteredProblems;
+        };
+
         let res = this.MVDM.list("Problem", this.context.patientId, queryRemoved);
 
-        res.results = _.sortBy(res.results, 'lastModifiedDate');
+        res.results = filterResults(res.results);
 
-        if (!filter) {
-            return res;
-        }
-
-        let filteredProblems = [];
-        res.results.forEach(problem => {
-            if ((problem.condition !== 'HIDDEN' &&
-                ((filter === 'both' || filter === 'active') && problem.problemStatus === 'ACTIVE') ||      //both or just active
-                ((filter === 'both' || filter === 'inactive') && problem.problemStatus === 'INACTIVE')) || //both or just inactive
-                (filter === 'removed' && problem.condition === 'HIDDEN'))                                  //removed problems
-            {
-                filteredProblems.push(problem);
-            }
-        });
-
-        filteredProblems = _.sortBy(filteredProblems, 'problemStatus');
-
-        res.results = filteredProblems;
+        this.emitEvent('list', res);
 
         return res;
     };
@@ -294,7 +312,11 @@ class ProblemService extends AbstractService {
      * @returns MVDM remove response.
      */
     remove(problemId) {
-        return this.MVDM.remove(problemId);
+        let res = this.MVDM.remove(problemId);
+
+        this.emit('remove', res);
+
+        return res;
     };
 
     /**
@@ -305,7 +327,11 @@ class ProblemService extends AbstractService {
      * @returns MVDM unremove response.
      */
     unremove(problemId) {
-        return this.MVDM.unremove(problemId);
+        let res = this.MVDM.unremove(problemId);
+
+        this.emit('unremove', res);
+
+        return res;
     };
 
     /**
@@ -328,7 +354,11 @@ class ProblemService extends AbstractService {
             })
         });
 
-        return this.MVDM.delete(mvdmComments);
+        let res = this.MVDM.delete(mvdmComments);
+
+        this.emitEvent('deleteComments', res);
+
+        return res;
     };
 }
 
