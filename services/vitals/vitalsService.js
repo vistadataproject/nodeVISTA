@@ -8,7 +8,7 @@ const moment = require('moment');
 const AbstractService = require('../abstractService');
 
 /**
- * Vitals Class
+ * Vitals Service Class
  *
  */
 class VitalsService extends AbstractService {
