@@ -72,7 +72,7 @@ describe('testVitalsService', () => {
         expect(res2.result).toEqual(res.created);
     });
 
-    it('Test supplemental vital data - blood pressure', function() {
+    it('Test supplemental vital data - blood pressure', () => {
 
         let vital = _.clone(testVitals.one.createArgs);
 
@@ -90,7 +90,7 @@ describe('testVitalsService', () => {
         expect(res.created.low).toBeDefined();
     });
 
-    it('Test supplemental vital data - temperature', function() {
+    it('Test supplemental vital data - temperature', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-2";
@@ -112,7 +112,7 @@ describe('testVitalsService', () => {
         expect(res.created.metricValue).toEqual('37');
     });
 
-    it ('Test supplemental vital data - respiration', function() {
+    it ('Test supplemental vital data - respiration', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-3";
@@ -129,7 +129,7 @@ describe('testVitalsService', () => {
         expect(res.created.low).toBeDefined();
     });
 
-    it ('Test supplemental vital data - pulse', function() {
+    it ('Test supplemental vital data - pulse', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-5";
@@ -146,7 +146,7 @@ describe('testVitalsService', () => {
         expect(res.created.low).toBeDefined();
     });
 
-    it ('Test supplemental vital data - height', function() {
+    it ('Test supplemental vital data - height', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-8";
@@ -169,7 +169,7 @@ describe('testVitalsService', () => {
         expect(res.created.metricValue).toEqual('177.8');
     });
 
-    it ('Test supplemental vital data - weight', function() {
+    it ('Test supplemental vital data - weight', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-9";
@@ -192,7 +192,7 @@ describe('testVitalsService', () => {
         expect(res.created.metricValue).toEqual('79.55');
     });
 
-    it ('Test supplemental vital data - CVP', function() {
+    it ('Test supplemental vital data - CVP', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-19";
@@ -210,7 +210,7 @@ describe('testVitalsService', () => {
         expect(res.created.low).toBeUndefined();
     });
 
-    it ('Test supplemental vital data - CG', function() {
+    it ('Test supplemental vital data - CG', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-20";
@@ -234,7 +234,7 @@ describe('testVitalsService', () => {
         expect(res.created.metricValue).toEqual('96.52');
     });
 
-    it ('Test supplemental vital data - PULSE OXIMETRY', function() {
+    it ('Test supplemental vital data - PULSE OXIMETRY', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-21";
@@ -252,7 +252,7 @@ describe('testVitalsService', () => {
         expect(res.created.low).toBeUndefined();
     });
 
-    it ('Test supplemental vital data - no supplemental data (PAIN)', function() {
+    it ('Test supplemental vital data - no supplemental data (PAIN)', () => {
         let vital = _.clone(testVitals.one.createArgs);
 
         vital.vitalType = "120_51-22";
@@ -269,7 +269,7 @@ describe('testVitalsService', () => {
     });
 
     it('List most recent vitals', () => {
-        //add an additional temperature value
+        //add an additional blood pressure vital
 
         let vital = _.clone(testVitals.one.createArgs);
 
@@ -284,6 +284,7 @@ describe('testVitalsService', () => {
         res = vitalsService.getMostRecentVitals();
 
         expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(10);
 
         //ensure that vitals are only the most recent (no duplicate types)
         let recentVitals = [];
@@ -296,10 +297,41 @@ describe('testVitalsService', () => {
         });
     });
 
+    it ('List most recent vitals from a given date range', () => {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalsTakenDateTime = new Date('2016-01-01').toISOString().substr(0,19) + "Z";
+
+        let createRes = vitalsService.create(vital);
+
+        expect(createRes.created).toBeDefined();
+
+        let res = vitalsService.getMostRecentVitals(new Date('2016-01-01'), new Date('2016-12-01'));
+
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(1);
+        expect(res.results[0].vitalType.id).toEqual(createRes.created.vitalType.id);
+    });
+
+    it('List most recent vitals from a date range, start date is missing', () => {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalsTakenDateTime = new Date('2006-01-01').toISOString().substr(0,19) + "Z";
+
+        let createRes = vitalsService.create(vital);
+
+        //leave out start date
+        let res = vitalsService.getMostRecentVitals(null, new Date('2015-01-01'));
+
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(1);
+        expect(res.results[0].vitalsTakenDateTime.value).toEqual('2006-01-01');
+    });
+
     let patientOneVitalId;
 
     // Only one vital belongs to 2-1
-    it("List Vitals of Patient 1", function() {
+    it("List Vitals of Patient 1", () => {
 
         let vital = _.clone(testVitals.one.createArgs);
 
@@ -324,7 +356,7 @@ describe('testVitalsService', () => {
     });
 
     // Remove one vital => only one now shows in LIST
-    it("Remove only vital of patient 1", function() {
+    it("Remove only vital of patient 1", () => {
         // relying on default 'logged in' user
         let res = vitalsService.remove(patientOneVitalId, "INVALID RECORD");
 
@@ -337,7 +369,7 @@ describe('testVitalsService', () => {
         expect(res.removed.removalDetails.comment).toBeDefined();
     });
 
-    it("Can describe removed vital by id", function() {
+    it("Can describe removed vital by id", () => {
 
         let res = vitalsService.describe(patientOneVitalId);
         expect(res.result.id).toEqual(patientOneVitalId);
@@ -349,7 +381,7 @@ describe('testVitalsService', () => {
         expect(res.result.removalDetails.comment).toBeDefined();
     });
 
-    it("List Vitals of Patient 1 who now has no (non removed) vitals", function() {
+    it("List Vitals of Patient 1 who now has no (non removed) vitals", () => {
 
         let res = vitalsService.list();
         expect(res.results).toBeDefined();
