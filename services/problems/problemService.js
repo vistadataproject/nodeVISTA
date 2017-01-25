@@ -93,16 +93,20 @@ class ProblemService extends AbstractService {
      * @returns MVDM create response.
      */
     create(args) {
-        let mvdmObj = {
-            type: "Problem",
-            condition: "PERMANENT" //default to PERMANENT
-        };
 
-        if (args.diagnosis) {
-            mvdmObj.diagnosis = {
-                id: args.diagnosis
-            }
-        }
+        let mvdmObj = _.pick(args,
+            'problemStatus',
+            'responsibleProvider',
+            'snomedCTConceptCode',
+            'snomedCTDesignationCode',
+            'codingSystem',
+            'condition',
+            'priority',
+            'uniqueTermRequested',
+            'uniqueTermRequestComment');
+
+        mvdmObj.type =  "Problem";
+        mvdmObj.condition = "PERMANENT"; //default to PERMANENT
 
         if (args.providerNarrative) {
             mvdmObj.providerNarrative = {
@@ -111,69 +115,17 @@ class ProblemService extends AbstractService {
             };
         }
 
-        if (args.problem) {
-            mvdmObj.problem = {
-                id: args.problem
-            };
-        }
+        mvdmObj = this.toPointer({
+            diagnosis: args.diagnosis,
+            problem: args.problem,
+            clinic: args.clinic,
+            responsibleProvider: args.responsibleProvider
+        }, mvdmObj);
 
-        if (args.clinic) {
-            mvdmObj.clinic = {
-                id: args.clinic
-            };
-        }
-
-        if (args.problemStatus) {
-            mvdmObj.problemStatus = args.problemStatus;
-        }
-
-        if (args.snomedCTConceptCode) {
-            mvdmObj.snomedCTConceptCode = args.snomedCTConceptCode;
-        }
-
-        if (args.snomedCTDesignationCode) {
-            mvdmObj.snomedCTDesignationCode = args.snomedCTDesignationCode;
-        }
-
-        if (args.codingSystem) {
-            mvdmObj.codingSystem = args.codingSystem;
-        }
-
-        if (args.condition) {
-            mvdmObj.condition = args.condition;
-        }
-
-        if (args.responsibleProvider) {
-            mvdmObj.responsibleProvider = {
-                id: args.responsibleProvider
-            };
-        }
-
-        if (args.priority) {
-            mvdmObj.priority = args.priority;
-        }
-
-        if (args.onsetDate) {
-            mvdmObj.onsetDate = {
-                value: args.onsetDate,
-                type: 'xsd:date'
-            };
-        }
-
-        if (args.interestDate) {
-            mvdmObj.interestDate = {
-                value: args.interestDate,
-                type: 'xsd:date'
-            };
-        }
-
-        if (args.uniqueTermRequested) {
-            mvdmObj.uniqueTermRequested = args.uniqueTermRequested;
-        }
-
-        if (args.uniqueTermRequestComment) {
-            mvdmObj.uniqueTermRequestComment = args.uniqueTermRequestComment;
-        }
+        mvdmObj = this.toDate({
+            onsetDate: args.onsetDate,
+            interestDate: args.interestDate
+        }, mvdmObj);
 
         if (args.treatmentFactors) {
             this.setTreatmentFactors(args.treatmentFactors, mvdmObj);
@@ -224,19 +176,19 @@ class ProblemService extends AbstractService {
      * @returns MVDM update response.
      */
     update(args) {
-        let mvdmObj = {
-            type: "Problem"
-        };
 
-        if (args.id) {
-            mvdmObj.id = args.id;
-        }
+        let mvdmObj = _.pick(args,
+            'id',
+            'problemStatus',
+            'snomedCTConceptCode',
+            'snomedCTDesignationCode',
+            'codingSystem',
+            'condition',
+            'priority',
+            'uniqueTermRequested',
+            'uniqueTermRequestComment');
 
-        if (args.diagnosis) {
-            mvdmObj.diagnosis = {
-                id: args.diagnosis
-            }
-        }
+        mvdmObj.type = 'Problem';
 
         if (args.providerNarrative) {
             mvdmObj.providerNarrative = {
@@ -245,69 +197,17 @@ class ProblemService extends AbstractService {
             };
         }
 
-        if (args.problem) {
-            mvdmObj.problem = {
-                id: args.problem
-            };
-        }
+        mvdmObj = this.toPointer({
+            diagnosis: args.diagnosis,
+            problem: args.problem,
+            clinic: args.clinic,
+            responsibleProvider: args.responsibleProvider
+        }, mvdmObj);
 
-        if (args.clinic) {
-            mvdmObj.clinic = {
-                id: args.clinic
-            };
-        }
-
-        if (args.problemStatus) {
-            mvdmObj.problemStatus = args.problemStatus;
-        }
-
-        if (args.snomedCTConceptCode || args.snomedCTConceptCode == '') {
-            mvdmObj.snomedCTConceptCode = args.snomedCTConceptCode;
-        }
-
-        if (args.snomedCTDesignationCode || args.snomedCTConceptCode == '') {
-            mvdmObj.snomedCTDesignationCode = args.snomedCTDesignationCode;
-        }
-
-        if (args.codingSystem) {
-            mvdmObj.codingSystem = args.codingSystem;
-        }
-
-        if (args.condition) {
-            mvdmObj.condition = args.condition;
-        }
-
-        if (args.responsibleProvider) {
-            mvdmObj.responsibleProvider = {
-                id: args.responsibleProvider
-            };
-        }
-
-        if (args.priority) {
-            mvdmObj.priority = args.priority;
-        }
-
-        if (args.onsetDate) {
-            mvdmObj.onsetDate = {
-                value: args.onsetDate,
-                type: 'xsd:date'
-            };
-        }
-
-        if (args.interestDate) {
-            mvdmObj.interestDate = {
-                value: args.interestDate,
-                type: 'xsd:date'
-            };
-        }
-
-        if (args.uniqueTermRequested) {
-            mvdmObj.uniqueTermRequested = args.uniqueTermRequested;
-        }
-
-        if (args.uniqueTermRequestComment) {
-            mvdmObj.uniqueTermRequestComment = args.uniqueTermRequestComment;
-        }
+        mvdmObj = this.toDate({
+            onsetDate: args.onsetDate,
+            interestDate: args.interestDate
+        }, mvdmObj);
 
         if (args.treatmentFactors) {
             this.setTreatmentFactors(args.treatmentFactors, mvdmObj);
