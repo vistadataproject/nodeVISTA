@@ -56,20 +56,50 @@ describe('testVitalsService', () => {
         expect(res2.result).toEqual(res.created);
     });
 
-    it("Create MVDM vital with qualifiers - expect VDM fan out and one MVDM", () => {
-        let res = vitalsService.create(testVitals.two.createArgs);
+    it("Create MVDM vital with qualifiers - expect VDM fan out and one MVDM", done => {
 
-        expect(res.created).toBeDefined();
+        //listen for vitalsService MVDM create event
+        let createRes, _userId, _facilityId, eventTimestamp;
 
-        expect(res.created.vitalType).toEqual(testVitals.two.createResult.vitalType);
-        expect(res.created.value).toEqual(testVitals.two.createResult.value);
-        expect(res.created.units).toEqual(testVitals.two.createResult.units);
+        let SpyObj = { //dummy spy object
+            createSpy: () => {
+                //method used to test whether vitalsService's MVDM 'create' event was called.
+            }
+        };
 
-        // Now let's get (DESCRIBE) the created MVDM vital separately
-        let createdId = res.created.id; // here's its id
-        let res2 = vitalsService.describe(createdId);
+        spyOn(SpyObj, 'createSpy');
 
-        expect(res2.result).toEqual(res.created);
+        vitalsService.once('create', res => {
+            createRes = res.data;
+            _userId = res.user.id;
+            _facilityId = res.facility.id;
+            eventTimestamp = res.timestamp;
+            SpyObj.createSpy();
+        });
+
+        vitalsService.create(testVitals.two.createArgs);
+
+        _.delay(() => {
+            expect(SpyObj.createSpy).toHaveBeenCalled();
+            expect(SpyObj.createSpy.calls.count()).toEqual(1);
+            expect(SpyObj.createSpy.calls.count()).not.toEqual(2);
+
+            expect(_userId).toEqual(userId);
+            expect(_facilityId).toEqual(facilityId);
+            expect(eventTimestamp).toMatch(/20\d\d-\d\d-\d\dT/);
+
+            expect(createRes.created).toBeDefined();
+
+            expect(createRes.created.vitalType).toEqual(testVitals.two.createResult.vitalType);
+            expect(createRes.created.value).toEqual(testVitals.two.createResult.value);
+            expect(createRes.created.units).toEqual(testVitals.two.createResult.units);
+
+            // Now let's get (DESCRIBE) the created MVDM vital separately
+            let createdId = createRes.created.id; // here's its id
+            let res2 = vitalsService.describe(createdId);
+
+            done();
+        }, 100);
     });
 
     it('Test supplemental vital data - blood pressure', () => {
