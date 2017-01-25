@@ -314,7 +314,7 @@ class ProblemService extends AbstractService {
     remove(problemId) {
         let res = this.MVDM.remove(problemId);
 
-        this.emit('remove', res);
+        this.emitEvent('remove', res);
 
         return res;
     };
@@ -329,7 +329,7 @@ class ProblemService extends AbstractService {
     unremove(problemId) {
         let res = this.MVDM.unremove(problemId);
 
-        this.emit('unremove', res);
+        this.emitEvent('unremove', res);
 
         return res;
     };
