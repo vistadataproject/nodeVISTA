@@ -23,6 +23,11 @@ class ProblemService extends AbstractService {
      * @param {String} serviceContext.patientId Patient identifier.
      */
     constructor(db, serviceContext) {
+
+        if (!serviceContext.patientId) {
+            throw new Error('Problem service requires a patientId');
+        }
+
         super(db, serviceContext);
 
         //private methods
@@ -88,7 +93,7 @@ class ProblemService extends AbstractService {
      *                            IONIZING_RADIATION, PERSIAN_GULF, HEAD_AND_OR_NECK_CANCER,
      *                            MILITARY_SEXUAL_TRAUMA, COMBAT_VETERAN, SHIPBOARD_HAZARD_DEFENSE.
      * @param {Array=} args.comments Problem comments.
-     * @fires create MVDM create event.
+     * @fires create Service create event.
      * @returns MVDM create response.
      */
     create(args) {
@@ -177,7 +182,7 @@ class ProblemService extends AbstractService {
      * @param {Array=} args.comments Problem comments.
      * @param {String} args.comments.comment.id Comment index.
      * @param {String} args.comments.comment.text Comment text.
-     * @fires update MVDM update event.
+     * @fires update Service update event.
      * @returns MVDM update response.
      */
     update(args) {
@@ -241,7 +246,7 @@ class ProblemService extends AbstractService {
      * Describes a problem.
      *
      * @param {String} problemId Problem identifier.
-     * @fire describe MVDM describe event.
+     * @fire describe Service describe event.
      * @returns MVDM describe response.
      */
     describe(problemId) {
@@ -256,8 +261,8 @@ class ProblemService extends AbstractService {
      * List of problems.
      *
      * @param {String} filter Problem list status filter. Possible values: active, inactive, both, removed.
-     * @fire list MVDM list event.
-     * @returns this.MVDM list response.
+     * @fire list Service list event.
+     * @returns MVDM list response.
      */
     list(filter) {
 
@@ -308,7 +313,7 @@ class ProblemService extends AbstractService {
      * Removes a problem.
      *
      * @param {String} problemId Problem identifier.
-     * @fires remove MVDM remove event.
+     * @fires remove Service remove event.
      * @returns MVDM remove response.
      */
     remove(problemId) {
@@ -323,7 +328,7 @@ class ProblemService extends AbstractService {
      * Unremoves a problem.
      *
      * @param {String} problemId Problem identifier.
-     * @fires unremove MVDM unremove event.
+     * @fires unremove Service unremove event.
      * @returns MVDM unremove response.
      */
     unremove(problemId) {
@@ -339,7 +344,7 @@ class ProblemService extends AbstractService {
      *
      * @param {String} problemId Problem identifier.
      * @param {Array} commentIds Comment indexes to delete (e.g. [1, 3, 5])
-     * @fires delete MVDM delete event.
+     * @fires deleteComments Service deleteComments event.
      * @returns MVDM delete response.
      */
     deleteComments(problemId, commentIds) {

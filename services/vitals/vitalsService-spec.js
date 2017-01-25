@@ -72,6 +72,291 @@ describe('testVitalsService', () => {
         expect(res2.result).toEqual(res.created);
     });
 
+    it('Test supplemental vital data - blood pressure', function() {
+
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-1";
+
+        vital.value = '120/80';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('BLOOD PRESSURE');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('mm[Hg]');
+        expect(res.created.high).toBeDefined();
+        expect(res.created.low).toBeDefined();
+    });
+
+    it('Test supplemental vital data - temperature', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-2";
+
+        vital.value = '98.6';
+
+        let res = vitalsService.create(vital);
+
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('TEMPERATURE');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('F');
+        expect(res.created.high).toBeDefined();
+        expect(res.created.low).toBeDefined();
+        expect(res.created.metricUnits).toBeDefined();
+        expect(res.created.metricUnits).toEqual('C');
+        expect(res.created.metricValue).toBeDefined();
+        expect(res.created.metricValue).toEqual('37');
+    });
+
+    it ('Test supplemental vital data - respiration', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-3";
+
+        vital.value = '35';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('RESPIRATION');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('/min');
+        expect(res.created.high).toBeDefined();
+        expect(res.created.low).toBeDefined();
+    });
+
+    it ('Test supplemental vital data - pulse', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-5";
+
+        vital.value = '80';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('PULSE');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('/min');
+        expect(res.created.high).toBeDefined();
+        expect(res.created.low).toBeDefined();
+    });
+
+    it ('Test supplemental vital data - height', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-8";
+
+        vital.value = '70';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('HEIGHT');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('in');
+        //no high and low values
+        expect(res.created.high).toBeUndefined();
+        expect(res.created.low).toBeUndefined();
+
+        expect(res.created.metricUnits).toBeDefined();
+        expect(res.created.metricUnits).toEqual('cm');
+        expect(res.created.metricValue).toBeDefined();
+        expect(res.created.metricValue).toEqual('177.8');
+    });
+
+    it ('Test supplemental vital data - weight', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-9";
+
+        vital.value = '175';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('WEIGHT');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('lb');
+        //no high and low values
+        expect(res.created.high).toBeUndefined();
+        expect(res.created.low).toBeUndefined();
+
+        expect(res.created.metricUnits).toBeDefined();
+        expect(res.created.metricUnits).toEqual('kg');
+        expect(res.created.metricValue).toBeDefined();
+        expect(res.created.metricValue).toEqual('79.55');
+    });
+
+    it ('Test supplemental vital data - CVP', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-19";
+
+        vital.value = '6';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('CENTRAL VENOUS PRESSURE');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('cmH20');
+        //no high and low values
+        expect(res.created.high).toBeUndefined();
+        expect(res.created.low).toBeUndefined();
+    });
+
+    it ('Test supplemental vital data - CG', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-20";
+
+        vital.value = '38';
+
+        let res = vitalsService.create(vital);
+
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('CIRCUMFERENCE_GIRTH');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('in');
+        //no high and low values
+        expect(res.created.high).toBeUndefined();
+        expect(res.created.low).toBeUndefined();
+
+        expect(res.created.metricUnits).toBeDefined();
+        expect(res.created.metricUnits).toEqual('cm');
+        expect(res.created.metricValue).toBeDefined();
+        expect(res.created.metricValue).toEqual('96.52');
+    });
+
+    it ('Test supplemental vital data - PULSE OXIMETRY', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-21";
+
+        vital.value = '96';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('PULSE OXIMETRY');
+        expect(res.created.units).toBeDefined();
+        expect(res.created.units).toEqual('%');
+        //no high and low values
+        expect(res.created.high).toBeUndefined();
+        expect(res.created.low).toBeUndefined();
+    });
+
+    it ('Test supplemental vital data - no supplemental data (PAIN)', function() {
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-22";
+
+        vital.value = '6';
+
+        let res = vitalsService.create(vital);
+        expect(res.created).toBeDefined();
+
+        expect(res.created.vitalType.label).toEqual('PAIN');
+        expect(res.created.units).toBeUndefined();
+        expect(res.created.high).toBeUndefined();
+        expect(res.created.low).toBeUndefined();
+    });
+
+    it('List most recent vitals', () => {
+        //add an additional temperature value
+
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vital.vitalType = "120_51-1";
+
+        vital.value = '120/80';
+
+        let res = vitalsService.create(vital);
+
+        expect(res.created).toBeDefined();
+
+        res = vitalsService.getMostRecentVitals();
+
+        expect(res.results).toBeDefined();
+
+        //ensure that vitals are only the most recent (no duplicate types)
+        let recentVitals = [];
+        res.results.forEach(vital => {
+            recentVitals.forEach(recentVital => {
+                expect(recentVital).not.toEqual(vital.vitalType.id);
+            });
+
+            recentVitals.push(vital);
+        });
+    });
+
+    let patientOneVitalId;
+
+    // Only one vital belongs to 2-1
+    it("List Vitals of Patient 1", function() {
+
+        let vital = _.clone(testVitals.one.createArgs);
+
+        vitalsService = new VitalsService(db, {
+            userId: userId,
+            facilityId: facilityId,
+            patientId: '2-1'
+        });
+
+        let res = vitalsService.create(vital);
+
+        expect(res.created).toBeDefined();
+
+        patientOneVitalId = res.created.id;
+
+        res = vitalsService.list();
+
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(1);
+        expect(res.results[0].id).toEqual(patientOneVitalId);
+
+    });
+
+    // Remove one vital => only one now shows in LIST
+    it("Remove only vital of patient 1", function() {
+        // relying on default 'logged in' user
+        let res = vitalsService.remove(patientOneVitalId, "INVALID RECORD");
+
+        // check that right VDM object was created
+        expect(res.removed).toBeDefined();
+        expect(res.removed.isRemoved).toBeDefined();
+        expect(res.removed.isRemoved).toEqual(true);
+
+        expect(res.removed.removalDetails).toBeDefined();
+        expect(res.removed.removalDetails.comment).toBeDefined();
+    });
+
+    it("Can describe removed vital by id", function() {
+
+        let res = vitalsService.describe(patientOneVitalId);
+        expect(res.result.id).toEqual(patientOneVitalId);
+        expect(res.result.isRemoved).toBeDefined();
+        expect(res.result.isRemoved).toEqual(true);
+
+        // details there and has the removed comment
+        expect(res.result.removalDetails).toBeDefined();
+        expect(res.result.removalDetails.comment).toBeDefined();
+    });
+
+    it("List Vitals of Patient 1 who now has no (non removed) vitals", function() {
+
+        let res = vitalsService.list();
+        expect(res.results).toBeDefined();
+        expect(res.results.length).toEqual(0);
+    });
+
+
     afterAll(() => {
         db.close();
     });
