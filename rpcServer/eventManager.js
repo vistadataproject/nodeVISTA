@@ -6,7 +6,7 @@ var util = require('util');
 var EventEmitter = require('events');
 
 function EventHandler() {
-   EventEmitter.call(this);
+    EventEmitter.call(this);
 }
 
 //inherit behavior from EventEmitter

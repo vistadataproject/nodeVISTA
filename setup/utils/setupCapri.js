@@ -47,7 +47,7 @@ function setupCapriInOSEHRA() {
     if (res.result !== "N") {
         // Kick trace - what is DOMAIN in kernel system parameters
         var domainIEN = db.get({global: "XTV", subscripts: [8989.3,1,0]}).data.split("^")[0];
-        console.log("CAPRI user needs to be setup for the OSEHRA domain which has IEN", domainIEN);
+        console.log("CAPRI user needs to be setup for the nodeVISTA domain which has IEN", domainIEN);
         res = db.function({function: "ADD^XPAR", arguments: ["SYS", "XU522", 1, "N"]});
         if (res.ok !== 1)
             throw new Error("ADD^XPAR failed");
@@ -57,7 +57,7 @@ function setupCapriInOSEHRA() {
         // TODO: kill "@" value for ADD, the entry for FOIA (which won't be SYS!) ... how to do?
     }
     else
-        console.log("CAPRI User already setup properly - OSEHRA omission fixed");
+        console.log("CAPRI User already setup properly - nodeVISTA omission fixed");
 
 }
 

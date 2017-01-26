@@ -48,7 +48,7 @@ VistA.wait(PROMPT,60)
 #Initialize FileMan
 # Pass a site name from CMake and have a default site name of 6161
 
-OSEHRASetup.initializeFileman(VistA,"DEMO.OSEHRA.ORG","6161")
+OSEHRASetup.initializeFileman(VistA,"DEMO.NODEVISTA.ORG","6161")
 
 # Setup the primary HFS directory from the
 # Kernel System Parameters file via FileMan
@@ -76,14 +76,14 @@ OSEHRASetup.configureConsoleDevice(VistA)
 # Kernel System Parameters and RPC Broker Site Parameters
 # and re-index both files.
 
-OSEHRASetup.setupVistADomain(VistA,"DEMO.OSEHRA.ORG")
+OSEHRASetup.setupVistADomain(VistA,"DEMO.NODEVISTA.ORG")
 
 # Set up the proper Box:Volume pair
 # VistA.getenv will query the instance for the local Box:Volume pair
 # and save the result as the "boxvol" parameter of the VistA object
 # IE. It can be printed via 'print VistA.boxvol'
-OSEHRASetup.setupBoxVolPair(VistA,'PLA','DEMO.OSEHRA.ORG','9430')
-OSEHRASetup.setupVolumeSet(VistA,"DEMO.OSEHRA.ORG",'PLA',"VISTA")
+OSEHRASetup.setupBoxVolPair(VistA,'PLA','DEMO.NODEVISTA.ORG','9430')
+OSEHRASetup.setupVolumeSet(VistA,"DEMO.NODEVISTA.ORG",'PLA',"VISTA")
 
 # Start TaskMan
 if VistA.type=='cache':

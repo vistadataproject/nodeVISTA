@@ -6,11 +6,11 @@
 
 'use strict';
 
-var util = require('util');
-var _ = require('underscore');
+const util = require('util');
+const _ = require('underscore');
 
-var fileman = require('mvdm/fileman');
-var fmql = require('mvdm/fmql');
+const fileman = require('mvdm/fileman');
+const fmql = require('mvdm/fmql');
 
 /*
  * Template pointers take the forms: 
@@ -32,7 +32,7 @@ function fillTemplateValues(fm, info, userId, facilityId, now) {
  
     function getLabelForId(fm, id) { // more expansive than dmUtils version and like it really wants a native fmql method
 
-        var reply = fmql.query(fm, 'DESCRIBE ' + id + ' CSTOP 0');
+        let reply = fmql.query(fm, 'DESCRIBE ' + id + ' CSTOP 0');
         if (_.has(reply, "error")) {
             throw new Error('There was a problem describing id ' + id + ': ' + reply.error);
         }
@@ -74,7 +74,7 @@ function fillTemplateValues(fm, info, userId, facilityId, now) {
 
         if (!/^\$ID\-/.test(propertyValue.id))
             throw new Error(util.format("Invalid $ setting %s for %s", propertyValue.id, propertyId));
-        var fid = propertyValue.id.split("-")[1];
+        let fid = propertyValue.id.split("-")[1];
 
         // VUID option - if VUID exists then will be at 99.99
         if (_.has(propertyValue, "sameAs")) {
@@ -108,7 +108,7 @@ function fillTemplateValues(fm, info, userId, facilityId, now) {
 
     Object.keys(info).forEach(function(propertyId) {
 
-        var propertyValue = info[propertyId];
+        let propertyValue = info[propertyId];
 
         // List of Objects or Pointers
         if (_.isArray(propertyValue)) {

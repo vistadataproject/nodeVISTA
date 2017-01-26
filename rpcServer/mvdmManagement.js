@@ -3,7 +3,7 @@
 
 //mvdm default management settings
 var mvdmManagement = {
-   isMvdmLocked: true
+    isMvdmLocked: true
 };
 
 module.exports = mvdmManagement;

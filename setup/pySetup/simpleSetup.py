@@ -21,7 +21,7 @@ logging.basicConfig(level=logging.INFO,
 
 """
 ConnectToMUMPS relies on environment:
-- is GTM => defined os.getenv('gtm_dist') == /home/osehra/lib/gtm
+- is GTM => defined os.getenv('gtm_dist') == /home/nodevista/lib/gtm
 - is Linux => defined sys.platform == 'linux2'
 """
 # print "Platform", sys.platform, "GT.M MUMPS VM", os.getenv('gtm_dist'), "GTM Prompt", os.getenv("gtm_prompt")
@@ -71,9 +71,9 @@ def postImportSetupBasics(VistA):
     """
 
     # from test.cmake
-    TEST_VISTA_SETUP_SITE_NAME = "DEMO.OSEHRA.ORG"
+    TEST_VISTA_SETUP_SITE_NAME = "DEMO.NODEVISTA.ORG"
     TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY = "@"
-    TEST_VISTA_SETUP_SITE_NAME = "DEMO.OSEHRA.ORG"
+    TEST_VISTA_SETUP_SITE_NAME = "DEMO.NODEVISTA.ORG"
     TEST_VISTA_SETUP_VOLUME_SET = "PLA"
     VISTA_TCP_PORT = "9210" # but commented out in test.cmake
 
@@ -213,7 +213,7 @@ def postImportSetupPatients(VistA):
     # The patient can be a veteran but not service connected
     # Function arguments:
     # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-    OSEHRASetup.addPatient(VistA,'/usr/local/src/nodeVISTA/setup/pySetup/dataFiles/patdata0.csv')
+    OSEHRASetup.addPatient(VistA,'/usr/local/src/nodevista/setup/pySetup/dataFiles/patdata0.csv')
 
 def main():
     simpleSetup()

@@ -75,10 +75,10 @@ captureFile.on("open", function (fd) {
         //start up mvdm client
         mvdmClient.init();
 
-       //get locked rpc list
-       processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
-          EventManager.emit(responseObject.message.eventType, responseObject.message.event);
-       });
+        //get locked rpc list
+        processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
+            EventManager.emit(responseObject.message.eventType, responseObject.message.event);
+        });
     });
 });
 

@@ -20,7 +20,7 @@ chmod -R g+rw $user_home
 
 cd $user_home
 echo "Cloning client code for use by $user_id..."
-git clone -q https://github.com/vistadataproject/nodeVISTA.git
+git clone -q https://github.com/vistadataproject/nodevista.git
 git clone https://github.com/caregraf/FMQL.git
 
 # Set up the shared development directories

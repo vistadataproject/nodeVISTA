@@ -130,15 +130,15 @@ ln -s $basedir/etc/xinetd.d/vista-rpcbroker /etc/xinetd.d/$instance-vista-rpcbro
 ln -s $basedir/etc/xinetd.d/vista-vistalink /etc/xinetd.d/$instance-vista-vistalink
 
 # Create startup service
-ln -s $basedir/etc/init.d/vista /etc/init.d/${instance}vista
+ln -s $basedir/etc/init.d/vista /etc/init.d/${instance}
 
 # Install init script
 if [[ $ubuntu || -z $RHEL ]]; then
-    update-rc.d ${instance}vista defaults
+    update-rc.d ${instance} defaults
 fi
 
 if [[ $RHEL || -z $ubuntu ]]; then
-    chkconfig --add ${instance}vista
+    chkconfig --add ${instance}
 fi
 
 # Symlink libs

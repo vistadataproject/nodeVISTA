@@ -1,26 +1,26 @@
 /*global define*/
 define([
-   'jquery',
-   'underscore',
-   'backbone',
-   'moment'
+    'jquery',
+    'underscore',
+    'backbone',
+    'moment'
 ], function ($, _, Backbone, moment) {
-   'use strict';
+    'use strict';
 
-   var EventModel = Backbone.Model.extend({
-      constructor: function() {
-         var args = arguments[0];
+    var EventModel = Backbone.Model.extend({
+        constructor: function() {
+            var args = arguments[0];
 
-         args.dateTime = moment(args.timestamp).format('MMM Do YYYY @ h:mm:ss a');
+            args.dateTime = moment(args.timestamp).format('MMM Do YYYY @ h:mm:ss a');
 
-         Backbone.Model.apply(this, arguments);
-      },
-      toJSON: function() {
-         var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
-         json.cid = this.cid;
-         return json;
-      }
-   });
+            Backbone.Model.apply(this, arguments);
+        },
+        toJSON: function() {
+            var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
+            json.cid = this.cid;
+            return json;
+        }
+    });
 
-   return EventModel;
+    return EventModel;
 });
