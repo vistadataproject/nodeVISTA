@@ -72,7 +72,7 @@ def simpleSetup():
         completeVitalsSetup(VistA)
     except Exception as e:
         print e
-        print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP
+        print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP"
         return
 
     print "OK"
