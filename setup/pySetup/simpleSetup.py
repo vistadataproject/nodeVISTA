@@ -63,9 +63,16 @@ def simpleSetup():
         time.sleep(10)
         VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
         postImportSetupPatients(VistA)
-    except Exception as e:
+    except:
         print "EXIT_PYS_CANT_SETUP_PATIENTS"
+        return
+
+    try:
+        print "Finally complete PARAMETER setup (VITALs/CAPRI) ..."
+        completeVitalsSetup(VistA)
+    except Exception as e:
         print e
+        print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP
         return
 
     print "OK"
@@ -198,20 +205,6 @@ def postImportSetupUsers(VistA):
     #Set up the Clerk verification code
     OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
 
-    return
-    
-    # GMV USER RPC - must be set per user so done here and not in vital setup above
-    VistA.wait(PROMPT,60)
-    VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
-    VistA.write('S DUZ=' + VistA.IENumber);
-    VistA.write('S UTVITAL=\"00;DIC(4.2,|DAILY VITALS\"')
-    VistA.write('D ADD^XPAR(\"USR\","\GMV USER DEFAULTS\",\"DefaultTemplate\",UTVITAL)')
-    
-    # Fix OSEHRA Capri - VA wants N to leave Old Style Capri enabled. OSEHRA's
-    # partial domain resetting from FOIA to OSEHRA leaves this parameter unset for the new
-    # domain
-    VistA.write('D ADD^XPAR(\"SYS\",\"XU522\",1,\"N\")')    
-
 def postImportSetupPatients(VistA):
 
     # Add patient to the instance using the registration menu.
@@ -221,6 +214,35 @@ def postImportSetupPatients(VistA):
     # Function arguments:
     # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
     OSEHRASetup.addPatient(VistA,'/usr/local/src/nodevista/setup/pySetup/dataFiles/patdata0.csv')
+
+"""
+Add to OSEHRA's OSEHRASetup.registerVitalsCPRS and fix CAPRI setting
+"""
+def completeVitalsSetup(VistA):
+
+    # 1. GMV MANAGER RPC
+    VistA.wait(PROMPT,60)
+    VistA.write('S TDVITALS=\"TPR, BP|1:0;5:0;3:0;2:0;21:0;8:0;22:0;9:0\"')
+    VistA.write('D ADD^XPAR(\"SYS\","\GMV TEMPLATE\",\"DAILY VITALS\",TDVITALS)')
+    # 2. GMV USER RPC - must be set per user so done later
+    VistA.wait(PROMPT,60)
+    VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
+    VistA.write('S DUZ=' + VistA.IENumber);
+    VistA.write('S UTVITAL=\"00;DIC(4.2,|DAILY VITALS\"')
+    VistA.write('D ADD^XPAR(\"USR\","\GMV USER DEFAULTS\",\"DefaultTemplate\",UTVITAL)')
+
+   
+    # GMV USER RPC - must be set per user so done here and not in vital setup above
+    VistA.wait(PROMPT,60)
+    VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
+    VistA.write('S DUZ=' + VistA.IENumber);
+    VistA.write('S UTVITAL=\"00;DIC(4.2,|DAILY VITALS\"')
+    VistA.write('D ADD^XPAR(\"USR\","\GMV USER DEFAULTS\",\"DefaultTemplate\",UTVITAL)')
+   
+    # Fix OSEHRA Capri - VA wants N to leave Old Style Capri enabled. OSEHRA's
+    # partial domain resetting from FOIA to OSEHRA leaves this parameter unset for the new
+    # domain
+    VistA.write('D ADD^XPAR(\"SYS\",\"XU522\",1,\"N\")')
 
 def main():
     simpleSetup()

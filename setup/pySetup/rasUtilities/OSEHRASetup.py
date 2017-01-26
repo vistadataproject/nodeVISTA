@@ -589,20 +589,6 @@ def registerVitalsCPRS(VistA):
   VistA.write('S GMVGUI=\"VITALSMANAGER.EXE:5.0.26.1\"')
   VistA.wait(PROMPT,60)
   VistA.write('D EN^XPAR(\"SYS\",\"GMV GUI VERSION\",GMVGUI,1)')
-  return
-  """
-  # ADDITIONS VDP
-  # 1. GMV MANAGER RPC
-  VistA.wait(PROMPT,60)
-  VistA.write('S TDVITALS=\"TPR, BP|1:0;5:0;3:0;2:0;21:0;8:0;22:0;9:0\"')
-  VistA.write('D ADD^XPAR(\"SYS\","\GMV TEMPLATE\",\"DAILY VITALS\",TDVITALS)')
-  # 2. GMV USER RPC - must be set per user so done later
-  VistA.wait(PROMPT,60)
-  VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
-  VistA.write('S DUZ=' + VistA.IENumber);
-  VistA.write('S UTVITAL=\"00;DIC(4.2,|DAILY VITALS\"')
-  VistA.write('D ADD^XPAR(\"USR\","\GMV USER DEFAULTS\",\"DefaultTemplate\",UTVITAL)')
-  """ 
 
 def addDoctor(VistA,name,init,SSN,sex,AC,VC1):
   # Adds a Doctor user into the system via the User Management Menu as
