@@ -9,6 +9,7 @@ TODO: break out last two steps completely and move them to JS. Finally move whol
 import os
 import sys
 import logging
+import time
 sys.path = ['rasUtilities'] + sys.path
 
 import OSEHRASetup
@@ -192,6 +193,8 @@ def postImportSetupUsers(VistA):
     VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Clerk verification code
     OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
+
+    return
     
     # GMV USER RPC - must be set per user so done here and not in vital setup above
     VistA.wait(PROMPT,60)
