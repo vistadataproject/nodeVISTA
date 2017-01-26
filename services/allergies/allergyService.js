@@ -102,8 +102,6 @@ class AllergyService extends AbstractService {
             });
         }
 
-        mvdmObj.reactant.label = "CHOCOLATE";
-
         let res = this.MVDM.create(mvdmObj);
 
         this.emitEvent('create', res);

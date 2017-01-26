@@ -58,7 +58,7 @@ describe('testVitalsService', () => {
 
         if (args.reactant) {
             args.reactantId = args.reactant.id;
-            args.reactantName = args.reactantName;
+            args.reactantName = args.reactant.label;
         }
 
         if (args.reactions) {
