@@ -145,7 +145,13 @@ def postImportSetupUsers(VistA):
 
     OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
 
-    OSEHRASetup.addDoctor(VistA,"ALEXANDER,ROBERT","RA","000000029","M","fakedoc1","2Doc!@#$")
+    """
+    Note that these verifies are temporary - VISTA forces a reset which is done as part of
+    the electronic signature setups below. It's the reset signature that will be used from
+    now on
+    """    
+    OSEHRASetup.addDoctor(VistA,"ALEXANDER,ROBERT","RA",
+    "000000029","M","fakedoc1","2Doc!@#$")
 
     #Enter the Nurse Mary Smith
     OSEHRASetup.addNurse(VistA,'SMITH,MARY','MS','000000030','F','fakenurse1','2Nur!@#$')
@@ -164,15 +170,40 @@ def postImportSetupUsers(VistA):
 
     # Add clinic via the XUP menu to allow scheduling
     OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
-
+    
+    """
+    The sleep and ConnectToMUMPS is needed as createClinic has halted and 
+    setup signature does a similar thing. Could debug and stop the halts but 
+    as replacing with JS, not worth it.
+    
+    Same "logic" is in OSEHRA's PostImportSetupScript.py
+    """
+    
+    time.sleep(10)
+    
+    VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Doctors electronic signature
     OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
 
+    VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Nurse electronic signature
     OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
 
+    VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Clerk verification code
     OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
+    
+    # GMV USER RPC - must be set per user so done here and not in vital setup above
+    VistA.wait(PROMPT,60)
+    VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
+    VistA.write('S DUZ=' + VistA.IENumber);
+    VistA.write('S UTVITAL=\"00;DIC(4.2,|DAILY VITALS\"')
+    VistA.write('D ADD^XPAR(\"USR\","\GMV USER DEFAULTS\",\"DefaultTemplate\",UTVITAL)')
+    
+    # Fix OSEHRA Capri - VA wants N to leave Old Style Capri enabled. OSEHRA's
+    # partial domain resetting from FOIA to OSEHRA leaves this parameter unset for the new
+    # domain
+    VistA.write('D ADD^XPAR(\"SYS\",\"XU522\",1,\"N\")')    
 
 def postImportSetupPatients(VistA):
 
