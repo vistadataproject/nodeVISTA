@@ -52,7 +52,7 @@ class AllergyService extends AbstractService {
      *
      * @param {String=} args.enteredBy Entered by identifier. Defaults to user.
      * @fires create Service create event.
-     * @returns MVDM create response.
+     * @returns {Object} MVDM create response.
      */
     create(args) {
         let mvdmObj = _.pick(args,
@@ -114,7 +114,7 @@ class AllergyService extends AbstractService {
      *
      * @param {String} allergyId Allergy identifier.
      * @fire describe Service describe event.
-     * @returns MVDM describe response.
+     * @returns {Object} MVDM describe response.
      */
     describe(allergyId) {
         let res = this.MVDM.describe(allergyId);
@@ -123,6 +123,60 @@ class AllergyService extends AbstractService {
 
         return res;
     };
+
+    /**
+     * List of patient allergies.
+     *
+     * @returns {Array} List of patient allergies.
+     */
+    list() {
+        let res = this.MVDM.list("Allergy", this.context.patientId);
+
+        this.emit('list', res);
+
+        return res;
+    }
+
+    /**
+     * List of patient allergy assessments
+     *
+     *  @returns {Array} List of patient allergy assessments.
+     */
+    listAllergyAssessments() {
+        let res = this.MVDM.list("AllergyAssessment", this.context.patientId);
+
+        this.emit('listAllergyAssessments', res);
+
+        return res;
+    }
+
+    /**
+     * Removes an allergy (marks as Entered in Error).
+     *
+     * @param {String} allergyId Allergy identifier.
+     * @param {String=} comment Optional entered in error comment.
+     */
+    remove(allergyId, comment) {
+        let res = this.MVDM.remove(allergyId, comment);
+
+        this.emit('remove', res);
+
+        return res;
+    }
+
+    /**
+     * Unremoves an allergy.
+     *
+     * @param {String} allergyId Allergy identifier.
+     * @param {String=} comment Optional unremove comment.
+     */
+    unremove(allergyId, comment) {
+        let res = this.MVDM.unremove(allergyId, comment);
+
+        this.emit('unremove', res);
+
+        return res;
+    }
 }
 
 module.exports = AllergyService;
