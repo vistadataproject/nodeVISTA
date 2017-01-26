@@ -59,9 +59,13 @@ def simpleSetup():
 
     try:
         print "Finally setting up Patients ..."
+        # have to reset VistA as Signature Setup halts from VISTA
+        time.sleep(10)
+        VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
         postImportSetupPatients(VistA)
-    except:
+    except Exception as e:
         print "EXIT_PYS_CANT_SETUP_PATIENTS"
+        print e
         return
 
     print "OK"
@@ -193,8 +197,6 @@ def postImportSetupUsers(VistA):
     VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Clerk verification code
     OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
-
-    VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
 
     return
     
