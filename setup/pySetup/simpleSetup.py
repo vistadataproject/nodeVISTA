@@ -194,6 +194,8 @@ def postImportSetupUsers(VistA):
     #Set up the Clerk verification code
     OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
 
+    VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
+
     return
     
     # GMV USER RPC - must be set per user so done here and not in vital setup above
