@@ -14,13 +14,29 @@ const nodem = require('nodem');
 
 //supported VDM models
 const vdmModels = [].concat(
+    //allergies
+    require('mvdm/allergies/vdmAllergiesModel').vdmModel,
+    require('mvdm/documents/vdmDocumentsModel').vdmModel,
+    require('mvdm/visits/vdmVisitsModel').vdmModel,
+
+    //problems
     require('mvdm/problems/vdmProblemsModel').vdmModel,
+
+    //vitals
     require('mvdm/vitals/vdmVitalsModel').vdmModel
 );
 
 //supported MVDM models
 const mvdmModels = [].concat(
+    //allergies
+    require('mvdm/allergies/mvdmAllergiesModel').mvdmModel,
+    require('mvdm/documents/mvdmDocumentsModel').mvdmModel,
+    require('mvdm/visits/mvdmVisitsModel').mvdmModel,
+
+    //problems
     require('mvdm/problems/mvdmProblemsModel').mvdmModel,
+
+    //vitals
     require('mvdm/vitals/mvdmVitalsModel').mvdmModel
 );
 
