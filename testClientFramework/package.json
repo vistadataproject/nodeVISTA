@@ -1,0 +1,14 @@
+{
+  "name": "nodevista-testclientframework",
+  "description": "Test Client for nodevista",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "net": "latest",
+    "promise": "latest",
+
+    "nodevista-rpcparser": "file:../lib/rpcParser"
+
+  }
+}

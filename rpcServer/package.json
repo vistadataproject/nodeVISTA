@@ -34,7 +34,6 @@
     "net": "latest",
     "nodem": "0.8.1",
     "nodevista-rpcparser": "file:../lib/rpcParser",
-    "promise": "latest",
     "underscore": "latest",
     "util": "latest",
     "uuid": "^2.0.2",

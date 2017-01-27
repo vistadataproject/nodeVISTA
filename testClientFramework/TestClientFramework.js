@@ -1,7 +1,7 @@
 'use strict';
 
 var net = require('net');
-var CONFIG = require('./cfg/config.js');
+var CONFIG = require('./cfg/testconfig.js');
 
 var Promise = require('promise');
 
