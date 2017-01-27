@@ -6,9 +6,9 @@
  * Basic setup
  */
 var nodem = require('nodem');
-var RPCRunner = require('../../VDM/prototypes/rpcRunner').RPCRunner;
+var RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 
-process.env.gtmroutines = process.env.gtmroutines + ' .' + ' ../../VDM/prototypes/';
+process.env.gtmroutines = process.env.gtmroutines + ' .' + ' ../../../VDM/prototypes/';
 
 let db = new nodem.Gtm();
 db.open();
@@ -25,10 +25,10 @@ let DUZ = 61; // Should match Robert Alexander used in JSON tests but may not.
 let rpcRunner = new RPCRunner(db);
 rpcRunner.initializeUser(DUZ);
 
-let CPRS_VERSION_WE_USE = "1.0.30.69";
+let CPRS_VERSION_WE_USE = "1.0.30.75"; // went from 69 to 75 in January 2017
 let args = [
     "OR CPRS GUI CHART",
-    CPRS_VERSION_WE_USE
+    CPRS_VERSION_WE_USE // ignored by RPC but sent by CPRS
 ];
 let res = rpcRunner.run("ORWU VERSRV", args);
 if (res.result !== CPRS_VERSION_WE_USE)

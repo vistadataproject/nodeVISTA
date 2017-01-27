@@ -58,7 +58,7 @@ def simpleSetup():
         VistA=ConnectToMUMPS(LOGFILE)
 
     try:
-        print "Finally setting up Patients ..."
+        print "Now setting up Patients ..."
         # have to reset VistA as Signature Setup halts from VISTA
         time.sleep(10)
         VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
@@ -236,6 +236,8 @@ def completeVitalsSetup(VistA):
     # 3. Fix OSEHRA Capri - VA wants N to leave Old Style Capri enabled. OSEHRA's
     # partial domain resetting from FOIA to OSEHRA leaves this parameter unset for the new
     # domain. Our nodeVISTA setup would suffer the same way
+    # ... may need to revisit - works from mumps line but doesn't get reset here
+    # ... issue with NEW PERSON?
     VistA.wait(PROMPT,60)
     VistA.write('D ADD^XPAR("SYS","XU522",1,"N")')
 
