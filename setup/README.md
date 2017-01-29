@@ -75,4 +75,3 @@ Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, 
 8. Right click on the new desktop shortcut ("RPC Server") and select "properties".
 9. Modify the target to the following: "C:\Program Files\VistA\CPRS\CPRSChart.exe" CCOW=disable s=10.2.2.100 p=9010 showrpcs
 
-**Note "10.2.2.100" is the presumed the IP address of the box RPC Server is running on and "9010" is the port that RPC Server is listening on for incoming RPC traffic. These settings match up with the RPC Server configurations inside of "cfg/config.js".**
