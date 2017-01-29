@@ -7,7 +7,12 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
+
+  config.vm.box = "nodeVISTA"
+  config.vm.box_url = "http://45.33.127.157/files/vagrant/nodeVISTA.json"
+
+  # Uncomment for manual setup (see setup provision step commented out at the bottom of this script)
+  # config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
 
   if Vagrant.has_plugin?("vagrant-timezone")
     config.timezone.value = "UTC"
@@ -136,7 +141,8 @@ Vagrant.configure("2") do |config|
     v.name = "nodeVISTA"
   end
 
-  config.vm.provision :shell do |s|
-    s.path = "setup.sh"
-  end
+  # Uncomment for manual setup
+  # config.vm.provision :shell do |s|
+  #   s.path = "setup.sh"
+  # end
 end
