@@ -76,7 +76,9 @@ Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, 
 9. Modify the target to the following: "C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe" CCOW=disable s=10.2.2.100 p=9010 showrpcs
 
 Final paths and contents should be:
-"""
+
+
+    ```text
 C:\Program Files (x86)\VistA\Common Files\
   CPRS30v72dll
   GMV_VitalsViewEnter
@@ -88,8 +90,9 @@ C:\Program Files (x86)\VistA\CPRS\
     CPRS
     CPRS.cnt
     borlndmm.dll
-   
-"""
+    ```
+    
+
   
 
 
