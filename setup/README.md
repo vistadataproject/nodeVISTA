@@ -74,8 +74,10 @@ Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, 
 7. Copy the Osehra VistA Desktop Shortcut and rename it to something like "RPC Server", etc.
 8. Right click on the new desktop shortcut ("RPC Server") and select "properties".
 9. Modify the target to the following: "C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe" CCOW=disable s=10.2.2.100 p=9010 showrpcs
+10. Run "RPC Server"
+11. Access / Verify codes:  
 
-Final paths and contents should be:
+Summary of paths and contents:
 ```text
 C:\Program Files (x86)\VistA\Common Files\
     CPRS30v72dll
@@ -92,8 +94,7 @@ C:\Program Files (x86)\VistA\CPRS\
 Desktop:
     RPC Server <-- relabelled from Osehra VistA 
 ```
-10. Run "RPC Server"
-11. Access / Verify codes:  
+
 
   
 
