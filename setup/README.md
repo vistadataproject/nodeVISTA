@@ -83,11 +83,15 @@ C:\Program Files (x86)\VistA\Common Files\
     GMV_VitalsViewEnter
     GMV_VitalsViewEnter.cnt
     GMV_VitalsViewEnter.dll
+
 C:\Program Files (x86)\VistA\CPRS\
     CPRSChart.exe  <-- relabeled from CPRSChart30v75.exe
     CPRS
     CPRS.cnt
     borlndmm.dll
+
+Desktop:
+    RPC Server <-- relabelled from Osehra VistA 
 ```
     
 
