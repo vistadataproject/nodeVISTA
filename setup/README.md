@@ -78,19 +78,18 @@ Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, 
 Final paths and contents should be:
 
 
-    ```text
+```text
 C:\Program Files (x86)\VistA\Common Files\
   CPRS30v72dll
   GMV_VitalsViewEnter
   GMV_VitalsViewEnter.cnt
   GMV_VitalsViewEnter.dll
-  
 C:\Program Files (x86)\VistA\CPRS\
     CPRSChart  <-- relabeled from
     CPRS
     CPRS.cnt
     borlndmm.dll
-    ```
+```
     
 
   
