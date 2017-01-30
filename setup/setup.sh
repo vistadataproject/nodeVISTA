@@ -9,6 +9,7 @@ fi
 #set variables
 instance="nodevista"
 repoPath="https://github.com/OSEHRA/VistA-M.git"
+nodever="4.7.0"
 nodemver="0.8.1"
 
 # Get primary username if using sudo, default to $username if not sudo'd
@@ -213,7 +214,6 @@ echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
 # Copy unique end of .profile of nodevista
 echo "source $nodevistahome/.nvm/nvm.sh" >> $vdphome/.profile
 # Set nodever. Otherwise $nodever .profile won't exist and npm install below will fail
-nodever="4.7.0"
 echo "nvm use $nodever" >> $vdphome/.profile
 
 cd $vdphome
