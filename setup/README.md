@@ -1,5 +1,7 @@
 # nodeVISTA
 
+####These setup instructions are for advanced users only. Please refer to the [Demo](https://github.com/vistadataproject) wiki to get quickly started.
+
 ### The following outlines how to install nodeVISTA
 
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
@@ -16,7 +18,7 @@
     ```text
     $ vagrant up
     ```
-    The initial Vagrant up process will download a pre-built nodeVISTA vagrant box. The box is ~2.6gb in size and may take awhile to initally download. The box will be cached and subsequent deployments will not take as long.
+   The initial Vagrant up process will invoke the "setup.sh" script. This script will take about 45-60 minutes to finish. Subsequent calls to vagrant up will not take this long.
 
     Note: Virtual Box VMs go under /Users/{user}/VirtualBox VMs/ on macOS.
 
