@@ -104,7 +104,7 @@ Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, 
 8. Right click on the new desktop shortcut ("RPC Server") and select "properties".
 9. Modify the target to the following: "C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe" CCOW=disable s=10.2.2.100 p=9010 showrpcs
 10. Run "RPC Server" from windows desktop
-11. Access / Verify codes:  
+11. Access / Verify codes: fakedoc1 / 1doc!@#$
 
 Summary of paths and contents:
 ```text
