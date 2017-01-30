@@ -2,7 +2,7 @@
 
 ####These setup instructions are for advanced users only. Please refer to the [demo](https://github.com/vistadataproject) wiki to get quickly started.
 
-### The following outlines how to install nodeVISTA from the setup script (not the quick start nodeVISTA vagrant box).
+### The following outlines how to install nodeVISTA from the setup shell script.
 
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
