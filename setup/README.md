@@ -31,6 +31,7 @@
           # Uncomment for manual setup (see setup provision step commented out at the bottom of this script)
           config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
         ...
+        
         (Around line 144, towards the bottom) 
         
         # Uncomment for manual setup
