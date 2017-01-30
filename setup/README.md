@@ -52,6 +52,36 @@
 
 * Check that FMQL was installed successfully by navigating your browser to [http://10.2.2.100:9000](http://10.2.2.100:9000).
 
+## CPRS Installation
+1. On a Windows7 or Windows10 box, download, unzip, and run the Osehra CPRS installer: [CPRS_Demo_0613.zip](https://github.com/vistadataproject/documents/raw/master/cprs/osehra/v69/CPRS_Demo_0613.zip)
+2. Download latest version of VA's CPRS binary: [CPRSChart30v75.zip (v1.0.30.75)](http://45.33.127.157/files/CPRSChart30v75.zip).
+3. Unzip CPRSChart30v75.zip and rename the uncompressed binary CPRSChart30v75.exe to CPRSChart.exe.
+4. Overwrite  C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe with the latest binary (v1.0.30.75).
+5. Download latest CommonFiles DLLs [CPRS30v72_dll.zip] (http://45.33.127.157/files/CPRS30v72_dll.zip).
+6. Unzip CPRS30v72_dll.zip and copy/overwrite the contents of the CPRS30v72_dll/ folder to C:\Program Files (x86)\VistA\Common Files.
+7. Copy the Osehra VistA Desktop Shortcut and rename it to something like "RPC Server", etc.
+8. Right click on the new desktop shortcut ("RPC Server") and select "properties".
+9. Modify the target to the following: "C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe" CCOW=disable s=10.2.2.100 p=9010 showrpcs
+10. Run "RPC Server" from windows desktop
+11. Access / Verify codes: fakedoc1 / 1doc!@#$
+
+Summary of paths and contents:
+```text
+C:\Program Files (x86)\VistA\Common Files\
+    CPRS30v72dll
+    GMV_VitalsViewEnter
+    GMV_VitalsViewEnter.cnt
+    GMV_VitalsViewEnter.dll
+
+C:\Program Files (x86)\VistA\CPRS\
+    CPRSChart.exe  <-- relabeled from CPRSChart30v75.exe
+    CPRS
+    CPRS.cnt
+    borlndmm.dll
+
+Desktop:
+    RPC Server <-- relabelled from Osehra VistA 
+```
 ### To develop inside the VM: 
 
 * git clone the [VDM](https://github.com/vistadataproject/VDM) git into a directory on your workstation (not the nodeVISTA VM) and go into _prototypes_. There you'll find the existing VDP VDM prototypes and this is also where we develop new prototypes.
@@ -93,38 +123,6 @@
         ```
 
 Finally - how to __Suspend (pause) and Resume__: to temporarily suspend the VM, just call _vagrant suspend_ and resume with _vagrant resume_.
-
-## CPRS Installation
-1. On a Windows7 or Windows10 box, download, unzip, and run the Osehra CPRS installer: [CPRS_Demo_0613.zip](https://github.com/vistadataproject/documents/raw/master/cprs/osehra/v69/CPRS_Demo_0613.zip)
-2. Download latest version of VA's CPRS binary: [CPRSChart30v75.zip (v1.0.30.75)](http://45.33.127.157/files/CPRSChart30v75.zip).
-3. Unzip CPRSChart30v75.zip and rename the uncompressed binary CPRSChart30v75.exe to CPRSChart.exe.
-4. Overwrite  C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe with the latest binary (v1.0.30.75).
-5. Download latest CommonFiles DLLs [CPRS30v72_dll.zip] (http://45.33.127.157/files/CPRS30v72_dll.zip).
-6. Unzip CPRS30v72_dll.zip and copy/overwrite the contents of the CPRS30v72_dll/ folder to C:\Program Files (x86)\VistA\Common Files.
-7. Copy the Osehra VistA Desktop Shortcut and rename it to something like "RPC Server", etc.
-8. Right click on the new desktop shortcut ("RPC Server") and select "properties".
-9. Modify the target to the following: "C:\Program Files (x86)\VistA\CPRS\CPRSChart.exe" CCOW=disable s=10.2.2.100 p=9010 showrpcs
-10. Run "RPC Server" from windows desktop
-11. Access / Verify codes: fakedoc1 / 1doc!@#$
-
-Summary of paths and contents:
-```text
-C:\Program Files (x86)\VistA\Common Files\
-    CPRS30v72dll
-    GMV_VitalsViewEnter
-    GMV_VitalsViewEnter.cnt
-    GMV_VitalsViewEnter.dll
-
-C:\Program Files (x86)\VistA\CPRS\
-    CPRSChart.exe  <-- relabeled from CPRSChart30v75.exe
-    CPRS
-    CPRS.cnt
-    borlndmm.dll
-
-Desktop:
-    RPC Server <-- relabelled from Osehra VistA 
-```
-
 
   
 
