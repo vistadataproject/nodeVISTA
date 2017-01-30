@@ -2,7 +2,7 @@
 
 ####These setup instructions are for advanced users only. Please refer to the [demo](https://github.com/vistadataproject) wiki to get quickly started.
 
-### The following outlines how to install nodeVISTA
+### The following outlines how to install nodeVISTA from the setup script (not the quick start nodeVISTA vagrant box).
 
 * Download and install [Virtualbox](https://www.virtualbox.org/wiki/Downloads?replytocom=98578)
 * Download and install [Vagrant](https://www.vagrantup.com/downloads.html)
@@ -16,8 +16,9 @@
 * Once you have Vagrant and VirtualBox setup open a terminal and cd to the __nodeVista/setup/__ directory. Open up the Vagrantfile in a text editor and make the following changes:
 
     * Comment out the following lines:
-       
        ```text
+        (Around line 11)
+        
         config.vm.box = "nodeVISTA"
         config.vm.box_url = "http://45.33.127.157/files/vagrant/nodeVISTA.json"
         ```
@@ -25,9 +26,12 @@
     * Uncomment theses lines:
        
        ```text
+          (Around line 14)
+          
           # Uncomment for manual setup (see setup provision step commented out at the bottom of this script)
           config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
         ...
+        (Around line 144, towards the bottom) 
         
         # Uncomment for manual setup
         config.vm.provision :shell do |s|
@@ -36,7 +40,7 @@
         ```
         
 
-* From the command-line run the following:
+* Then from the command-line run the following:
 
     ```text
     $ vagrant up
