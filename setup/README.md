@@ -1,6 +1,6 @@
 # nodeVISTA
 
-####These setup instructions are for advanced users only. Please refer to the [demo](https://github.com/vistadataproject) wiki to get quickly started.
+####These setup instructions are for advanced users only. Please refer to the [demo](https://github.com/vistadataproject) wiki to get started quickly.
 
 ### The following outlines how to install nodeVISTA from the setup shell script.
 
