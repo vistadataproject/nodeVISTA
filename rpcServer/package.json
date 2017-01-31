@@ -38,5 +38,11 @@
     "util": "latest",
     "uuid": "^2.0.2",
     "mvdm": "git+https://github.com/vistadataproject/MVDM.git"
+  },
+  "devDependencies": {
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "jasmine": "^2.4.1"
   }
 }
