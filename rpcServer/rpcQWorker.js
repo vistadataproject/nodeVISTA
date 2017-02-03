@@ -46,6 +46,25 @@ function connectVistaDatabase() {
     rpcFacade.setLocking(true); //default is to utilize mvdm locking
 
     rpcContexts = new RPCContexts(db);
+
+
+    // Add prototype RPC Locker model if we're in 'developer' mode, which would be set in the config
+    if (CONFIG.developerMode) {
+        LOGGER.info('***************** DEVELOPER MODE *****************');
+        LOGGER.debug('Loading Non-Clinical RPC Locker and VDM Models...');
+
+        try {
+            const devRPCModels = require('../../nonClinicalRPCs/prototypes'); // eslint-disable-line global-require
+
+            const rpcL = rpcFacade.getRPCLInstance();
+            rpcL.addLockerModel(devRPCModels.rpcLModel);
+            rpcL.addVDMModel(devRPCModels.vdmModel);
+
+            LOGGER.debug('Successfully loaded the Non-Clinical RPC Models!');
+        } catch (err) {
+            LOGGER.info(`ERROR loading the Non-Clinical RPC Models: ${err.message} [${err.code}]`);
+        }
+    }
 }
 
 function generateTransactionId() {
