@@ -39,7 +39,8 @@
         "no-unused-vars": ["warn", {
             "vars": "local",
             "args": "none"
-        }]
+        }],
+        "no-underscore-dangle": "off"
     },
     "parserOptions": {
         "ecmaVersion": 6,
