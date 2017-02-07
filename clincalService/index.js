@@ -17,6 +17,6 @@ app.use('/problem', problemRouter);
 
 const port = config.port;
 app.listen(port, () => {
-    logger.info(`MVDM Client listening on port ${port}`);
+    logger.info(`Clinical Service listening on port ${port}`);
 });
 
