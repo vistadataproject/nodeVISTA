@@ -15,9 +15,12 @@
     "body-parser": "^1.16.0",
     "bunyan": "^1.8.5",
     "express": "^4.14.1",
-    "nodem": "0.8.1",
     "fs": "0.0.1-security",
+    "http-status": "^1.0.1",
+    "install": "^0.8.7",
     "mvdm": "git+https://github.com/vistadataproject/MVDM.git",
+    "nodem": "0.8.1",
+    "npm": "^4.1.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
