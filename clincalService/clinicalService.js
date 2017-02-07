@@ -44,7 +44,7 @@ class ClinicalService {
     }
 
     getAllergyService() {
-        if (!this.servies.allergyService) {
+        if (!this.services.allergyService) {
             this.services.allergyService = this.clinicalServiceFactory.createAllergyService();
         }
     }
