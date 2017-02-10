@@ -2,69 +2,110 @@
 
 'use strict';
 
-const config = require('./config.js');
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const config = require('./config/config.js');
 const logger = require('./logger.js');
-const nodem = require('nodem');
-const fileman = require('mvdm/fileman');
-const ClinicalServiceFactory = require('mvdm/clinicalServiceFactory');
+const InvalidTokenError = require('./invalidTokenError');
+const qoper8 = require('ewd-qoper8');
 
 class ClinicalService {
     constructor() {
-        const db = new nodem.Gtm();
-        db.open();
+        // start process queue
+        this.processQueue = new qoper8.masterProcess();
 
-        const userId = fileman.lookupBy01(db, '200', config.user).id;
-        const facilityId = fileman.lookupBy01(db, '4', config.facility).id;
-
-        this.clinicalServiceFactory = new ClinicalServiceFactory(db, userId, facilityId);
-
-        this.services = {};
-
-        process.on('uncaughtException', (err) => {
-            if (!db) {
-                db.close();
-            }
-
-            logger.error('Uncaught Exception:\n', err.stack);
-
-            process.exit(1);
+        this.processQueue.on('started', function () {
+            this.worker.module = `${__dirname}/clinicalQWorker`;
         });
 
-        // node shutdown
-        process.on('exit', () => {
-            if (!db) {
-                db.close();
+        this.processQueue.on('start', function () {
+            this.setWorkerPoolSize(config.workerQ.size);
+        });
+
+        this.processQueue.start();
+
+        this._issueAccessToken = function _issueAccessToken(context) {
+            const cert = fs.readFileSync(config.accessToken.privateKey);  // get token private key
+
+            return jwt.sign({
+                context,
+            }, cert,
+                { algorithm: config.accessToken.algorithm },
+                { expiresIn: config.accessToken.expiresIn });
+        };
+
+        this._issueRefreshToken = function _issueRefreshToken(context) {
+            const cert = fs.readFileSync(config.refreshToken.privateKey);  // get token private key
+
+            return jwt.sign({
+                context,
+            }, cert,
+                { algorithm: config.refreshToken.algorithm },
+                { expiresIn: config.refreshToken.expiresIn });
+        };
+
+        this._issuePatientToken = function _issuePatientToken(patientId) {
+            const cert = fs.readFileSync(config.patientToken.privateKey);  // get token private key
+
+            return jwt.sign({
+                patientId,
+            }, cert,
+                { algorithm: config.patientToken.algorithm },
+                { expiresIn: config.patientToken.expiresIn });
+        };
+    }
+
+    authenticate(context) {
+        // sign access & refresh tokens with RSA SHA256
+        return new Promise((resolve, reject) => {
+            resolve({
+                accessToken: this._issueAccessToken(context),
+                refreshToken: this._issueRefreshToken(context),
+            });
+        });
+    }
+
+    refreshToken(refreshToken) {
+        return new Promise((resolve, reject) => {
+            const cert = fs.readFileSync(config.refreshToken.privateKey);
+            try {
+                const decode = jwt.verify(refreshToken, cert);
+
+                // token is valid
+                resolve({
+                    accessToken: this._issueAccessToken(decode.context),
+                    refreshToken: this._issueRefreshToken(decode.context),
+                });
+            } catch (err) {
+                reject(new InvalidTokenError('Invalid refresh token'));
             }
         });
     }
 
-    selectPatient(patientId) {
-        this.clinicalServiceFactory.selectPatient(patientId);
-        this.services = {};
+    selectPatient(context, patientId) {
+        return new Promise((resolve, reject) => {
+            this.callService(context, 'PatientService', 'selectPatient', [patientId]).then((result) => {
+                resolve({ patientToken: this._issuePatientToken(patientId) });
+            }).catch((err) => {
+                reject(err);
+            });
+        });
     }
 
-    getAllergyService() {
-        if (!this.services.allergyService) {
-            this.services.allergyService = this.clinicalServiceFactory.createAllergyService();
-        }
+    callService(context, service, method, args) {
+        return new Promise((resolve, reject) => {
+            const messageObject = {
+                context,
+                service,
+                method,
+                args,
+            };
+
+            this.processQueue.handleMessage(messageObject, (responseObject) => {
+                resolve(responseObject);
+            });
+        });
     }
-
-    getProblemService() {
-        if (!this.services.problemService) {
-            this.services.problemService = this.clinicalServiceFactory.createProblemService();
-        }
-
-        return this.services.problemService;
-    }
-
-    getVitalsService() {
-        if (!this.services.vitalsService) {
-            this.services.vitalsService = this.clinicalServiceFactory.createVitalsService();
-        }
-
-        return this.services.vitalsService;
-    }
-
 }
 
 module.exports = new ClinicalService();

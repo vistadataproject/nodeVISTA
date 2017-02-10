@@ -3,7 +3,7 @@
 'use strict';
 
 const bunyan = require('bunyan');
-const config = require('./config.js');
+const config = require('./config/config.js');
 const fs = require('fs');
 
 if (!fs.existsSync('./log')) {
@@ -11,11 +11,11 @@ if (!fs.existsSync('./log')) {
 }
 
 const logger = bunyan.createLogger({
-    name: config.LOGGER.name,
+    name: config.logger.name,
     streams: [
         {
             level: 'info',
-            path: config.LOGGER.infoFile,
+            path: config.logger.infoFile,
         },
         {
             level: 'info',
@@ -23,7 +23,7 @@ const logger = bunyan.createLogger({
         },
         {
             level: 'error',
-            path: config.LOGGER.errorFile,
+            path: config.logger.errorFile,
         },
         {
             level: 'error',
@@ -31,7 +31,7 @@ const logger = bunyan.createLogger({
         },
         {
             level: 'trace',
-            path: config.LOGGER.debugFile,
+            path: config.logger.debugFile,
         },
     ],
 });
