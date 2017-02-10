@@ -30,7 +30,8 @@ describe('test authentication service', () => {
         facilityId = fileman.lookupBy01(db, '4', 'VISTA HEALTH CARE').id;
     });
 
-    let accessToken, refreshToken;
+    let accessToken;
+    let refreshToken;
 
     it('POST /auth call returns access and refresh tokens', (done) => {
         chai.request(app)
@@ -78,6 +79,28 @@ describe('test authentication service', () => {
                 expect(decoded.userId).to.equal(userId);
                 expect(decoded.facilityId).to.equal(facilityId);
                 expect(decoded.exp).to.exist;
+                done();
+            });
+    });
+
+    it('POST /auth/refreshToken call throws an error if expired refresh token is passed in', (done) => {
+        // create expired refresh token
+        const privCert = fs.readFileSync(config.refreshToken.privateKey);
+        refreshToken = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) - (60 * 60), // set expiration date to an hour ago
+            userId,
+            facilityId,
+        }, privCert, { algorithm: config.refreshToken.algorithm });
+
+        chai.request(app)
+            .post('/auth/refreshToken')
+            .set('x-refresh-token', refreshToken)
+            .end((err, res) => {
+                expect(err).not.to.be.null;
+                expect(res).to.have.status(401);
+                expect(res.text).to.equal('jwt expired');
+                expect(res.header['x-access-token']).not.to.exist;
+
                 done();
             });
     });

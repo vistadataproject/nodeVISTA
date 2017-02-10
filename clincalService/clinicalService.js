@@ -6,7 +6,6 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const config = require('./config/config.js');
 const logger = require('./logger.js');
-const InvalidTokenError = require('./invalidTokenError');
 const qoper8 = require('ewd-qoper8');
 
 class ClinicalService {
@@ -71,13 +70,13 @@ class ClinicalService {
             const cert = fs.readFileSync(config.refreshToken.publicKey);
             jwt.verify(refreshToken, cert, (err, decoded) => {
                 if (err) {
-                    reject(new InvalidTokenError(`Invalid refresh token: ${err.message}`));
+                    reject(err);
                 } else {
                     // token is valid
                     resolve({
                         accessToken: this._issueAccessToken({
                             userId: decoded.userId,
-                            facilityId: decoded.facilityId
+                            facilityId: decoded.facilityId,
                         }),
                     });
                 }

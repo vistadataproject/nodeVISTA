@@ -51,8 +51,10 @@ router.post('/refreshToken', (req, res) => {
         res.header('x-access-token', result.accessToken);
         res.sendStatus(HttpStatus.OK);
     }).catch((err) => {
-        if (err.name === 'InvalidTokenError') {
-            res.status(HttpStatus.NOT_FOUND).send('Invalid refresh token.');
+        if (err.name === 'TokenExpiredError') {
+            res.status(HttpStatus.UNAUTHORIZED).send(err.message);
+        } else if (err.name === 'JsonWebTokenError') {
+            res.status(HttpStatus.NOT_FOUND).send(err.message);
         } else {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }
