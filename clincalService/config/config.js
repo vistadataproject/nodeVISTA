@@ -12,28 +12,13 @@ const config = {
 
     port: 9030, // service listens on this port
 
-    // JWT access token
-    accessToken: {
-        publicKey: './config/accessToken.pub',
-        privateKey: './config/accessToken.key',
+    // JWT
+    jwt: {
+        publicKey: './config/jwtRS256.key.pub',
+        privateKey: './config/jwtRS256.key',
         algorithm: 'RS256',
-        expiresIn: '15m', // short expiration of 15 minutes
-    },
-
-    // JWT refresh token
-    refreshToken: {
-        publicKey: './config/refreshToken.pub',
-        privateKey: './config/refreshToken.key',
-        algorithm: 'RS256',
-        expiresIn: '1h', // expires after an hour
-    },
-
-    // JWT patient token
-    patientToken: {
-        publicKey: './config/patientToken.pub',
-        privateKey: './config/patientToken.key',
-        algorithm: 'RS256',
-        expiresIn: '1h', // expires after an hour
+        expiresIn: '15m', // access / patient token has a short expiration of 15 minutes
+        refreshExpiresIn: '1h', // refresh token expires after an hour
     },
 
     workerQ: {

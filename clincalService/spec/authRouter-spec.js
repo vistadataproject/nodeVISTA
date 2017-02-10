@@ -31,6 +31,8 @@ describe('test authentication service', () => {
         facilityId = fileman.lookupBy01(db, '4', 'VISTA HEALTH CARE').id;
     });
 
+    const privCert = fs.readFileSync(config.jwt.privateKey);
+    const pubCert = fs.readFileSync(config.jwt.publicKey);
     let accessToken;
     let refreshToken;
 
@@ -48,15 +50,13 @@ describe('test authentication service', () => {
                 refreshToken = res.header['x-refresh-token'];
 
                 // ensure that the access token contains user info
-                const accessPubKey = fs.readFileSync(config.accessToken.publicKey);
-                let decoded = jwt.verify(accessToken, accessPubKey);
+                let decoded = jwt.verify(accessToken, pubCert);
                 expect(decoded.userId).to.equal(userId);
                 expect(decoded.facilityId).to.equal(facilityId);
                 expect(decoded.exp).to.exist;
 
                 // ensure that the refresh token contains user info
-                const refreshPubKey = fs.readFileSync(config.refreshToken.publicKey);
-                decoded = jwt.verify(refreshToken, refreshPubKey);
+                decoded = jwt.verify(refreshToken, pubCert);
                 expect(decoded.userId).to.equal(userId);
                 expect(decoded.facilityId).to.equal(facilityId);
                 done();
@@ -75,8 +75,7 @@ describe('test authentication service', () => {
                 accessToken = res.header['x-access-token'];
 
                 // ensure that the access token contains user info
-                const accessPubKey = fs.readFileSync(config.accessToken.publicKey);
-                const decoded = jwt.verify(accessToken, accessPubKey);
+                const decoded = jwt.verify(accessToken, pubCert);
                 expect(decoded.userId).to.equal(userId);
                 expect(decoded.facilityId).to.equal(facilityId);
                 expect(decoded.exp).to.exist;
@@ -86,12 +85,11 @@ describe('test authentication service', () => {
 
     it('POST /auth/refreshToken call throws an error if an expired refresh token is passed in', (done) => {
         // create expired refresh token
-        const privCert = fs.readFileSync(config.refreshToken.privateKey);
         refreshToken = jwt.sign({
             exp: Math.floor(Date.now() / 1000) - (60 * 60), // set expiration date to an hour ago
             userId,
             facilityId,
-        }, privCert, { algorithm: config.refreshToken.algorithm });
+        }, privCert, { subject: 'refreshToken', algorithm: config.jwt.algorithm });
 
         chai.request(app)
             .post('/auth/refreshToken')
@@ -113,7 +111,7 @@ describe('test authentication service', () => {
             .end((err, res) => {
                 expect(err).not.to.be.null;
                 expect(res).to.have.status(HttpStatus.BAD_REQUEST);
-                expect(res.text).to.equal('invalid signature');
+                expect(res.text).to.equal('jwt subject invalid. expected: refreshToken');
                 expect(res.header['x-access-token']).not.to.exist;
 
                 done();

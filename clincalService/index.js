@@ -15,18 +15,14 @@ const problemRouter = require('./problemRouter');
 
 const app = express();
 
-const accessTokenPubKey = fs.readFileSync(config.accessToken.publicKey);
-
 // middleware
 
 // require JWT token for all services except auth
 app.use(
     expressJwt({
-        secret: accessTokenPubKey,
+        secret: fs.readFileSync(config.jwt.publicKey),
         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
-
-const patientTokenPubKey = fs.readFileSync(config.patientToken.publicKey);
 
 // check and validate for a patient token and add to the context
 app.use((req, res, next) => {
@@ -36,7 +32,10 @@ app.use((req, res, next) => {
 
     if (patientToken) {
         try {
-            const decoded = jsonwebtoken.verify(patientToken, patientTokenPubKey);
+            const decoded = jsonwebtoken.verify(
+                patientToken,
+                fs.readFileSync(config.jwt.publicKey),
+                { subject: 'patientToken' });
             if (_req.auth && _req.auth.context) {
                 _req.auth.context.patientId = decoded.patientId;
                 logger.debug(`retrieved patientId: ${_req.auth.context.patientId}`);

@@ -23,35 +23,39 @@ class ClinicalService {
 
         this.processQueue.start();
 
+        const privateCert = fs.readFileSync(config.jwt.privateKey); // token private key
+
         this._issueAccessToken = function _issueAccessToken(context) {
-            const cert = fs.readFileSync(config.accessToken.privateKey);  // get token private key
             return jwt.sign(
                 context,
-                cert,
-                { algorithm: config.accessToken.algorithm,
-                    expiresIn: config.accessToken.expiresIn,
+                privateCert,
+                {
+                    subject: 'accessToken',
+                    algorithm: config.jwt.algorithm,
+                    expiresIn: config.jwt.expiresIn,
                 });
         };
 
         this._issueRefreshToken = function _issueRefreshToken(context) {
-            const cert = fs.readFileSync(config.refreshToken.privateKey);  // get token private key
-
             return jwt.sign(
                 context,
-                cert,
-                { algorithm: config.refreshToken.algorithm,
-                    expiresIn: config.refreshToken.expiresIn,
+                privateCert,
+                {
+                    subject: 'refreshToken',
+                    algorithm: config.jwt.algorithm,
+                    expiresIn: config.jwt.refreshExpiresIn,
                 });
         };
 
         this._issuePatientToken = function _issuePatientToken(patientId) {
-            const cert = fs.readFileSync(config.patientToken.privateKey);  // get token private key
-
             return jwt.sign({
                 patientId,
-            }, cert,
-                { algorithm: config.patientToken.algorithm },
-                { expiresIn: config.patientToken.expiresIn });
+            }, privateCert,
+                {
+                    subject: 'patientToken',
+                    algorithm: config.jwt.algorithm,
+                    expiresIn: config.jwt.expiresIn,
+                });
         };
     }
 
@@ -67,8 +71,8 @@ class ClinicalService {
 
     refreshToken(refreshToken) {
         return new Promise((resolve, reject) => {
-            const cert = fs.readFileSync(config.refreshToken.publicKey);
-            jwt.verify(refreshToken, cert, (err, decoded) => {
+            const pubCert = fs.readFileSync(config.jwt.publicKey);
+            jwt.verify(refreshToken, pubCert, { subject: 'refreshToken' }, (err, decoded) => {
                 if (err) {
                     reject(err);
                 } else {
