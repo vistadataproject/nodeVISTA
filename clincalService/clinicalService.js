@@ -27,9 +27,9 @@ class ClinicalService {
         this._issueAccessToken = function _issueAccessToken(context) {
             const cert = fs.readFileSync(config.accessToken.privateKey);  // get token private key
 
-            return jwt.sign({
+            return jwt.sign(
                 context,
-            }, cert,
+                cert,
                 { algorithm: config.accessToken.algorithm },
                 { expiresIn: config.accessToken.expiresIn });
         };
@@ -37,9 +37,9 @@ class ClinicalService {
         this._issueRefreshToken = function _issueRefreshToken(context) {
             const cert = fs.readFileSync(config.refreshToken.privateKey);  // get token private key
 
-            return jwt.sign({
+            return jwt.sign(
                 context,
-            }, cert,
+                cert,
                 { algorithm: config.refreshToken.algorithm },
                 { expiresIn: config.refreshToken.expiresIn });
         };

@@ -45,9 +45,12 @@ function setServiceContext(context) {
 
     // restore user & patient context
     clincalServiceFactory = new ClinicalServiceFactory(db, context.userId, context.facilityId);
+    logger.debug(`setServiceContext - creating clinical service factory instance: ${context.userId} ${context.facilityId}`);
 
     if (context.patientId) {
         clincalServiceFactory.selectPatient(context.patientId);
+
+        logger.debug(`setServiceContext - calling select patient: ${context.patientId}`)
     }
 }
 
@@ -60,8 +63,13 @@ module.exports = function () {
 
     // respond to message event
     this.on('message', (messageObj, send, finished) => {
+        console.log(`on message - ${JSON.stringify(messageObj, null, 2)}`);
+
         try {
             let service;
+
+            setServiceContext(messageObj.context);
+
             // create a service
             if (messageObj.service === 'PatientService' && messageObj.method === 'selectPatient') {
                 service = clincalServiceFactory;
@@ -84,6 +92,8 @@ module.exports = function () {
                 data: res,
             });
         } catch (err) {
+            logger.error(`Error processing message: ${JSON.stringify(err)}`);
+
             finished({
                 type: 'error',
                 data: err,

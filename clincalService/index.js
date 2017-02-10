@@ -23,7 +23,7 @@ const accessTokenPubKey = fs.readFileSync(config.accessToken.publicKey);
 app.use(
     expressJwt({
         secret: accessTokenPubKey,
-        requestProperty: 'context', // change decoded JWT token from 'req.user' to 'req.context'
+        requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
     }).unless({ path: [/^\/auth\/.*/] })); // auth requests don't require a JWT token
 
 const patientTokenPubKey = fs.readFileSync(config.patientToken.publicKey);
@@ -32,13 +32,18 @@ const patientTokenPubKey = fs.readFileSync(config.patientToken.publicKey);
 app.use((req, res, next) => {
     logger.debug('Invoking patientId middleware');
     const _req = req;
-    const patientToken = req.get('x-patient-token');
+    const patientToken = _req.get('x-patient-token');
 
     if (patientToken) {
-        const decoded = jsonwebtoken.verify(patientToken, patientTokenPubKey);
-        _req.context.patientId = decoded.patientId;
-
-        logger.debug(`retrieved patientId: ${_req.context.patientId}`);
+        try {
+            const decoded = jsonwebtoken.verify(patientToken, patientTokenPubKey);
+            if (_req.auth && _req.auth.context) {
+                _req.auth.context.patientId = decoded.patientId;
+                logger.debug(`retrieved patientId: ${_req.auth.context.patientId}`);
+            }
+        } catch (e) {
+            logger.error(e);
+        }
     }
 
     next();
