@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/refresh', (req, res) => {
+router.post('/refreshToken', (req, res) => {
     const refreshToken = req.get('x-refresh-token');
 
     if (!refreshToken) {
@@ -49,7 +49,6 @@ router.post('/refresh', (req, res) => {
 
     clinicalService.refreshToken(refreshToken).then((result) => {
         res.header('x-access-token', result.accessToken);
-        res.header('x-refresh-token', result.refreshToken);
         res.sendStatus(HttpStatus.OK);
     }).catch((err) => {
         if (err.name === 'InvalidTokenError') {

@@ -63,8 +63,6 @@ module.exports = function () {
 
     // respond to message event
     this.on('message', (messageObj, send, finished) => {
-        console.log(`on message - ${JSON.stringify(messageObj, null, 2)}`);
-
         try {
             let service;
 

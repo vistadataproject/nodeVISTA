@@ -26,12 +26,12 @@ class ClinicalService {
 
         this._issueAccessToken = function _issueAccessToken(context) {
             const cert = fs.readFileSync(config.accessToken.privateKey);  // get token private key
-
             return jwt.sign(
                 context,
                 cert,
-                { algorithm: config.accessToken.algorithm },
-                { expiresIn: config.accessToken.expiresIn });
+                { algorithm: config.accessToken.algorithm,
+                    expiresIn: config.accessToken.expiresIn,
+                });
         };
 
         this._issueRefreshToken = function _issueRefreshToken(context) {
@@ -40,8 +40,9 @@ class ClinicalService {
             return jwt.sign(
                 context,
                 cert,
-                { algorithm: config.refreshToken.algorithm },
-                { expiresIn: config.refreshToken.expiresIn });
+                { algorithm: config.refreshToken.algorithm,
+                    expiresIn: config.refreshToken.expiresIn,
+                });
         };
 
         this._issuePatientToken = function _issuePatientToken(patientId) {
@@ -67,18 +68,20 @@ class ClinicalService {
 
     refreshToken(refreshToken) {
         return new Promise((resolve, reject) => {
-            const cert = fs.readFileSync(config.refreshToken.privateKey);
-            try {
-                const decode = jwt.verify(refreshToken, cert);
-
-                // token is valid
-                resolve({
-                    accessToken: this._issueAccessToken(decode.context),
-                    refreshToken: this._issueRefreshToken(decode.context),
-                });
-            } catch (err) {
-                reject(new InvalidTokenError('Invalid refresh token'));
-            }
+            const cert = fs.readFileSync(config.refreshToken.publicKey);
+            jwt.verify(refreshToken, cert, (err, decoded) => {
+                if (err) {
+                    reject(new InvalidTokenError(`Invalid refresh token: ${err.message}`));
+                } else {
+                    // token is valid
+                    resolve({
+                        accessToken: this._issueAccessToken({
+                            userId: decoded.userId,
+                            facilityId: decoded.facilityId
+                        }),
+                    });
+                }
+            });
         });
     }
 

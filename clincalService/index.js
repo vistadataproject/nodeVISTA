@@ -24,7 +24,7 @@ app.use(
     expressJwt({
         secret: accessTokenPubKey,
         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
-    }).unless({ path: [/^\/auth\/.*/] })); // auth requests don't require a JWT token
+    }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
 
 const patientTokenPubKey = fs.readFileSync(config.patientToken.publicKey);
 
@@ -66,3 +66,4 @@ app.use((err, req, res, next) => {
     }
 });
 
+module.exports = app;
