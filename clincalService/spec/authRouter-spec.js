@@ -83,7 +83,7 @@ describe('test authentication service', () => {
             });
     });
 
-    it('POST /auth/refreshToken call throws an error if expired refresh token is passed in', (done) => {
+    it('POST /auth/refreshToken call throws an error if an expired refresh token is passed in', (done) => {
         // create expired refresh token
         const privCert = fs.readFileSync(config.refreshToken.privateKey);
         refreshToken = jwt.sign({
