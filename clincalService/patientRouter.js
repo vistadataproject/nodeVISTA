@@ -32,7 +32,7 @@ router.post('/select',
 
         logger.debug('calling patient select');
 
-        clinicalService.selectPatient(req.auth.context, patientId).then((result) => {
+        clinicalService.selectPatient(req.auth, patientId).then((result) => {
             res.header('x-patient-token', result.patientToken);
             res.sendStatus(HttpStatus.OK);
         }).catch((err) => {

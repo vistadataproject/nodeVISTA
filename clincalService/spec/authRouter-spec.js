@@ -16,10 +16,16 @@ chai.use(chaiHttp);
 
 const expect = chai.expect;
 
-describe('test authentication service', () => {
+describe('test authentication service route', () => {
+
     let db;
     let userId;
     let facilityId;
+    let accessToken;
+    let refreshToken;
+    let privCert;
+    let pubCert;
+
     before(() => {
         // set node environment to test
         process.env.NODE_ENV = 'test';
@@ -29,12 +35,10 @@ describe('test authentication service', () => {
 
         userId = fileman.lookupBy01(db, '200', 'ALEXANDER,ROBERT').id;
         facilityId = fileman.lookupBy01(db, '4', 'VISTA HEALTH CARE').id;
-    });
 
-    const privCert = fs.readFileSync(config.jwt.privateKey);
-    const pubCert = fs.readFileSync(config.jwt.publicKey);
-    let accessToken;
-    let refreshToken;
+        privCert = fs.readFileSync(config.jwt.privateKey);
+        pubCert = fs.readFileSync(config.jwt.publicKey);
+    });
 
     it('POST /auth call returns access and refresh tokens', (done) => {
         chai.request(app)
@@ -42,7 +46,7 @@ describe('test authentication service', () => {
             .send({ userId, facilityId })
             .end((err, res) => {
                 expect(err).to.be.null;
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(HttpStatus.OK);
                 expect(res.header['x-access-token']).to.exist;
                 expect(res.header['x-refresh-token']).to.exist;
 
@@ -69,7 +73,7 @@ describe('test authentication service', () => {
             .set('x-refresh-token', refreshToken)
             .end((err, res) => {
                 expect(err).to.be.null;
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(HttpStatus.OK);
                 expect(res.header['x-access-token']).to.exist;
 
                 accessToken = res.header['x-access-token'];
@@ -120,5 +124,5 @@ describe('test authentication service', () => {
 
     after(() => {
         db.close();
-    })
+    });
 });
