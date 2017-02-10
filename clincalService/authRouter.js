@@ -54,7 +54,7 @@ router.post('/refreshToken', (req, res) => {
         if (err.name === 'TokenExpiredError') {
             res.status(HttpStatus.UNAUTHORIZED).send(err.message);
         } else if (err.name === 'JsonWebTokenError') {
-            res.status(HttpStatus.NOT_FOUND).send(err.message);
+            res.status(HttpStatus.BAD_REQUEST).send(err.message);
         } else {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }

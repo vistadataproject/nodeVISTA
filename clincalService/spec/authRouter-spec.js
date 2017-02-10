@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const fileman = require('mvdm/fileman');
 const app = require('../index');
 const config = require('../config/config');
+const HttpStatus = require('http-status');
 
 chai.use(chaiHttp);
 
@@ -97,8 +98,22 @@ describe('test authentication service', () => {
             .set('x-refresh-token', refreshToken)
             .end((err, res) => {
                 expect(err).not.to.be.null;
-                expect(res).to.have.status(401);
+                expect(res).to.have.status(HttpStatus.UNAUTHORIZED);
                 expect(res.text).to.equal('jwt expired');
+                expect(res.header['x-access-token']).not.to.exist;
+
+                done();
+            });
+    });
+
+    it('POST /auth/refreshToken call throws an error if an invalid refresh token is passed in', (done) => {
+        chai.request(app)
+            .post('/auth/refreshToken')
+            .set('x-refresh-token', accessToken) // pass in accessToken
+            .end((err, res) => {
+                expect(err).not.to.be.null;
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                expect(res.text).to.equal('invalid signature');
                 expect(res.header['x-access-token']).not.to.exist;
 
                 done();
