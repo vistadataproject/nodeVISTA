@@ -102,7 +102,11 @@ class ClinicalService {
             };
 
             this.processQueue.handleMessage(messageObject, (responseObject) => {
-                resolve(responseObject);
+                if (responseObject.message.type === 'error') {
+                    reject(responseObject.message.data);
+                } else {
+                    resolve(responseObject.message.data);
+                }
             });
         });
     }

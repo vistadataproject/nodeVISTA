@@ -83,8 +83,7 @@ module.exports = function () {
 
             // invoke service method with args array
             validateMethod(messageObj.service, service, messageObj.method);
-
-            const res = service[messageObj.method].apply(messageObj.args);
+            const res = service[messageObj.method].apply(service, messageObj.args);
 
             // send response event
             finished({
