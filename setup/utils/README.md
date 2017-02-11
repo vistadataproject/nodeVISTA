@@ -37,6 +37,7 @@ node updateNodeVISTAParameters.js delete
 
 ### Entity Values
 The `entity` attribute can contain entity values in one of 3 formats:
+
 1. Fileman file entry value corresponding to a valid, acceptable entity for that particular parameter (e.g. `200-62` for user with IEN of **62**).
 
    The utility will convert the file entry to the appropriate parameter entity code.
