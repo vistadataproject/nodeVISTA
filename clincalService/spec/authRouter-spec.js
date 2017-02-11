@@ -114,7 +114,7 @@ describe('test authentication service route', () => {
             .set('x-refresh-token', accessToken) // pass in accessToken
             .end((err, res) => {
                 expect(err).not.to.be.null;
-                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                expect(res).to.have.status(HttpStatus.UNAUTHORIZED);
                 expect(res.text).to.equal('jwt subject invalid. expected: refreshToken');
                 expect(res.header['x-access-token']).not.to.exist;
 

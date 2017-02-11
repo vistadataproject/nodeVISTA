@@ -56,7 +56,7 @@ describe('test patient service route', () => {
             });
     });
 
-    it('select patient', (done) => {
+    it('POST /patient/select', (done) => {
         chai.request(app)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
@@ -67,7 +67,39 @@ describe('test patient service route', () => {
                 expect(res.header['x-patient-token']).to.exist;
                 done();
             });
-    })
+    });
+
+    it('POST /patient/select call without patientId', (done) => {
+        chai.request(app)
+            .post('/patient/select')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .send({})
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.NOT_FOUND);
+                expect(res.text).to.equal('Invalid parameters. Missing patientId');
+                done();
+            });
+    });
+
+    it('POST /patient/select call with expired accessToken', (done) => {
+        accessToken = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) - (60 * 60), // set expiration date to an hour ago
+            userId,
+            facilityId,
+        }, privCert, { subject: 'accessToken', algorithm: config.jwt.algorithm });
+
+        chai.request(app)
+            .post('/patient/select')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .send({})
+            .end((err, res) => {
+                expect(err).to.exist;
+                expect(res).to.have.status(HttpStatus.UNAUTHORIZED);
+                expect(res.text).to.equal('jwt expired');
+                done();
+            });
+    });
 
     after(() => {
         db.close();

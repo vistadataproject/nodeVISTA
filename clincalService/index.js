@@ -61,7 +61,7 @@ app.listen(port, () => {
 // error handling
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
-        res.status(HttpStatus.NOT_FOUND).send('Unauthorized token. Invoke /auth to retrieve a valid JWT token.');
+        res.status(HttpStatus.UNAUTHORIZED).send(err.message);
     }
 });
 
