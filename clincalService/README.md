@@ -1,5 +1,5 @@
 
-# Clinical REST Service Interface
+# Clinical REST Service
 
 ## Running integration tests
 
