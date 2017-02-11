@@ -36,35 +36,56 @@ process.on('uncaughtException', function(err) {
 });
 
 function connectVistaDatabase() {
-    process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
+    process.env.gtmroutines += ` ${vdmUtils.getVdmPath()}`; // make VDP MUMPS available
     // console.log("process.env.gtmroutines: " + process.env.gtmroutines);
+
+    // Use the development RPC Facade if we're in 'developer' mode (dev-vdm or dev-nc), which would be set in the config
+    const isDeveloperMode = CONFIG['dev-vdm'] || CONFIG['dev-nc'];
+
+    // Attach the path to the prototype MUMPS code if we're in developer mode
+    process.env.gtmroutines += isDeveloperMode ? ' ../../VDM/prototypes' : '';
 
     db = new nodem.Gtm();
     db.open();
 
-    rpcFacade = new RPCFacade(db);
-    rpcFacade.setLocking(true); //default is to utilize mvdm locking
-
-    rpcContexts = new RPCContexts(db);
-
-
-    // Add prototype RPC Locker model if we're in 'developer' mode, which would be set in the config
-    if (CONFIG.developerMode) {
+    if (isDeveloperMode) {
         LOGGER.info('***************** DEVELOPER MODE *****************');
-        LOGGER.debug('Loading Non-Clinical RPC Locker and VDM Models...');
+        LOGGER.debug('Loading Prototyped RPC Locker and VDM Models...');
 
         try {
-            const devRPCModels = require('../../nonClinicalRPCs/prototypes'); // eslint-disable-line global-require
+            LOGGER.debug('Initializing VDM RPC Facade and prototype locker models...');
 
-            const rpcL = rpcFacade.getRPCLInstance();
-            rpcL.addLockerModel(devRPCModels.rpcLModel);
-            rpcL.addVDMModel(devRPCModels.vdmModel);
+            // eslint-disable-next-line
+            const VDMRPCFacade = require('../../VDM/prototypes/rpcFacade');
+            rpcFacade = new VDMRPCFacade(db);
 
-            LOGGER.debug('Successfully loaded the Non-Clinical RPC Models!');
+            // eslint-disable-next-line
+            const ParameterService = require('../../VDM/prototypes/parameterService');
+            ParameterService.setDB(db);
+
+            // If we're also including Non-Clinical RPC development, load those models as well
+            if (CONFIG['dev-nc']) {
+                LOGGER.debug('Adding prototype Non-Clinical RPC Models...');
+
+                // eslint-disable-next-line
+                const devRPCModels = require('../../nonClinicalRPCs/prototypes');
+
+                const rpcL = rpcFacade.getRPCLInstance();
+                rpcL.addLockerModel(devRPCModels.rpcLModel);
+                rpcL.addVDMModel(devRPCModels.vdmModel);
+
+                LOGGER.debug('Successfully loaded the Non-Clinical RPC Models!');
+            }
         } catch (err) {
-            LOGGER.info(`ERROR loading the Non-Clinical RPC Models: ${err.message} [${err.code}]`);
+            LOGGER.error(`ERROR initializing DEVELOPER MODE: ${err.message} [${err.code}]`);
         }
     }
+
+    // If we haven't set the RPC Facade instance yet, do it now, then default to utilize mvdm locking
+    rpcFacade = rpcFacade || new RPCFacade(db);
+    rpcFacade.setLocking(true);
+
+    rpcContexts = new RPCContexts(db);
 }
 
 function generateTransactionId() {
