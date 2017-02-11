@@ -7,7 +7,7 @@ The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute
 
 * Install Mocha 
 ```text
-$ npm install mocha -g
+$ npm install mocha -g <-- installs mocha globally
 ```
 
 * Execute a test
