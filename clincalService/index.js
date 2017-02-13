@@ -47,15 +47,21 @@ app.listen(port, () => {
 // error handling
 app.use((err, req, res, next) => {
     let status;
-    if (err.name === 'UnauthorizedError' || err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
+    if (err.name === 'UnauthorizedError' ||
+        err.name === 'TokenExpiredError' ||
+        err.name === 'JsonWebTokenError') {
         status = HttpStatus.UNAUTHORIZED;
-    } else if (err.name === 'InvalidParametersError') {
+    } else if (
+        err.name === 'InvalidParametersError' ||
+        err.name === 'InvalidContextError') {
         status = HttpStatus.NOT_FOUND;
     } else if (err.name === 'MissingTokenError') {
         status = HttpStatus.BAD_REQUEST;
     } else {
         status = HttpStatus.INTERNAL_SERVER_ERROR;
     }
+
+    logger.error(`Error with status ${status}::${err}`);
 
     res.status(status).send(err.message);
 });

@@ -7,6 +7,8 @@ const logger = require('./logger.js');
 const nodem = require('nodem');
 const vdmUtils = require('mvdm/vdmUtils');
 const ClinicalServiceFactory = require('mvdm/clinicalServiceFactory');
+const UnsupportedMethodError = require('./errors/unsupportedMethodError');
+const InvalidContextError = require('./errors/invalidContextError');
 
 let db;
 let clincalServiceFactory;
@@ -34,13 +36,13 @@ function connectToVista() {
 
 function validateMethod(serviceName, service, method) {
     if (!service[method]) {
-        throw new Error(`Unsupported method - service ${serviceName} does not support ${method}`);
+        throw new UnsupportedMethodError(`Unsupported method - service ${serviceName} does not support ${method}`);
     }
 }
 
 function setServiceContext(context) {
     if (!context.userId || !context.facilityId) {
-        throw new Error('Missing required fields userId and/or facilityId');
+        throw new InvalidContextError('Missing required fields userId and/or facilityId');
     }
 
     // restore user & patient context
