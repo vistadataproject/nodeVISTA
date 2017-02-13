@@ -22,6 +22,7 @@ describe('test problem service route', () => {
     let userId;
     let facilityId;
     let patientId;
+    let problemId;
     let accessToken;
     let patientToken;
     let testProblems;
@@ -123,6 +124,8 @@ describe('test problem service route', () => {
                 const json = JSON.parse(res.text);
                 expect(json).to.have.created;
 
+                problemId = json.created.id;
+
                 const problem = _.omit(json.created, ['id', 'uniqueId']);
 
                 const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
@@ -136,7 +139,7 @@ describe('test problem service route', () => {
 
     it('GET /problem/:id without access token', (done) => {
         chai.request(app)
-            .get('/problem/9000011-1')
+            .get(`/problem/${problemId}`)
             // exclude access token
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -162,7 +165,7 @@ describe('test problem service route', () => {
 
     it('GET /problem/:id', (done) => {
         chai.request(app)
-            .get('/problem/9000011-1')
+            .get(`/problem/${problemId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -172,7 +175,7 @@ describe('test problem service route', () => {
                 expect(json).to.have.result;
                 let problem = json.result;
                 expect(problem).to.have.id;
-                expect(problem.id).to.equal('9000011-1');
+                expect(problem.id).to.equal(problemId);
 
                 problem = _.omit(json.result, ['id', 'uniqueId']);
 
@@ -195,6 +198,24 @@ describe('test problem service route', () => {
                 done();
             });
     });
+
+    it('PUT /problem - update a problem', (done) => {
+        chai.request(app)
+            .put('/problem')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: problemId, onsetDate: '2016-03-01' })
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.updated;
+                expect(json.updated.onsetDate.value).to.equal('2016-03-01');
+
+                done();
+            });
+    });
+
 
     after(() => {
         db.close();
