@@ -51,11 +51,9 @@ app.use((err, req, res, next) => {
         err.name === 'TokenExpiredError' ||
         err.name === 'JsonWebTokenError') {
         status = HttpStatus.UNAUTHORIZED;
-    } else if (
+    } else if (err.name === 'MissingTokenError' ||
         err.name === 'InvalidParametersError' ||
         err.name === 'InvalidContextError') {
-        status = HttpStatus.NOT_FOUND;
-    } else if (err.name === 'MissingTokenError') {
         status = HttpStatus.BAD_REQUEST;
     } else {
         status = HttpStatus.INTERNAL_SERVER_ERROR;
