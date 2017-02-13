@@ -25,6 +25,7 @@ app.use(
         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
 
+// require patient token for all services expect /auth/* and /patient/select
 app.use(
     requiresToken({
         secret: fs.readFileSync(config.jwt.publicKey),
