@@ -233,6 +233,20 @@ describe('test problem service route', () => {
             });
     });
 
+    it('GET /problem - invalid filter', (done) => {
+        chai.request(app)
+            .get('/problem')
+            .query({ filter: 'all' }) // an invalid filter parameter
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                expect(res.text).to.equal('Invalid parameter - possible filter values are active, inactive, both, or removed');
+                done();
+            });
+    });
+
 
     after(() => {
         db.close();
