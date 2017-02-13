@@ -18,6 +18,7 @@
     "ewd-qoper8": "file:../lib/ewd-qoper8",
     "express": "^4.14.1",
     "express-jwt": "^5.1.0",
+    "express-unless": "^0.3.0",
     "fs": "0.0.1-security",
     "http-status": "^1.0.1",
     "install": "^0.8.7",

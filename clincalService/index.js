@@ -9,6 +9,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const config = require('./config/config.js');
 const logger = require('./logger.js');
 const HttpStatus = require('http-status');
+const requiresPatientToken = require('./requiresPatientToken');
 const authRouter = require('./authRouter');
 const patientRouter = require('./patientRouter');
 const problemRouter = require('./problemRouter');
@@ -24,29 +25,10 @@ app.use(
         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
 
-// check and validate for a patient token and add to the context
-app.use((req, res, next) => {
-    logger.debug('Invoking patientId middleware');
-    const _req = req;
-    const patientToken = _req.get('x-patient-token');
-
-    if (patientToken) {
-        try {
-            const decoded = jsonwebtoken.verify(
-                patientToken,
-                fs.readFileSync(config.jwt.publicKey),
-                { subject: 'patientToken' });
-            if (_req.auth && _req.auth.context) {
-                _req.auth.context.patientId = decoded.patientId;
-                logger.debug(`retrieved patientId: ${_req.auth.context.patientId}`);
-            }
-        } catch (e) {
-            logger.error(e);
-        }
-    }
-
-    next();
-});
+app.use(
+    requiresPatientToken({
+        pubKeyPath: config.jwt.publicKey,
+    }).unless({ path: [/^\/auth/, /^\/auth\/.*/, /^\/patient\/select/, /^\/patient\/select\//] }));
 
 // init routers
 app.use('/auth', authRouter);

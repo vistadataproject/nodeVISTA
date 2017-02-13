@@ -89,11 +89,11 @@ module.exports = function () {
                 data: res,
             });
         } catch (err) {
-            logger.error(`Error processing message: ${JSON.stringify(err)}`);
+            logger.error(`Error processing message: ${err.message}`);
 
             finished({
                 type: 'error',
-                data: err,
+                error: { name: err.name, message: err.message },
             });
         }
     });

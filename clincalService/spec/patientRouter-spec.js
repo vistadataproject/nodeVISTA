@@ -77,7 +77,7 @@ describe('test patient service route', () => {
             .end((err, res) => {
                 expect(err).to.exist
                 expect(res).to.have.status(HttpStatus.NOT_FOUND);
-                expect(res.text).to.equal('Invalid parameters. Missing patientId');
+                expect(res.text).to.equal('Invalid parameters - missing patientId');
                 done();
             });
     });

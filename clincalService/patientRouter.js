@@ -8,17 +8,18 @@ const bodyParser = require('body-parser');
 const HttpStatus = require('http-status');
 const logger = require('./logger.js');
 const config = require('./config/config');
+const utils = require('./utils');
 const clinicalService = require('./clinicalService');
 
 const router = express.Router();
 
-router.use(bodyParser.urlencoded({extended: true}));
+router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 router.post('/select',
     (req, res) => {
         if (!req.body || !req.body.patientId) {
-            res.status(HttpStatus.NOT_FOUND).send('Invalid parameters. Missing patientId');
+            res.status(HttpStatus.NOT_FOUND).send('Invalid parameters - missing patientId');
             return;
         }
 
@@ -32,11 +33,11 @@ router.post('/select',
 
         logger.debug('calling patient select');
 
-        clinicalService.selectPatient(req.auth, patientId).then((result) => {
+        clinicalService.selectPatient(utils.toContext(req), patientId).then((result) => {
             res.header('x-patient-token', result.patientToken);
             res.sendStatus(HttpStatus.OK);
         }).catch((err) => {
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err);
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
         });
     });
 
