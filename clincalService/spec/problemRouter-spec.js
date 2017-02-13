@@ -120,7 +120,7 @@ describe('test problem service route', () => {
             .send(testProblems.active.one.createArgs)
             .end((err, res) => {
                 expect(err).to.be.null;
-                expect(res).to.have.status(HttpStatus.OK);
+                expect(res).to.have.status(HttpStatus.CREATED);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.created;
 
