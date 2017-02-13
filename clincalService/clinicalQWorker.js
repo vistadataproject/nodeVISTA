@@ -93,7 +93,7 @@ module.exports = function () {
 
             finished({
                 type: 'error',
-                error: { name: err.name, message: err.message },
+                error: err,
             });
         }
     });

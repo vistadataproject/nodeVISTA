@@ -9,6 +9,7 @@ const HttpStatus = require('http-status');
 const logger = require('./logger.js');
 const config = require('./config/config');
 const utils = require('./utils');
+const InvalidParametersError = require('./errors/invalidParametersError');
 const clinicalService = require('./clinicalService');
 
 const router = express.Router();
@@ -19,8 +20,7 @@ router.use(bodyParser.json());
 router.post('/select',
     (req, res) => {
         if (!req.body || !req.body.patientId) {
-            res.status(HttpStatus.NOT_FOUND).send('Invalid parameters - missing patientId');
-            return;
+            throw new InvalidParametersError('Invalid parameters - missing patientId');
         }
 
         // TODO Patient select will be come more elaborate. Currently the factory just applies patientId to internal context.
@@ -37,7 +37,7 @@ router.post('/select',
             res.header('x-patient-token', result.patientToken);
             res.sendStatus(HttpStatus.OK);
         }).catch((err) => {
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+            throw err;
         });
     });
 

@@ -87,7 +87,7 @@ describe('test authentication service route', () => {
             });
     });
 
-    it('POST /auth/refreshToken call throws an error if an expired refresh token is passed in', (done) => {
+    it('POST /auth/refreshToken call returns an error if an expired refresh token is passed in', (done) => {
         // create expired refresh token
         refreshToken = jwt.sign({
             exp: Math.floor(Date.now() / 1000) - (60 * 60), // set expiration date to an hour ago
@@ -108,7 +108,7 @@ describe('test authentication service route', () => {
             });
     });
 
-    it('POST /auth/refreshToken call throws an error if an invalid refresh token is passed in', (done) => {
+    it('POST /auth/refreshToken call returns an error if an invalid refresh token is passed in', (done) => {
         chai.request(app)
             .post('/auth/refreshToken')
             .set('x-refresh-token', accessToken) // pass in accessToken

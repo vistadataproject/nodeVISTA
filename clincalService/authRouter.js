@@ -10,6 +10,7 @@ const logger = require('./logger.js');
 const config = require('./config/config');
 const requiresToken = require('./requiresToken');
 const utils = require('./utils');
+const InvalidParametersError = require('./errors/invalidParametersError');
 const clinicalService = require('./clinicalService');
 
 const router = express.Router();
@@ -19,8 +20,7 @@ router.use(bodyParser.json());
 
 router.post('/', (req, res) => {
     if (!req.body || !req.body.userId || !req.body.facilityId) {
-        res.status(HttpStatus.NOT_FOUND).send('Invalid parameters. Missing userId and/or facilityId');
-        return;
+        throw new InvalidParametersError('Invalid parameters - missing userId and/or facilityId');
     }
 
     let userId = req.body.userId;
@@ -38,8 +38,8 @@ router.post('/', (req, res) => {
         res.header('x-access-token', result.accessToken);
         res.header('x-refresh-token', result.refreshToken);
         res.sendStatus(HttpStatus.OK);
-    }).catch((err) => { // TODO add error checking
-        res.status(HttpStatus.UNAUTHORIZED).send('You are not authorized to use this service.');
+    }).catch((err) => {
+        throw err;
     });
 });
 
@@ -60,7 +60,7 @@ router.post('/refreshToken', (req, res) => {
         res.header('x-access-token', result.accessToken);
         res.sendStatus(HttpStatus.OK);
     }).catch((err) => {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+        throw err;
     });
 });
 

@@ -20,9 +20,8 @@ router.get('/:id',
         clinicalService.callService(utils.toContext(req), 'ProblemService', 'describe', [req.params.id]).then((result) => {
             res.send(result);
         }).catch((err) => {
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
+            throw err;
         });
     });
-
 
 module.exports = router;

@@ -46,9 +46,18 @@ app.listen(port, () => {
 
 // error handling
 app.use((err, req, res, next) => {
-    if (err.name === 'UnauthorizedError') {
-        res.status(HttpStatus.UNAUTHORIZED).send(err.message);
+    let status;
+    if (err.name === 'UnauthorizedError' || err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
+        status = HttpStatus.UNAUTHORIZED;
+    } else if (err.name === 'InvalidParametersError') {
+        status = HttpStatus.NOT_FOUND;
+    } else if (err.name === 'MissingTokenError') {
+        status = HttpStatus.BAD_REQUEST;
+    } else {
+        status = HttpStatus.INTERNAL_SERVER_ERROR;
     }
+
+    res.status(status).send(err.message);
 });
 
 module.exports = app;

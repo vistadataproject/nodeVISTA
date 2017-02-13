@@ -6,7 +6,7 @@ const fs = require('fs');
 const express = require('express');
 const jsonwebtoken = require('jsonwebtoken');
 const unless = require('express-unless');
-const HttpStatus = require('http-status');
+const MissingTokenError = require('./errors/missingTokenError');
 
 /**
  * Requires token middleware
@@ -29,23 +29,13 @@ module.exports = function (options) {
         const token = _req.get(tokenHeaderField);
 
         if (!token) {
-            res.status(HttpStatus.BAD_REQUEST).send(`Missing token (${tokenHeaderField})`);
-            return;
+            throw new MissingTokenError(`Missing token (${tokenHeaderField})`);
         }
 
-        try {
-            _req[requestProp] = jsonwebtoken.verify(
-                token,
-                secret,
-                { subject: tokenSubject });
-        } catch (err) {
-            if (err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
-                res.status(HttpStatus.UNAUTHORIZED).send(err.message);
-            } else {
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
-            }
-            return;
-        }
+        _req[requestProp] = jsonwebtoken.verify(
+            token,
+            secret,
+            { subject: tokenSubject });
 
         next();
     };
