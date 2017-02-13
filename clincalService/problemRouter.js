@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const HttpStatus = require('http-status');
 const logger = require('./logger.js');
 const utils = require('./utils');
+const InvalidParametersError = require('./errors/invalidParametersError');
 const clinicalService = require('./clinicalService');
 
 const router = express.Router();
@@ -105,11 +106,26 @@ router.put('/',
  *
  *      responses:
  *          200: Problem description
- *          404: Not found
+ *          400: invalid parameters produce a bad request
+ *          404: Resource not found
  */
 router.get('/:id',
     (req, res, next) => {
-        clinicalService.callService(utils.toContext(req), 'ProblemService', 'describe', [req.params.id]).then((result) => {
+        const problemId = req.params.id;
+
+        let paramErr;
+        if (!problemId) {
+            paramErr = 'Invalid parameter - missing problemId';
+        } else if (!/9000011-\d+/g.test(problemId)) {
+            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
+        }
+
+        if (paramErr) {
+            next(new InvalidParametersError(paramErr));
+            return;
+        }
+
+        clinicalService.callService(utils.toContext(req), 'ProblemService', 'describe', [problemId]).then((result) => {
             res.send(result);
         }).catch((err) => {
             next(err);
