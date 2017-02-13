@@ -132,4 +132,38 @@ router.get('/:id',
         });
     });
 
+/**
+ * /problem
+ *  GET:
+ *      Retrieves a list of all problems associated with a patient
+ *      produces: application/json
+ *      parameters:
+ *           @param {String=} filter Problem list status filter. Possible values: active, inactive, both, removed. Defaults to all.
+ *
+ *      responses:
+ *          200: List of all problems associated with a patient
+ *          400: invalid parameters produce a bad request
+ *          404: Resource not found
+ */
+router.get('/',
+    (req, res, next) => {
+        const filter = req.params.filter;
+
+        let paramErr;
+        if (filter && !/^(active|inactive|both|removed)$/g.test(filter)) {
+            paramErr = 'Invalid parameter - possible filter values are active, inactive, both, or removed.';
+        }
+
+        if (paramErr) {
+            next(new InvalidParametersError(paramErr));
+            return;
+        }
+
+        clinicalService.callService(utils.toContext(req), 'ProblemService', 'list', [filter]).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            next(err);
+        });
+    });
+
 module.exports = router;

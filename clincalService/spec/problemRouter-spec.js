@@ -187,18 +187,6 @@ describe('test problem service route', () => {
             });
     });
 
-    it('GET /problem without id', (done) => {
-        chai.request(app)
-            .get('/problem')
-            .set('authorization', `Bearer ${accessToken}`)
-            .set('x-patient-token', patientToken)
-            .end((err, res) => {
-                expect(err).to.exist
-                expect(res).to.have.status(HttpStatus.NOT_FOUND);
-                done();
-            });
-    });
-
     it('PUT /problem - update a problem', (done) => {
         chai.request(app)
             .put('/problem')
@@ -211,6 +199,35 @@ describe('test problem service route', () => {
                 const json = JSON.parse(res.text);
                 expect(json).to.have.updated;
                 expect(json.updated.onsetDate.value).to.equal('2016-03-01');
+
+                done();
+            });
+    });
+
+    it('GET /problem - list all problems', (done) => {
+        chai.request(app)
+            .get('/problem')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.results;
+                const problems = json.results;
+                expect(problems.length).to.equal(1);
+
+                let problem = problems[0];
+                expect(problem).to.have.id;
+                expect(problem.id).to.equal(problemId);
+
+                problem = _.omit(json.result, ['id', 'uniqueId']);
+
+                const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
+                Object.keys(problem).forEach((key) => {
+                    expect(problem[key]).to.deep.equal(expectedResult[key]);
+                });
+                expect(problems[0].id).to.equal(problemId);
 
                 done();
             });
