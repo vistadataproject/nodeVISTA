@@ -17,8 +17,7 @@ router.use(bodyParser.json());
  * /problem:
  *  POST:
  *      description: Creates a new problem.
- *      produces:
- *          - application/json
+ *      produces: application/json
  *      parameters:
  *          @param {String} args.diagnosis Diagnosis identifier.
  *          @param {String} args.providerNarrative Problem narrative string (e.g. 'Hypertension').
@@ -41,8 +40,8 @@ router.use(bodyParser.json());
  *          @param {Array=} args.comments Problem comments.
  *
  *      responses:
- *          201:
- *              description: new created problem
+ *          201: new created problem
+ *          400: invalid parameters produce a bad request
  */
 router.post('/',
     (req, res, next) => {
