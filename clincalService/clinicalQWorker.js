@@ -9,6 +9,7 @@ const vdmUtils = require('mvdm/vdmUtils');
 const ClinicalServiceFactory = require('mvdm/clinicalServiceFactory');
 const UnsupportedMethodError = require('./errors/unsupportedMethodError');
 const InvalidContextError = require('./errors/invalidContextError');
+const InvalidParametersError = require('./errors/invalidParametersError');
 
 let db;
 let clincalServiceFactory;
@@ -90,9 +91,14 @@ module.exports = function () {
                 type: 'clinicalService',
                 data: res,
             });
-        } catch (err) {
-            logger.error(`Error processing message: ${err.message}`);
+        } catch (e) {
+            let err = e;
+            // DMUtils defines error 11 as PROPERTIES_REQUIRED_ABSENT
+            if (/Error 11/g.test(err.message)) {
+                err = new InvalidParametersError(err.message);
+            }
 
+            logger.error(`Error processing message: ${err.message}`);
             finished({
                 type: 'error',
                 error: { name: err.name, message: err.message },
