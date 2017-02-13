@@ -4,8 +4,10 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const _ = require('underscore');
 const nodem = require('nodem');
 const fileman = require('mvdm/fileman');
+const vdmUtils = require('mvdm/vdmUtils');
 const problemUtils = require('mvdm/problems/problemRpcUtils');
 const app = require('../index');
 const HttpStatus = require('http-status');
@@ -25,17 +27,17 @@ describe('test problem service route', () => {
     let testProblems;
 
     before(() => {
-        // set node environment to test
-        process.env.NODE_ENV = 'test';
+        // sets the path for all mumps GT.M routines (compiled .m files)
+        process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath();
 
         db = new nodem.Gtm();
         db.open();
 
-        // problemUtils.purgeAllProblems(db); //clear out problems
-
         userId = fileman.lookupBy01(db, '200', 'ALEXANDER,ROBERT').id;
         facilityId = fileman.lookupBy01(db, '4', 'VISTA HEALTH CARE').id;
         patientId = fileman.lookupBy01(db, '2', 'CARTER,DAVID').id;
+
+        problemUtils.purgeAllProblems(db); // clear out problems
 
         testProblems = _testProblems(db, userId, facilityId);
     });
@@ -89,6 +91,49 @@ describe('test problem service route', () => {
             });
     });
 
+    function setDefaultValues(expectedRes, res) {
+        const expectedResult = expectedRes;
+        expectedResult.patient = res.patient;
+        expectedResult.enteredBy = res.enteredBy;
+        expectedResult.responsibleProvider = res.responsibleProvider;
+        expectedResult.lastModifiedDate = res.lastModifiedDate;
+        expectedResult.enteredDate = res.enteredDate;
+        expectedResult.interestDate = res.interestDate;
+
+        // set comment defaults (enteredBy, enteredDate)
+        if (res.comments) {
+            for (let i = 0; i < res.comments.length; i += 1) {
+                expectedResult.comments[i].enteredBy = res.comments[i].enteredBy;
+                expectedResult.comments[i].enteredDate = res.comments[i].enteredDate;
+                expectedResult.comments[i].facility = res.comments[i].facility;
+            }
+        }
+        return expectedResult;
+    }
+
+    it('POST /problem - create a problem', (done) => {
+        chai.request(app)
+            .post('/problem')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send(testProblems.active.one.createArgs)
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.created;
+
+                const problem = _.omit(json.created, ['id', 'uniqueId']);
+
+                const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
+                Object.keys(problem).forEach((key) => {
+                    expect(problem[key]).to.deep.equal(expectedResult[key]);
+                });
+
+                done();
+            });
+    });
+
     it('GET /problem/:id without access token', (done) => {
         chai.request(app)
             .get('/problem/9000011-1')
@@ -125,9 +170,16 @@ describe('test problem service route', () => {
                 expect(res).to.have.status(HttpStatus.OK);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.result;
-                const problem = json.result;
+                let problem = json.result;
                 expect(problem).to.have.id;
                 expect(problem.id).to.equal('9000011-1');
+
+                problem = _.omit(json.result, ['id', 'uniqueId']);
+
+                const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
+                Object.keys(problem).forEach((key) => {
+                    expect(problem[key]).to.deep.equal(expectedResult[key]);
+                });
                 done();
             });
     });

@@ -8,6 +8,7 @@ const fs = require('fs');
 const nodem = require('nodem');
 const jwt = require('jsonwebtoken');
 const fileman = require('mvdm/fileman');
+const vdmUtils = require('mvdm/vdmUtils');
 const app = require('../index');
 const config = require('../config/config');
 const HttpStatus = require('http-status');
@@ -26,8 +27,8 @@ describe('test patient service route', () => {
     let pubCert;
 
     before(() => {
-        // set node environment to test
-        process.env.NODE_ENV = 'test';
+        // sets the path for all mumps GT.M routines (compiled .m files)
+        process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath();
 
         db = new nodem.Gtm();
         db.open();
