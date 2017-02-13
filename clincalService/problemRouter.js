@@ -14,9 +14,9 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 /**
- * /problem:
+ * /problem
  *  POST:
- *      description: Creates a new problem.
+ *      Creates a new problem.
  *      produces: application/json
  *      parameters:
  *          @param {String} args.diagnosis Diagnosis identifier.
@@ -52,6 +52,40 @@ router.post('/',
         });
     });
 
+/**
+ * /problem
+ *  PUT:
+ *      Updates an existing problem.
+ *      produces: application/json
+ *      parameters:
+ *          @param {Object} args Update problem arguments.
+ *          @param {String} args.id Problem identifier.
+ *          @param {String} args.diagnosis Diagnosis identifier.
+ *          @param {String} args.providerNarrative Problem narrative string (e.g. 'Hypertension').
+ *          @param {String} args.problem Problem expression identifier.
+ *          @param {String} args.clinic Clinic identifier.
+ *          @param {enum} args.problemStatus Status of a problem. Possible values: ACTIVE, INACTIVE.
+ *          @param {String} args.snomedCTConceptCode SNOMED CT concept code.
+ *          @param {String} args.snomedCTDesignationCode SNMOED CT designation code.
+ *          @param {String} args.codingSystem Coding system associated with the problem (e.g. 10D).
+ *          @param {enum=} args.condition Problem condition. Possible values: TRANSCRIBED, PERMANENT, HIDDEN. Defaults to PERMANENT
+ *          @param {String=} args.responsibleProvider Responsible provider identifier.
+ *          @param {enum=} args.priority Immediacy value. Possible values: ACUTE, CHRONIC.
+ *          @param {Date=} args.onsetDate Date of problem onset.
+ *          @param {Date=} args.interestDate Date of interest.
+ *          @param {Boolean=} args.uniqueTermRequested Indicates whether a unique term was requested.
+ *          @param {String=} args.uniqueTermRequestComment Unique term request comment.
+ *          @param {Array=} args.treatmentFactors List of treatment factors. Possible values: SERVICE_CONNECTED, AGENT_ORANGE,
+ *                            IONIZING_RADIATION, PERSIAN_GULF, HEAD_AND_OR_NECK_CANCER,
+ *                            MILITARY_SEXUAL_TRAUMA, COMBAT_VETERAN, SHIPBOARD_HAZARD_DEFENSE.
+ *          @param {Array=} args.comments Problem comments.
+ *          @param {String} args.comments.comment.id Comment index.
+ *          @param {String} args.comments.comment.text Comment text.
+ *
+ *      responses:
+ *          200: an updated problem
+ *          400: invalid parameters produce a bad request
+ */
 router.put('/',
     (req, res, next) => {
         clinicalService.callService(utils.toContext(req), 'ProblemService', 'update', [req.body]).then((result) => {
@@ -61,6 +95,18 @@ router.put('/',
         });
     });
 
+/**
+ * /problem/:id
+ *  GET:
+ *      Retrieves a problem description
+ *      produces: application/json
+ *      parameters:
+ *          @param {String} problemId Problem identifier.
+ *
+ *      responses:
+ *          200: Problem description
+ *          404: Not found
+ */
 router.get('/:id',
     (req, res, next) => {
         clinicalService.callService(utils.toContext(req), 'ProblemService', 'describe', [req.params.id]).then((result) => {
