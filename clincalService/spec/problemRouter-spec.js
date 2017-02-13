@@ -4,14 +4,12 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const fs = require('fs');
 const nodem = require('nodem');
-const jwt = require('jsonwebtoken');
 const fileman = require('mvdm/fileman');
 const problemUtils = require('mvdm/problems/problemRpcUtils');
 const app = require('../index');
-const config = require('../config/config');
 const HttpStatus = require('http-status');
+const _testProblems = require('./testProblems');
 
 chai.use(chaiHttp);
 
@@ -24,8 +22,7 @@ describe('test problem service route', () => {
     let patientId;
     let accessToken;
     let patientToken;
-    let privCert;
-    let pubCert;
+    let testProblems;
 
     before(() => {
         // set node environment to test
@@ -40,8 +37,7 @@ describe('test problem service route', () => {
         facilityId = fileman.lookupBy01(db, '4', 'VISTA HEALTH CARE').id;
         patientId = fileman.lookupBy01(db, '2', 'CARTER,DAVID').id;
 
-        privCert = fs.readFileSync(config.jwt.privateKey);
-        pubCert = fs.readFileSync(config.jwt.publicKey);
+        testProblems = _testProblems(db, userId, facilityId);
     });
 
     beforeEach('get an access token', (done) => {
@@ -67,7 +63,7 @@ describe('test problem service route', () => {
         chai.request(app)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
-            .send({patientId})
+            .send({ patientId })
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(HttpStatus.OK);
@@ -75,6 +71,20 @@ describe('test problem service route', () => {
 
                 patientToken = res.header['x-patient-token'];
 
+                done();
+            });
+    });
+
+    it('POST /problem - create with missing/empty parameters', (done) => {
+        chai.request(app)
+            .post('/problem')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ patientId })
+            .end((err, res) => {
+                expect(err).to.exist
+                // expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                // expect(res.text).to.equal('Missing token (x-patient-token)');
                 done();
             });
     });

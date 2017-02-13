@@ -18,9 +18,9 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
     if (!req.body || !req.body.userId || !req.body.facilityId) {
-        throw new InvalidParametersError('Invalid parameters - missing userId and/or facilityId');
+        next(new InvalidParametersError('Invalid parameters - missing userId and/or facilityId'));
     }
 
     let userId = req.body.userId;
@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
         res.header('x-refresh-token', result.refreshToken);
         res.sendStatus(HttpStatus.OK);
     }).catch((err) => {
-        throw err;
+        next(err);
     });
 });
 
@@ -52,7 +52,7 @@ router.use('/refreshToken',
         tokenSubject: 'refreshToken',
     }));
 
-router.post('/refreshToken', (req, res) => {
+router.post('/refreshToken', (req, res, next) => {
     clinicalService.refreshToken({
         userId: req.refresh.userId,
         facilityId: req.refresh.facilityId,
@@ -60,7 +60,7 @@ router.post('/refreshToken', (req, res) => {
         res.header('x-access-token', result.accessToken);
         res.sendStatus(HttpStatus.OK);
     }).catch((err) => {
-        throw err;
+        next(err);
     });
 });
 

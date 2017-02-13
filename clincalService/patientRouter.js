@@ -18,7 +18,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 router.post('/select',
-    (req, res) => {
+    (req, res, next) => {
         if (!req.body || !req.body.patientId) {
             throw new InvalidParametersError('Invalid parameters - missing patientId');
         }
@@ -37,7 +37,7 @@ router.post('/select',
             res.header('x-patient-token', result.patientToken);
             res.sendStatus(HttpStatus.OK);
         }).catch((err) => {
-            throw err;
+            next(err);
         });
     });
 

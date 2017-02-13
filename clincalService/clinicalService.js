@@ -99,7 +99,9 @@ class ClinicalService {
 
             this.processQueue.handleMessage(messageObject, (responseObject) => {
                 if (responseObject.message.type === 'error') {
-                    reject(responseObject.message.error);
+                    const err = new Error(responseObject.message.error.message);
+                    err.name = responseObject.message.error.name;
+                    reject(err);
                 } else {
                     resolve(responseObject.message.data);
                 }

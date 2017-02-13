@@ -10,7 +10,7 @@
  * (c) VISTA Data Project 2016
  */
 
-const testUtils = require('./../testUtils');
+const testUtils = require('./testUtils');
 
 module.exports = function (db, userId, facilityId) {
     const activeProblemOne = {

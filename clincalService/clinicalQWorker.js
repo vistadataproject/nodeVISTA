@@ -95,7 +95,7 @@ module.exports = function () {
 
             finished({
                 type: 'error',
-                error: err,
+                error: { name: err.name, message: err.message },
             });
         }
     });
