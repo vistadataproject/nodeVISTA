@@ -20,7 +20,8 @@ router.use(bodyParser.json());
 router.post('/select',
     (req, res, next) => {
         if (!req.body || !req.body.patientId) {
-            throw new InvalidParametersError('Invalid parameters - missing patientId');
+            next(new InvalidParametersError('Invalid parameters - missing patientId'));
+            return;
         }
 
         // TODO Patient select will be come more elaborate. Currently the factory just applies patientId to internal context.

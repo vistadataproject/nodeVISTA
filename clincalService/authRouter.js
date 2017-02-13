@@ -21,6 +21,7 @@ router.use(bodyParser.json());
 router.post('/', (req, res, next) => {
     if (!req.body || !req.body.userId || !req.body.facilityId) {
         next(new InvalidParametersError('Invalid parameters - missing userId and/or facilityId'));
+        return;
     }
 
     let userId = req.body.userId;
