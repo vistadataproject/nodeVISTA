@@ -9,7 +9,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const config = require('./config/config.js');
 const logger = require('./logger.js');
 const HttpStatus = require('http-status');
-const requiresPatientToken = require('./requiresPatientToken');
+const requiresToken = require('./requiresToken');
 const authRouter = require('./authRouter');
 const patientRouter = require('./patientRouter');
 const problemRouter = require('./problemRouter');
@@ -26,8 +26,11 @@ app.use(
     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
 
 app.use(
-    requiresPatientToken({
-        pubKeyPath: config.jwt.publicKey,
+    requiresToken({
+        secret: fs.readFileSync(config.jwt.publicKey),
+        requestProperty: 'patient',
+        requestHeaderField: 'x-patient-token',
+        tokenSubject: 'patientToken',
     }).unless({ path: [/^\/auth/, /^\/auth\/.*/, /^\/patient\/select/, /^\/patient\/select\//] }));
 
 // init routers

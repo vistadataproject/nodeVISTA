@@ -69,21 +69,11 @@ class ClinicalService {
         });
     }
 
-    refreshToken(refreshToken) {
+    refreshToken(context) {
+        // sign new refresh token with RSA SHA256
         return new Promise((resolve, reject) => {
-            const pubCert = fs.readFileSync(config.jwt.publicKey);
-            jwt.verify(refreshToken, pubCert, { subject: 'refreshToken' }, (err, decoded) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    // token is valid
-                    resolve({
-                        accessToken: this._issueAccessToken({
-                            userId: decoded.userId,
-                            facilityId: decoded.facilityId,
-                        }),
-                    });
-                }
+            resolve({
+                accessToken: this._issueAccessToken(context),
             });
         });
     }

@@ -2,10 +2,14 @@
 
 'use strict';
 
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
-const logger = require('./logger.js');
 const HttpStatus = require('http-status');
+const logger = require('./logger.js');
+const config = require('./config/config');
+const requiresToken = require('./requiresToken');
+const utils = require('./utils');
 const clinicalService = require('./clinicalService');
 
 const router = express.Router();
@@ -39,25 +43,25 @@ router.post('/', (req, res) => {
     });
 });
 
+// use middleware to decode the refresh token
+router.use('/refreshToken',
+    requiresToken({
+        secret: fs.readFileSync(config.jwt.publicKey),
+        requestProperty: 'refresh',
+        requestHeaderField: 'x-refresh-token',
+        tokenSubject: 'refreshToken',
+    }));
+
 router.post('/refreshToken', (req, res) => {
-    const refreshToken = req.get('x-refresh-token');
-
-    if (!refreshToken) {
-        res.status(HttpStatus.BAD_REQUEST).send('Missing refresh token in header (x-refresh-token)');
-        return;
-    }
-
-    clinicalService.refreshToken(refreshToken).then((result) => {
+    clinicalService.refreshToken({
+        userId: req.refresh.userId,
+        facilityId: req.refresh.facilityId,
+    }).then((result) => {
         res.header('x-access-token', result.accessToken);
         res.sendStatus(HttpStatus.OK);
     }).catch((err) => {
-        if (err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
-            res.status(HttpStatus.UNAUTHORIZED).send(err.message);
-        } else {
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
-        }
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err.message);
     });
 });
-
 
 module.exports = router;

@@ -100,7 +100,7 @@ describe('test problem service route', () => {
             .end((err, res) => {
                 expect(err).to.exist
                 expect(res).to.have.status(HttpStatus.BAD_REQUEST);
-                expect(res.text).to.equal('Missing patient token (x-patient-token)');
+                expect(res.text).to.equal('Missing token (x-patient-token)');
                 done();
             });
     });
