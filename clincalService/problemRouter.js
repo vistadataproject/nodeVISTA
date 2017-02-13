@@ -147,19 +147,10 @@ router.get('/:id',
  */
 router.get('/',
     (req, res, next) => {
-        let filter;
+        const filter = req.query ? req.query.filter : undefined;
 
-        if (req.query) {
-            filter = req.query.filter;
-        }
-
-        let paramErr;
         if (filter && !/^(active|inactive|both|removed)$/g.test(filter)) {
-            paramErr = 'Invalid parameter - possible filter values are active, inactive, both, or removed';
-        }
-
-        if (paramErr) {
-            next(new InvalidParametersError(paramErr));
+            next(new InvalidParametersError('Invalid parameter - possible filter values are active, inactive, both, or removed'));
             return;
         }
 
