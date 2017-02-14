@@ -3,7 +3,7 @@
 
 ## Running integration tests
 
-The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute the tests, [Chai expects](http://chaijs.com/guide/styles/#expect) for assertions, and (chai-http)[https://github.com/chaijs/chai-http] to excute test code against an instance of the REST service.
+The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute the tests, [Chai expects](http://chaijs.com/guide/styles/#expect) for assertions, and [chai-http](https://github.com/chaijs/chai-http) to excute test code against an instance of the REST service.
 
 * Install Mocha 
 ```text
