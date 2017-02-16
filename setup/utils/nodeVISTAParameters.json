@@ -1948,5 +1948,17 @@
         "entity": "SYS",
         "instance": "10",
         "value": "25"
+    },
+    {
+        "name": "GMV DLL VERSION",
+        "entity": "SYS",
+        "instance": "GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52",
+        "value": "1"
+    },
+    {
+        "name": "GMV DLL VERSION",
+        "entity": "SYS",
+        "instance": "GMV_VITALSVIEWENTER.DLL:v. 04/07/09 16:30",
+        "value": "0"
     }
 ]
