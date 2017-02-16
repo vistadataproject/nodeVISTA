@@ -28,8 +28,8 @@
     //HtmlCell formatting utility
     Backgrid.HtmlCell.formatAsHtml = function (rawValue, model) {
 
-        //mvdmLocked runner events are displayed as bold
-        if (model.get('runner') === 'mvdmLocked') {
+        //isRPCLocked runner events are displayed as bold
+        if (model.get('runner') === 'rpcLocked') {
             rawValue = '<strong>' + rawValue + '</strong>';
         }
 

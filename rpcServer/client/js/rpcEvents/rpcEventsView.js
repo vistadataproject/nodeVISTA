@@ -56,7 +56,7 @@ define([
                     {label: "All", value: null},
                     {label: "All No Polling", value: 'noPoller'},
                     {label: 'RPC Runner', value: 'rpcRunner'},
-                    {label: 'MVDM Locked', value: 'mvdmLocked'},
+                    {label: 'RPC Locked', value: 'rpcLocked'},
                     {label: 'Server', value: 'server'}],
                 selectMatcher: function(value) {
                     return function(model) {
@@ -93,8 +93,8 @@ define([
 
                             if (rawValue === 'rpcRunner') {
                                 retVal = 'RPC Runner';
-                            } else if (rawValue === 'mvdmLocked') {
-                                retVal = 'MVDM Locked';
+                            } else if (rawValue === 'rpcLocked') {
+                                retVal = 'RPC Locked';
                             } else if (rawValue === 'server') {
                                 retVal = 'Server';
                             }
@@ -160,7 +160,7 @@ define([
             this.$el.find('.event-count-total').html(EventCounter.get('total'));
             this.$el.find('.event-count-total-no-poller').html(EventCounter.get('totalNoPoller'));
             this.$el.find('.event-count-rpc-runner').html(EventCounter.get('rpcRunner'));
-            this.$el.find('.event-count-mvdm-locked').html(EventCounter.get('mvdmLocked'));
+            this.$el.find('.event-count-mvdm-locked').html(EventCounter.get('rpcLocked'));
             this.$el.find('.event-count-server').html(EventCounter.get('server'));
         },
         clearEventCounter: function() {
@@ -168,7 +168,7 @@ define([
                 total: 0,
                 totalNoPoller: 0,
                 rpcRunner: 0,
-                mvdmLocked: 0,
+                rpcLocked: 0,
                 server: 0
             });
 

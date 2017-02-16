@@ -19,7 +19,7 @@ define([
             sortKey: 'name'
         },
         consumeEvent: function(eventModel) {
-            if (eventModel.get('runner') !== 'mvdmLocked') {
+            if (eventModel.get('runner') !== 'rpcLocked') {
                 return;
             }
 

@@ -69,7 +69,7 @@ define([
             var distinctLocked = 0;
 
             this.forEach(function(rpc) {
-                if (rpc.get('runner') === 'mvdmLocked') {
+                if (rpc.get('runner') === 'rpcLocked') {
                     distinctLocked++;
                 }
             });
@@ -81,7 +81,7 @@ define([
             var locked = 0;
 
             this.forEach(function(rpc) {
-                if (rpc.get('runner') === 'mvdmLocked') {
+                if (rpc.get('runner') === 'rpcLocked') {
                     locked += rpc.get('count');
                 }
             });

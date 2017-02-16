@@ -43,8 +43,8 @@ function init() {
 
         var settings = req.body;
 
-        if (_.has(settings, 'isMvdmLocked')) {
-            mvdmManagement.isMvdmLocked = settings.isMvdmLocked;
+        if (_.has(settings, 'isRPCLocked')) {
+            mvdmManagement.isRPCLocked = settings.isRPCLocked;
         }
 
         return res.sendStatus(200);

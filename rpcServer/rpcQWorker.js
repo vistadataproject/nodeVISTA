@@ -17,10 +17,10 @@ const clinicalModels = require('./clinicalModels');
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('mvdm/rpcFacade');
+var RPCDispatcher = require('./rpcDispatcher');
 var RPCContexts = require('mvdm/rpcRunner').RPCContexts;
 
-var db, rpcFacade, rpcContexts;
+var db, rpcDispatcher, rpcContexts;
 //need for user and facility lookup
 var MVDM = require('mvdm/mvdm');
 var vdmUtils = require('mvdm/vdmUtils');
@@ -44,14 +44,14 @@ function connectVistaDatabase() {
     db = new nodem.Gtm();
     db.open();
 
-    const rpcL = new ClinicalRPCLocker(db);
-    rpcL.addVDMModel(clinicalModels.vdmModel);
-    rpcL.addMVDMModel(clinicalModels.mvdmModel);
-    rpcL.addLockerModel(clinicalModels.rpcLModel);
+    const cRPCL = new ClinicalRPCLocker(db);
+    cRPCL.addVDMModel(clinicalModels.vdmModel);
+    cRPCL.addMVDMModel(clinicalModels.mvdmModel);
+    cRPCL.addLockerModel(clinicalModels.rpcLModel);
 
-    rpcFacade = new RPCFacade(db, rpcL);
-    rpcFacade.setLocking(true); //default is to utilize mvdm locking
+    const rpcLockers = [cRPCL];
 
+    rpcDispatcher = new RPCDispatcher(db, rpcLockers);
     rpcContexts = new RPCContexts(db);
 }
 
@@ -68,7 +68,7 @@ function generateTransactionId() {
 //    FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
 //
 //    if (facilityCode !== 'unk') { //unknown facility a result of a failed logon attempt
-//        rpcFacade.setUserAndFacility(DUZ, facilityCode);
+//        rpcDispatcher.setUserAndFacility(DUZ, facilityCode);
 //    }
 //}
 
@@ -101,7 +101,7 @@ function callRPC(messageObject, send) {
     } else {
         // These are normal RPCs that can go to either the locker or the runner.
         LOGGER.debug("calling RPC service");
-        var ret = rpcFacade.run(rpcObject.name, rpcObject.args);
+        var ret = rpcDispatcher.dispatch(rpcObject.name, rpcObject.args);
 
         rpcObject.to = ret.path;
         response = ret.rpcResponse;
@@ -132,7 +132,7 @@ function callRPC(messageObject, send) {
         };
 
         //include user if
-        var userAndFacility = rpcFacade.getUserAndFacility();
+        var userAndFacility = rpcDispatcher.getUserAndFacility();
 
         rpcCallEvent.user = {
             id: '200-' + userAndFacility.userId,
@@ -235,7 +235,7 @@ module.exports = function() {
 
         // now check the message to setup callbacks to the rpcServer after running the rpc or other messages
         if (messageObj.method === 'callRPC') {
-            rpcFacade.setLocking(messageObj.isMvdmLocked);
+            rpcDispatcher.setLocking(messageObj.isRPCLocked);
 
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
@@ -250,9 +250,9 @@ module.exports = function() {
 
             finished(res);
         } else if (messageObj.method === 'dbReinit') {
-            // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcFacade)
-            if (rpcFacade !== undefined) {
-                rpcFacade.reinit();
+            // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcDispatcher)
+            if (rpcDispatcher !== undefined) {
+                rpcDispatcher.reinit();
             }
             // also clear the contexts
             if (rpcContexts !== undefined) {
@@ -264,7 +264,7 @@ module.exports = function() {
             finished({
                 type: 'rpcL',
                 event: {
-                    list: rpcFacade.getLockedRPCList()
+                    list: rpcDispatcher.getLockedRPCList()
                 },
                 eventType: 'lockedRPCList'
             });
