@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 
 var LOGGER = require('./logger.js');
@@ -11,6 +12,8 @@ var uuid = require('uuid');
 var $ = require('jquery');
 var _ = require('underscore');
 
+const ClinicalRPCLocker = require('mvdm/cRPCL');
+const clinicalModels = require('./clincalModels');
 
 // imports for RPCService
 var nodem = require('nodem');
@@ -38,11 +41,15 @@ process.on('uncaughtException', function(err) {
 function connectVistaDatabase() {
     process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
     // console.log("process.env.gtmroutines: " + process.env.gtmroutines);
-
     db = new nodem.Gtm();
     db.open();
 
-    rpcFacade = new RPCFacade(db);
+    const rpcL = new ClinicalRPCLocker(db);
+    rpcL.addVDMModel(clinicalModels.vdmModel);
+    rpcL.addMVDMModel(clinicalModels.mvdmModel);
+    rpcL.addLockerModel(clinicalModels.rpcLModel);
+
+    rpcFacade = new RPCFacade(db, rpcL);
     rpcFacade.setLocking(true); //default is to utilize mvdm locking
 
     rpcContexts = new RPCContexts(db);
