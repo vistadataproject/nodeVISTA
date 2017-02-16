@@ -13,7 +13,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 const ClinicalRPCLocker = require('mvdm/cRPCL');
-const clinicalModels = require('./clincalModels');
+const clinicalModels = require('./clinicalModels');
 
 // imports for RPCService
 var nodem = require('nodem');
