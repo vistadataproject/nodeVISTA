@@ -288,7 +288,6 @@ describe('test problem service route', () => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(HttpStatus.OK);
                 const json = JSON.parse(res.text);
-                console.log(JSON.stringify(json, null, 2));
                 expect(json).to.have.comments;
 
                 done();
