@@ -8,24 +8,25 @@ const _ = require('underscore');
 const nodem = require('nodem');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
-const problemUtils = require('mvdm/problems/problemRpcUtils');
+const allergyUtils = require('mvdm/allergies/allergyUtils');
 const app = require('../index');
 const HttpStatus = require('http-status');
-const _testProblems = require('./testProblems');
+const moment = require('moment');
+const _testAllergies = require('./testAllergies');
 
 chai.use(chaiHttp);
 
 const expect = chai.expect;
 
-describe('test problem service route', () => {
+describe('test allergy service route', () => {
     let db;
     let userId;
     let facilityId;
     let patientId;
-    let problemId;
+    let allergyId;
     let accessToken;
     let patientToken;
-    let testProblems;
+    let testAllergies;
 
     before(() => {
         // sets the path for all mumps GT.M routines (compiled .m files)
@@ -38,10 +39,29 @@ describe('test problem service route', () => {
         facilityId = fileman.lookupBy01(db, '4', 'VISTA HEALTH CARE').id;
         patientId = fileman.lookupBy01(db, '2', 'CARTER,DAVID').id;
 
-        problemUtils.purgeAllProblems(db); // clear out problems
+        allergyUtils.purgeAllAllergies(db); // clear out allergies
 
-        testProblems = _testProblems(db, userId, facilityId);
+        testAllergies = _testAllergies(db, userId, facilityId);
     });
+
+    function toArgs(createInput) {
+        const args = _.clone(createInput);
+
+        if (args.reactions) {
+            const reactions = [];
+            args.reactions.forEach((reaction) => {
+                reactions.push(reaction.reaction.id);
+            });
+
+            args.reactions = reactions;
+        }
+
+        if (args.dateOccurred) {
+            args.dateOccurred = moment(args.dateOccurred.value).toDate();
+        }
+
+        return args;
+    }
 
     beforeEach('get an access token', (done) => {
         chai.request(app)
@@ -78,9 +98,9 @@ describe('test problem service route', () => {
             });
     });
 
-    it('POST /problem - create with missing/empty parameters', (done) => {
+    it('POST /allergy - create with missing/empty parameters', (done) => {
         chai.request(app)
-            .post('/problem')
+            .post('/allergy')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
             .send({ patientId })
@@ -92,53 +112,28 @@ describe('test problem service route', () => {
             });
     });
 
-    function setDefaultValues(expectedRes, res) {
-        const expectedResult = expectedRes;
-        expectedResult.patient = res.patient;
-        expectedResult.enteredBy = res.enteredBy;
-        expectedResult.responsibleProvider = res.responsibleProvider;
-        expectedResult.lastModifiedDate = res.lastModifiedDate;
-        expectedResult.enteredDate = res.enteredDate;
-        expectedResult.interestDate = res.interestDate;
-
-        // set comment defaults (enteredBy, enteredDate)
-        if (res.comments) {
-            for (let i = 0; i < res.comments.length; i += 1) {
-                expectedResult.comments[i].enteredBy = res.comments[i].enteredBy;
-                expectedResult.comments[i].enteredDate = res.comments[i].enteredDate;
-                expectedResult.comments[i].facility = res.comments[i].facility;
-            }
-        }
-        return expectedResult;
-    }
-
-    it('POST /problem - create a problem', (done) => {
+    it('POST /allergy - create an allergy', (done) => {
         chai.request(app)
-            .post('/problem')
+            .post('/allergy')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
-            .send(testProblems.active.two.createArgs)
+            .send(toArgs(testAllergies.observeds.one.createInput))
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(HttpStatus.CREATED);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.created;
-
-                problemId = json.created.id;
-
-                const problem = _.omit(json.created, ['id', 'uniqueId', 'providerNarrative']);
-                const expectedResult = setDefaultValues(testProblems.active.two.createResult, problem);
-                Object.keys(problem).forEach((key) => {
-                    expect(problem[key]).to.deep.equal(expectedResult[key]);
-                });
-
+                const allergy = json.created;
+                allergyId = allergy.id;
+                expect(allergy).to.have.reactant;
+                expect(allergy.reactant.label).to.equal('CHOCOLATE');
                 done();
             });
     });
 
-    it('GET /problem/:id without access token', (done) => {
+    it('GET /allergy/:id without access token', (done) => {
         chai.request(app)
-            .get(`/problem/${problemId}`)
+            .get(`/allergy/${allergyId}`)
             // exclude access token
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -149,9 +144,9 @@ describe('test problem service route', () => {
             });
     });
 
-    it('GET /problem/:id without patient token', (done) => {
+    it('GET /allergy/:id without patient token', (done) => {
         chai.request(app)
-            .get(`/problem/${problemId}`)
+            .get(`/allergy/${allergyId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             // exclude patient token
             .end((err, res) => {
@@ -162,9 +157,24 @@ describe('test problem service route', () => {
             });
     });
 
-    it('GET /problem/:id', (done) => {
+    it('GET /allergy/:id - describe an allergy with an invalid allergy id', (done) => {
         chai.request(app)
-            .get(`/problem/${problemId}`)
+            .get('/allergy/1234')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - id must be in the form of 120_8-{IEN}');
+
+                done();
+            });
+    });
+
+    it('GET /allergy/:id', (done) => {
+        chai.request(app)
+            .get(`/allergy/${allergyId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -172,40 +182,19 @@ describe('test problem service route', () => {
                 expect(res).to.have.status(HttpStatus.OK);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.result;
-                let problem = json.result;
-                expect(problem).to.have.id;
-                expect(problem.id).to.equal(problemId);
-
-                problem = _.omit(json.result, ['id', 'uniqueId', 'providerNarrative']);
-
-                const expectedResult = setDefaultValues(testProblems.active.two.createResult, problem);
-                Object.keys(problem).forEach((key) => {
-                    expect(problem[key]).to.deep.equal(expectedResult[key]);
-                });
-                done();
-            });
-    });
-
-    it('PUT /problem - update a problem', (done) => {
-        chai.request(app)
-            .put('/problem')
-            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
-            .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: problemId, onsetDate: '2016-03-01' })
-            .end((err, res) => {
-                expect(err).to.be.null;
-                expect(res).to.have.status(HttpStatus.OK);
-                const json = JSON.parse(res.text);
-                expect(json).to.have.updated;
-                expect(json.updated.onsetDate.value).to.equal('2016-03-01');
+                const allergy = json.result;
+                expect(allergy).to.have.id;
+                expect(allergy.id).to.equal(allergyId);
+                expect(allergy).to.have.reactant;
+                expect(allergy.reactant.label).to.equal('CHOCOLATE');
 
                 done();
             });
     });
 
-    it('GET /problem - list all problems', (done) => {
+    it('GET /allergy - list all allergies', (done) => {
         chai.request(app)
-            .get('/problem')
+            .get('/allergy')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -213,82 +202,68 @@ describe('test problem service route', () => {
                 expect(res).to.have.status(HttpStatus.OK);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.results;
-                const problems = json.results;
-                expect(problems.length).to.equal(1);
+                const allergies = json.results;
+                expect(allergies.length).to.equal(1);
 
-                let problem = problems[0];
-                expect(problem).to.have.id;
-                expect(problem.id).to.equal(problemId);
-
-                problem = _.omit(json.result, ['id', 'uniqueId', 'providerNarrative']);
-
-                const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
-                Object.keys(problem).forEach((key) => {
-                    expect(problem[key]).to.deep.equal(expectedResult[key]);
-                });
-                expect(problems[0].id).to.equal(problemId);
+                const allergy = allergies[0];
+                expect(allergy).to.have.id;
+                expect(allergy.id).to.equal(allergyId);
+                expect(allergy).to.have.reactant;
+                expect(allergy.reactant.label).to.equal('CHOCOLATE');
 
                 done();
             });
     });
 
-    it('GET /problem - invalid filter', (done) => {
+    it('PUT /remove - remove an allergy without allergy id', (done) => {
+        const removeComment = 'entered by mistake';
         chai.request(app)
-            .get('/problem')
-            .query({ filter: 'all' }) // an invalid filter parameter
+            .put('/allergy/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ comment: removeComment })
             .end((err, res) => {
                 expect(err).to.exist
                 expect(res).to.have.status(HttpStatus.BAD_REQUEST);
-                expect(res.text).to.equal('Invalid parameter - possible filter values are active, inactive, both, or removed');
+                expect(res.text).to.equal('Invalid parameter - missing id');
+
                 done();
             });
     });
 
-    it('PUT /remove - remove a problem', (done) => {
+    it('PUT /remove - remove an allergy with an invalid allergy id', (done) => {
+        const removeComment = 'entered by mistake';
         chai.request(app)
-            .put('/problem/remove')
+            .put('/allergy/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: problemId })
+            .send({ id: '1234', comment: removeComment })
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - id must be in the form of 120_8-{IEN}');
+
+                done();
+            });
+    });
+
+    it('PUT /remove - remove an allergy', (done) => {
+        const removeComment = 'entered by mistake';
+        chai.request(app)
+            .put('/allergy/remove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: allergyId, comment: removeComment })
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(HttpStatus.OK);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.removed;
-
-                done();
-            });
-    });
-
-    it('PUT /unremove - unremove a problem', (done) => {
-        chai.request(app)
-            .put('/problem/unremove')
-            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
-            .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: problemId })
-            .end((err, res) => {
-                expect(err).to.be.null;
-                expect(res).to.have.status(HttpStatus.OK);
-                const json = JSON.parse(res.text);
-                expect(json).to.have.unremoved;
-
-                done();
-            });
-    });
-
-    it('DELETE /deleteComments - unremove a problem', (done) => {
-        chai.request(app)
-            .delete('/problem/deleteComments')
-            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
-            .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: problemId, commentIds: [1] })
-            .end((err, res) => {
-                expect(err).to.be.null;
-                expect(res).to.have.status(HttpStatus.OK);
-                const json = JSON.parse(res.text);
-                expect(json).to.have.comments;
+                expect(json).to.have.isRemoved;
+                expect(json.removed.isRemoved).to.be.true;
+                expect(json.removed).to.have.removalDetails;
+                expect(json.removed.removalDetails.comment).to.equal(removeComment);
 
                 done();
             });

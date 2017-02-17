@@ -14,6 +14,17 @@ const router = express.Router();
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+
+function validateProblemId(problemId) {
+    let paramErr;
+    if (!problemId) {
+        paramErr = 'Invalid parameter - missing id';
+    } else if (!/9000011-\d+/g.test(problemId)) {
+        paramErr = 'Invalid parameter - id must be in the form of 9000011-{IEN}';
+    }
+
+    return paramErr;
+}
 /**
  * /problem
  *  POST:
@@ -113,12 +124,7 @@ router.get('/:id',
     (req, res, next) => {
         const problemId = req.params.id;
 
-        let paramErr;
-        if (!problemId) {
-            paramErr = 'Invalid parameter - missing problemId';
-        } else if (!/9000011-\d+/g.test(problemId)) {
-            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
-        }
+        const paramErr = validateProblemId(problemId);
 
         if (paramErr) {
             next(new InvalidParametersError(paramErr));
@@ -178,12 +184,7 @@ router.put('/remove',
     (req, res, next) => {
         const problemId = req.body.id;
 
-        let paramErr;
-        if (!problemId) {
-            paramErr = 'Invalid parameter - missing problemId';
-        } else if (!/9000011-\d+/g.test(problemId)) {
-            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
-        }
+        const paramErr = validateProblemId(problemId);
 
         if (paramErr) {
             next(new InvalidParametersError(paramErr));
@@ -213,12 +214,7 @@ router.put('/unremove',
     (req, res, next) => {
         const problemId = req.body.id;
 
-        let paramErr;
-        if (!problemId) {
-            paramErr = 'Invalid parameter - missing problemId';
-        } else if (!/9000011-\d+/g.test(problemId)) {
-            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
-        }
+        const paramErr = validateProblemId(problemId);
 
         if (paramErr) {
             next(new InvalidParametersError(paramErr));
@@ -250,16 +246,11 @@ router.delete('/deleteComments',
     (req, res, next) => {
         const problemId = req.body.id;
 
-        let paramErr;
-        if (!problemId) {
-            paramErr = 'Invalid parameter - missing problemId';
-        } else if (!/9000011-\d+/g.test(problemId)) {
-            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
-        }
+        let paramErr = validateProblemId(problemId);
 
         const commentIds = req.body.commentIds;
         if (!commentIds || !Array.isArray(commentIds) || commentIds.length < 1) {
-            paramErr = 'Invalid paramter - missing or invalid commentIds';
+            paramErr = 'Invalid parameter - missing or invalid commentIds';
         }
 
         if (paramErr) {

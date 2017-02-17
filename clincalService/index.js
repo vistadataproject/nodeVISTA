@@ -12,6 +12,7 @@ const HttpStatus = require('http-status');
 const requiresToken = require('./requiresToken');
 const authRouter = require('./authRouter');
 const patientRouter = require('./patientRouter');
+const allergyRouter = require('./allergyRouter');
 const problemRouter = require('./problemRouter');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(
 // init routers
 app.use('/auth', authRouter);
 app.use('/patient', patientRouter);
+app.use('/allergy', allergyRouter);
 app.use('/problem', problemRouter);
 
 const port = config.port;
