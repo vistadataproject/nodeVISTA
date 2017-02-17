@@ -49,13 +49,14 @@ function connectVistaDatabase() {
     db = new nodem.Gtm();
     db.open();
 
-    // create new clinical RPC locker and apply supported models
+    // clinical RPC locker
     const cRPCL = new ClinicalRPCLocker(db, {
         vdmModel,
         mvdmModel: modelsClinical.mvdmModel,
         rpcLModel: modelsClinical.rpcLModel,
     });
 
+    // non-clinical RPC locker
     const ncRPCL = new NonClinicalRPCLocker(db, {
         rpcLModel: modelsNonClinical.rpcLModel,
     });
