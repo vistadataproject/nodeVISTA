@@ -34,8 +34,14 @@ config.mvdmClient.port = 9020;
 config.client = {};
 config.client.defaultName = "CPRS";
 
-config.workerQ = {}
+config.workerQ = {};
 config.workerQ.size = 1;
+
+config.lockers = [{
+    name: 'Clinical Locker',
+    path: 'mvdm/cRPCL',
+    models: ['./modelsClinical'],
+}];
 
 try {
     module.exports = config;

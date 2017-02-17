@@ -12,14 +12,6 @@ var uuid = require('uuid');
 var $ = require('jquery');
 var _ = require('underscore');
 
-const ClinicalRPCLocker = require('mvdm/cRPCL');
-const NonClinicalRPCLocker = require('mvdm/ncRPCL');
-const modelsClinical = require('./modelsClinical');
-const modelsNonClinical = require('./modelsNonClinical');
-
-//concat all models together because VDM is a singleton and same instance is used in all rpcL instances
-const vdmModel = modelsClinical.vdmModel.concat(modelsNonClinical.vdmModel);
-
 // imports for RPCService
 var nodem = require('nodem');
 var RPCDispatcher = require('./rpcDispatcher');
@@ -49,23 +41,6 @@ function connectVistaDatabase() {
     db = new nodem.Gtm();
     db.open();
 
-    // clinical RPC locker
-    const cRPCL = new ClinicalRPCLocker(db, {
-        vdmModel,
-        mvdmModel: modelsClinical.mvdmModel,
-        rpcLModel: modelsClinical.rpcLModel,
-    });
-
-    // non-clinical RPC locker
-    const ncRPCL = new NonClinicalRPCLocker(db, {
-        rpcLModel: modelsNonClinical.rpcLModel,
-    });
-
-    // chain together all locker implementations
-    const rpcLockers = [cRPCL, ncRPCL];
-
-    // create RPC dispatcher and register lockers
-    rpcDispatcher = new RPCDispatcher(db, rpcLockers);
     rpcContexts = new RPCContexts(db);
 }
 
@@ -89,14 +64,15 @@ function setGtmRoutinePath() {
 }
 
 /**
- * Create, initialize and register ancillary lockers based on server configuration properties.
+ * Create and initialize RPC dispatcher.
  *
- * This function allows users to register non-standard, "developer" Locker/Model instances with the dispatcher.
+ * This function also registers RPC lockers based on server configuration properties.
+ *
  * Locker and Model instances are dynamically instantiated based on configuration options, which decouples the
  * target locker/model code from the worker. It also precludes the need for special "developer mode" flags and
  * gives sever user more control over the registration process.
  *
- * To configure registration of custom Lockers, the function depends the 'CONFIG.lockers' attribute, which
+ * To configure registration of lockers, the function depends the 'CONFIG.lockers' attribute, which
  * should be an array of Locker configuration objects. The objects should have the following format:
  *
  *    locker.name: {String} <OPTIONAL> Arbitrary string name of the locker.
@@ -108,9 +84,17 @@ function setGtmRoutinePath() {
  * Order matters with respect to the configuration objects. Lockers listed earlier in the CONFIG.lockers array will
  * be given higher precedence in the dispatcher handler.
  */
-function registerLockers() {
+function createDispatcher() {
+
+    // create RPC dispatcher
+    rpcDispatcher = new RPCDispatcher(db);
+
     // Grab the locker definition object array from the configuration
     const lockers = CONFIG.lockers || [];
+
+    let vdmModels = [];
+    let mvdmModels = [];
+
     lockers.forEach((locker) => {
         const name = locker.name || 'UNKNOWN';
         LOGGER.info(`Registering locker: ${name}...`);
@@ -133,10 +117,16 @@ function registerLockers() {
 
                 // Inject model dependencies into the locker instance
                 if (model.vdmModel) {
-                    rpcLocker.addVDMModel(model.vdmModel);
+                    // add to existing vdm model list (VDM is a singleton)
+                    vdmModels = vdmModels.concat(model.vdmModel);
+
+                    rpcLocker.addVDMModel(vdmModels);
                 }
                 if (model.mvdmModel) {
-                    rpcLocker.addMVDMModel(model.mvdmModel);
+                    // add to existing MVDM list (MVDM is a singleton)
+                    mvdmModels = mvdmModels.concat(model.mvdmModel);
+
+                    rpcLocker.addMVDMModel(mvdmModels);
                 }
                 if (model.rpcLModel) {
                     rpcLocker.addLockerModel(model.rpcLModel);
@@ -318,7 +308,7 @@ function setMvdmHandlers(send) {
 }
 
 connectVistaDatabase();
-registerLockers();
+createDispatcher();
 
 module.exports = function() {
 
