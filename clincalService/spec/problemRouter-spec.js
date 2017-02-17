@@ -278,6 +278,23 @@ describe('test problem service route', () => {
             });
     });
 
+    it('DELETE /deleteComments - unremove a problem', (done) => {
+        chai.request(app)
+            .delete('/problem/deleteComments')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: problemId, commentIds: [1] })
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                console.log(JSON.stringify(json, null, 2));
+                expect(json).to.have.comments;
+
+                done();
+            });
+    });
+
     after(() => {
         db.close();
     });

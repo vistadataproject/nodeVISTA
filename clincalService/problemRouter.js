@@ -248,7 +248,7 @@ router.put('/unremove',
  */
 router.delete('/deleteComments',
     (req, res, next) => {
-        const problemId = req.body.problemId;
+        const problemId = req.body.id;
 
         let paramErr;
         if (!problemId) {
