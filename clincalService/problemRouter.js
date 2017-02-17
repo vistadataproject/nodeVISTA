@@ -245,12 +245,15 @@ router.put('/unremove',
 router.delete('/deleteComments',
     (req, res, next) => {
         const problemId = req.body.id;
+        const commentIds = req.body.commentIds;
 
         let paramErr = validateProblemId(problemId);
 
-        const commentIds = req.body.commentIds;
-        if (!commentIds || !Array.isArray(commentIds) || commentIds.length < 1) {
-            paramErr = 'Invalid parameter - missing or invalid commentIds';
+        // validate comment ids
+        if (!paramErr) {
+            if (!commentIds || !Array.isArray(commentIds) || commentIds.length < 1) {
+                paramErr = 'Invalid parameter - missing or invalid commentIds';
+            }
         }
 
         if (paramErr) {

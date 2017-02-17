@@ -162,6 +162,21 @@ describe('test problem service route', () => {
             });
     });
 
+    it('GET /problem/:id - describe a problem with an invalid problem id', (done) => {
+        chai.request(app)
+            .get('/problem/1234')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - id must be in the form of 9000011-{IEN}');
+
+                done();
+            });
+    });
+
     it('GET /problem/:id', (done) => {
         chai.request(app)
             .get(`/problem/${problemId}`)
@@ -182,6 +197,20 @@ describe('test problem service route', () => {
                 Object.keys(problem).forEach((key) => {
                     expect(problem[key]).to.deep.equal(expectedResult[key]);
                 });
+                done();
+            });
+    });
+
+    it('PUT /problem - update with missing/empty parameters', (done) => {
+        chai.request(app)
+            .put('/problem')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ patientId })
+            .end((err, res) => {
+                expect(err).to.exist;
+                expect(res).to.have.status(HttpStatus.INTERNAL_SERVER_ERROR);
+                expect(res.text).to.equal("Update Object must have the 'id' of the object being updated");
                 done();
             });
     });
@@ -246,6 +275,37 @@ describe('test problem service route', () => {
             });
     });
 
+    it('PUT /remove - remove a problem without a problem id', (done) => {
+        chai.request(app)
+            .put('/problem/remove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({})
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                expect(res.text).to.equal('Invalid parameter - missing id');
+
+                done();
+            });
+    });
+
+    it('PUT /remove - remove a problem with an invalid problem id', (done) => {
+        chai.request(app)
+            .put('/problem/remove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: '1234' })
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - id must be in the form of 9000011-{IEN}');
+
+                done();
+            });
+    });
+
     it('PUT /remove - remove a problem', (done) => {
         chai.request(app)
             .put('/problem/remove')
@@ -257,6 +317,37 @@ describe('test problem service route', () => {
                 expect(res).to.have.status(HttpStatus.OK);
                 const json = JSON.parse(res.text);
                 expect(json).to.have.removed;
+
+                done();
+            });
+    });
+
+    it('PUT /unremove - unremove a problem without a problem id', (done) => {
+        chai.request(app)
+            .put('/problem/unremove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({})
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                expect(res.text).to.equal('Invalid parameter - missing id');
+
+                done();
+            });
+    });
+
+    it('PUT /unremove - unremove a problem with an invalid problem id', (done) => {
+        chai.request(app)
+            .put('/problem/unremove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: '1234' })
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - id must be in the form of 9000011-{IEN}');
 
                 done();
             });
@@ -278,7 +369,54 @@ describe('test problem service route', () => {
             });
     });
 
-    it('DELETE /deleteComments - unremove a problem', (done) => {
+    it('DELETE /deleteComments - delete a comment without a problem id', (done) => {
+        chai.request(app)
+            .delete('/problem/deleteComments')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({})
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                expect(res.text).to.equal('Invalid parameter - missing id');
+
+                done();
+            });
+    });
+
+    it('DELETE /deleteComments - delete a comment with an invalid problem id', (done) => {
+        chai.request(app)
+            .delete('/problem/deleteComments')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: '1234', commentIds: [1] })
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - id must be in the form of 9000011-{IEN}');
+
+                done();
+            });
+    });
+
+    it('DELETE /deleteComments - delete a comment with invalid commentIds', (done) => {
+        chai.request(app)
+            .delete('/problem/deleteComments')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: problemId, commentIds: 1 })
+            .end((err, res) => {
+                expect(err).to.exist
+                expect(res).to.have.status(HttpStatus.BAD_REQUEST);
+                console.log(res.text);
+                expect(res.text).to.equal('Invalid parameter - missing or invalid commentIds');
+
+                done();
+            });
+    });
+
+    it('DELETE /deleteComments - delete a comment', (done) => {
         chai.request(app)
             .delete('/problem/deleteComments')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
