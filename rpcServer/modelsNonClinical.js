@@ -7,9 +7,7 @@
  */
 
 // VDM Models
-const vdmModel = [].concat(
-    // patient
-    require('mvdm/patient/vdmPatientModel').vdmModel);
+const vdmModel = [];
 
 // Non-clinical RPC Locker models
 const rpcLModel = [];
