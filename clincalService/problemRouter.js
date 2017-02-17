@@ -161,4 +161,118 @@ router.get('/',
         });
     });
 
+/**
+ * /problem/remove
+ *  PUT:
+ *      Removes a problem (sets condition to HIDDEN).
+ *      produces: application/json
+ *      parameters:
+ *           @param {String} problemId Problem identifier.
+ *
+ *      responses:
+ *          200: Removed problem.
+ *          400: invalid parameters produce a bad request
+ *          404: Resource not found
+ */
+router.put('/remove',
+    (req, res, next) => {
+        const problemId = req.body.id;
+
+        let paramErr;
+        if (!problemId) {
+            paramErr = 'Invalid parameter - missing problemId';
+        } else if (!/9000011-\d+/g.test(problemId)) {
+            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
+        }
+
+        if (paramErr) {
+            next(new InvalidParametersError(paramErr));
+            return;
+        }
+
+        clinicalService.callService(utils.toContext(req), 'ProblemService', 'remove', [problemId]).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            next(err);
+        });
+    });
+/**
+ * /problem/unremove
+ *  PUT:
+ *      Unremoves a problem (sets condition back to PERMANENT).
+ *      produces: application/json
+ *      parameters:
+ *           @param {String} problemId Problem identifier.
+ *
+ *      responses:
+ *          200: Unremoved problem.
+ *          400: invalid parameters produce a bad request
+ *          404: Resource not found
+ */
+router.put('/unremove',
+    (req, res, next) => {
+        const problemId = req.body.id;
+
+        let paramErr;
+        if (!problemId) {
+            paramErr = 'Invalid parameter - missing problemId';
+        } else if (!/9000011-\d+/g.test(problemId)) {
+            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
+        }
+
+        if (paramErr) {
+            next(new InvalidParametersError(paramErr));
+            return;
+        }
+
+        clinicalService.callService(utils.toContext(req), 'ProblemService', 'unremove', [problemId]).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            next(err);
+        });
+    });
+
+/**
+ * /problem/deleteComments
+ *  DELETE:
+ *      Deletes problem comments.
+ *      produces: application/json
+ *      parameters:
+ *           @param {String} problemId Problem identifier.
+ *           @param {Array} commentIds List of comment ids to delete.
+ *
+ *      responses:
+ *          200: Deleted problem comments.
+ *          400: invalid parameters produce a bad request
+ *          404: Resource not found
+ */
+router.delete('/deleteComments',
+    (req, res, next) => {
+        const problemId = req.body.problemId;
+
+        let paramErr;
+        if (!problemId) {
+            paramErr = 'Invalid parameter - missing problemId';
+        } else if (!/9000011-\d+/g.test(problemId)) {
+            paramErr = 'Invalid parameter - problemId must be in the form of 9000011-{IEN}';
+        }
+
+        const commentIds = req.body.commentIds;
+        if (!commentIds || !Array.isArray(commentIds) || commentIds.length < 1) {
+            paramErr = 'Invalid paramter - missing or invalid commentIds';
+        }
+
+        if (paramErr) {
+            next(new InvalidParametersError(paramErr));
+            return;
+        }
+
+        clinicalService.callService(utils.toContext(req), 'ProblemService', 'deleteComments', [problemId, commentIds]).then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            next(err);
+        });
+    });
+
+
 module.exports = router;

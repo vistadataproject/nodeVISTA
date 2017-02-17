@@ -117,7 +117,7 @@ describe('test problem service route', () => {
             .post('/problem')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
-            .send(testProblems.active.one.createArgs)
+            .send(testProblems.active.two.createArgs)
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(HttpStatus.CREATED);
@@ -126,9 +126,8 @@ describe('test problem service route', () => {
 
                 problemId = json.created.id;
 
-                const problem = _.omit(json.created, ['id', 'uniqueId']);
-
-                const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
+                const problem = _.omit(json.created, ['id', 'uniqueId', 'providerNarrative']);
+                const expectedResult = setDefaultValues(testProblems.active.two.createResult, problem);
                 Object.keys(problem).forEach((key) => {
                     expect(problem[key]).to.deep.equal(expectedResult[key]);
                 });
@@ -177,9 +176,9 @@ describe('test problem service route', () => {
                 expect(problem).to.have.id;
                 expect(problem.id).to.equal(problemId);
 
-                problem = _.omit(json.result, ['id', 'uniqueId']);
+                problem = _.omit(json.result, ['id', 'uniqueId', 'providerNarrative']);
 
-                const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
+                const expectedResult = setDefaultValues(testProblems.active.two.createResult, problem);
                 Object.keys(problem).forEach((key) => {
                     expect(problem[key]).to.deep.equal(expectedResult[key]);
                 });
@@ -221,7 +220,7 @@ describe('test problem service route', () => {
                 expect(problem).to.have.id;
                 expect(problem.id).to.equal(problemId);
 
-                problem = _.omit(json.result, ['id', 'uniqueId']);
+                problem = _.omit(json.result, ['id', 'uniqueId', 'providerNarrative']);
 
                 const expectedResult = setDefaultValues(testProblems.active.one.createResult, problem);
                 Object.keys(problem).forEach((key) => {
@@ -247,6 +246,37 @@ describe('test problem service route', () => {
             });
     });
 
+    it('PUT /remove - remove a problem', (done) => {
+        chai.request(app)
+            .put('/problem/remove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: problemId })
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.removed;
+
+                done();
+            });
+    });
+
+    it('PUT /unremove - unremove a problem', (done) => {
+        chai.request(app)
+            .put('/problem/unremove')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send({ id: problemId })
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.unremoved;
+
+                done();
+            });
+    });
 
     after(() => {
         db.close();
