@@ -102,7 +102,7 @@ router.put('/',
  *      Retrieves a problem description
  *      produces: application/json
  *      parameters:
- *          @param {String} problemId Problem identifier.
+ *          @param {String} id Problem identifier.
  *
  *      responses:
  *          200: Problem description
@@ -167,7 +167,7 @@ router.get('/',
  *      Removes a problem (sets condition to HIDDEN).
  *      produces: application/json
  *      parameters:
- *           @param {String} problemId Problem identifier.
+ *           @param {String} id Problem identifier.
  *
  *      responses:
  *          200: Removed problem.
@@ -202,7 +202,7 @@ router.put('/remove',
  *      Unremoves a problem (sets condition back to PERMANENT).
  *      produces: application/json
  *      parameters:
- *           @param {String} problemId Problem identifier.
+ *           @param {String} id Problem identifier.
  *
  *      responses:
  *          200: Unremoved problem.
@@ -238,7 +238,7 @@ router.put('/unremove',
  *      Deletes problem comments.
  *      produces: application/json
  *      parameters:
- *           @param {String} problemId Problem identifier.
+ *           @param {String} id Problem identifier.
  *           @param {Array} commentIds List of comment ids to delete.
  *
  *      responses:
