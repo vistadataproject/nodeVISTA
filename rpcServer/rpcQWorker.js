@@ -44,7 +44,7 @@ process.on('uncaughtException', function(err) {
 });
 
 function connectVistaDatabase() {
-    process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
+    process.env.gtmroutines = setGtmRoutinePath();
     // console.log("process.env.gtmroutines: " + process.env.gtmroutines);
     db = new nodem.Gtm();
     db.open();
@@ -67,6 +67,90 @@ function connectVistaDatabase() {
     // create RPC dispatcher and register lockers
     rpcDispatcher = new RPCDispatcher(db, rpcLockers);
     rpcContexts = new RPCContexts(db);
+}
+
+/**
+ * Adjust the GT.M routine path environment variable. This needs to be called prior to the nodem instance
+ * being created to ensure that the MUMPS routine paths are included in the configuration.
+ */
+function setGtmRoutinePath() {
+    const pathElements = [process.env.gtmroutines, vdmUtils.getVdmPath()];
+
+    const lockers = CONFIG.lockers || [];
+    lockers.forEach((locker) => {
+
+        // Add the MUMPS routine paths any exist for this locker configuration
+        if (locker.routinePath) {
+            LOGGER.debug(`Appending ${locker.routinePath} to the gtmroutines environment variable`);
+            pathElements.push(locker.routinePath);
+        }
+    });
+    return pathElements.join(' ');
+}
+
+/**
+ * Create, initialize and register ancillary lockers based on server configuration properties.
+ *
+ * This function allows users to register non-standard, "developer" Locker/Model instances with the dispatcher.
+ * Locker and Model instances are dynamically instantiated based on configuration options, which decouples the
+ * target locker/model code from the worker. It also precludes the need for special "developer mode" flags and
+ * gives sever user more control over the registration process.
+ *
+ * To configure registration of custom Lockers, the function depends the 'CONFIG.lockers' attribute, which
+ * should be an array of Locker configuration objects. The objects should have the following format:
+ *
+ *    locker.name: {String} <OPTIONAL> Arbitrary string name of the locker.
+ *    locker.path: {String} <REQUIRED> Relative or absolute path of the Locker class definition module,
+ *                 in CommonJS format.
+ *    locker.models: {Array} <REQUIRED> Relative or absolute paths to the model definition modules, in CommonJS format.
+ *    locker.routinePath: {String} <OPTIONAL> Path to additional required MUMPS routines.
+ *
+ * Order matters with respect to the configuration objects. Lockers listed earlier in the CONFIG.lockers array will
+ * be given higher precedence in the dispatcher handler.
+ */
+function registerLockers() {
+    // Grab the locker definition object array from the configuration
+    const lockers = CONFIG.lockers || [];
+    lockers.forEach((locker) => {
+        const name = locker.name || 'UNKNOWN';
+        LOGGER.info(`Registering locker: ${name}...`);
+
+        // We're going to be doing dynamic 'requires', so we'll need to catch any errors if they occur
+        try {
+            LOGGER.debug(`Creating instance of RPC Locker class from ${locker.path}`);
+
+            // eslint-disable-next-line
+            const LockerClass = require(locker.path);
+            const rpcLocker = new LockerClass(db);
+
+            // If that was successful, load all the models specified for this locker via module paths
+            const modelPaths = locker.models || [];
+            modelPaths.forEach((modelPath) => {
+                LOGGER.debug(`Loading models from ${modelPath}`);
+
+                // eslint-disable-next-line
+                const model = require(modelPath);
+
+                // Inject model dependencies into the locker instance
+                if (model.vdmModel) {
+                    rpcLocker.addVDMModel(model.vdmModel);
+                }
+                if (model.mvdmModel) {
+                    rpcLocker.addMVDMModel(model.mvdmModel);
+                }
+                if (model.rpcLModel) {
+                    rpcLocker.addLockerModel(model.rpcLModel);
+                }
+            });
+
+            // If everything was successful and we didn't raise an exception, we register the locker with the dispatcher
+            rpcDispatcher.registerLocker(rpcLocker);
+
+            LOGGER.info(`Successfully registered locker: ${name}`);
+        } catch (e) {
+            LOGGER.error(`ERROR registering locker: ${name} - ${e.toString()}`);
+        }
+    });
 }
 
 function generateTransactionId() {
@@ -234,6 +318,7 @@ function setMvdmHandlers(send) {
 }
 
 connectVistaDatabase();
+registerLockers();
 
 module.exports = function() {
 
