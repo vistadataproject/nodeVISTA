@@ -44,7 +44,7 @@ process.on('uncaughtException', function(err) {
 });
 
 function connectVistaDatabase() {
-    process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
+    process.env.gtmroutines = setGtmRoutinePath();
     // console.log("process.env.gtmroutines: " + process.env.gtmroutines);
     db = new nodem.Gtm();
     db.open();
@@ -67,6 +67,25 @@ function connectVistaDatabase() {
     // create RPC dispatcher and register lockers
     rpcDispatcher = new RPCDispatcher(db, rpcLockers);
     rpcContexts = new RPCContexts(db);
+}
+
+/**
+ * Adjust the GT.M routine path environment variable. This needs to be called prior to the nodem instance
+ * being created to ensure that the MUMPS routine paths are included in the configuration.
+ */
+function setGtmRoutinePath() {
+    const pathElements = [process.env.gtmroutines, vdmUtils.getVdmPath()];
+
+    const lockers = CONFIG.lockers || [];
+    lockers.forEach((locker) => {
+
+        // Add the MUMPS routine paths any exist for this locker configuration
+        if (locker.routinePath) {
+            LOGGER.debug(`Appending ${locker.routinePath} to the gtmroutines environment variable`);
+            pathElements.push(locker.routinePath);
+        }
+    });
+    return pathElements.join(' ');
 }
 
 /**
