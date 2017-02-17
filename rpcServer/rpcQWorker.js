@@ -13,7 +13,12 @@ var $ = require('jquery');
 var _ = require('underscore');
 
 const ClinicalRPCLocker = require('mvdm/cRPCL');
-const clinicalModels = require('./clinicalModels');
+const NonClinicalRPCLocker = require('mvdm/ncRPCL');
+const modelsClinical = require('./modelsClinical');
+const modelsNonClinical = require('./modelsNonClinical');
+
+//concat all models together because VDM is a singleton and same instance is used in all rpcL instances
+const vdmModel = modelsClinical.vdmModel.concat(modelsNonClinical.vdmModel);
 
 // imports for RPCService
 var nodem = require('nodem');
@@ -45,13 +50,18 @@ function connectVistaDatabase() {
     db.open();
 
     // create new clinical RPC locker and apply supported models
-    const cRPCL = new ClinicalRPCLocker(db);
-    cRPCL.addVDMModel(clinicalModels.vdmModel);
-    cRPCL.addMVDMModel(clinicalModels.mvdmModel);
-    cRPCL.addLockerModel(clinicalModels.rpcLModel);
+    const cRPCL = new ClinicalRPCLocker(db, {
+        vdmModel,
+        mvdmModel: modelsClinical.mvdmModel,
+        rpcLModel: modelsClinical.rpcLModel,
+    });
+
+    const ncRPCL = new NonClinicalRPCLocker(db, {
+        rpcLModel: modelsNonClinical.rpcLModel,
+    });
 
     // chain together all locker implementations
-    const rpcLockers = [cRPCL];
+    const rpcLockers = [cRPCL, ncRPCL];
 
     // create RPC dispatcher and register lockers
     rpcDispatcher = new RPCDispatcher(db, rpcLockers);
