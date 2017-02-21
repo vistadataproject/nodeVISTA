@@ -107,7 +107,7 @@ OK
 ```
 ### Allergy Domain
 The following commands are used to perform Allergy operations.
-##### Create an allergy
+#### Create an allergy
 ```text
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
 -H "x-patient-token: <patient-token>"  -d '{
@@ -129,22 +129,21 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <acce
   "comments": [
     "unfortunate fellow\nbut mannerly!"
   ]
-}
-' "http://10.2.2.100:9030/allergy"
+}' "http://10.2.2.100:9030/allergy"
 ```
-##### Describe an allergy
+#### Describe an allergy
 ```text
 curl -X GET -H "Content-Type: application/json" 
 -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
 "http://10.2.2.100:9030/allergy/120_8-1"
 ```
-##### List allergies
+#### List allergies
 ```text
 curl -X GET -H "Content-Type: application/json" 
 -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
 "http://10.2.2.100:9030/allergy/"
 ```
-##### Mark as entered in error (remove)
+#### Mark as entered in error (remove)
 ```text
 curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
 -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
