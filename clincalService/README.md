@@ -15,8 +15,8 @@ const config = {
 
     port: 9030, // service listens on this port
 
-    // JWT    <-- JSON web token settings 
-    jwt: {
+    // JWT    
+    jwt: {    <-- JSON web token settings 
         publicKey: './config/jwtRS256.key.pub',
         privateKey: './config/jwtRS256.key',
         algorithm: 'RS256',
@@ -29,6 +29,8 @@ const config = {
     },
 };
 ```
+
+Utilize [jwtRS256.sh](https://github.com/vistadataproject/nodeVISTA/blob/master/clincalService/config/jwtRS256.sh) to generate a public/private keypair.
 
 ```text
 $ npm install
