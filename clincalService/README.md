@@ -14,4 +14,8 @@ $ npm install mocha -g <-- installs mocha globally
 ```text
 $ mocha spec/authRotuer-spec.js
 ```
+* Execute all tests
+```test
+$ npm test
+```
 
