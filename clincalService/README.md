@@ -132,19 +132,18 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <acce
 }
 ' "http://10.2.2.100:9030/allergy"
 ```
-### Describe an allergy
+##### Describe an allergy
 ```text
 curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" "http://10.2.2.100:9030/allergy/120_8-1"
 ```
-### List allergies
+##### List allergies
 ```text
 curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" "http://10.2.2.100:9030/allergy/"
 ```
-## Mark as entered in error (remove)
+##### Mark as entered in error (remove)
 ```text
 curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" -d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
 ```
-
 ## Running integration tests
 
 The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute the tests, [Chai expects](http://chaijs.com/guide/styles/#expect) for assertions, and [chai-http](https://github.com/chaijs/chai-http) to excute test code against an instance of the REST service.
