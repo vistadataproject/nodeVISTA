@@ -79,7 +79,7 @@ module.exports = function () {
             } else if (messageObj.service === 'AllergyService') {
                 service = clincalServiceFactory.createAllergyService();
             } else if (messageObj.service === 'VitalsService') {
-                service = clincalServiceFactory.createAllergyService();
+                service = clincalServiceFactory.createVitalsService();
             }
 
             // invoke service method with args array

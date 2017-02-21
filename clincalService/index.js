@@ -14,6 +14,7 @@ const authRouter = require('./authRouter');
 const patientRouter = require('./patientRouter');
 const allergyRouter = require('./allergyRouter');
 const problemRouter = require('./problemRouter');
+const vitalsRouter = require('./vitalsRouter');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/auth', authRouter);
 app.use('/patient', patientRouter);
 app.use('/allergy', allergyRouter);
 app.use('/problem', problemRouter);
+app.use('/vitals', vitalsRouter);
 
 const port = config.port;
 app.listen(port, () => {

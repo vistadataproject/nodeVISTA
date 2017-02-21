@@ -66,7 +66,7 @@ router.post('/',
  *          @param {String} id Allergy identifier.
  *
  *      responses:
- *          200: Alelrgy description
+ *          200: Allergy description
  *          400: invalid parameters produce a bad request
  *          404: Resource not found
  */
