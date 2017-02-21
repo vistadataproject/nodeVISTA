@@ -109,7 +109,8 @@ OK
 The following commands are used to perform Allergy operations.
 #### Create an allergy
 ```text
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMDAtNjIiLCJmYWNpbGl0eUlkIjoiNC0yOTU3IiwiaWF0IjoxNDg3NzE3NzQ4LCJleHAiOjE0ODc3MTg2NDgsInN1YiI6ImFjY2Vzc1Rva2VuIn0.tShI_NiPvisJ5nrlvWhwNLudw6qG26Vz1rFCUbt3-VDNh3j292EiOJ6LDLcKPRDxIp0O24jtWTpGMUOIGFg05ft9qI_8915l0uF3radvZJOQii5zV5WAVF7Jwz0oL_H1uKqzi7L_Q4wwk9iUOWzK4cyLmvI9lfyB761JoAKH0s0h9f-jdIwqz79AzebzQsKO06oigFxGz9geGONG26WxMDVlblcihd8dz6xjGWjFPRvIknCI0uIPND6s6r1tqpx2gFnAoBDEqUXYwwpiG0x-khzCSbivDnj7dp9Acdbe9ZOZhjhgzkWbQILWZVDmocmzn3YIIZJA0PT1WckvtLovO3Y5biZcpM1F1N3rpwJ1hV3niQyDQyoIIAI0NXBZUHyCcA4v1VwNH-2mGSkpnLlORsFBS43PzU0piw53CabnBl9WIKiRldMp1hsDOdCc5VfvtNS5bb9Lccq_kgkI_h7xN3rxipIAGzZEpRoJylGRoR0DE3A9tG_cRAk5GwY8uRqA7YqfBdQUroDcl-7lDjnNU8YVrb3dcTioC72ywHhF2F6qWB-vrhqHUA-_y0qFRSBfvbchvL11jSEJjyFnxICgl46B9NmXmqazUy_nYMPiv1NcFQyxoIIkELG4JgaouTg95AJRDKBU5An7BN-hisKYhW58zScSrfL-1QctSAc4NtA" -H "x-patient-token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRpZW50SWQiOiIyLTI1IiwiaWF0IjoxNDg3NzE3NzcxLCJleHAiOjE0ODc3MTg2NzEsInN1YiI6InBhdGllbnRUb2tlbiJ9.yjq3EE3dZZ88pmOnppdpb4xL8X5XBgR3KMAlDBpeaSmXRVR4u4pBJftfq14j8ZYaNhcPJwJ_LYrU2sho541xwnnOX1hOYTmGaksQlKVOe-OetRg5Hyzb7cPju6KR2-FG3QX2VwM0OIQvOvsvP_dc8W6Yog-_bNpoNZNdwsAvZNntni2nLQSnRJxgYqA3vtmsqS_oWunxkwtVbxqBBBZxoyfFTZDkTnSymQD9L1Pnu8v9j06Z3RBvLRGD2m36ZqFhZNhaxlgKuoDhfeCwy9PBZyC1w5agAVZ8T6YbGsdQZWStMuO0XU4ysFifeEKHlzFynxd43Eg1CtmagynyCLNBzpQ1UlwT37JBW9Cb7DbeN8QSbEfAXyVsI43rQmcwrMhaNFp_MmgA4Gvj40kXUbchBTeMJBh9GYNaON6ngWJk23vT_t-AJjlzs5Ea2SKqDdMNoefyftnBnjyTmEOsv537MN6H97EolkAU4gMsGFgqolqVY5xSbCmWG1j56OIJinkDwjk5fxCzQnpCTIorzNM8c-18m9oKudGPpL4Os4w8RePseCMjGX1RpQChRjjs4-MDzcPWGWcCzIdCt5Qsfh5mU1Cr6_HjQbs7qRZVS3FnSiStj6BMuLymFvxksO_IyJbMzcFbC4qK9ivS_fnmVArAwmzZZ7TkKzkxbEjyVYFVSng"  -d '{
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
   "type": "Allergy",
   "reactant": {
     "id": "120_82-3",
@@ -130,6 +131,18 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJhb
   ]
 }
 ' "http://10.2.2.100:9030/allergy"
+```
+### Describe an allergy
+```text
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" "http://10.2.2.100:9030/allergy/120_8-1"
+```
+### List allergies
+```text
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" "http://10.2.2.100:9030/allergy/"
+```
+## Mark as entered in error (remove)
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <access-token>" -d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
 ```
 
 ## Running integration tests
