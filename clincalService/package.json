@@ -6,7 +6,7 @@
   "homepage": "https://github.com/vistadataproject/nodeVISTA",
   "private": true,
   "scripts": {
-    "test": "mocha spec/authRouter-spec.js && mocha spec/patientRouter-spec.js && mocha spec/problemRouter-spec.js && mocha spec/allergyRouter-spec.js"
+    "test": "mocha spec/authRouter-spec.js && mocha spec/patientRouter-spec.js && mocha spec/problemRouter-spec.js && mocha spec/allergyRouter-spec.js && mocha spec/vitalsRouter-spec.js"
   },
   "ignore": [
     "**/.*",
