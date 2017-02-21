@@ -134,15 +134,15 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <acce
 ```
 ### Describe an allergy
 ```text
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" "http://10.2.2.100:9030/allergy/120_8-1"
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" "http://10.2.2.100:9030/allergy/120_8-1"
 ```
 ### List allergies
 ```text
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" "http://10.2.2.100:9030/allergy/"
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" "http://10.2.2.100:9030/allergy/"
 ```
 ## Mark as entered in error (remove)
 ```text
-curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <access-token>" -d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" -d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
 ```
 
 ## Running integration tests
