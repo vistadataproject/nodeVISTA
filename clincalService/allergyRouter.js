@@ -134,7 +134,14 @@ router.put('/remove',
             return;
         }
 
-        clinicalService.callService(utils.toContext(req), 'AllergyService', 'remove', [allergyId, comment]).then((result) => {
+        const params = [allergyId];
+
+        if (comment) {
+            params.push(comment);
+        }
+
+
+        clinicalService.callService(utils.toContext(req), 'AllergyService', 'remove', params).then((result) => {
             res.send(result);
         }).catch((err) => {
             next(err);
