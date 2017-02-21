@@ -107,7 +107,7 @@ OK
 ```
 ### Allergy Domain
 The following commands are used to perform Allergy operations.
-#### Create an allergy
+##### Create an allergy
 ```text
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
 -H "x-patient-token: <patient-token>"  -d '{
