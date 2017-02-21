@@ -149,6 +149,60 @@ curl -X PUT -H "Content-Type: application/x-www-form-urlencoded"
 -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
 -d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
 ```
+### Problem Domain
+The following commands are used to perform Problem operations.
+#### Create a problem
+```text
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
+  diagnosis: '80-521774',
+  providerNarrative: 'Diabetes mellitus',
+  problemStatus: 'ACTIVE',
+  problem: '757_01-7130783',
+  clinic: '44-8',
+  snomedCTConceptCode: '73211009',
+  snomedCTDesignationCode: '121589010',
+  codingSystem: '10D',
+}' "http://10.2.2.100:9030/problem"
+```
+#### Update a problem
+```text
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
+  id: 9000011-1, 
+  onsetDate: '2016-03-01' 
+}' "http://10.2.2.100:9030/problem"
+```
+#### Describe a problem
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/problem/9000011-1"
+```
+#### List problems
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/problem?filter=both"
+```
+#### Remove a problem
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=9000011-1' "http://10.2.2.100:9030/problem/remove"
+```
+#### Unremove a problem
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=9000011-1' "http://10.2.2.100:9030/problem/unremove"
+```
+#### Delete a comment
+```text
+curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=9000011-1&commentIds=1&commentIds=2' "http://10.2.2.100:9030/problem/deleteComments"
+```
 ## Running integration tests
 
 The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute the tests, [Chai expects](http://chaijs.com/guide/styles/#expect) for assertions, and [chai-http](https://github.com/chaijs/chai-http) to excute test code against an instance of the REST service.
