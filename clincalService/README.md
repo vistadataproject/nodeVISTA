@@ -243,7 +243,7 @@ curl -X GET -H "Content-Type: application/json"
 curl -X GET -H "Content-Type: application/json" 
 -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
 "http://10.2.2.100:9030/vitals?startDate=2017-01-01T08:30:00&endDate=2017-01-31T08:30"
-
+```
 #### List most recent vitals
 ```text
 curl -X GET -H "Content-Type: application/json" 
