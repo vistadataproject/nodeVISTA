@@ -40,6 +40,23 @@ $ node index.js
 
 {"name":"clinicalService","hostname":"addgene-ubuntu-1604-vbox","pid":29869,"level":30,"msg":"Clinical Service listening on port 9030","time":"2017-02-21T22:01:47.762Z","v":0}
 ```
+## Running integration tests
+
+The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute the tests, [Chai expects](http://chaijs.com/guide/styles/#expect) for assertions, and [chai-http](https://github.com/chaijs/chai-http) to excute test code against an instance of the REST service.
+
+* Install Mocha 
+```text
+$ npm install mocha -g <-- installs mocha globally
+```
+
+* Execute a test
+```text
+$ mocha spec/authRotuer-spec.js
+```
+* Execute all tests
+```test
+$ npm test
+```
 ## Using the service
 ### Authenticate POST /auth
 
@@ -129,37 +146,107 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <acce
   "comments": [
     "unfortunate fellow\nbut mannerly!"
   ]
-}
-' "http://10.2.2.100:9030/allergy"
+}' "http://10.2.2.100:9030/allergy"
 ```
-### Describe an allergy
+#### Describe an allergy
 ```text
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" "http://10.2.2.100:9030/allergy/120_8-1"
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/allergy/120_8-1"
 ```
-### List allergies
+#### List allergies
 ```text
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" "http://10.2.2.100:9030/allergy/"
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/allergy/"
 ```
-## Mark as entered in error (remove)
+#### Mark as entered in error (remove)
 ```text
-curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" -d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=120_8-2&comment=by mistake' "http://10.2.2.100:9030/allergy/remove"
 ```
-
-## Running integration tests
-
-The Clinical REST service tests utilize [Mocha](https://mochajs.org/) to execute the tests, [Chai expects](http://chaijs.com/guide/styles/#expect) for assertions, and [chai-http](https://github.com/chaijs/chai-http) to excute test code against an instance of the REST service.
-
-* Install Mocha 
+### Problem Domain
+The following commands are used to perform Problem operations.
+#### Create a problem
 ```text
-$ npm install mocha -g <-- installs mocha globally
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
+  diagnosis: '80-521774',
+  providerNarrative: 'Diabetes mellitus',
+  problemStatus: 'ACTIVE',
+  problem: '757_01-7130783',
+  clinic: '44-8',
+  snomedCTConceptCode: '73211009',
+  snomedCTDesignationCode: '121589010',
+  codingSystem: '10D'
+}' "http://10.2.2.100:9030/problem"
 ```
-
-* Execute a test
+#### Update a problem
 ```text
-$ mocha spec/authRotuer-spec.js
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
+  id: 9000011-1, 
+  onsetDate: '2016-03-01' 
+}' "http://10.2.2.100:9030/problem"
 ```
-* Execute all tests
-```test
-$ npm test
+#### Describe a problem
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/problem/9000011-1"
 ```
-
+#### List problems
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/problem?filter=both"
+```
+#### Remove a problem
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=9000011-1' "http://10.2.2.100:9030/problem/remove"
+```
+#### Unremove a problem
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=9000011-1' "http://10.2.2.100:9030/problem/unremove"
+```
+#### Delete a comment
+```text
+curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=9000011-1&commentIds=1&commentIds=2' "http://10.2.2.100:9030/problem/deleteComments"
+```
+### Vitals Domain
+The following commands are used to perform Vitals operations.
+#### Create a vital
+```text
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
+  vitalsTakenDateTime: 2016-02-18T00:00:00,
+  vitalType: '120_51-1',
+  hospitalLocation: '44-6',
+  value: '120/80'
+}' "http://10.2.2.100:9030/vitals"
+```
+#### Describe a vital
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/vitals/120_5-1"
+```
+#### List vitals
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/vitals?startDate=2017-01-01T08:30:00&endDate=2017-01-31T08:30"
+```
+#### Remove a vital
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=120_5-1&reason=INCORRECT READING' "http://10.2.2.100:9030/vitals/remove"
+```
