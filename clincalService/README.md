@@ -209,7 +209,7 @@ The following commands are used to perform Vitals operations.
 ```text
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
 -H "x-patient-token: <patient-token>"  -d '{
-  vitalsTakenDateTime: now,
+  vitalsTakenDateTime: 2016-02-18T00:00:00,
   vitalType: '120_51-1',
   hospitalLocation: '44-6',
   value: '120/80'
