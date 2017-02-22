@@ -162,7 +162,7 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <acce
   clinic: '44-8',
   snomedCTConceptCode: '73211009',
   snomedCTDesignationCode: '121589010',
-  codingSystem: '10D',
+  codingSystem: '10D'
 }' "http://10.2.2.100:9030/problem"
 ```
 #### Update a problem
@@ -202,6 +202,36 @@ curl -X PUT -H "Content-Type: application/x-www-form-urlencoded"
 curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" 
 -H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
 -d 'id=9000011-1&commentIds=1&commentIds=2' "http://10.2.2.100:9030/problem/deleteComments"
+```
+### Vitals Domain
+The following commands are used to perform Vitals operations.
+#### Create a vital
+```text
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <access-token>" 
+-H "x-patient-token: <patient-token>"  -d '{
+  vitalsTakenDateTime: now,
+  vitalType: '120_51-1',
+  hospitalLocation: '44-6',
+  value: '120/80'
+}' "http://10.2.2.100:9030/vitals"
+```
+#### Describe a vital
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/vitals/120_5-1"
+```
+#### List vitals
+```text
+curl -X GET -H "Content-Type: application/json" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+"http://10.2.2.100:9030/vitals?startDate=2017-01-01T08:30:00&endDate=2017-01-31T08:30"
+```
+#### Remove a vital
+```text
+curl -X PUT -H "Content-Type: application/x-www-form-urlencoded" 
+-H "Authorization: Bearer <access-token>" -H "x-patient-token: <patient-token>" 
+-d 'id=120_5-1&reason=INCORRECT READING' "http://10.2.2.100:9030/vitals/remove"
 ```
 ## Running integration tests
 
