@@ -4,7 +4,7 @@
 The clinical REST service provides a way to access VistA clinical data using underline MVDM services. The service is secured by JSON web tokens. See [JWT](https://jwt.io/).
 
 ## Executing the service
-Make configuration changes in config/config.js:
+#### Make configuration changes in config/config.js
 
 ```javascript
 const config = {
@@ -34,6 +34,7 @@ const config = {
 
 Utilize [jwtRS256.sh](https://github.com/vistadataproject/nodeVISTA/blob/master/clincalService/config/jwtRS256.sh) to generate a public/private keypair.
 
+#### Run the service
 ```text
 $ npm install
 $ node index.js
