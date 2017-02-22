@@ -23,7 +23,8 @@ describe('test vitals service route', () => {
     let userId;
     let facilityId;
     let patientId;
-    let vitalId;
+    let vitalOneId;
+    let vitalTwoId;
     let accessToken;
     let patientToken;
     let testVitals;
@@ -93,7 +94,7 @@ describe('test vitals service route', () => {
             });
     });
 
-    it('POST /vitals - create a vital', (done) => {
+    it('POST /vitals - create a blood pressure vital', (done) => {
         chai.request(app)
             .post('/vitals')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
@@ -105,7 +106,7 @@ describe('test vitals service route', () => {
                 const json = JSON.parse(res.text);
                 expect(json).to.have.created;
                 const vital = json.created;
-                vitalId = vital.id;
+                vitalOneId = vital.id;
                 expect(vital.vitalType.label).to.equal(testVitals.one.createResult.vitalType.label);
                 expect(vital.value).to.equal(testVitals.one.createResult.value);
                 expect(vital.units).to.equal(testVitals.one.createResult.units);
@@ -115,7 +116,7 @@ describe('test vitals service route', () => {
 
     it('GET /vitals/:id without access token', (done) => {
         chai.request(app)
-            .get(`/vitals/${vitalId}`)
+            .get(`/vitals/${vitalOneId}`)
             // exclude access token
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -128,7 +129,7 @@ describe('test vitals service route', () => {
 
     it('GET /vitals/:id without patient token', (done) => {
         chai.request(app)
-            .get(`/vitals/${vitalId}`)
+            .get(`/vitals/${vitalOneId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             // exclude patient token
             .end((err, res) => {
@@ -156,7 +157,7 @@ describe('test vitals service route', () => {
 
     it('GET /vitals/:id', (done) => {
         chai.request(app)
-            .get(`/vitals/${vitalId}`)
+            .get(`/vitals/${vitalOneId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
             .end((err, res) => {
@@ -166,11 +167,31 @@ describe('test vitals service route', () => {
                 expect(json).to.have.result;
                 const vital = json.result;
                 expect(vital).to.have.id;
-                expect(vital.id).to.equal(vitalId);
+                expect(vital.id).to.equal(vitalOneId);
                 expect(vital.vitalType.label).to.equal(testVitals.one.createResult.vitalType.label);
                 expect(vital.value).to.equal(testVitals.one.createResult.value);
                 expect(vital.units).to.equal(testVitals.one.createResult.units);
 
+                done();
+            });
+    });
+
+    it('POST /vitals - create another blood pressure vital', (done) => {
+        chai.request(app)
+            .post('/vitals')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send(testVitals.two.createArgs)
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.CREATED);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.created;
+                const vital = json.created;
+                vitalTwoId = vital.id;
+                expect(vital.vitalType.label).to.equal(testVitals.one.createResult.vitalType.label);
+                expect(vital.value).to.equal(testVitals.one.createResult.value);
+                expect(vital.units).to.equal(testVitals.one.createResult.units);
                 done();
             });
     });
@@ -187,14 +208,38 @@ describe('test vitals service route', () => {
                 const json = JSON.parse(res.text);
                 expect(json).to.have.results;
                 const vitals = json.results;
+                expect(vitals.length).to.equal(2);
+
+                const vital = vitals[0];
+                expect(vital).to.have.id;
+                expect(vital.id).to.equal(vitalOneId);
+                expect(vital.vitalType.label).to.equal(testVitals.one.createResult.vitalType.label);
+                expect(vital.value).to.equal(testVitals.one.createResult.value);
+                expect(vital.units).to.equal(testVitals.one.createResult.units);
+
+                done();
+            });
+    });
+
+    it('GET /vitals/mostRecent - list most recent vitals', (done) => {
+        chai.request(app)
+            .get('/vitals/mostRecent')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                expect(json).to.have.results;
+                const vitals = json.results;
                 expect(vitals.length).to.equal(1);
 
                 const vital = vitals[0];
                 expect(vital).to.have.id;
-                expect(vital.id).to.equal(vitalId);
-                expect(vital.vitalType.label).to.equal(testVitals.one.createResult.vitalType.label);
-                expect(vital.value).to.equal(testVitals.one.createResult.value);
-                expect(vital.units).to.equal(testVitals.one.createResult.units);
+                expect(vital.id).to.equal(vitalTwoId);
+                expect(vital.vitalType.label).to.equal(testVitals.two.createResult.vitalType.label);
+                expect(vital.value).to.equal(testVitals.two.createResult.value);
+                expect(vital.units).to.equal(testVitals.two.createResult.units);
 
                 done();
             });
@@ -238,7 +283,7 @@ describe('test vitals service route', () => {
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: vitalId })
+            .send({ id: vitalOneId })
             .end((err, res) => {
                 expect(err).to.exist
                 expect(res).to.have.status(HttpStatus.BAD_REQUEST);
@@ -254,7 +299,7 @@ describe('test vitals service route', () => {
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: vitalId, reason: 'a bad reason' })
+            .send({ id: vitalOneId, reason: 'a bad reason' })
             .end((err, res) => {
                 expect(err).to.exist
                 expect(res).to.have.status(HttpStatus.BAD_REQUEST);
@@ -271,7 +316,7 @@ describe('test vitals service route', () => {
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
-            .send({ id: vitalId, reason })
+            .send({ id: vitalOneId, reason })
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(HttpStatus.OK);

@@ -63,6 +63,54 @@ router.post('/',
         });
     });
 
+ /**
+ * /vital/mostRecent
+ *  GET:
+ *      List of most recent vitals within start and stop date/times.
+ *
+ *      If no start and stop dates are indicated, the most recent are returned.
+ *
+ *      If no start date is passed then the start date is set to a time before records were collected.
+ *
+ *      If no end date is passed then the start date is also the end date and if there's no start date, then end date is the current date time.
+ *
+ *
+ *      produces: application/json
+ *
+ *      @param {String=} startDate Start date in the form of YYYY-MM-DDThh:mm:ss (ISO_8601).
+ *      @param {String=} endDate End date in the form of YYYY-MM-DDThh:mm:ss (ISO_8601)
+ *
+ *      responses:
+ *          200: List of all vitals associated with a patient
+ *          400: invalid parameters produce a bad request
+ *          404: Resource not found
+ */
+router.get('/mostRecent/',
+    (req, res, next) => {
+        let startDate = req.params.startDate;
+        let endDate = req.params.endDate;
+
+        try {
+            if (startDate) {
+                startDate = new Date(startDate);
+            }
+
+            if (endDate) {
+                endDate = new Date(endDate);
+            }
+        } catch (e) {
+            next(e);
+            return;
+        }
+
+        clinicalService.callService(utils.toContext(req), 'VitalsService', 'getMostRecentVitals').then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            next(err);
+        });
+    });
+
+
 /**
  * /vital/:id
  *  GET:
