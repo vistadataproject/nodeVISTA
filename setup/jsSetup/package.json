@@ -1,0 +1,16 @@
+{
+  "name": "parameter_service_setup",
+  "version": "1.0.0",
+  "description": "Scripts that add vitals parameter settings",
+  "main": "parameterServiceTest.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "underscore": "^1.8.3"
+  }
+}
