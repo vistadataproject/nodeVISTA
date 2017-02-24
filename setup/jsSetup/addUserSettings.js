@@ -5,7 +5,7 @@ const parameterService = require('./parameterService');
 const RPCRunner = require('./rpcRunner').RPCRunner;
 const _ = require('lodash');
 
-process.env.gtmroutines = process.env.gtmroutines + ' .';
+process.env.gtmroutines = `${process.env.gtmroutines} .`;
 const db = new nodem.Gtm();
 const DEBUG = true;
 db.open();
@@ -62,7 +62,7 @@ _.each(parameterList, (parameter) => {
             break;
         case 'get':
             console.log(`running ${parameter.type} with parameter ${parameter.parameterName}`);
-            consoel.log('result =>' + parameterService.get(parameter.parameterName, createAvailableOptions(parameter)));
+            console.log(`result => ${parameterService.get(parameter.parameterName, createAvailableOptions(parameter))}`);
             break;
         default:
             console.log('invalid type');

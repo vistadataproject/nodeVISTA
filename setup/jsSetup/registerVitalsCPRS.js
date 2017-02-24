@@ -5,7 +5,7 @@ const nodem = require('nodem');
 const parameterService = require('./parameterService');
 const _ = require('lodash');
 
-process.env.gtmroutines = process.env.gtmroutines + ' .';
+process.env.gtmroutines = `${process.env.gtmroutines} .`;
 const db = new nodem.Gtm();
 const DEBUG = true;
 db.open();
@@ -81,12 +81,12 @@ _.each(parameterList, (parameter) => {
         case 'update':
         case 'addChangeDelete':
             console.log(`running ${parameter.type} with parameter ${parameter.parameterName}`);
-            parameter.type + ' return =>' + parameterService[parameter.type](parameter.parameterName, parameter.value,
+            parameterService[parameter.type](parameter.parameterName, parameter.value,
                 createAvailableOptions(parameter));
             break;
         case 'get':
             console.log(`running ${parameter.type} with parameter ${parameter.parameterName}`);
-            console.log('result =>' + parameterService.get(parameter.parameterName, createAvailableOptions(parameter)));
+            console.log(`result =>${parameterService.get(parameter.parameterName, createAvailableOptions(parameter))}`);
             break;
         default:
             console.log('invalid type');
