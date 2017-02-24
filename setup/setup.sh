@@ -318,6 +318,11 @@ cd $vdphome
 su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
 #***
 
+cd $vdphome/FMQL/webservice
+#start up fmqlServer using pm2 and save settings
+echo "Running FMQL as a service via pm2"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
+
 echo "Restarting nodevista"
 service nodevista restart
 echo "Done restarting nodevista"
@@ -325,11 +330,6 @@ echo "Done restarting nodevista"
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
-
-cd $vdphome/FMQL/webservice
-#start up fmqlServer using pm2 and save settings
-echo "Running FMQL as a service via pm2"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
 
 duration=$SECONDS
 echo "$(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds elapsed."
