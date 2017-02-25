@@ -1,10 +1,10 @@
 'use strict';
 
 const nodem = require('nodem');
-const parameterService = require('./parameterService');
+const parameterService = require('../../../VDM/prototypes/parameterService');
 const _ = require('lodash');
 
-process.env.gtmroutines = `${process.env.gtmroutines} .`;
+process.env.gtmroutines = `${process.env.gtmroutines} ../../../VDM/prototypes`;
 const db = new nodem.Gtm();
 const DEBUG = true;
 db.open();

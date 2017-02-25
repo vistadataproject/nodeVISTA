@@ -1,11 +1,11 @@
 'use strict';
 
 const nodem = require('nodem');
-const parameterService = require('./parameterService');
-const RPCRunner = require('./rpcRunner').RPCRunner;
+const parameterService = require('../../../VDM/prototypes/parameterService');
+const RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
 const _ = require('lodash');
 
-process.env.gtmroutines = `${process.env.gtmroutines} .`;
+process.env.gtmroutines = `${process.env.gtmroutines} ../../../VDM/prototypes`;
 const db = new nodem.Gtm();
 const DEBUG = true;
 db.open();
