@@ -283,6 +283,12 @@ su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 # enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
+#npm install on VDM prototypes
+echo "npm install VDM prototypes..."
+cd $vdphome/VDM/prototypes
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/VDMNpmInstall.log"
+
+echo "npm install nodevista/setup/jsSetup..."
 cd $vdphome/nodevista/setup/jsSetup
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/registerVitalsSetupNpmInstall.log"
 
