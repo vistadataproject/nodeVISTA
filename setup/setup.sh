@@ -166,8 +166,7 @@ git clone --depth 1 $repoPath VistA-Source
 #sudo cp -rf /vagrant/VistA-Source/. /usr/local/src/VistA-Source
 
 # Not Ideal - nodevista for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
-#git clone https://github.com/vistadataproject/nodevista.git
-git clone -b replacing-python-xpar-with-parameter-service --single-branch https://github.com/vistadataproject/nodevista.git
+git clone https://github.com/vistadataproject/nodevista.git
 
 #install vdp
 vdpid=vdp
@@ -204,8 +203,7 @@ su $vdpid -c "mkdir logs"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet nodem@$nodemver >> $vdphome/nodemInstall.log"
 
 echo "Cloning nodevista and VDM for use by $vdpid"
-#git clone -q https://github.com/vistadataproject/nodevista.git
-git clone -b replacing-python-xpar-with-parameter-service --single-branch https://github.com/vistadataproject/nodevista.git
+git clone -q https://github.com/vistadataproject/nodevista.git
 git clone -q https://github.com/vistadataproject/VDM.git
 
 echo "running my node.js parameter service setup scripts"
