@@ -9,9 +9,11 @@ const nodem = require('nodem');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
 const problemUtils = require('mvdm/problems/problemRpcUtils');
-const app = require('../index');
 const HttpStatus = require('http-status');
 const _testProblems = require('./testProblems');
+const config = require('../config/config');
+
+const endpoint = `localhost:${config.port}`;
 
 chai.use(chaiHttp);
 
@@ -44,7 +46,7 @@ describe('test problem service route', () => {
     });
 
     beforeEach('get an access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth')
             .send({
                 userId,
@@ -63,7 +65,7 @@ describe('test problem service route', () => {
     });
 
     beforeEach('get a patient token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .send({ patientId })
@@ -79,7 +81,7 @@ describe('test problem service route', () => {
     });
 
     it('POST /problem - create with missing/empty parameters', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/problem')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -113,7 +115,7 @@ describe('test problem service route', () => {
     }
 
     it('POST /problem - create a problem', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/problem')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -137,7 +139,7 @@ describe('test problem service route', () => {
     });
 
     it('GET /problem/:id without access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/problem/${problemId}`)
             // exclude access token
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -150,7 +152,7 @@ describe('test problem service route', () => {
     });
 
     it('GET /problem/:id without patient token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/problem/${problemId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             // exclude patient token
@@ -163,7 +165,7 @@ describe('test problem service route', () => {
     });
 
     it('GET /problem/:id - describe a problem with an invalid problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/problem/1234')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -178,7 +180,7 @@ describe('test problem service route', () => {
     });
 
     it('GET /problem/:id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/problem/${problemId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -202,7 +204,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /problem - update with missing/empty parameters', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -216,7 +218,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /problem - update a problem', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -233,7 +235,7 @@ describe('test problem service route', () => {
     });
 
     it('GET /problem - list all problems', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/problem')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -262,7 +264,7 @@ describe('test problem service route', () => {
     });
 
     it('GET /problem - invalid filter', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/problem')
             .query({ filter: 'all' }) // an invalid filter parameter
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
@@ -276,7 +278,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /remove - remove a problem without a problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -291,7 +293,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /remove - remove a problem with an invalid problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -307,7 +309,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /remove - remove a problem', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -323,7 +325,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /unremove - unremove a problem without a problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem/unremove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -338,7 +340,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /unremove - unremove a problem with an invalid problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem/unremove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -354,7 +356,7 @@ describe('test problem service route', () => {
     });
 
     it('PUT /unremove - unremove a problem', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/problem/unremove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -370,7 +372,7 @@ describe('test problem service route', () => {
     });
 
     it('DELETE /deleteComments - delete a comment without a problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .delete('/problem/deleteComments')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -385,7 +387,7 @@ describe('test problem service route', () => {
     });
 
     it('DELETE /deleteComments - delete a comment with an invalid problem id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .delete('/problem/deleteComments')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -401,7 +403,7 @@ describe('test problem service route', () => {
     });
 
     it('DELETE /deleteComments - delete a comment with invalid commentIds', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .delete('/problem/deleteComments')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -417,7 +419,7 @@ describe('test problem service route', () => {
     });
 
     it('DELETE /deleteComments - delete a comment', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .delete('/problem/deleteComments')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken

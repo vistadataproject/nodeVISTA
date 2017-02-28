@@ -9,10 +9,12 @@ const nodem = require('nodem');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
 const vitalUtils = require('mvdm/vitals/vitalUtils');
-const app = require('../index');
 const HttpStatus = require('http-status');
 const moment = require('moment');
 const _testVitals = require('./testVitals');
+const config = require('../config/config');
+
+const endpoint = `localhost:${config.port}`;
 
 chai.use(chaiHttp);
 
@@ -46,7 +48,7 @@ describe('test vitals service route', () => {
     });
 
     beforeEach('get an access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth')
             .send({
                 userId,
@@ -65,7 +67,7 @@ describe('test vitals service route', () => {
     });
 
     beforeEach('get a patient token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .send({ patientId })
@@ -81,7 +83,7 @@ describe('test vitals service route', () => {
     });
 
     it('POST /vitals - create with missing/empty parameters', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/vitals')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -95,7 +97,7 @@ describe('test vitals service route', () => {
     });
 
     it('POST /vitals - create a blood pressure vital', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/vitals')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -115,7 +117,7 @@ describe('test vitals service route', () => {
     });
 
     it('GET /vitals/:id without access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/vitals/${vitalOneId}`)
             // exclude access token
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -128,7 +130,7 @@ describe('test vitals service route', () => {
     });
 
     it('GET /vitals/:id without patient token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/vitals/${vitalOneId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             // exclude patient token
@@ -141,7 +143,7 @@ describe('test vitals service route', () => {
     });
 
     it('GET /vitals/:id - describe a vital with an invalid vital id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/vitals/1234')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -156,7 +158,7 @@ describe('test vitals service route', () => {
     });
 
     it('GET /vitals/:id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/vitals/${vitalOneId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -177,7 +179,7 @@ describe('test vitals service route', () => {
     });
 
     it('POST /vitals - create another blood pressure vital', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/vitals')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -197,7 +199,7 @@ describe('test vitals service route', () => {
     });
 
     it('GET /vitals - list vitals with start and end dates', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/vitals')
             .query({ startDate: new Date(2016, 1, 1).toISOString(), endDate: new Date().toISOString() })
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
@@ -222,7 +224,7 @@ describe('test vitals service route', () => {
     });
 
     it('GET /vitals/mostRecent - list most recent vitals', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/vitals/mostRecent')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -247,7 +249,7 @@ describe('test vitals service route', () => {
 
     it('PUT /remove - remove a vital without vital id', (done) => {
         const reason = 'INCORRECT DATE/TIME';
-        chai.request(app)
+        chai.request(endpoint)
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -263,7 +265,7 @@ describe('test vitals service route', () => {
 
     it('PUT /remove - remove a vital with an invalid vital id', (done) => {
         const reason = 'INCORRECT DATE/TIME';
-        chai.request(app)
+        chai.request(endpoint)
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -279,7 +281,7 @@ describe('test vitals service route', () => {
     });
 
     it('PUT /remove - remove a vital with a missing reason', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -295,7 +297,7 @@ describe('test vitals service route', () => {
     });
 
     it('PUT /remove - remove a vital with an invalid reason', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -312,7 +314,7 @@ describe('test vitals service route', () => {
 
     it('PUT /remove - remove a vital', (done) => {
         const reason = 'INCORRECT DATE/TIME';
-        chai.request(app)
+        chai.request(endpoint)
             .put('/vitals/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken

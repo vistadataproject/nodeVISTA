@@ -9,9 +9,10 @@ const nodem = require('nodem');
 const jwt = require('jsonwebtoken');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
-const app = require('../index');
 const config = require('../config/config');
 const HttpStatus = require('http-status');
+
+const endpoint = `localhost:${config.port}`;
 
 chai.use(chaiHttp);
 
@@ -42,7 +43,7 @@ describe('test authentication service route', () => {
     });
 
     it('POST /auth call returns access and refresh tokens', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth')
             .send({ userId, facilityId })
             .end((err, res) => {
@@ -69,7 +70,7 @@ describe('test authentication service route', () => {
     });
 
     it('POST /auth/refreshToken call returns new access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth/refreshToken')
             .set('x-refresh-token', refreshToken)
             .end((err, res) => {
@@ -96,7 +97,7 @@ describe('test authentication service route', () => {
             facilityId,
         }, privCert, { subject: 'refreshToken', algorithm: config.jwt.algorithm });
 
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth/refreshToken')
             .set('x-refresh-token', refreshToken)
             .end((err, res) => {
@@ -110,7 +111,7 @@ describe('test authentication service route', () => {
     });
 
     it('POST /auth/refreshToken call returns an error if an invalid refresh token is passed in', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth/refreshToken')
             .set('x-refresh-token', accessToken) // pass in accessToken
             .end((err, res) => {

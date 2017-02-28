@@ -238,11 +238,15 @@ chown -R vdp:vdp static
 
 #install jasmine
 echo "Installing Jasmine"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/jasmineInstall.log"
+
+#install mocha
+echo "Installing Mocha"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
 #install bower
 echo "Installing Bower"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/bowerInstall.log"
 
 #copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
@@ -334,6 +338,10 @@ echo "Done restarting nodevista"
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
+
+#start up clinical REST service using pm2 and save settings
+echo "Running clinical REST service as a service via pm2"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/clinicalService && npm install --quiet && pm2 start index.js --name clinicalService && pm2 save >> $vdphome/logs/clinicalServiceStartup.log"
 
 duration=$SECONDS
 echo "$(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds elapsed."

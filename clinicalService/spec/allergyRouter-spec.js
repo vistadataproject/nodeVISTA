@@ -9,10 +9,12 @@ const nodem = require('nodem');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
 const allergyUtils = require('mvdm/allergies/allergyUtils');
-const app = require('../index');
 const HttpStatus = require('http-status');
 const moment = require('moment');
 const _testAllergies = require('./testAllergies');
+const config = require('../config/config');
+
+const endpoint = `localhost:${config.port}`;
 
 chai.use(chaiHttp);
 
@@ -64,7 +66,7 @@ describe('test allergy service route', () => {
     }
 
     beforeEach('get an access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth')
             .send({
                 userId,
@@ -83,7 +85,7 @@ describe('test allergy service route', () => {
     });
 
     beforeEach('get a patient token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .send({ patientId })
@@ -99,7 +101,7 @@ describe('test allergy service route', () => {
     });
 
     it('POST /allergy - create with missing/empty parameters', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/allergy')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -113,7 +115,7 @@ describe('test allergy service route', () => {
     });
 
     it('POST /allergy - create an allergy', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/allergy')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -132,7 +134,7 @@ describe('test allergy service route', () => {
     });
 
     it('GET /allergy/:id without access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/allergy/${allergyId}`)
             // exclude access token
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -145,7 +147,7 @@ describe('test allergy service route', () => {
     });
 
     it('GET /allergy/:id without patient token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/allergy/${allergyId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             // exclude patient token
@@ -158,7 +160,7 @@ describe('test allergy service route', () => {
     });
 
     it('GET /allergy/:id - describe an allergy with an invalid allergy id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/allergy/1234')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -173,7 +175,7 @@ describe('test allergy service route', () => {
     });
 
     it('GET /allergy/:id', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get(`/allergy/${allergyId}`)
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -193,7 +195,7 @@ describe('test allergy service route', () => {
     });
 
     it('GET /allergy - list all allergies', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .get('/allergy')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -217,7 +219,7 @@ describe('test allergy service route', () => {
 
     it('PUT /remove - remove an allergy without allergy id', (done) => {
         const removeComment = 'entered by mistake';
-        chai.request(app)
+        chai.request(endpoint)
             .put('/allergy/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -233,7 +235,7 @@ describe('test allergy service route', () => {
 
     it('PUT /remove - remove an allergy with an invalid allergy id', (done) => {
         const removeComment = 'entered by mistake';
-        chai.request(app)
+        chai.request(endpoint)
             .put('/allergy/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken
@@ -250,7 +252,7 @@ describe('test allergy service route', () => {
 
     it('PUT /remove - remove an allergy', (done) => {
         const removeComment = 'entered by mistake';
-        chai.request(app)
+        chai.request(endpoint)
             .put('/allergy/remove')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .set('x-patient-token', patientToken) // pass in patientToken

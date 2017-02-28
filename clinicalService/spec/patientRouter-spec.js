@@ -9,9 +9,10 @@ const nodem = require('nodem');
 const jwt = require('jsonwebtoken');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
-const app = require('../index');
 const config = require('../config/config');
 const HttpStatus = require('http-status');
+
+const endpoint = `localhost:${config.port}`;
 
 chai.use(chaiHttp);
 
@@ -42,7 +43,7 @@ describe('test patient service route', () => {
     });
 
     beforeEach('get an access token', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/auth')
             .send({ userId, facilityId })
             .end((err, res) => {
@@ -58,7 +59,7 @@ describe('test patient service route', () => {
     });
 
     it('POST /patient/select', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .send({ patientId })
@@ -71,7 +72,7 @@ describe('test patient service route', () => {
     });
 
     it('POST /patient/select call without patientId', (done) => {
-        chai.request(app)
+        chai.request(endpoint)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .send({})
@@ -90,7 +91,7 @@ describe('test patient service route', () => {
             facilityId,
         }, privCert, { subject: 'accessToken', algorithm: config.jwt.algorithm });
 
-        chai.request(app)
+        chai.request(endpoint)
             .post('/patient/select')
             .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
             .send({})
