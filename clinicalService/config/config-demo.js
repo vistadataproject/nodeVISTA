@@ -10,7 +10,7 @@ const config = {
         errorFile: './log/clinicalService-error.log',
     },
 
-    port: 9031, // service listens on this port
+    port: 9030, // service listens on this port
 
     // JWT
     jwt: {
