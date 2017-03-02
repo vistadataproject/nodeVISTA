@@ -147,6 +147,7 @@ class RPCDispatcher {
         let rpcResult;
         let patient;
         let rpcPath;
+        let lockerName;
 
         // generate a random transaction id for rpcL and rpcRunner calls
         const transactionId = this.generateTransactionId();
@@ -164,6 +165,7 @@ class RPCDispatcher {
             }
 
             rpcPath = 'rpcLocked';
+            lockerName = rpcL.name || 'Unknown';
 
             rpcResult = rpcL.run(rpcName, rpcArgs, transactionId);
 
@@ -191,6 +193,7 @@ class RPCDispatcher {
 
         const ret = {
             path: rpcPath,
+            lockerName,
             rpcResponse: response,
             transactionId,
             result: rpcResult.result,

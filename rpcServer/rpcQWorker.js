@@ -107,6 +107,8 @@ function createDispatcher() {
             const LockerClass = require(locker.path);
             const rpcLocker = new LockerClass(db);
 
+            rpcLocker.name = name;
+
             // If that was successful, load all the models specified for this locker via module paths
             const modelPaths = locker.models || [];
             modelPaths.forEach((modelPath) => {
@@ -195,6 +197,7 @@ function callRPC(messageObject, send) {
         response = ret.rpcResponse;
         transactionId = ret.transactionId;
         runResult = ret.result;
+        rpcObject.lockerName = ret.lockerName;
     }
 
     // log to capture file the RPC and the response to a file
@@ -212,6 +215,7 @@ function callRPC(messageObject, send) {
             ipAddress: messageObject.ipAddress,
             timestamp: rpcObject.timeStamp,
             runner: rpcObject.to,
+            lockerName: rpcObject.lockerName,
             runResult: runResult,
             rpcName: rpcObject.name,
             rpcObject: rpcObject,

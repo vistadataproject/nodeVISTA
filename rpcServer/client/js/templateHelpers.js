@@ -28,12 +28,12 @@ define([
         return new Handlebars.SafeString(selectHtml);
     });
 
-    Handlebars.registerHelper('show-runner', function(runner) {
-
+    Handlebars.registerHelper('show-runner', function(runner, lockerName) {
+        console.log(`runner: ${runner}, lockerName: ${lockerName}`);
         if (runner === 'rpcRunner') {
             return 'RPC Runner';
         } else if (runner === 'rpcLocked') {
-            return 'RPC Locked';
+            return lockerName || 'RPC Locked';
         } else if (runner === 'server') {
             return 'Server';
         } else return runner;

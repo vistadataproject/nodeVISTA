@@ -94,7 +94,7 @@ define([
                             if (rawValue === 'rpcRunner') {
                                 retVal = 'RPC Runner';
                             } else if (rawValue === 'rpcLocked') {
-                                retVal = 'RPC Locked';
+                                retVal = model.get('lockerName') || 'RPC Locked';
                             } else if (rawValue === 'server') {
                                 retVal = 'Server';
                             }

@@ -34,6 +34,7 @@ define([
         consumeEvent: function(eventModel) {
             var rpcName = eventModel.get('rpcName');
             var runner = eventModel.get('runner');
+            var lockerName = eventModel.get('lockerName');
 
             var rpc = this.find(function(model) {return model.get('name') === rpcName});
 
@@ -41,7 +42,8 @@ define([
                 var data = {
                     name: rpcName,
                     count: 1,
-                    runner: runner
+                    runner: runner,
+                    lockerName: lockerName,
                 };
 
                 data = _.extend(data, rpcsCategorized[rpcName]);
