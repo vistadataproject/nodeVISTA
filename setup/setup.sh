@@ -290,6 +290,10 @@ echo "npm install VDM prototypes..."
 cd $vdphome/VDM/prototypes
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/VDMNpmInstall.log"
 
+echo "npm install nodevista/setup/utils..."
+cd $vdphome/nodevista/setup/utils
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/updateNodeVISTAParametersNpmInstall.log"
+
 echo "npm install nodevista/setup/jsSetup..."
 cd $vdphome/nodevista/setup/jsSetup
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/registerVitalsSetupNpmInstall.log"
@@ -301,6 +305,11 @@ su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/en
 # using parameter service to inject system level settings
 echo "run registerVitalsCPRS.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node registerVitalsCPRS.js >> $vdphome/logs/registerVitalsCPRS.log"
+
+# inject additional nodeVista parameters
+cd $vdphome/nodevista/setup/utils
+echo "run updateNodeVISTAParameters.js"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js >> $vdphome/logs/updateNodeVISTAParameters.log"
 
 cd $basedir
 cd /usr/local/src/nodevista/setup/pySetup
