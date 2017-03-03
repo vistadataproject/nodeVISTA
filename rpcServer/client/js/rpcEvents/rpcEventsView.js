@@ -55,8 +55,8 @@ define([
                 selectOptions: [
                     {label: "All", value: null},
                     {label: "All No Polling", value: 'noPoller'},
-                    {label: 'RPC Runner', value: 'rpcRunner'},
-                    {label: 'RPC Locked', value: 'rpcLocked'},
+                    {label: 'Pass Through', value: 'rpcRunner'},
+                    {label: 'Lockers', value: 'rpcLocked'},
                     {label: 'Server', value: 'server'}],
                 selectMatcher: function(value) {
                     return function(model) {
@@ -84,7 +84,7 @@ define([
                     formatter: htmlFormatter
                 }, {
                     name: 'runner',
-                    label: 'Path',
+                    label: 'Route',
                     editable: false,
                     cell: Backgrid.HtmlCell,
                     formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
@@ -92,7 +92,7 @@ define([
                             var retVal = rawValue;
 
                             if (rawValue === 'rpcRunner') {
-                                retVal = 'RPC Runner';
+                                retVal = 'Pass Through';
                             } else if (rawValue === 'rpcLocked') {
                                 retVal = model.get('lockerName') || 'RPC Locked';
                             } else if (rawValue === 'server') {
