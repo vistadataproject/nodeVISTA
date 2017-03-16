@@ -99,7 +99,7 @@ function init() {
 
     });
 
-    var port = CONFIG.mvdmClient.port;
+    var port = CONFIG.nodeVISTAManager.port;
     app.listen(port, function () {
         LOGGER.info('nodeVISTA Manager listening on port ' + port);
     });

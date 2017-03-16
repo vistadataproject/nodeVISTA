@@ -7,7 +7,7 @@ var util = require('util');
 var _ = require('underscore');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
-var mvdmClient = require('./mvdmClient');
+var nodeVISTAManager = require('./nodeVISTAManager');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 
@@ -73,7 +73,7 @@ captureFile.on("open", function (fd) {
         LOGGER.info('RPCServer listening to %j', server.address());
 
         //start up mvdm client
-        mvdmClient.init();
+        nodeVISTAManager.init();
 
         //get locked rpc list
         processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {

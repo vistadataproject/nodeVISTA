@@ -10,7 +10,7 @@
     "static",
     "eventManager.js",
     "logger.js",
-    "mvdmClient.js",
+    "nodeVISTAManager.js",
     "mvdmManagement.js",
     "package.json",
     "README.md",

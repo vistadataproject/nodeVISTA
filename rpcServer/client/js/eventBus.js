@@ -69,7 +69,7 @@ define([
 
         function initWebSocket(socketRoute, onMessageCallback) {
             // Open an event web socket
-            var eventsSocket = new WebSocket("ws://" + config.mvdmClient.host + ":" + config.mvdmClient.port + '/' + socketRoute);
+            var eventsSocket = new WebSocket("ws://" + config.nodeVISTAManager.host + ":" + config.nodeVISTAManager.port + '/' + socketRoute);
 
             eventsSocket.onopen = function () {
                 // Web Socket is connected, send data using send()
