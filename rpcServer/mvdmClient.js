@@ -101,7 +101,7 @@ function init() {
 
     var port = CONFIG.mvdmClient.port;
     app.listen(port, function () {
-        LOGGER.info('MVDM Client listening on port ' + port);
+        LOGGER.info('nodeVISTA Manager listening on port ' + port);
     });
 
     //static files

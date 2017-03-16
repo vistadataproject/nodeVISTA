@@ -33,7 +33,7 @@ $ node rpcServer.js
 ```
 The RPC Server should be listening for incoming RPC connections on the configured rpcServer port (9010). 
 
-**Launch MVDM Client**
+**Launch nodeVISTA Manager**
 
 Open your browser and launch the mvdm client URL: 
 ```

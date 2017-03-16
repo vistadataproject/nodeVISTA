@@ -33,7 +33,7 @@ define([
         if (runner === 'rpcRunner') {
             return 'Pass Through';
         } else if (runner === 'rpcLocked') {
-            return lockerName || 'RPC Locked';
+            return lockerName || 'RPC Emulated';
         } else if (runner === 'server') {
             return 'Server';
         } else return runner;

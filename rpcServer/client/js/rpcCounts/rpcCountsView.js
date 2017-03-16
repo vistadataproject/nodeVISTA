@@ -153,11 +153,11 @@ define([
                     divId: 'distinct-svg',
                     data: [
                         {
-                            "LABEL": "Distinct Unlocked",
+                            "LABEL": "Distinct Pass Through",
                             "COUNT": RPCCountCollection.distinctTotal()
                         },
                         {
-                            "LABEL": "Distinct Locked",
+                            "LABEL": "Distinct Emulated",
                             "COUNT": RPCCountCollection.distinctLockedTotal()
                         }
                     ],
@@ -224,11 +224,11 @@ define([
                     divId: 'locked-svg',
                     data: [
                         {
-                            "LABEL": "Unlocked",
+                            "LABEL": "Pass Through",
                             "COUNT": RPCCountCollection.total()
                         },
                         {
-                            "LABEL": "Locked",
+                            "LABEL": "Emulated",
                             "COUNT": RPCCountCollection.lockedTotal()
                         }
                     ],
