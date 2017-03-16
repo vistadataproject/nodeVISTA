@@ -1,9 +1,9 @@
-##RPC Server 
+## RPC Server 
 
 The purpose of the RPC Server is to listen for RPC client requests (typically from CPRS or JLV) and forward them on to either the local RPC runner (pass through) or the MVDM RPC Emulator (emulated).
 
 
-###Running the Server
+### Running the Server
 
 **Configuration**
 
@@ -35,9 +35,9 @@ The RPC Server should be listening for incoming RPC connections on the configure
 
 **Launch nodeVISTA Manager**
 
-Open your browser and launch the mvdm client URL: 
+Open your browser and launch the nodeVISTA Manager URL: 
 ```
-http://<mvdmClient.host>:<mvdmClient.port>
+http://<nodeManager.host>:<nodeManager.port>
 
 i.e. http://10.2.2.100:9020
 ```
