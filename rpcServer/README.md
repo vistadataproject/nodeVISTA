@@ -7,17 +7,17 @@ The purpose of the RPC Server is to listen for RPC client requests (typically fr
 
 **Configuration**
 
-Modify cfg/config.js and set the rpc server and MVDM client to the desired settings
+Modify cfg/config.js and set the rpc server and nodeVISTA Manager to the desired settings
 
 ```javascript
 // rpc server socket
 config.rpcServer = {};
 config.rpcServer.port = 9010;
 
-// mvdm socket
-config.mvdmClient = {};
-config.mvdmClient.host = '10.2.2.100'; <-- osehraVISTA IP
-config.mvdmClient.port = 9020;
+// nodeVISTAManager socket
+config.nodeVISTAManager = {};
+config.nodeVISTAManager.host = '10.2.2.100'; <-- nodeVISTA IP
+config.nodeVISTAManager.port = 9020;
 ```
 
 **Execute the Server**
