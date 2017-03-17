@@ -90,12 +90,12 @@ class ProcessAdapter {
 
     // Child error handler
     static onChildError(code, signal) {
-        console.log(code, signal);
+        console.log('ProcessAdapter handing child ERROR signal', code, signal);
     }
 
     // Child exit handler
     static onChildExit(code, signal) {
-        console.log(code, signal);
+        console.log('ProcessAdapter handing child EXIT signal', code, signal);
     }
 }
 
