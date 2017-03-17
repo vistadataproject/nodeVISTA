@@ -13,8 +13,16 @@ var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 var rpcsCategorized = require('./cfg/rpcsCategorized');
+var ProcessAdapter = require('./processAdapter');
+var util = require('util');
 
 var lockedRPCList = [];
+
+// =========== Initialize the process adapter, which ties this back into the RPC Server ============
+const processAdapter = new ProcessAdapter();
+processAdapter.init();
+processAdapter.bindEventManager(EventManager);
+// =================================================================================================
 
 function init() {
     // parse application/x-www-form-urlencoded
@@ -44,7 +52,7 @@ function init() {
         var settings = req.body;
 
         if (_.has(settings, 'isRPCLocked')) {
-            mvdmManagement.isRPCLocked = settings.isRPCLocked;
+            processAdapter.setRPCLocked(settings.isRPCLocked);
         }
 
         return res.sendStatus(200);
@@ -171,4 +179,3 @@ function processEvent(clients, eventCategory, event) {
 }
 
 module.exports.init = init;
-
