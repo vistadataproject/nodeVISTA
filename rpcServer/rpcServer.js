@@ -7,7 +7,6 @@ var util = require('util');
 var _ = require('underscore');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
-var nodeVISTAManager = require('./nodeVISTAManager');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 var ProcessAdapter = require('./processAdapter');
