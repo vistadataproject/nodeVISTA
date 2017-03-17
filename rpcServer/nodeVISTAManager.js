@@ -50,6 +50,7 @@ function init() {
         var settings = req.body;
 
         if (_.has(settings, 'isRPCLocked')) {
+            mvdmManagement.isRPCLocked = settings.isRPCLocked;
             processAdapter.setRPCLocked(settings.isRPCLocked);
         }
 
