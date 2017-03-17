@@ -80,9 +80,6 @@ captureFile.on("open", function (fd) {
     server.listen(port, function () {
         LOGGER.info('RPCServer listening to %j', server.address());
 
-        //start up mvdm client - except this is handled by the ProcessAdapter now so don't
-        //nodeVISTAManager.init();
-
         //get locked rpc list
         processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
             EventManager.emit(responseObject.message.eventType, responseObject.message.event);

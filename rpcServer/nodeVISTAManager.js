@@ -14,7 +14,6 @@ var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 var rpcsCategorized = require('./cfg/rpcsCategorized');
 var ProcessAdapter = require('./processAdapter');
-var util = require('util');
 
 var lockedRPCList = [];
 
