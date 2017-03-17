@@ -70,16 +70,24 @@ class ProcessAdapter {
     }
 
     /**
-     * Sample webserver API call. This will set the MVDM management option on the RPC server side (which
-     * used to be a singleton) via call.
+     * Send a JS-based event from the child process (nodeVISTAManager) to the RPC Server. On the parent side,
+     * these events can be processed by registered child event handlers (via registerChildEventHandler)
+     */
+    sendEventToRPCServer(event) {
+        if (this.isChildProcess) {
+            process.send(event);
+        }
+    }
+
+    /**
+     * nodeVISTA manager API function. This will allow the nodeVISTAManager to set the MVDM management option on
+     * the RPC server side (which used to be a singleton) transparently through the interprocess barrier.
      */
     setRPCLocked(isRPCLocked) {
-        if (this.isChildProcess) {
-            process.send({
-                event: 'isRPCLocked',
-                value: isRPCLocked,
-            });
-        }
+        this.sendEventToRPCServer({
+            event: 'isRPCLocked',
+            value: isRPCLocked,
+        });
     }
 
     // Child error handler
