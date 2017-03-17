@@ -15,13 +15,7 @@ class ProcessAdapter {
 
         this.childProcess = null;
         this.childEventHandlers = {};
-    }
 
-    /**
-     * Initialize the manager process adapter object. This must be called after construction to ensure
-     * proper setup of the object internals.
-     */
-    init() {
         // If this is a parent process, spawn the nodeVISTAManager instance as a child process. Instances
         // of this class that are created within will be created with the appropriate environment variable
         if (this.isParentProcess) {

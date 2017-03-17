@@ -18,11 +18,9 @@ var util = require('util');
 
 var lockedRPCList = [];
 
-// =========== Initialize the process adapter, which ties this back into the RPC Server ============
+// Initialize the process adapter, which ties this back into the RPC Server
 const processAdapter = new ProcessAdapter();
-processAdapter.init();
 processAdapter.bindEventManager(EventManager);
-// =================================================================================================
 
 function init() {
     // parse application/x-www-form-urlencoded

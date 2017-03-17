@@ -62,7 +62,6 @@ processQueue.start();
 
 // = Initialize the process adapter which spawns and links the nodeVISTAManager in a new process ==
 const processAdapter = new ProcessAdapter();
-processAdapter.init();
 processAdapter.bindEventManager(EventManager);
 processAdapter.registerChildEventHandler('isRPCLocked', (isRPCLocked) => {
     mvdmManagement.isRPCLocked = isRPCLocked;
