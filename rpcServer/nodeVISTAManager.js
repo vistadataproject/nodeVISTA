@@ -2,7 +2,7 @@
 'use strict';
 
 var express = require('express');
-var _ = require('underscore');
+var _ = require('lodash');
 var app = express();
 var expressWs = require('express-ws')(app);
 var bodyParser = require('body-parser');

@@ -10,7 +10,7 @@ var parser = require('nodevista-rpcparser/rpcParser.js');
 
 var uuid = require('uuid');
 var $ = require('jquery');
-var _ = require('underscore');
+var _ = require('lodash');
 
 // imports for RPCService
 var nodem = require('nodem');

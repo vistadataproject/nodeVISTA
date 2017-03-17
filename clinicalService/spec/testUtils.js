@@ -7,7 +7,7 @@
 'use strict';
 
 var util = require('util');
-var _ = require('underscore');
+var _ = require('lodash');
 
 var fileman = require('mvdm/fileman');
 var fmql = require('mvdm/fmql');

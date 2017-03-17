@@ -4,7 +4,7 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const _ = require('underscore');
+const _ = require('lodash');
 const nodem = require('nodem');
 const fileman = require('mvdm/fileman');
 const vdmUtils = require('mvdm/vdmUtils');
