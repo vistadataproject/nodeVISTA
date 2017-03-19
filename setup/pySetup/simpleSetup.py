@@ -172,6 +172,9 @@ def postImportSetupUsers(VistA):
     # Add a clerk user with permissions for Problem List Data entry
     OSEHRASetup.addClerk(VistA,"CLERK,JOE","JC","000000112","M","fakeclerk1","2Cle!@#$")
 
+    # Add a Pharmacist
+    OSEHRASetup.addPharmacist(VistA,"PHARMA,FRED","FP","000000031","M","fakepharma1","2Pha!@#$");
+
     #Create a new Order Menu
     OSEHRASetup.createOrderMenu(VistA)
 

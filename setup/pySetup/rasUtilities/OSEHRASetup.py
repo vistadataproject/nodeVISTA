@@ -752,6 +752,90 @@ def addClerk(VistA,name,init,SSN,sex,AC,VC1):
   VistA.wait("User Management")
   VistA.write("")
 
+#
+# TODO: complete fill in for Typical Pharmacist (based on Provider now)
+# ... see [PHARMACIST CHECK] keys
+#
+# Not putting in: many have a ton of (FileMan) permissions (accessible_file) too
+#
+# Note there is a separate "Outpatient Pharmacy Manager/Supervisor Functions/...
+# ... Select Pharmacist to make a user a pharmacist.
+#
+def addPharmacist(VistA,name,init,SSN,sex,AC,VC1):
+  # Adds a Pharmacist user into the system via the User Management Menu as
+  # the System Manager.
+  # Needs:
+  # Pharmacist Name, Pharmacist Initials, SSN, Sex, Access Code, Verify Code
+  # VDP: IMPORTANT - presumes signonZU called before and ends up in
+  # System Manager Menu
+  VistA.wait("Systems Manager Menu")
+  VistA.write('USER MANAGEMENT')
+  VistA.wait('User Management')
+  VistA.write('ADD')
+  VistA.wait('name')
+  VistA.write(name+'\rY')
+  VistA.wait('INITIAL:')
+  VistA.write(init)
+  VistA.wait('SSN:')
+  VistA.write(SSN)
+  VistA.wait('SEX:')
+  VistA.write(sex)
+  VistA.wait('NPI')
+  VistA.write('')
+  VistA.wait('NAME COMPONENTS')
+  # A ScreenMan form opens at this point, and the following information is set:
+  # Primary Menu:   XUCORE [PHARMACIST CHECK]
+  # Secondary Menu: OR CPRS GUI CHART, PSINPATIENT, PSB GUI CONTEXT - USER, BPSMENU, PSB PHARMACY, TIU MAIN MENU CLINICIAN
+  # (but problem - so only putting OR CPRS GUI CHART)
+  # Access Code:    <passed as argument> [PHARMACIST CHECK]
+  # Verify Code:    <passed as argument> [PHARMACIST CHECK]
+  # No restriction on Patient Selection [PHARMACIST CHECK]
+  # Allowed multiple sign-ons [PHARMACIST CHECK]
+  # Service Section: IRM [PHARMACIST CHECK] -- probably wrong
+  # Pharmacy Service Providers (Pharmacist) as the Person Class: (183500000X) - 246
+  # Core CPRS Tab access [PHARMACIST CHECK]
+  VistA.write('\r\r\r\r\r^PRIMARY MENU OPTION\rXUCOR\r^SECONDARY MENU OPTIONS\rOR CPRS GUI CHART\rY\r\r\r\r^Want to edit ACCESS CODE\rY\r'+AC+'\r'+AC+'\r^Want to edit VERIFY CODE\rY\r'+VC1+'\r'+VC1+'\rVISTA HEALTH CARE\rY\r\r\r\r\r^SERVICE/SECTION\rIRM\r^Language\r\r246\rY\rY\rT-1\r\r^RESTRICT PATIENT SELECTION\r0\r\rCOR\rY\rT-1\r\r^MULTIPLE SIGN-ON\r1\r1\r99\r^\rS\rE') 
+  # Exiting the ScreenMan form, Allocate Security Keys
+  VistA.wait('User Account Access Letter')
+  VistA.write('NO')
+  VistA.wait('wish to allocate security keys?')
+  VistA.write('Y')
+  # Mandatory or in most pharmacists have these KEYs in Clone (PSORPH is key)
+  VistA.wait('Allocate key')
+  VistA.write('PSORPH\r1')
+  VistA.wait('Another key')
+  VistA.write('MAGDISP CLIN')
+  VistA.wait('Another key')
+  VistA.write('PSUSER')
+  VistA.wait('Another key')
+  VistA.write('PSJ RPHARM')
+  VistA.wait('Another key')
+  VistA.write('PSOLOCKCLOZ')
+  VistA.wait('Another key')
+  VistA.write('BPSMENU')
+  VistA.wait('Another key')
+  VistA.write('BPS REPORTS')
+  VistA.wait('Another key')
+  VistA.write('GMRA-ALLERGY VERIFY')
+  VistA.wait('Another key')
+  VistA.write('PSJU PL')
+  VistA.wait('Another key')
+  VistA.write('BPS USER')
+  VistA.wait('Another key')
+  VistA.write('RT MAS-FR-STAFF')
+  VistA.wait('Another key')
+  VistA.write('PSB READ ONLY')
+  VistA.wait('Another key')
+  VistA.write('')
+  VistA.wait('Another holder')
+  VistA.write('')
+  VistA.wait('Do you wish to proceed')
+  VistA.write('Yes')
+  VistA.wait('add this user to mail groups')
+  VistA.write('NO')
+  VistA.wait("User Management")
+  VistA.write("")
+
 def createOrderMenu(VistA):
   # Create the Quick Order Menu to have the LRZ Strep Test as a selectable option while
   # not removing the old entries.
