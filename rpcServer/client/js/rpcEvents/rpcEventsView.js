@@ -55,8 +55,8 @@ define([
                 selectOptions: [
                     {label: "All", value: null},
                     {label: "All No Polling", value: 'noPoller'},
-                    {label: 'RPC Runner', value: 'rpcRunner'},
-                    {label: 'MVDM Locked', value: 'mvdmLocked'},
+                    {label: 'Pass Through', value: 'rpcRunner'},
+                    {label: 'Lockers', value: 'rpcLocked'},
                     {label: 'Server', value: 'server'}],
                 selectMatcher: function(value) {
                     return function(model) {
@@ -84,7 +84,7 @@ define([
                     formatter: htmlFormatter
                 }, {
                     name: 'runner',
-                    label: 'Path',
+                    label: 'Route',
                     editable: false,
                     cell: Backgrid.HtmlCell,
                     formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
@@ -92,9 +92,9 @@ define([
                             var retVal = rawValue;
 
                             if (rawValue === 'rpcRunner') {
-                                retVal = 'RPC Runner';
-                            } else if (rawValue === 'mvdmLocked') {
-                                retVal = 'MVDM Locked';
+                                retVal = 'Pass Through';
+                            } else if (rawValue === 'rpcLocked') {
+                                retVal = model.get('lockerName') || 'RPC Locked';
                             } else if (rawValue === 'server') {
                                 retVal = 'Server';
                             }
@@ -160,7 +160,7 @@ define([
             this.$el.find('.event-count-total').html(EventCounter.get('total'));
             this.$el.find('.event-count-total-no-poller').html(EventCounter.get('totalNoPoller'));
             this.$el.find('.event-count-rpc-runner').html(EventCounter.get('rpcRunner'));
-            this.$el.find('.event-count-mvdm-locked').html(EventCounter.get('mvdmLocked'));
+            this.$el.find('.event-count-mvdm-locked').html(EventCounter.get('rpcLocked'));
             this.$el.find('.event-count-server').html(EventCounter.get('server'));
         },
         clearEventCounter: function() {
@@ -168,7 +168,7 @@ define([
                 total: 0,
                 totalNoPoller: 0,
                 rpcRunner: 0,
-                mvdmLocked: 0,
+                rpcLocked: 0,
                 server: 0
             });
 

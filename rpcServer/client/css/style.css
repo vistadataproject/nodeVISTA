@@ -154,3 +154,8 @@ nav {
     margin-bottom: 10px;
 }
 
+/* Centers grid column header labels */
+.backgrid thead button {
+    margin: auto;
+}
+

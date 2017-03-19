@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 
 var LOGGER = require('./logger.js');
@@ -9,15 +10,14 @@ var parser = require('nodevista-rpcparser/rpcParser.js');
 
 var uuid = require('uuid');
 var $ = require('jquery');
-var _ = require('underscore');
-
+var _ = require('lodash');
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('mvdm/rpcFacade');
+var RPCDispatcher = require('./rpcDispatcher');
 var RPCContexts = require('mvdm/rpcRunner').RPCContexts;
 
-var db, rpcFacade, rpcContexts;
+var db, rpcDispatcher, rpcContexts;
 //need for user and facility lookup
 var MVDM = require('mvdm/mvdm');
 var vdmUtils = require('mvdm/vdmUtils');
@@ -36,16 +36,113 @@ process.on('uncaughtException', function(err) {
 });
 
 function connectVistaDatabase() {
-    process.env.gtmroutines = process.env.gtmroutines + ' ' + vdmUtils.getVdmPath(); // make VDP MUMPS available
+    process.env.gtmroutines = setGtmRoutinePath();
     // console.log("process.env.gtmroutines: " + process.env.gtmroutines);
-
     db = new nodem.Gtm();
     db.open();
 
-    rpcFacade = new RPCFacade(db);
-    rpcFacade.setLocking(true); //default is to utilize mvdm locking
-
     rpcContexts = new RPCContexts(db);
+}
+
+/**
+ * Adjust the GT.M routine path environment variable. This needs to be called prior to the nodem instance
+ * being created to ensure that the MUMPS routine paths are included in the configuration.
+ */
+function setGtmRoutinePath() {
+    const pathElements = [process.env.gtmroutines, vdmUtils.getVdmPath()];
+
+    const lockers = CONFIG.lockers || [];
+    lockers.forEach((locker) => {
+
+        // Add the MUMPS routine paths any exist for this locker configuration
+        if (locker.routinePath) {
+            LOGGER.debug(`Appending ${locker.routinePath} to the gtmroutines environment variable`);
+            pathElements.push(locker.routinePath);
+        }
+    });
+    return pathElements.join(' ');
+}
+
+/**
+ * Create and initialize RPC dispatcher.
+ *
+ * This function also registers RPC lockers based on server configuration properties.
+ *
+ * Locker and Model instances are dynamically instantiated based on configuration options, which decouples the
+ * target locker/model code from the worker. It also precludes the need for special "developer mode" flags and
+ * gives sever user more control over the registration process.
+ *
+ * To configure registration of lockers, the function depends the 'CONFIG.lockers' attribute, which
+ * should be an array of Locker configuration objects. The objects should have the following format:
+ *
+ *    locker.name: {String} <OPTIONAL> Arbitrary string name of the locker.
+ *    locker.path: {String} <REQUIRED> Relative or absolute path of the Locker class definition module,
+ *                 in CommonJS format.
+ *    locker.models: {Array} <REQUIRED> Relative or absolute paths to the model definition modules, in CommonJS format.
+ *    locker.routinePath: {String} <OPTIONAL> Path to additional required MUMPS routines.
+ *
+ * Order matters with respect to the configuration objects. Lockers listed earlier in the CONFIG.lockers array will
+ * be given higher precedence in the dispatcher handler.
+ */
+function createDispatcher() {
+
+    // create RPC dispatcher
+    rpcDispatcher = new RPCDispatcher(db);
+
+    // Grab the locker definition object array from the configuration
+    const lockers = CONFIG.lockers || [];
+
+    let vdmModels = [];
+    let mvdmModels = [];
+
+    lockers.forEach((locker) => {
+        const name = locker.name || 'UNKNOWN';
+        LOGGER.info(`Registering locker: ${name}...`);
+
+        // We're going to be doing dynamic 'requires', so we'll need to catch any errors if they occur
+        try {
+            LOGGER.debug(`Creating instance of RPC Locker class from ${locker.path}`);
+
+            // eslint-disable-next-line
+            const LockerClass = require(locker.path);
+            const rpcLocker = new LockerClass(db);
+
+            rpcLocker.name = name;
+
+            // If that was successful, load all the models specified for this locker via module paths
+            const modelPaths = locker.models || [];
+            modelPaths.forEach((modelPath) => {
+                LOGGER.debug(`Loading models from ${modelPath}`);
+
+                // eslint-disable-next-line
+                const model = require(modelPath);
+
+                // Inject model dependencies into the locker instance
+                if (model.vdmModel) {
+                    // add to existing vdm model list (VDM is a singleton)
+                    vdmModels = vdmModels.concat(model.vdmModel);
+
+                    rpcLocker.addVDMModel(vdmModels);
+                }
+                if (model.mvdmModel) {
+                    // add to existing MVDM list (MVDM is a singleton)
+                    mvdmModels = mvdmModels.concat(model.mvdmModel);
+
+                    rpcLocker.addMVDMModel(mvdmModels);
+                }
+                if (model.rpcLModel) {
+                    rpcLocker.addLockerModel(model.rpcLModel);
+                }
+            });
+
+            // If everything was successful and we didn't raise an exception, we register the locker with the dispatcher
+            rpcDispatcher.registerLocker(rpcLocker);
+
+            LOGGER.info(`Successfully registered locker: ${name}`);
+        } catch (e) {
+            LOGGER.error(`ERROR registering locker: ${name} - ${e.toString()}`);
+        }
+    });
 }
 
 function generateTransactionId() {
@@ -61,7 +158,7 @@ function generateTransactionId() {
 //    FACILITY = vdmUtils.facilityFromId(db, '4-' + facilityCode);
 //
 //    if (facilityCode !== 'unk') { //unknown facility a result of a failed logon attempt
-//        rpcFacade.setUserAndFacility(DUZ, facilityCode);
+//        rpcDispatcher.setUserAndFacility(DUZ, facilityCode);
 //    }
 //}
 
@@ -94,12 +191,13 @@ function callRPC(messageObject, send) {
     } else {
         // These are normal RPCs that can go to either the locker or the runner.
         LOGGER.debug("calling RPC service");
-        var ret = rpcFacade.run(rpcObject.name, rpcObject.args);
+        var ret = rpcDispatcher.dispatch(rpcObject.name, rpcObject.args);
 
         rpcObject.to = ret.path;
         response = ret.rpcResponse;
         transactionId = ret.transactionId;
         runResult = ret.result;
+        rpcObject.lockerName = ret.lockerName;
     }
 
     // log to capture file the RPC and the response to a file
@@ -117,6 +215,7 @@ function callRPC(messageObject, send) {
             ipAddress: messageObject.ipAddress,
             timestamp: rpcObject.timeStamp,
             runner: rpcObject.to,
+            lockerName: rpcObject.lockerName,
             runResult: runResult,
             rpcName: rpcObject.name,
             rpcObject: rpcObject,
@@ -125,7 +224,7 @@ function callRPC(messageObject, send) {
         };
 
         //include user if
-        var userAndFacility = rpcFacade.getUserAndFacility();
+        var userAndFacility = rpcDispatcher.getUserAndFacility();
 
         rpcCallEvent.user = {
             id: '200-' + userAndFacility.userId,
@@ -213,6 +312,7 @@ function setMvdmHandlers(send) {
 }
 
 connectVistaDatabase();
+createDispatcher();
 
 module.exports = function() {
 
@@ -228,7 +328,7 @@ module.exports = function() {
 
         // now check the message to setup callbacks to the rpcServer after running the rpc or other messages
         if (messageObj.method === 'callRPC') {
-            rpcFacade.setLocking(messageObj.isMvdmLocked);
+            rpcDispatcher.setLocking(messageObj.isRPCLocked);
 
             LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
@@ -243,9 +343,9 @@ module.exports = function() {
 
             finished(res);
         } else if (messageObj.method === 'dbReinit') {
-            // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcFacade)
-            if (rpcFacade !== undefined) {
-                rpcFacade.reinit();
+            // if the connection to the server is disconnected it will send a reinit to the rpcRunner (via rpcDispatcher)
+            if (rpcDispatcher !== undefined) {
+                rpcDispatcher.reinit();
             }
             // also clear the contexts
             if (rpcContexts !== undefined) {
@@ -257,7 +357,7 @@ module.exports = function() {
             finished({
                 type: 'rpcL',
                 event: {
-                    list: rpcFacade.getLockedRPCList()
+                    list: rpcDispatcher.getLockedRPCList()
                 },
                 eventType: 'lockedRPCList'
             });

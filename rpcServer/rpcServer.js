@@ -4,10 +4,10 @@
 var net = require('net');
 var fs = require('fs');
 var util = require('util');
-var _ = require('underscore');
+var _ = require('lodash');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
-var mvdmClient = require('./mvdmClient');
+var nodeVISTAManager = require('./nodeVISTAManager');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 
@@ -73,7 +73,7 @@ captureFile.on("open", function (fd) {
         LOGGER.info('RPCServer listening to %j', server.address());
 
         //start up mvdm client
-        mvdmClient.init();
+        nodeVISTAManager.init();
 
         //get locked rpc list
         processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
@@ -125,7 +125,7 @@ function handleConnection(conn) {
             messageObject.method = 'callRPC';
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
-            messageObject.isMvdmLocked = mvdmManagement.isMvdmLocked;
+            messageObject.isRPCLocked = mvdmManagement.isRPCLocked;
             messageObject.contextId = remoteAddress;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);

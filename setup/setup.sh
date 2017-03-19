@@ -1,14 +1,39 @@
 #!/usr/bin/env bash
 
+SECONDS=0
+
 # Make sure we are root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root" 1>&2
     exit 1
 fi
 
+#install node 4.7.0 (nodem supports up to 4.7.0)
+nodever="4.7.0"
+
+# Set the node version
+shortnodever=$(echo $nodever | cut -d'.' -f 2)
+
+# set the arch
+arch=$(uname -m | tr -d _)
+
+# This should be ran as the instance owner to keep all of VistA together
+if [[ -z $basedir ]]; then
+    echo "The required variable \$instance is not set"
+fi
+
+echo "Installing node.js via NVM (node version manager)"
+
+cd $basedir
+
+#install vim as convenient editor
+sudo apt-get update
+sudo apt-get -y install vim
+
 #set variables
 instance="nodevista"
 repoPath="https://github.com/OSEHRA/VistA-M.git"
+nodever="4.7.0"
 nodemver="0.8.1"
 
 # Get primary username if using sudo, default to $username if not sudo'd
@@ -90,64 +115,7 @@ USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 # source env script during running user's login
 echo "source $basedir/etc/env" >> $USER_HOME/.bashrc
 
-# Replace dashboard test with straight non test installation
-# Clone VistA-M repo
-cd /usr/local/src
-git clone --depth 1 $repoPath VistA-Source
-# Not Ideal - cloning nodevista for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
-git clone https://github.com/vistadataproject/nodevista.git
-cd $basedir
-su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
-
-# Python and RAS driven changes (note: some JS parameters settings below. Should combine)
-cd /usr/local/src/nodevista/setup/pySetup
-mkdir /usr/local/src/nodevista/setup/pySetup/logs
-chmod a+w /usr/local/src/nodevista/setup/pySetup
-chmod a+w /usr/local/src/nodevista/setup/pySetup/logs
-# NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
-su $instance -c "source $basedir/etc/env && python ZTMGRSET.py" 
-# TODO: should exit if simpleSetup.py fails
-su $instance -c "source $basedir/etc/env && python simpleSetup.py"
-su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
-
-# enable journaling
-su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
-
-echo "Restarting xinetd"
-service xinetd restart
-echo "Done restarting xinetd"
-
-# Add p and s directories to gtmroutines environment variable
-su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
-if [[ $gtmver == *"6.2"* ]]; then
-    echo "Adding Development directories for GT.M 6.2"
-    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
-else
-    echo "Adding Development directories for GT.M <6.2"
-    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
-fi
-
-# Install node.js via NVM (node version manager)
-
-#install node 4.7.0 (nodem supports up to 4.7.0)
-nodever="4.7.0"
-
-# Set the node version
-shortnodever=$(echo $nodever | cut -d'.' -f 2)
-
-# set the arch
-arch=$(uname -m | tr -d _)
-
-# This should be ran as the instance owner to keep all of VistA together
-if [[ -z $basedir ]]; then
-    echo "The required variable \$instance is not set"
-fi
-
-echo "Installing node.js via NVM (node version manager)"
-
-cd $basedir
-
-# Install node.js using NVM (node version manager)
+#Install node.js using NVM (node version manager)
 echo "Installing NVM"
 su $instance -c  "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash"
 su $instance -c  "export NVM_DIR=\"$basedir/.nvm\""
@@ -188,6 +156,18 @@ echo "export gtmroutines=\"\${gtmroutines}\"\" \"\$basedir/node_modules/nodem/sr
 
 echo "Done installing node.js"
 
+# Replace dashboard test with straight non test installation
+# Clone VistA-M repo
+cd /usr/local/src
+git clone --depth 1 $repoPath VistA-Source
+
+#keep in order to speed up deployment in (development) by copying from local/VistA-Source to vm instead of using git clone
+#sudo mkdir /usr/local/src/VistA-Source
+#sudo cp -rf /vagrant/VistA-Source/. /usr/local/src/VistA-Source
+
+# Not Ideal - nodevista for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
+git clone https://github.com/vistadataproject/nodevista.git
+
 #install vdp
 vdpid=vdp
 test -d /home/$vdpid &&
@@ -213,7 +193,6 @@ echo "export gtm_tmp=/tmp" >> $vdphome/.bashrc
 # Copy unique end of .profile of nodevista
 echo "source $nodevistahome/.nvm/nvm.sh" >> $vdphome/.profile
 # Set nodever. Otherwise $nodever .profile won't exist and npm install below will fail
-nodever="4.7.0"
 echo "nvm use $nodever" >> $vdphome/.profile
 
 cd $vdphome
@@ -227,6 +206,9 @@ echo "Cloning nodevista and VDM for use by $vdpid"
 git clone -q https://github.com/vistadataproject/nodevista.git
 git clone -q https://github.com/vistadataproject/VDM.git
 
+echo "running my node.js parameter service setup scripts"
+echo "npm install..."
+
 # Add FMQL x 2
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
@@ -236,10 +218,9 @@ chown -R vdp:vdp nodevista
 chown -R vdp:vdp VDM
 chown -R vdp:vdp FMQL
 
-echo "Installing FMQL"
-# echo "Adding FMQL (MUMPS) to nodevistaVISTA"
-su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
+cd $vdphome
 
+echo "Installing FMQL"
 #install pm2 (production process manager for node see pm2.keymetrics.io)
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet pm2 -g >> $vdphome/pm2Install.log"
 
@@ -255,17 +236,17 @@ cp -r ../webclients .
 mv webclients static
 chown -R vdp:vdp static
 
-#start up fmqlServer using pm2 and save settings
-echo "Running FMQL as a service via pm2"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
-
 #install jasmine
 echo "Installing Jasmine"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet jasmine -g >> $vdphome/jasmineInstall.log"
+
+#install mocha
+echo "Installing Mocha"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
 #install bower
 echo "Installing Bower"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/nodemInstall.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/bowerInstall.log"
 
 #copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
@@ -274,7 +255,6 @@ chown -R vdp:vdp utils
 
 echo "User $vdpid created"
 
-#run VDM/prototypes/sysSetup npm install
 echo "Running npm install on /vagrant/utils"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
 
@@ -287,6 +267,79 @@ rm -rf utils
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
 
+#***
+cd $basedir
+su $instance -c "source $basedir/etc/env && $scriptdir/GTM/importVistA.sh"
+
+# Python and RAS driven changes (note: some JS parameters settings below. Should combine)
+cd /usr/local/src/nodevista/setup/pySetup
+mkdir /usr/local/src/nodevista/setup/pySetup/logs
+chmod a+w /usr/local/src/nodevista/setup/pySetup
+chmod a+w /usr/local/src/nodevista/setup/pySetup/logs
+# NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
+su $instance -c "source $basedir/etc/env && python ZTMGRSET.py"
+# TODO: should exit if simpleSetup.py fails
+su $instance -c "source $basedir/etc/env && python simpleSetup.py"
+#su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
+
+# enable journaling
+su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
+
+#npm install on VDM prototypes
+echo "npm install VDM prototypes..."
+cd $vdphome/VDM/prototypes
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/VDMNpmInstall.log"
+
+echo "npm install nodevista/setup/utils..."
+cd $vdphome/nodevista/setup/utils
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/updateNodeVISTAParametersNpmInstall.log"
+
+echo "npm install nodevista/setup/jsSetup..."
+cd $vdphome/nodevista/setup/jsSetup
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/registerVitalsSetupNpmInstall.log"
+
+# using parameter service to inject user level settings
+echo "run addUserSettings.js"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addUserSettings.js >> $vdphome/logs/addUserSettings.log"
+
+# using parameter service to inject system level settings
+echo "run registerVitalsCPRS.js"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node registerVitalsCPRS.js >> $vdphome/logs/registerVitalsCPRS.log"
+
+# inject additional nodeVista parameters
+cd $vdphome/nodevista/setup/utils
+echo "run updateNodeVISTAParameters.js"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js >> $vdphome/logs/updateNodeVISTAParameters.log"
+
+cd $basedir
+cd /usr/local/src/nodevista/setup/pySetup
+su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
+
+echo "Restarting xinetd"
+service xinetd restart
+echo "Done restarting xinetd"
+
+# Add p and s directories to gtmroutines environment variable
+su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
+if [[ $gtmver == *"6.2"* ]]; then
+    echo "Adding Development directories for GT.M 6.2"
+    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
+else
+    echo "Adding Development directories for GT.M <6.2"
+    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
+fi
+
+cd $vdphome
+
+# echo "Adding FMQL (MUMPS) to nodevistaVISTA"
+su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
+#***
+
+cd $vdphome/FMQL/webservice
+#start up fmqlServer using pm2 and save settings
+echo "Running FMQL as a service via pm2"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
+
 echo "Restarting nodevista"
 service nodevista restart
 echo "Done restarting nodevista"
@@ -295,4 +348,10 @@ echo "Done restarting nodevista"
 echo "Running rpcServer as a service via pm2"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
 
+#start up clinical REST service using pm2 and save settings
+echo "Running clinical REST service as a service via pm2"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/clinicalService && npm install --quiet && pm2 start index.js --name clinicalService && pm2 save >> $vdphome/logs/clinicalServiceStartup.log"
+
+duration=$SECONDS
+echo "$(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds elapsed."
 echo "Setup Complete"

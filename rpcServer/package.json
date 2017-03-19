@@ -10,7 +10,7 @@
     "static",
     "eventManager.js",
     "logger.js",
-    "mvdmClient.js",
+    "nodeVISTAManager.js",
     "mvdmManagement.js",
     "package.json",
     "README.md",
@@ -30,13 +30,19 @@
     "handlebars": "^4.0.5",
     "hashmap": "latest",
     "jquery": "^3.1.1",
+    "lodash": "^4.17.4",
     "moment": "^2.14.1",
+    "mvdm": "git+https://github.com/vistadataproject/MVDM.git",
     "net": "latest",
     "nodem": "0.8.1",
     "nodevista-rpcparser": "file:../lib/rpcParser",
-    "underscore": "latest",
     "util": "latest",
-    "uuid": "^2.0.2",
-    "mvdm": "git+https://github.com/vistadataproject/MVDM.git"
+    "uuid": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "jasmine": "^2.4.1"
   }
 }

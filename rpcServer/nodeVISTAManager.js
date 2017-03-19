@@ -2,7 +2,7 @@
 'use strict';
 
 var express = require('express');
-var _ = require('underscore');
+var _ = require('lodash');
 var app = express();
 var expressWs = require('express-ws')(app);
 var bodyParser = require('body-parser');
@@ -43,8 +43,8 @@ function init() {
 
         var settings = req.body;
 
-        if (_.has(settings, 'isMvdmLocked')) {
-            mvdmManagement.isMvdmLocked = settings.isMvdmLocked;
+        if (_.has(settings, 'isRPCLocked')) {
+            mvdmManagement.isRPCLocked = settings.isRPCLocked;
         }
 
         return res.sendStatus(200);
@@ -99,9 +99,9 @@ function init() {
 
     });
 
-    var port = CONFIG.mvdmClient.port;
+    var port = CONFIG.nodeVISTAManager.port;
     app.listen(port, function () {
-        LOGGER.info('MVDM Client listening on port ' + port);
+        LOGGER.info('nodeVISTA Manager listening on port ' + port);
     });
 
     //static files

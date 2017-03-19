@@ -21,7 +21,7 @@ var utilityRpcLClassesByName = utilityRpcLModel.reduce(function(obj, val) {obj[v
 
 // imports for RPCService
 var nodem = require('nodem');
-var RPCFacade = require('mvdm/rpcFacade');
+var RPCFacade = require('mvdm/rpcDispatcher');
 var RPCContexts = require('mvdm/rpcRunner').RPCContexts;
 var db, rpcFacade, rpcContexts;
 

@@ -5,22 +5,22 @@ define([
 ], function (Handlebars, jsBeautify) {
     'use strict';
 
-    Handlebars.registerHelper('mvdm-lock-select', function(management) {
+    Handlebars.registerHelper('rpc-lock-select', function(management) {
 
         if (!management) {
             return;
         }
 
         function setSelected(management, optionValue) {
-            if ((management.isMvdmLocked && optionValue === 'on') ||
-                (!management.isMvdmLocked && optionValue === 'off')) {
+            if ((management.isRPCLocked && optionValue === 'on') ||
+                (!management.isRPCLocked && optionValue === 'off')) {
                 return ' selected';
             }
 
             return '';
         }
 
-        var selectHtml = '<select class="form-control mvdm-lock-select">';
+        var selectHtml = '<select class="form-control rpc-lock-select">';
         selectHtml += '<option value="on"' + setSelected(management, 'on') + '>On</option>';
         selectHtml += '<option value="off"' + setSelected(management, 'off') + '>Off</option>';
         selectHtml += '</select>';
@@ -28,12 +28,12 @@ define([
         return new Handlebars.SafeString(selectHtml);
     });
 
-    Handlebars.registerHelper('show-runner', function(runner) {
-
+    Handlebars.registerHelper('show-runner', function(runner, lockerName) {
+        console.log(`runner: ${runner}, lockerName: ${lockerName}`);
         if (runner === 'rpcRunner') {
-            return 'RPC Runner';
-        } else if (runner === 'mvdmLocked') {
-            return 'MVDM Locked';
+            return 'Pass Through';
+        } else if (runner === 'rpcLocked') {
+            return lockerName || 'RPC Emulated';
         } else if (runner === 'server') {
             return 'Server';
         } else return runner;

@@ -572,24 +572,6 @@ def setupStrepTest(VistA):
   VistA.wait("Do you really")
   VistA.write("Y")
 
-def registerVitalsCPRS(VistA):
-  # Register the DLL versions for Vitals and the executable version for
-  # CPRS through the XPAR Menu.  This information should match the versions
-  # that will be used during testing.
-  # Files can be downloaded: http://www.osehra.org/document/guis-used-automatic-functional-testing
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVDLL=\"GMV_VITALSVIEWENTER.DLL:v. 08/11/09 15:00\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV DLL VERSION\",GMVDLL,1)')
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVDLL=\"GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV DLL VERSION\",GMVDLL,1)')
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVGUI=\"VITALSMANAGER.EXE:5.0.26.1\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV GUI VERSION\",GMVGUI,1)')
-
 def addDoctor(VistA,name,init,SSN,sex,AC,VC1):
   # Adds a Doctor user into the system via the User Management Menu as
   # the System Manager.

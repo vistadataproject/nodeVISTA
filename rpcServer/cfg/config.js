@@ -26,16 +26,22 @@ config.FILE.defaultCaptureFile = './log/capture.txt';
 config.rpcServer = {};
 config.rpcServer.port = 9010;
 
-// mvdm socket
-config.mvdmClient = {};
-config.mvdmClient.host = '10.2.2.100';
-config.mvdmClient.port = 9020;
+// nodeVISTAManager socket
+config.nodeVISTAManager = {};
+config.nodeVISTAManager.host = '10.2.2.100';
+config.nodeVISTAManager.port = 9020;
 
 config.client = {};
 config.client.defaultName = "CPRS";
 
-config.workerQ = {}
+config.workerQ = {};
 config.workerQ.size = 1;
+
+config.lockers = [{
+    name: 'Clinical Emulator',
+    path: 'mvdm/cRPCL',
+    models: ['./modelsClinical'],
+}];
 
 try {
     module.exports = config;

@@ -1,23 +1,23 @@
-##RPC Server 
+## RPC Server 
 
 The purpose of the RPC Server is to listen for RPC client requests (typically from CPRS or JLV) and forward them on to either the local RPC runner (pass through) or the MVDM RPC Emulator (emulated).
 
 
-###Running the Server
+### Running the Server
 
 **Configuration**
 
-Modify cfg/config.js and set the rpc server and MVDM client to the desired settings
+Modify cfg/config.js and set the rpc server and nodeVISTA Manager to the desired settings
 
 ```javascript
 // rpc server socket
 config.rpcServer = {};
 config.rpcServer.port = 9010;
 
-// mvdm socket
-config.mvdmClient = {};
-config.mvdmClient.host = '10.2.2.100'; <-- osehraVISTA IP
-config.mvdmClient.port = 9020;
+// nodeVISTAManager socket
+config.nodeVISTAManager = {};
+config.nodeVISTAManager.host = '10.2.2.100'; <-- nodeVISTA IP
+config.nodeVISTAManager.port = 9020;
 ```
 
 **Execute the Server**
@@ -33,11 +33,11 @@ $ node rpcServer.js
 ```
 The RPC Server should be listening for incoming RPC connections on the configured rpcServer port (9010). 
 
-**Launch MVDM Client**
+**Launch nodeVISTA Manager**
 
-Open your browser and launch the mvdm client URL: 
+Open your browser and launch the nodeVISTA Manager URL: 
 ```
-http://<mvdmClient.host>:<mvdmClient.port>
+http://<nodeManager.host>:<nodeManager.port>
 
 i.e. http://10.2.2.100:9020
 ```
