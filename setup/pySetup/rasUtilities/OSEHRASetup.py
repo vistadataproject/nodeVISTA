@@ -735,10 +735,8 @@ def addClerk(VistA,name,init,SSN,sex,AC,VC1):
   VistA.write("")
 
 #
-# TODO: complete fill in for Typical Pharmacist (based on Provider now)
-# ... see [PHARMACIST CHECK] keys
-#
 # Not putting in: many have a ton of (FileMan) permissions (accessible_file) too
+# and other typical demographic mandatories (revisit when MVDM)
 #
 # Note there is a separate "Outpatient Pharmacy Manager/Supervisor Functions/...
 # ... Select Pharmacist to make a user a pharmacist.
@@ -750,7 +748,6 @@ def addPharmacist(VistA,name,init,SSN,sex,AC,VC1):
   # Pharmacist Name, Pharmacist Initials, SSN, Sex, Access Code, Verify Code
   # VDP: IMPORTANT - presumes signonZU called before and ends up in
   # System Manager Menu
-  VistA.wait("Systems Manager Menu")
   VistA.write('USER MANAGEMENT')
   VistA.wait('User Management')
   VistA.write('ADD')
@@ -766,18 +763,19 @@ def addPharmacist(VistA,name,init,SSN,sex,AC,VC1):
   VistA.write('')
   VistA.wait('NAME COMPONENTS')
   # A ScreenMan form opens at this point, and the following information is set:
-  # Primary Menu:   XUCORE [PHARMACIST CHECK]
+  # Primary Menu:   leaving at XUCORE as PSMENU causes problems
   # Secondary Menu: OR CPRS GUI CHART, PSINPATIENT, PSB GUI CONTEXT - USER, BPSMENU, PSB PHARMACY, TIU MAIN MENU CLINICIAN
   # (but problem - so only putting OR CPRS GUI CHART)
-  # Access Code:    <passed as argument> [PHARMACIST CHECK]
-  # Verify Code:    <passed as argument> [PHARMACIST CHECK]
-  # No restriction on Patient Selection [PHARMACIST CHECK]
-  # Allowed multiple sign-ons [PHARMACIST CHECK]
-  # Service Section: IRM [PHARMACIST CHECK] -- probably wrong
+  # Access Code:    <passed as argument>
+  # Verify Code:    <passed as argument>
+  # No restriction on Patient Selection
+  # Allowed multiple sign-on
+  # Service Section: IRM - PHARMACY not yet in 49
   # Pharmacy Service Providers (Pharmacist) as the Person Class: (183500000X) - 246
-  # Core CPRS Tab access [PHARMACIST CHECK]
-  VistA.write('\r\r\r\r\r^PRIMARY MENU OPTION\rXUCOR\r^SECONDARY MENU OPTIONS\rOR CPRS GUI CHART\rY\r\r\r\r^Want to edit ACCESS CODE\rY\r'+AC+'\r'+AC+'\r^Want to edit VERIFY CODE\rY\r'+VC1+'\r'+VC1+'\rVISTA HEALTH CARE\rY\r\r\r\r\r^SERVICE/SECTION\rIRM\r^Language\r\r246\rY\rY\rT-1\r\r^RESTRICT PATIENT SELECTION\r0\r\rCOR\rY\rT-1\r\r^MULTIPLE SIGN-ON\r1\r1\r99\r^\rS\rE') 
+  # Core CPRS Tab access COR (pharmacist same as others)
+  VistA.write('\r\r\r\r\r^PRIMARY MENU OPTION\rXUCOR\r^SECONDARY MENU OPTIONS\rOR CPRS GUI CHART\rY\r\r\r\r^Want to edit ACCESS CODE\rY\r'+AC+'\r'+AC+'\r^Want to edit VERIFY CODE\rY\r'+VC1+'\r'+VC1+'\rVISTA HEALTH CARE\rY\r\r\r\r\r^SERVICE/SECTION\rIRM\r^Language\r\r246\rY\rY\rT-1\r\r^RESTRICT PATIENT SELECTION\r0\r\rCOR\rY\rT-1\r\r^MULTIPLE SIGN-ON\r1\r1\r99\r^\rS\rE')
   # Exiting the ScreenMan form, Allocate Security Keys
+  # PROVIDER,GMV MANAGER,LRLAB,LRVERIFY,ORES,SD SUPERVISOR,SDWL PARAMETER,SDWL MENU,
   VistA.wait('User Account Access Letter')
   VistA.write('NO')
   VistA.wait('wish to allocate security keys?')
