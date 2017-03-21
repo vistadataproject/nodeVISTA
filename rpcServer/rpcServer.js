@@ -7,9 +7,9 @@ var util = require('util');
 var _ = require('lodash');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
-var nodeVISTAManager = require('./nodeVISTAManager');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
+var ProcessAdapter = require('./processAdapter');
 
 // import for multiprocess management
 var qoper8 = require('ewd-qoper8');
@@ -60,6 +60,14 @@ processQueue.on('start', function() {
 
 processQueue.start();
 
+// = Initialize the process adapter which spawns and links the nodeVISTAManager in a new process ==
+const processAdapter = new ProcessAdapter();
+processAdapter.bindEventManager(EventManager);
+processAdapter.registerChildEventHandler('isRPCLocked', (isRPCLocked) => {
+    mvdmManagement.isRPCLocked = isRPCLocked;
+});
+// =================================================================================================
+
 var captureFile = fs.createWriteStream(capturePath, CONFIG.FILE.options);
 // wait until the captureFile is open before continuing
 captureFile.on("open", function (fd) {
@@ -71,9 +79,6 @@ captureFile.on("open", function (fd) {
     server.on('connection', handleConnection);
     server.listen(port, function () {
         LOGGER.info('RPCServer listening to %j', server.address());
-
-        //start up mvdm client
-        nodeVISTAManager.init();
 
         //get locked rpc list
         processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
