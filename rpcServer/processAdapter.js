@@ -2,7 +2,7 @@
 
 const path = require('path');
 const childProcess = require('child_process');
-const _ = require('underscore');
+const _ = require('lodash');
 
 const PROCESS_ADAPTER_CHILD_MODULE = process.env.PROCESS_ADAPTER_CHILD_MODULE || 'nodeVISTAManagerChild.js';
 
