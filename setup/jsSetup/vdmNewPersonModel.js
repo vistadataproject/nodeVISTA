@@ -370,7 +370,6 @@ var VDM_MODEL = [
             "label": "Name Components",
             "description": "Answer with the entry in the NAME COMPONENTS file that contains the\rcomponents of the person's name.",
             "datatype": "POINTER",
-            "required": true,
             "range": {
                 "id": "Name_Components-20"
             }
