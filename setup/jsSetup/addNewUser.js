@@ -4,6 +4,7 @@
 
 const VDM = require('../../../VDM/prototypes/vdm');
 const vdmUtils = require('../../../VDM/prototypes/vdmUtils');
+const testUtils = require('../../../VDM/prototypes/testUtils');
 const vdmNonClinicalModel = require('./vdmNewPersonModel').vdmModel;
 const _ = require('lodash');
 const fs = require('fs');
@@ -16,7 +17,19 @@ process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()}`;
 const db = new nodem.Gtm();
 db.open();
 
+// prevent incomplete exit on exception - always close db
+process.on('uncaughtException', (err) => {
+    db.close();
+
+    console.log('Uncaught Exception:\n', err);
+
+    process.exit(1);
+});
+
 VDM.setDBAndModel(db, vdmNonClinicalModel);
+let userId = testUtils.lookupUserIdByName(db, 'ALEXANDER,ROBERT'); // TODO: make this Manager,System
+let facilityId = testUtils.lookupFacilityIdByName(db, 'VISTA HEALTH CARE');
+VDM.setUserAndFacility(userId, facilityId); // must setup user (DUZ) when creating ELSE creator is 0
 
 // var newPerson = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
 // retrieve MANAGER,SYSTEM (61) record from nodeVistA
@@ -44,7 +57,8 @@ _.each(newPersonJSON, (element, key) => {
 
 delete newPersonJSON.id;
 delete newPersonJSON.file_manager_access_code;
-newPersonJSON.access_code = 'fakedoc1';
+newPersonJSON.name = "REALLY,NEW"; // want a new name - shouldn't have two with same name (but it is possible)
+newPersonJSON.access_code = 'newaccess1'; // NB: can't be same as someone else's access code
 newPersonJSON.verify_code = '1doc!@#$';
 
 console.log(util.inspect(newPersonJSON, {
