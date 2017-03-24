@@ -24,12 +24,12 @@ config.FILE.defaultCaptureFile = './log/capture.txt';
 
 // rpc server socket
 config.rpcServer = {};
-config.rpcServer.port = 9010;
+config.rpcServer.port = 9011;
 
 // nodeVISTAManager socket
 config.nodeVISTAManager = {};
 config.nodeVISTAManager.host = '10.2.2.100';
-config.nodeVISTAManager.port = 9020;
+config.nodeVISTAManager.port = 9021;
 
 config.client = {};
 config.client.defaultName = "CPRS";
@@ -41,6 +41,19 @@ config.lockers = [{
     name: 'Clinical Emulator',
     path: 'mvdm/cRPCL',
     models: ['./modelsClinical'],
+}, {
+    name: 'Non-Clinical Emulator',
+    path: '../../VDM/prototypes/ncRPCL',
+    models: ['../../nonClinicalRPCs/prototypes'],
+    routinePath: '../../VDM/prototypes',
+}, {
+    name: 'JS Utility Emulator',
+    path: '../../VDM/prototypes/ncRPCL',
+    models: ['../../nonClinicalRPCs/prototypes/utility'],
+}, {
+    name: 'Out-Of-Scope Emulator',
+    path: '../../VDM/prototypes/ncRPCL',
+    models: ['../../nonClinicalRPCs/prototypes/outofscope'],
 }];
 
 try {
