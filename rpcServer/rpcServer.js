@@ -184,37 +184,84 @@ function handleConnection(conn) {
             //
             //conn.write(responseBuffer);
 
-            var messageObject = {};
-            messageObject.method = 'callRPC';
-            messageObject.ipAddress = conn.remoteAddress;
-            messageObject.rpcPacket = rpcPacket;
-            messageObject.isRPCLocked = mvdmManagement.isRPCLocked;
-            messageObject.contextId = remoteAddress;
-            processQueue.handleMessage(messageObject, function(responseObject) {
-                LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
+            // ****************************** TESTING ASYNC EMULATOR *******************************
+            // First, we parse the RPC packet up front, then we check to see whether or not our
+            // async emulator is set up to handle that particular RPC. For this experiment
+            // RPC models that can handle asynchronous execution will have an 'invokeRPCAsync'
+            // function associated with it.
+            const rpcObject = parser.parseRawRPC(rpcPacket);
+            rpcObject.ipAddress = conn.remoteAddress;
+            rpcObject.startTimestamp = process.hrtime();
 
-                if (!responseObject.finished) {
-                    // send() from worker handler
-                    if (responseObject.type === 'emitRpcEvent') {
-                        EventManager.emit('rpcCall', responseObject.message.event);
-                    } else if (responseObject.type === 'emitMvdmEvent') {
-                        EventManager.emit(responseObject.message.eventType, responseObject.message.event);
+            if (isTestingAsync && asyncEmulator.isAsyncRPCSupported(rpcObject.name)) {
+                LOGGER.info('>>> Using ASYNC EMULATOR to handle RPC request...');
+                asyncEmulator.dispatch(rpcObject, (err, result) => {
+                    if (err) {
+                        // Asynchronous error handling here instead of throwing exceptions.
                     }
-                } else {
-                    // finished() from worker handler
-                    if (responseObject.message.type === 'rpcResponse') {
-                        // write out the rpc to a capture log
-                        captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
 
-                        // write the response back to the client
-                        LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
-                        var responseBuffer = new Buffer(responseObject.message.response, 'binary');
+                    const elapsedTime = process.hrtime(rpcObject.startTimestamp);
+                    const elapsedTimeSecs = (elapsedTime[0] * 1000) + (elapsedTime[1] / 1000000);
+                    const timingMessage = `ASYNC ${rpcObject.name} ${rpcObject.args}: ${elapsedTimeSecs} ms\n`;
+                    fs.appendFile(TIMING_FILE_NAME, timingMessage, () => {
+                        LOGGER.info(timingMessage);
+                    });
 
-                        conn.write(responseBuffer);
+                    // I know this isn't the right way to do this, but this lets us trigger websocket
+                    // handling for the RPC in the nodeVISTA manager.
+                    EventManager.emit('rpcCall', result);
+
+                    // Send the response back to the RPC broker TCP socket
+                    const responseBuffer = new Buffer(result.response, 'binary');
+                    conn.write(responseBuffer);
+                });
+            }
+            // *************************************************************************************
+
+            else {
+                var messageObject = {};
+                messageObject.method = 'callRPC';
+                messageObject.ipAddress = conn.remoteAddress;
+                messageObject.rpcPacket = rpcPacket;
+                messageObject.isRPCLocked = mvdmManagement.isRPCLocked;
+                messageObject.contextId = remoteAddress;
+                processQueue.handleMessage(messageObject, function(responseObject) {
+                    LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
+
+                    if (!responseObject.finished) {
+                        // send() from worker handler
+                        if (responseObject.type === 'emitRpcEvent') {
+                            EventManager.emit('rpcCall', responseObject.message.event);
+                        } else if (responseObject.type === 'emitMvdmEvent') {
+                            EventManager.emit(responseObject.message.eventType, responseObject.message.event);
+                        }
+                    } else {
+                        // finished() from worker handler
+                        if (responseObject.message.type === 'rpcResponse') {
+
+                            // ********************** TESTING ASYNC EMULATOR ***********************
+                            const elapsedTime = process.hrtime(rpcObject.startTimestamp);
+                            const elapsedTimeSecs = (elapsedTime[0] * 1000) + (elapsedTime[1] / 1000000);
+                            if (asyncEmulator.isAsyncRPCSupported(rpcObject.name)) {
+                                const timingMessage = `QUEUE ${rpcObject.name} ${rpcObject.args}: ${elapsedTimeSecs} ms\n`;
+                                fs.appendFile(TIMING_FILE_NAME, timingMessage, () => {
+                                    LOGGER.info(timingMessage);
+                                });
+                            }
+                            // *********************************************************************
+
+                            // write out the rpc to a capture log
+                            captureFile.write(JSON.stringify(responseObject.message.rpcObject, null, 2) + ",\n");
+
+                            // write the response back to the client
+                            LOGGER.info("SENDING RESPONSE to client: %j", responseObject.message.response);
+                            var responseBuffer = new Buffer(responseObject.message.response, 'binary');
+
+                            conn.write(responseBuffer);
+                        }
                     }
-                }
-            });
-
+                });
+            }
         }
     }
 
