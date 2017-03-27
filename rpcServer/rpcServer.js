@@ -11,6 +11,64 @@ var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
 var ProcessAdapter = require('./processAdapter');
 
+// ************************************ TESTING ASYNC EMULATOR *************************************
+const parser = require('nodevista-rpcparser/rpcParser.js');
+const RPCAsyncEmulator = require('./rpcAsyncEmulator');
+const utilityRPCLModels = require('../../nonClinicalRPCs/prototypes/utility').rpcLModel;
+
+const isTestingAsync = !!process.env.ASYNC_TEST;
+const isUsingDeferred = !!process.env.DEFERRED;
+
+if (isTestingAsync) {
+    LOGGER.info('*** Testing Asychronous Execution Model for Emulators ***');
+}
+
+// We create a copy of the utility RPC models, then inject invocation methods with
+// asynchronous call structure to them for our async emulator.
+LOGGER.info('=> Initializing Utility RPCs with asynchronous invocation methods...');
+const asyncModels = utilityRPCLModels.map(model => (_.extend(model, {
+
+    // We can wrap the utility RPC emulator models in two ways to give it an asynchronous
+    // execution model signature:
+    //    Deferred: We push the execution of the invocation function to the back of the
+    //              call stack to model true asynchronous processing.
+    //      Inline: We handle the execution of the invocation function directly and just
+    //              present the facade of an asynchronous execution model with the function
+    //              signature.
+    //
+    invokeRPCAsync: (rpcArgs, callback) => {
+        // === DEFERRED ===
+        if (isUsingDeferred) {
+            _.defer(() => {
+                let res = null;
+                try {
+                    res = model.processRPCInvocation(rpcArgs);
+                } catch (e) {
+                    callback(e.message, null);
+                }
+                callback(null, res);
+            });
+        } else {
+            // === INLINE ===
+            let res = null;
+            try {
+                res = model.processRPCInvocation(rpcArgs);
+            } catch (e) {
+                callback(e.message, null);
+            }
+            callback(null, res);
+        }
+    },
+})));
+
+LOGGER.info('=> Initializing Asynchronous RPC Emulator');
+const asyncEmulator = new RPCAsyncEmulator();
+asyncEmulator.addModels(asyncModels);
+
+const ASYNC_METHOD = isUsingDeferred ? 'Deferred' : 'Inline';
+const TIMING_FILE_NAME = isTestingAsync ? `async${ASYNC_METHOD}TimingCounts.txt` : 'queueTimingCounts.txt';
+// *************************************************************************************************
+
 // import for multiprocess management
 var qoper8 = require('ewd-qoper8');
 var processQueue = new qoper8.masterProcess();
