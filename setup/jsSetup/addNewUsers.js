@@ -35,14 +35,12 @@ const printResult = function printResult(obj) {
 // Check if the the user has minimum required field for fileman to create a new user
 const hasMinumumFields = function hasMinumumFields(user) {
     const minimumFieldToCreate = ['name', 'type', 'service_section', 'initial'];
-    let found = true;
-    _.each(minimumFieldToCreate, (field) => {
+    return !_.some(minimumFieldToCreate, (field) => {
         if (!_.has(user, field)) {
             console.log(`unable to proceed, user ${user.name} missing required '${field}' field to create!`);
-            found = false;
+            return true;
         }
     });
-    return found;
 };
 
 // Filemans allow to update the following fields with no error
