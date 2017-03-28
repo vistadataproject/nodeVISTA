@@ -244,10 +244,6 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 echo "Installing Mocha"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
-#install bower
-echo "Installing Bower"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/bowerInstall.log"
-
 #copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
 cp -r /vagrant/utils .
@@ -346,7 +342,7 @@ echo "Done restarting nodevista"
 
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
 
 #start up clinical REST service using pm2 and save settings
 echo "Running clinical REST service as a service via pm2"
