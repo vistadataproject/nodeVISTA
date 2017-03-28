@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "license": "Apache-2.0",
   "private": true,
+  "scripts": {
+    "postinstall": "bower install"
+  },
   "files": [
     "cfg",
     "spec",
@@ -22,6 +25,7 @@
   "main": "rpcServer.js",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "bower": "^1.8.0",
     "bunyan": "latest",
     "ewd-qoper8": "file:../lib/ewd-qoper8",
     "express": "^4.14.0",
