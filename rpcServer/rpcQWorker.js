@@ -191,7 +191,23 @@ function callRPC(messageObject, send) {
     } else {
         // These are normal RPCs that can go to either the locker or the runner.
         LOGGER.debug("calling RPC service");
-        var ret = rpcDispatcher.dispatch(rpcObject.name, rpcObject.args);
+
+        // Wrap the dispatcher in a try/catch block to allow for error condition logging
+        let ret = {};
+        try {
+            ret = rpcDispatcher.dispatch(rpcObject.name, rpcObject.args);
+        } catch (e) {
+            LOGGER.error(`RPC DISPATCH ERROR: ${e.message} {RPC: ${rpcObject.name}, args: [${rpcObject.args}]}`);
+            LOGGER.error(e.stack);
+
+            ret = {
+                path: 'ERROR',
+                rpcResponse: e.message,
+                transactionId: e.errno,
+                result: e.message,
+                lockerName: 'ERROR',
+            };
+        }
 
         rpcObject.to = ret.path;
         response = ret.rpcResponse;
