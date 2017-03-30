@@ -45,6 +45,7 @@
     "uuid": "^2.0.3"
   },
   "devDependencies": {
+    "bower": "^1.8.0",
     "eslint": "^3.14.1",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
