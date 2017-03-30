@@ -9,7 +9,7 @@ var cors = require('cors')
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var path = require('path');
-var CONFIG = require('./cfg/config.js');
+var CONFIG = require('./cfg/clientConfig.js');
 var LOGGER = require('./logger.js');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
@@ -109,7 +109,7 @@ function init() {
 
     });
 
-    var port = CONFIG.nodeVISTAManager.port;
+    var port = CONFIG.port;
     app.listen(port, function () {
         LOGGER.info('nodeVISTA Manager listening on port ' + port);
     });
@@ -117,7 +117,6 @@ function init() {
     //static files
     app.use(express.static(__dirname + "/client")); //use web client files in ROOT/public folder
     app.use(express.static(__dirname + "/node_modules")); //expose node_modules for bootstrap, jquery, underscore, etc.
-    app.use(express.static(__dirname + "/cfg")); //config - exposing for convenience
 }
 
 function handleSocketClose(ws, clients) {

@@ -15,14 +15,14 @@ if [ -d "client" ]; then
     rm -rf ./client
 fi
 
-echo "Copyping the Node VISTA Manager directory to clients\n\n"
+echo "Copying the Node VISTA Manager directory to clients\n\n"
 
 mkdir ./client
 cp -r nodeVISTAClients/nodeVISTAManager/* ./client
 rm -rf nodeVISTAClients
 
 echo "Copying client config\n\n"
-cp setup/clientConfig.js ./client/js/config.js
+cp cfg/clientConfig.js ./client/js/config.js
 
 cd ./client
 

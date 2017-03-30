@@ -6,3 +6,10 @@ const config = {
     host: '10.2.2.100',
     port: 9020,
 };
+
+try {
+    module.exports = config;
+}
+catch(exception) {
+    // will fail in browser - config is referenced by browser client for convenience
+}
