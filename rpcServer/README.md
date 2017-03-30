@@ -15,7 +15,7 @@ config.rpcServer = {};
 config.rpcServer.port = 9010;
 ```
 
-Modify setup/clientConfig.js and set the nodeVISTA Manager configuration to the desired settings (this file is copied into the nodeVISTAManager clone that occurs post npm install):
+Modify cfg/clientConfig.js and set the nodeVISTA Manager configuration to the desired settings (this file is copied into the nodeVISTAManager clone that occurs post npm install):
 
 ```javascript
 const config = {
