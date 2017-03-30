@@ -26,11 +26,6 @@ config.FILE.defaultCaptureFile = './log/capture.txt';
 config.rpcServer = {};
 config.rpcServer.port = 9010;
 
-// nodeVISTAManager socket
-config.nodeVISTAManager = {};
-config.nodeVISTAManager.host = '10.2.2.100';
-config.nodeVISTAManager.port = 9020;
-
 config.client = {};
 config.client.defaultName = "CPRS";
 
