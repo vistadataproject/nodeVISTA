@@ -5,6 +5,7 @@ var express = require('express');
 var _ = require('lodash');
 var app = express();
 var expressWs = require('express-ws')(app);
+var cors = require('cors')
 var bodyParser = require('body-parser');
 var moment = require('moment');
 var path = require('path');
@@ -24,6 +25,9 @@ processAdapter.bindEventManager(EventManager);
 function init() {
     // parse application/x-www-form-urlencoded
     app.use(bodyParser.urlencoded({ extended: false }));
+
+    // CORS needed to allow single page application access
+    app.use(cors());
 
     // parse application/json
     app.use(bodyParser.json());
