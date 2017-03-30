@@ -7,17 +7,22 @@ The purpose of the RPC Server is to listen for RPC client requests (typically fr
 
 **Configuration**
 
-Modify cfg/config.js and set the rpc server and nodeVISTA Manager to the desired settings
+Modify cfg/config.js and set the rpc server and to the desired settings
 
 ```javascript
 // rpc server socket
 config.rpcServer = {};
 config.rpcServer.port = 9010;
+```
 
-// nodeVISTAManager socket
-config.nodeVISTAManager = {};
-config.nodeVISTAManager.host = '10.2.2.100'; <-- nodeVISTA IP
-config.nodeVISTAManager.port = 9020;
+Modify setup/clientConfig.js and set the nodeVISTA Manager configuration to the desired settings (this file is copied into the nodeVISTAManager clone that occurs post npm install):
+
+```javascript
+const config = {
+    httpProtocol: 'http',
+    host: '10.2.2.100',
+    port: 9020,
+};
 ```
 
 **Execute the Server**
@@ -26,9 +31,7 @@ SSH into the nodeVista machine and login as the vdp user:
 
 ```
 $ cd ~/dev/nodeVista/interfaces/rpcServer
-$ npm install bower -g <--- installs bower on machine, this only needs to be executed once 
-$ npm install  <--- installs node_modules
-$ bower install <--- install client/bower_components
+$ npm install  <--- installs node_modules & nodeVISTAManager client
 $ node rpcServer.js
 ```
 The RPC Server should be listening for incoming RPC connections on the configured rpcServer port (9010). 
