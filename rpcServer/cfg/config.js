@@ -36,6 +36,18 @@ config.lockers = [{
     name: 'Clinical Emulator',
     path: 'mvdm/cRPCL',
     models: ['./modelsClinical'],
+}, {
+    name: 'Non-Clinical Emulator',
+    path: 'mvdm/ncRPCL',
+    models: ['mvdm/nonClinicalRPCs'],
+}, {
+    name: 'JS Utility Emulator',
+    path: 'mvdm/ncRPCL',
+    models: ['mvdm/nonClinicalRPCs/utility'],
+}, {
+    name: 'Out-Of-Scope Emulator',
+    path: 'mvdm/ncRPCL',
+    models: ['mvdm/nonClinicalRPCs/outofscope'],
 }];
 
 try {
