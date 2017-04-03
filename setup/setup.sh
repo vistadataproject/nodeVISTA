@@ -348,6 +348,11 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 echo "Running clinical REST service as a service via pm2"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/clinicalService && npm install --quiet && pm2 start index.js --name clinicalService && pm2 save >> $vdphome/logs/clinicalServiceStartup.log"
 
+#update patient records
+echo "run updatePatients.js"
+cd $vdphome/nodevista/setup/jsSetup
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updatePatients.js >> $vdphome/logs/updatePatients.log"
+
 duration=$SECONDS
 echo "$(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds elapsed."
 echo "Setup Complete"
