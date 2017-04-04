@@ -572,24 +572,6 @@ def setupStrepTest(VistA):
   VistA.wait("Do you really")
   VistA.write("Y")
 
-def registerVitalsCPRS(VistA):
-  # Register the DLL versions for Vitals and the executable version for
-  # CPRS through the XPAR Menu.  This information should match the versions
-  # that will be used during testing.
-  # Files can be downloaded: http://www.osehra.org/document/guis-used-automatic-functional-testing
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVDLL=\"GMV_VITALSVIEWENTER.DLL:v. 08/11/09 15:00\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV DLL VERSION\",GMVDLL,1)')
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVDLL=\"GMV_VITALSVIEWENTER.DLL:v. 01/21/11 12:52\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV DLL VERSION\",GMVDLL,1)')
-  VistA.wait(PROMPT,60)
-  VistA.write('S GMVGUI=\"VITALSMANAGER.EXE:5.0.26.1\"')
-  VistA.wait(PROMPT,60)
-  VistA.write('D EN^XPAR(\"SYS\",\"GMV GUI VERSION\",GMVGUI,1)')
-
 def addDoctor(VistA,name,init,SSN,sex,AC,VC1):
   # Adds a Doctor user into the system via the User Management Menu as
   # the System Manager.
@@ -741,6 +723,88 @@ def addClerk(VistA,name,init,SSN,sex,AC,VC1):
   VistA.write('Y')
   VistA.wait('Allocate key')
   VistA.write('ORELSE')
+  VistA.wait('Another key')
+  VistA.write('')
+  VistA.wait('Another holder')
+  VistA.write('')
+  VistA.wait('Do you wish to proceed')
+  VistA.write('Yes')
+  VistA.wait('add this user to mail groups')
+  VistA.write('NO')
+  VistA.wait("User Management")
+  VistA.write("")
+
+#
+# Not putting in: many have a ton of (FileMan) permissions (accessible_file) too
+# and other typical demographic mandatories (revisit when MVDM)
+#
+# Note there is a separate "Outpatient Pharmacy Manager/Supervisor Functions/...
+# ... Select Pharmacist to make a user a pharmacist.
+#
+def addPharmacist(VistA,name,init,SSN,sex,AC,VC1):
+  # Adds a Pharmacist user into the system via the User Management Menu as
+  # the System Manager.
+  # Needs:
+  # Pharmacist Name, Pharmacist Initials, SSN, Sex, Access Code, Verify Code
+  # VDP: IMPORTANT - presumes signonZU called before and ends up in
+  # System Manager Menu
+  VistA.write('USER MANAGEMENT')
+  VistA.wait('User Management')
+  VistA.write('ADD')
+  VistA.wait('name')
+  VistA.write(name+'\rY')
+  VistA.wait('INITIAL:')
+  VistA.write(init)
+  VistA.wait('SSN:')
+  VistA.write(SSN)
+  VistA.wait('SEX:')
+  VistA.write(sex)
+  VistA.wait('NPI')
+  VistA.write('')
+  VistA.wait('NAME COMPONENTS')
+  # A ScreenMan form opens at this point, and the following information is set:
+  # Primary Menu:   leaving at XUCORE as PSMENU causes problems
+  # Secondary Menu: OR CPRS GUI CHART, PSINPATIENT, PSB GUI CONTEXT - USER, BPSMENU, PSB PHARMACY, TIU MAIN MENU CLINICIAN
+  # (but problem - so only putting OR CPRS GUI CHART)
+  # Access Code:    <passed as argument>
+  # Verify Code:    <passed as argument>
+  # No restriction on Patient Selection
+  # Allowed multiple sign-on
+  # Service Section: IRM - PHARMACY not yet in 49
+  # Pharmacy Service Providers (Pharmacist) as the Person Class: (183500000X) - 246
+  # Core CPRS Tab access COR (pharmacist same as others)
+  VistA.write('\r\r\r\r\r^PRIMARY MENU OPTION\rXUCOR\r^SECONDARY MENU OPTIONS\rOR CPRS GUI CHART\rY\r\r\r\r^Want to edit ACCESS CODE\rY\r'+AC+'\r'+AC+'\r^Want to edit VERIFY CODE\rY\r'+VC1+'\r'+VC1+'\rVISTA HEALTH CARE\rY\r\r\r\r\r^SERVICE/SECTION\rIRM\r^Language\r\r246\rY\rY\rT-1\r\r^RESTRICT PATIENT SELECTION\r0\r\rCOR\rY\rT-1\r\r^MULTIPLE SIGN-ON\r1\r1\r99\r^\rS\rE')
+  # Exiting the ScreenMan form, Allocate Security Keys
+  # PROVIDER,GMV MANAGER,LRLAB,LRVERIFY,ORES,SD SUPERVISOR,SDWL PARAMETER,SDWL MENU,
+  VistA.wait('User Account Access Letter')
+  VistA.write('NO')
+  VistA.wait('wish to allocate security keys?')
+  VistA.write('Y')
+  # Mandatory or in most pharmacists have these KEYs in Clone (PSORPH is key)
+  VistA.wait('Allocate key')
+  VistA.write('PSORPH\r1')
+  VistA.wait('Another key')
+  VistA.write('MAGDISP CLIN')
+  VistA.wait('Another key')
+  VistA.write('PSUSER')
+  VistA.wait('Another key')
+  VistA.write('PSJ RPHARM')
+  VistA.wait('Another key')
+  VistA.write('PSOLOCKCLOZ')
+  VistA.wait('Another key')
+  VistA.write('BPSMENU')
+  VistA.wait('Another key')
+  VistA.write('BPS REPORTS')
+  VistA.wait('Another key')
+  VistA.write('GMRA-ALLERGY VERIFY')
+  VistA.wait('Another key')
+  VistA.write('PSJU PL')
+  VistA.wait('Another key')
+  VistA.write('BPS USER')
+  VistA.wait('Another key')
+  VistA.write('RT MAS-FR-STAFF')
+  VistA.wait('Another key')
+  VistA.write('PSB READ ONLY')
   VistA.wait('Another key')
   VistA.write('')
   VistA.wait('Another holder')
