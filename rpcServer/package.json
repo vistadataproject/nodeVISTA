@@ -4,13 +4,16 @@
   "version": "0.0.1",
   "license": "Apache-2.0",
   "private": true,
+  "scripts": {
+    "postinstall": "sh setup/client-setup.sh"
+  },
   "files": [
     "cfg",
     "spec",
     "static",
     "eventManager.js",
     "logger.js",
-    "mvdmClient.js",
+    "nodeVISTAManager.js",
     "mvdmManagement.js",
     "package.json",
     "README.md",
@@ -22,7 +25,9 @@
   "main": "rpcServer.js",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "bower": "^1.8.0",
     "bunyan": "latest",
+    "cors": "^2.8.3",
     "ewd-qoper8": "file:../lib/ewd-qoper8",
     "express": "^4.14.0",
     "express-ws": "^2.0.0",
@@ -30,13 +35,20 @@
     "handlebars": "^4.0.5",
     "hashmap": "latest",
     "jquery": "^3.1.1",
+    "lodash": "^4.17.4",
     "moment": "^2.14.1",
+    "mvdm": "git+https://github.com/vistadataproject/MVDM.git",
     "net": "latest",
     "nodem": "0.8.1",
     "nodevista-rpcparser": "file:../lib/rpcParser",
-    "underscore": "latest",
     "util": "latest",
-    "uuid": "^2.0.2",
-    "mvdm": "git+https://github.com/vistadataproject/MVDM.git"
+    "uuid": "^2.0.3"
+  },
+  "devDependencies": {
+    "bower": "^1.8.0",
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "jasmine": "^2.4.1"
   }
 }

@@ -4,12 +4,12 @@
 var net = require('net');
 var fs = require('fs');
 var util = require('util');
-var _ = require('underscore');
+var _ = require('lodash');
 var LOGGER = require('./logger.js');
 var CONFIG = require('./cfg/config.js');
-var mvdmClient = require('./mvdmClient');
 var mvdmManagement = require('./mvdmManagement');
 var EventManager = require('./eventManager');
+var ProcessAdapter = require('./processAdapter');
 
 // import for multiprocess management
 var qoper8 = require('ewd-qoper8');
@@ -60,6 +60,14 @@ processQueue.on('start', function() {
 
 processQueue.start();
 
+// = Initialize the process adapter which spawns and links the nodeVISTAManager in a new process ==
+const processAdapter = new ProcessAdapter();
+processAdapter.bindEventManager(EventManager);
+processAdapter.registerChildEventHandler('isRPCLocked', (isRPCLocked) => {
+    mvdmManagement.isRPCLocked = isRPCLocked;
+});
+// =================================================================================================
+
 var captureFile = fs.createWriteStream(capturePath, CONFIG.FILE.options);
 // wait until the captureFile is open before continuing
 captureFile.on("open", function (fd) {
@@ -71,9 +79,6 @@ captureFile.on("open", function (fd) {
     server.on('connection', handleConnection);
     server.listen(port, function () {
         LOGGER.info('RPCServer listening to %j', server.address());
-
-        //start up mvdm client
-        mvdmClient.init();
 
         //get locked rpc list
         processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
@@ -125,7 +130,7 @@ function handleConnection(conn) {
             messageObject.method = 'callRPC';
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
-            messageObject.isMvdmLocked = mvdmManagement.isMvdmLocked;
+            messageObject.isRPCLocked = mvdmManagement.isRPCLocked;
             messageObject.contextId = remoteAddress;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);

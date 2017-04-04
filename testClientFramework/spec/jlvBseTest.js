@@ -73,7 +73,6 @@ function test1() {
 
                 // build next rpc
                 var rpcName = "ORWU1 NEWLOC";
-                // var rpcArgs = [rpcFormatter.buildLiteralParamString("janusJLVD0n0tl00K"), ];
                 var rpc = rpcFormatter.buildRpcString(rpcName);
                 console.log(rpc);
 
