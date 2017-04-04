@@ -92,23 +92,7 @@ VDPCorrections ;
  . Set ^DD(9.8,1.4,0)=x
  . Quit
  ;
- ; 10. Error in cross-reference 52, 6: undefined variable
- Do
- . New p,x
- . Set x=$Get(^DD(52,6,1,1,1))
- . Quit:x'="I X,$P(^PSRX(DA,2),""^"",2) S ^PSRX(""ADL"",$P(^PSRX(DA,2),""^"",2),X,DA)=""""
- . Set x="I X,$P($G(^PSRX(DA,2)),""^"",2) S ^PSRX(""ADL"",$P(^PSRX(DA,2),""^"",2),X,DA)=""""
- . Set ^DD(52,6,1,1,1)=x
- . Quit
- Do
- . New p,x
- . Set x=$Get(^DD(52,6,1,1,2))
- . Quit:x'="I X,$P(^PSRX(DA,2),""^"",2) K ^PSRX(""ADL"",$P(^PSRX(DA,2),""^"",2),X,DA)"
- . Set x="I X,$P($G(^PSRX(DA,2)),""^"",2) K ^PSRX(""ADL"",$P(^PSRX(DA,2),""^"",2),X,DA)"
- . Set ^DD(52,6,1,1,2)=x
- . Quit
- ;
- ; 11. Fields should not be Required in File 52 (fields 99, 99.1, 99.2 and 108)
+ ; 10. Fields should not be Required in File 52 (fields 99, 99.1, 99.2 and 108)
  Do
  . New field,p,x
  . For field=99,99.1,99.2,108 Do
@@ -119,20 +103,7 @@ VDPCorrections ;
  . . Quit
  . Quit
  ;
- ; ...not clear is #12 is a correction that should be made
- ; disabled this one for now...
- ; 12. Uncertainty about which file is being pointed to in 53.51, 0.01 (PATIENT)
- Do
- . Quit  ; Don't make this change for the time being
- . New p,x
- . Set x=$Get(^DD(53.51,.01,0)),p=$Piece(x,"^",3)
- . Quit:p'="PS(55,"
- . Set p="^DPT("
- . Set $Pece(x,"^",3)=p
- . Set ^DD(53.51,.01,0)=x
- . Quit
- ;
- ; 13. Cross-reference on File #100, field #.01
+ ; 11. Cross-reference on File #100, field #.01
  Do
  . New count,ii,next,x
  . Set x=$Get(^DD(100,.01,1,1,1))
@@ -149,13 +120,13 @@ VDPCorrections ;
  . Set ^DD(100,0.02,1)="^.1^"_next_"^"_count
  . Quit
  ;
- ; 14. Check whether variable exists in ORDD100.
+ ; 12. Check whether variable exists in ORDD100.
  Kill find,replace
  Set find(1)=" I ORACT'=ORCACT D  Q  ; not Current action"
  Set replace(1)=" I $G(ORCACT),ORACT'=ORCACT D  Q  ; not Current action"
  Do FixRoutine("ORDD100",.find,.replace)
  ;
- ; 15. Check whether global variable exists in file #51.41, field #15
+ ; 13. Check whether global variable exists in file #51.41, field #15
  Do
  . New x
  . Set x=$Get(^DD(52.41,15,1,1,1))
@@ -170,7 +141,7 @@ VDPCorrections ;
  . . Quit
  . Quit
  ;
- ; 16. Check whether field is populated in file #52, field #6
+ ; 14. Check whether field is populated in file #52, field #6
  ;     as well as its companion-field in file #52, field #22
  Do
  . New x
@@ -196,7 +167,7 @@ VDPCorrections ;
  . . Quit
  . Quit
  ;
- ; 17. Remove unused (and conflicting) field in File #52.04, field #1
+ ; 15. Remove unused (and conflicting) field in File #52.04, field #1
  Do
  . New count,ii,last,x
  . Quit:$Piece($Get(^DD(52.04,0)),"^",1)'="SIG1 SUB-FIELD"
@@ -207,6 +178,21 @@ VDPCorrections ;
  . Set (count,ii,last)=0 For  Set ii=$Order(^DD(52.04,ii)) Quit:'ii  Set last=ii,count=count+1
  . Set ^DD(52.04,0)="SIG1 SUB-FIELD^^"_last_"^"_count
  . Quit
+ ;
+ ;
+ ; ...not clear is #99 is a correction that should be made
+ ; disabled this one for now...
+ ; 99. Uncertainty about which file is being pointed to in 53.51, 0.01 (PATIENT)
+ Do
+ . Quit  ; Don't make this change for the time being
+ . New p,x
+ . Set x=$Get(^DD(53.51,.01,0)),p=$Piece(x,"^",3)
+ . Quit:p'="PS(55,"
+ . Set p="^DPT("
+ . Set $Pece(x,"^",3)=p
+ . Set ^DD(53.51,.01,0)=x
+ . Quit
+ ;
  Quit
  ;
 Search(name) New void
