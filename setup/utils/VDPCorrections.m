@@ -75,7 +75,7 @@ VDPCorrections ;
  ; 8. Error in input transformation 2100, 460.2 (VEND ZIP 2)
  Do
  . New p,x
- . Set x=$Get(^DD(2100,460.2,0),p=$Piece(x,"^",5,999)
+ . Set x=$Get(^DD(2100,460.2,0)),p=$Piece(x,"^",5,999)
  . Quit:p'="K:$L(X)>4!($L(X)<1)!'(X'?1P.E) X"
  . Set p="K:X'?5N X"
  . Set $Piece(x,"^",5,999)=p
@@ -115,7 +115,7 @@ VDPCorrections ;
  . Set next=$Order(^DD(100,0.02,1," "),-1)+1
  . Set ^DD(100,0.02,1,next,0)="100^AZ^MUMPS"
  . Set ^DD(100,0.02,1,next,1)="S:X'="""" S ^OR(100,""AZ"",DA,X)="""""
- . Set ^DD(100,0.02,1.next.2)="Q"
+ . Set ^DD(100,0.02,1,next,2)="Q"
  . Set (ii,count)=0 For  Set ii=$Order(^DD(100,0.02,1,ii)) Quit:'ii  Set count=count+1
  . Set ^DD(100,0.02,1)="^.1^"_next_"^"_count
  . Quit
@@ -156,14 +156,14 @@ VDPCorrections ;
  . . Set ^DD(52,6,1,1,2)=x
  . . Quit
  . Set x=$Get(^DD(52,22,1,5,1))
- . Do:x="I X,$P(^PSRX(DA,0),""^"",6) S ^PSRX(""ADL"",X,$P(^PSRX(DA,0),""^"",6),DA)=""
- . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,0)),""^"",6) I X,Y1 S ^PSRX(""ADL"",X,Y1,DA)=""
+ . Do:x="I X,$P(^PSRX(DA,0),""^"",6) S ^PSRX(""ADL"",X,$P(^PSRX(DA,0),""^"",6),DA)="""""
+ . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,0)),""^"",6) I X,Y1 S ^PSRX(""ADL"",X,Y1,DA)="""""
  . . Set ^DD(52,22,1,5,1)=x
  . . Quit
- . Set x=$Get(^DD*52,22,1,5,2))
+ . Set x=$Get(^DD(52,22,1,5,2))
  . Do:x="I X,$P(^PSRX(DA,0),""^"",6) K ^PSRX(""ADL"",X,$P(^PSRX(DA,0),""^"",6),DA)"
  . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,0)),""^"",6) I X,Y1 K ^PSRX(""ADL"",X,Y1,DA)"
- . . Set ^DD*52,22,1,5,2)=x
+ . . Set ^DD(52,22,1,5,2)=x
  . . Quit
  . Quit
  ;
@@ -189,97 +189,16 @@ VDPCorrections ;
  . Set x=$Get(^DD(53.51,.01,0)),p=$Piece(x,"^",3)
  . Quit:p'="PS(55,"
  . Set p="^DPT("
- . Set $Pece(x,"^",3)=p
+ . Set $Piece(x,"^",3)=p
  . Set ^DD(53.51,.01,0)=x
  . Quit
  ;
  Quit
  ;
-Search(name) New void
- Set void=$ZSearch("")
- Quit $ZSearch(name)
- ;
 FixRoutine(name,find,replace) ;
- If $ZVersion["GT.M" Do FixGTMRoutine(.name,.find,.replace) Quit
- If $ZVersion["Cache" Do FixCacheRoutine(.name,.find,.replace) Quit
+ If $ZVersion["GT.M" Do FixGTMRoutine^VDPCorrectionsGTM(.name,.find,.replace) Quit
+ If $ZVersion["Cache" Do FixCacheRoutine^VDPCorrectionsCache(.name,.find,.replace) Quit
  Write !!,"Current system is "_$ZVersion
  Write !,"Cannot fix routine "_name_".",!
  Quit
  ;
-FixGTMRoutine(name,find,replace) New done,found,i1,i2,line,max,new,newfile,ok,oldfile,oldfile1,oldfile2,savefile
- Set oldfile1="/home/nodevista/r/"_name_".m"
- Set oldfile2="/home/nodevista/p/"_name_".m"
- Set new="/home/nodevista/p/"_name_".new"
- Set new="./"_name_".new" ; remove when done testing
- Set max=$Order(find(""),-1)
- For i1=1:1 Set newfile=new_i1 Quit:$$Search(newfile)=""
- Set savefile="" Do:$$Search(oldfile2)'=""
- . For i1=1:1 Set savefile="/home/nodevista/p/"_name_".old"_i1 Quit:$$Search(savefile)=""
- . Quit
- Set oldfile=oldfile2 Set:$$Search(oldfile)="" oldfile=oldfile1
- If $$Search(oldfile)="" Write !,"Cannot find "_oldfile,! Quit
- ;
- Open oldfile:readonly Use oldfile
- Set i1=0,done=0 For  Do  Quit:done
- . Set $ETrap="Set done=1,$ECode="""""
- . Read line Set:line'="" i1=i1+1,line(i1)=line
- . Quit
- Close oldfile
- Open newfile:newversion Use newfile
- Set found=0,i1="" For  Set i1=$Order(line(i1)) Quit:i1=""  Do
- . If line(i1)'=find(1) Write line(i1),! Quit
- . If max=1 Do  Quit
- . . Set found=found+1
- . . Set i2="" For  Set i2=$Order(replace(i2)) Quit:i2=""  Write replace(i2),!
- . . Quit
- . Set ok=1 For i2=2:1:max If $Get(line(i1+i2))'=find(i2) Set ok=0 Quit
- . If 'ok Write line(i1),! Quit
- . Set found=found+1
- . Set i2="" For  Set i2=$Order(replace(i2)) Quit:i2=""  Write replace(i2),!
- . Quit
- If 'found Do  Quit
- . Close newfile:delete
- . Use $Principal
- . Write !,"No changes made, no new file created"
- . Quit
- If savefile'="" ZSystem "cp "_oldfile_" "_savefile
- Close newfile:rename=oldfile2
- Use $Principal
- Write !,found_" change"_$Select(found=1:"",1:"s")_" made."
- Write:savefile'="" !,"Old file saved as "_savefile
- Write !,"New file saved as "_oldfile2
- Quit
- ;
-FixCacheRoutine(name,find,replace) New done,found,i1,i2,i3,line,max,new,newcode,ok,oldcode
- For i1=1:1 Set line=$Text(+i1^@name) Quit:line=""  Set oldcode(i1)=line
- Set max=$Order(find(""),-1)
- Set found=0,i3=0,i1="" For  Set i1=$Order(oldcode(i1)) Quit:i1=""  Do
- . If oldcode(i1)'=find(1) Set i3=i3+1,newcode(i3)=oldcode(i1) Quit
- . If max=1 Do  Quit
- . . Set found=found+1
- . . Set i2="" For  Set i2=$Order(replace(i2)) Quit:i2=""  Set i3=i3+1,newcode(i3)=replace(i2)
- . . Quit
- . Set ok=1 For i2=2:1:max If $Get(oldcode(i1+i2))'=find(i2) Set ok=0 Quit
- . If 'ok Set i3=i3+1,newcode(i3)=oldcode(i1) Quit
- . Set found=found+1
- . Set i2="" For  Set i2=$Order(replace(i2)) Quit:i2=""  Set i3=i3+1,newcode(i3)=replace(i2)
- . Quit
- If 'found Do  Quit
- . Write !,"No changes made, no new routine created"
- . Quit
- Set newcode(0)=i3,errors=""
- Set status=$Compile(newcode,0,errors,,,,name)
- If $ListValid(errors) For i1=1:1:$ListLength(errors) Do
- . Set line=$ListGet(errors,i1)
- . Write !,"Line "_$ListGet(line,1),": ",$ListGet(line,4)
- . Quit
- Kill ^ROUTINE(name,0)
- Merge ^ROUTINE(name,0)=newcode
- Set ^ROUTINE(name,0)=$Horolog
- Set i3=-1,i1=0 For  Set i1=$Order(newcode(i1)) Quit:i1=""  Set i3=i3+1+$Length(newcode(i1))
- Set ^ROUTINE(name,0,"SIZE")=i3
- Set ^ROUTINE(name,"LANG")=""
- Write !,found_" change"_$Select(found=1:"",1:"s")_" made."
- Quit
- ;
-
