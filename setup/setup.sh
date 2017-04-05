@@ -254,9 +254,9 @@ echo "User $vdpid created"
 echo "Running npm install on /vagrant/utils"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
 
-#apply problem data dictionary fix
-echo "Applying problem data dictionary fix (fixDD.js)"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
+#apply VDP data dictionary and other (GT/M portability) fixes
+echo "Applying data dictionary fixes"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
 
 rm -rf utils
 
