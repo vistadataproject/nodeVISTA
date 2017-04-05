@@ -29,6 +29,8 @@ const nodeVISTAParameters = require('./nodeVISTAParameters');
 
 const parameterAction = process.argv[2] || 'update';
 
+// =========================================== UTILITIES ===========================================
+const ENTITY_FILETYPE_MAP = _.invert(ParameterService.ENTITY_CODE_MAP);
 const PARAMETER_FUNCTION_MAP = {
     delete: (param, options) => {
         ParameterService.delete(param.name, options);
@@ -42,9 +44,24 @@ const lookupIdByName = (db, fileType, name) => {
     return fileman.lookupBy01(db, fileType, name).id;
 }
 
+let lookupItemIdByName = null;
 let lookupUserIdByName = null;
 let lookupFacilityIdByName = null;
 
+const getEntity = (options) => {
+    // If this is a named entity, we split out the data
+    const entityElements = (options.entity || '').split('^');
+    let entity = entityElements[0];
+
+    if (entityElements.length > 1) {
+        const fileType = ENTITY_FILETYPE_MAP[entityElements[0]];
+        entity = lookupItemIdByName(fileType, entityElements[1]);
+    }
+
+    return ParameterService.convertFileToEntity(entity);
+}
+// =================================================================================================
+//
 const setupParameterService = () => {
     console.log('Setting up Parameter Service...');
 
@@ -66,6 +83,7 @@ const setupParameterService = () => {
     });
 
     // Configure the lookup functions with a closure on the db in the lexical scope
+    lookupItemIdByName = _.partial(lookupIdByName, db);
     lookupUserIdByName = _.partial(lookupIdByName, db, '200');
     lookupFacilityIdByName = _.partial(lookupIdByName, db, '4');
 
@@ -90,7 +108,7 @@ const runParameters = () => {
         try {
             // Just in case, convert any file type identifiers to appropriate parameter service entities.
             let options = _.omit(param, 'name', 'value');
-            const entity = ParameterService.convertFileToEntity(options.entity);
+            const entity = getEntity(options);
 
             if (!_.isUndefined(entity)) {
                 options = _.extend(options, { entity });
