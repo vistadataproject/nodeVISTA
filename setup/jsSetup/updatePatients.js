@@ -13,7 +13,7 @@ const utils = require('./utils');
 
 const vdmModel = vdmPatientModel.vdmModel;
 
-process.env.gtmroutines = `${process.env.gtmroutines} ../../../VDM/prototypes`;
+process.env.gtmroutines = `${process.env.gtmroutines} node_modules/mvdm`;
 
 process.on('uncaughtException', (err) => {
     db.close();
@@ -24,7 +24,7 @@ process.on('uncaughtException', (err) => {
 const db = new nodem.Gtm();
 db.open();
 
-const userId = utils.lookupUserIdByName(db, 'ALEXANDER,ROBERT');
+const userId = utils.lookupUserIdByName(db, 'MANAGER,SYSTEM');
 const facilityId = utils.lookupFacilityIdByName(db, 'VISTA HEALTH CARE');
 
 VDM.setDBAndModel(db, vdmModel);

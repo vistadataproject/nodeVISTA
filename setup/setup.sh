@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# (c) 2017 VISTA Data Project
+
 SECONDS=0
 
 # Make sure we are root
