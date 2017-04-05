@@ -1,0 +1,2948 @@
+{
+    "50": [
+        {
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "source_of_supply": "2U", 
+            "gender_specific_lbls_on_all_rx": false, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "L0191", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "1", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "2", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": ".5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "1.5", 
+                    "package": "O"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002457", 
+                "sameAsLabel": "LORAZEPAM 1MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "LORAZEPAM 1MG TAB"
+            }, 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "LORAZEPAM 1MG TAB", 
+            "price_per_dispense_unit": "0.0164", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "12", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "LORAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017848", 
+                "sameAsLabel": "LORAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "LORAZEPAM"
+            }, 
+            "application_packages_use": "ONX", 
+            "standard_sig": "\"HALF-TABLET\"", 
+            "strength": "1", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00378-2457-01", 
+                    "last_cmop_ndc": "67544-0879-53"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0008-0064-02", 
+                    "synonym": "ATIVAN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "reorder_level": "1", 
+            "va_product_name": "LORAZEPAM 1MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** SCRIPTPRO ***", 
+            "action_profile_message_op": "\"HALF-TABLET\" WILL SAVE $$", 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "dispense_unit": "TAB", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "price_per_order_unit": "1.64", 
+            "ndc": "00378-2457-01"
+        }, 
+        {
+            "source_of_supply": "6U", 
+            "dea_special_hdlg": "2APG", 
+            "va_classification": "CN802", 
+            "dispense_units_per_order_unit": "100", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4004066", 
+                "sameAsLabel": "METHYLPHENIDATE HCL 5MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "METHYLPHENIDATE HCL 5MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "5", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "10", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "2.5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "7.5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "5", 
+            "generic_name": "METHYLPHENIDATE  5MG TAB ", 
+            "price_per_dispense_unit": "0.0263", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "1", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "METHYLPHENIDATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4019832", 
+                "sameAsLabel": "METHYLPHENIDATE", 
+                "id": "$ID-50_6", 
+                "label": "METHYLPHENIDATE"
+            }, 
+            "application_packages_use": "ONUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00406-1121-01"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "RITALIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021797", 
+                "sameAsLabel": "CN802", 
+                "id": "$ID-50_605", 
+                "label": "CN802"
+            }, 
+            "va_product_name": "METHYLPHENIDATE HCL 5MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "NATL FORM (IEN)", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "2.63", 
+            "ncpdp_quantity_multiplier": "1", 
+            "reorder_level": "1", 
+            "ndc": "00406-1121-01"
+        }, 
+        {
+            "source_of_supply": "1U", 
+            "dea_special_hdlg": "2APG", 
+            "va_classification": "CN802", 
+            "dispense_units_per_order_unit": "100", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4004067", 
+                "sameAsLabel": "METHYLPHENIDATE HCL 10MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "METHYLPHENIDATE HCL 10MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "10", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "20", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "15", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "10", 
+            "generic_name": "METHYLPHENIDATE 10MG TAB", 
+            "price_per_dispense_unit": "0.0415", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "1", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "METHYLPHENIDATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4019832", 
+                "sameAsLabel": "METHYLPHENIDATE", 
+                "id": "$ID-50_6", 
+                "label": "METHYLPHENIDATE"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00406-1122-01"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0083-0003-40", 
+                    "synonym": "RITALIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021797", 
+                "sameAsLabel": "CN802", 
+                "id": "$ID-50_605", 
+                "label": "CN802"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "reorder_level": "1", 
+            "va_product_name": "METHYLPHENIDATE HCL 10MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM (IEN)", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "3D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "price_per_order_unit": "4.15", 
+            "ndc": "00406-1122-01"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "B0503", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "100", 
+                    "package": "IO"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4016940", 
+                "sameAsLabel": "BUPROPION HCL 100MG 12HR TAB,SA", 
+                "id": "$ID-50_68", 
+                "label": "BUPROPION HCL 100MG 12HR TAB,SA"
+            }, 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "BUPROPION HCL 100MG 12HR SA TAB", 
+            "price_per_dispense_unit": "0.1647", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "BuPROPion"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4019645", 
+                "sameAsLabel": "BUPROPION", 
+                "id": "$ID-50_6", 
+                "label": "BUPROPION"
+            }, 
+            "application_packages_use": "OUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00185-0410-01", 
+                    "last_cmop_ndc": "00185-0410-01"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "WELLBUTRIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "strength": "100", 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "BUPROPION HCL 100MG 12HR TAB,SA", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM (IEN); *** TCGRx ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "16.47", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00185-0410-01"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "B0510", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "bcma_units_per_dose": "1", 
+                    "dose": "150", 
+                    "package": "IO"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4017073", 
+                "sameAsLabel": "BUPROPION HCL 150MG 12HR TAB,SA", 
+                "id": "$ID-50_68", 
+                "label": "BUPROPION HCL 150MG 12HR TAB,SA"
+            }, 
+            "dispense_units_per_order_unit": "250", 
+            "generic_name": "BUPROPION HCL 150MG 12HR SA TAB", 
+            "price_per_dispense_unit": "0.0891", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "BuPROPion"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4019645", 
+                "sameAsLabel": "BUPROPION", 
+                "id": "$ID-50_6", 
+                "label": "BUPROPION"
+            }, 
+            "application_packages_use": "OXU", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00591-3541-25", 
+                    "last_cmop_ndc": "00591-3541-25"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "WELLBUTRIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "strength": "150", 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "BUPROPION HCL 150MG 12HR TAB,SA", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM (IEN); *** TCGRx & SCRIPTPRO ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "22.28", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "0"
+        }, 
+        {
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "price_per_order_unit": "1.91", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "C0743", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002194", 
+                "sameAsLabel": "CLONAZEPAM 1MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CLONAZEPAM 1MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "1", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "2", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": ".5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "1", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "CLONAZEPAM 1MG TAB", 
+            "price_per_dispense_unit": "0.0191", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CLONAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017791", 
+                "sameAsLabel": "CLONAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "CLONAZEPAM"
+            }, 
+            "application_packages_use": "ONX", 
+            "standard_sig": "\"HALF-TABLET\"", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00228-3004-11", 
+                    "last_cmop_ndc": "67544-0289-80"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "KLONOPIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "va_product_name": "CLONAZEPAM 1MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** SCRIPTPRO ***", 
+            "action_profile_message_op": "\"HALF-TABLET\" WILL SAVE $$", 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "3", 
+            "ndc": "00228-3004-11"
+        }, 
+        {
+            "source_of_supply": "2U", 
+            "gender_specific_lbls_on_all_rx": false, 
+            "dea_special_hdlg": "6P", 
+            "va_classification": "CN609", 
+            "cmop_id": "T0081", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "50", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "100", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "25", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "75", 
+                    "package": "O"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4006653", 
+                "sameAsLabel": "TRAZODONE HCL 50MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "TRAZODONE HCL 50MG TAB"
+            }, 
+            "dispense_units_per_order_unit": "500", 
+            "generic_name": "TRAZODONE HCL 50MG TAB", 
+            "price_per_dispense_unit": "0.0450", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "1", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "TRAZODONE HCL"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4019954", 
+                "sameAsLabel": "TRAZODONE", 
+                "id": "$ID-50_6", 
+                "label": "TRAZODONE"
+            }, 
+            "application_packages_use": "OXU", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "50111-0433-03", 
+                    "last_cmop_ndc": "00603-6147-32"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "DESYREL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "strength": "50", 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "TRAZODONE HCL 50MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** TCGRx & SCRIPTPRO ", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "22.48", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "1", 
+            "ndc": "50111-0433-03"
+        }, 
+        {
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4006654", 
+                "sameAsLabel": "TRAZODONE HCL 100MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "TRAZODONE HCL 100MG TAB"
+            }, 
+            "dea_special_hdlg": "6P", 
+            "va_classification": "CN609", 
+            "cmop_id": "T0078", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "100", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "bcma_units_per_dose": "2", 
+                    "dose": "200", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "50", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "150", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "2.5", 
+                    "dose": "250", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "3", 
+                    "bcma_units_per_dose": "3", 
+                    "dose": "300", 
+                    "package": "IO"
+                }
+            ], 
+            "strength": "100", 
+            "dispense_units_per_order_unit": "500", 
+            "generic_name": "TRAZODONE HCL 100MG TAB", 
+            "price_per_dispense_unit": "0.0957", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "TRAZODONE HCL"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4019954", 
+                "sameAsLabel": "TRAZODONE", 
+                "id": "$ID-50_6", 
+                "label": "TRAZODONE"
+            }, 
+            "application_packages_use": "OXU", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "50111-0434-02", 
+                    "last_cmop_ndc": "00603-6161-32"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "DESYREL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "gender_specific_lbls_on_all_rx": false, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "TRAZODONE HCL 100MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** SCRIPTPRO ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "47.86", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "1", 
+            "ndc": "50111-0434-02"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "C1017", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "10", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "20", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "15", 
+                    "package": "O"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4015650", 
+                "sameAsLabel": "CITALOPRAM HYDROBROMIDE 10MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CITALOPRAM HYDROBROMIDE 10MG TAB"
+            }, 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "CITALOPRAM HYDROBROMIDE 10MG TAB", 
+            "price_per_dispense_unit": "0.0341", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CITALOPRAM HBR"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4021129", 
+                "sameAsLabel": "CITALOPRAM", 
+                "id": "$ID-50_6", 
+                "label": "CITALOPRAM"
+            }, 
+            "application_packages_use": "OXU", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "24658-0140-01", 
+                    "last_cmop_ndc": "00093-4740-01"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "CELEXA", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "strength": "10", 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "CITALOPRAM HYDROBROMIDE 10MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** TCGRx *** (-LEAVEN 012610 CR)", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "3.41", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": false, 
+            "ndc": "24658-0140-01"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": false, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN709", 
+            "cmop_id": "Q0022", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4013115", 
+                "sameAsLabel": "QUETIAPINE FUMARATE 25MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "QUETIAPINE FUMARATE 25MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "25", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "bcma_units_per_dose": "2", 
+                    "dose": "50", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "12.5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "37.5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "25", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "QUETIAPINE FUMARATE 25MG TAB", 
+            "price_per_dispense_unit": "0.5628", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "QUETIAPINE FUMARATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4024080", 
+                "sameAsLabel": "QUETIAPINE", 
+                "id": "$ID-50_6", 
+                "label": "QUETIAPINE"
+            }, 
+            "application_packages_use": "OUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00310-0275-10", 
+                    "last_cmop_ndc": "00310-0275-10"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0310-0275-10", 
+                    "synonym": "SEROQUEL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021873", 
+                "sameAsLabel": "CN709", 
+                "id": "$ID-50_605", 
+                "label": "CN709"
+            }, 
+            "va_product_name": "QUETIAPINE FUMARATE 25MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "NATL FORM *** TCGRx & SCRIPTPRO ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "56.28", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00310-0275-10"
+        }, 
+        {
+            "quantity_dispense_message": "EACH UNIT", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN709", 
+            "cmop_id": "Q0032", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4015276", 
+                "sameAsLabel": "QUETIAPINE FUMARATE 300MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "QUETIAPINE FUMARATE 300MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "300", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "150", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "300", 
+            "dispense_units_per_order_unit": "60", 
+            "generic_name": "QUETIAPINE FUMARATE 300MG TAB", 
+            "price_per_dispense_unit": "2.6930", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "QUETIAPINE FUMARATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4024080", 
+                "sameAsLabel": "QUETIAPINE", 
+                "id": "$ID-50_6", 
+                "label": "QUETIAPINE"
+            }, 
+            "application_packages_use": "OX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00310-0274-60", 
+                    "last_cmop_ndc": "00310-0274-60"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "SEROQUEL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021873", 
+                "sameAsLabel": "CN709", 
+                "id": "$ID-50_605", 
+                "label": "CN709"
+            }, 
+            "va_product_name": "QUETIAPINE FUMARATE 300MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "161.58", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00310-0274-60"
+        }, 
+        {
+            "price_per_order_unit": "100.33", 
+            "gender_specific_lbls_on_all_rx": false, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "T0380", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002700", 
+                "sameAsLabel": "TEMAZEPAM 7.5MG CAP", 
+                "id": "$ID-50_68", 
+                "label": "TEMAZEPAM 7.5MG CAP"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "7.5", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "15", 
+                    "package": "IO"
+                }
+            ], 
+            "strength": "7.5", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "TEMAZEPAM 7.5MG CAP", 
+            "price_per_dispense_unit": "1.0033", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "TEMAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017894", 
+                "sameAsLabel": "TEMAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "TEMAZEPAM"
+            }, 
+            "application_packages_use": "UNOX", 
+            "dispense_unit": "CAP", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00406-9915-01", 
+                    "last_cmop_ndc": "00406-9915-01"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0078-0140-05", 
+                    "synonym": "RESTORIL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "va_product_name": "TEMAZEPAM 7.5MG CAP", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "NATL FORM", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "1", 
+            "ndc": "00406-9915-01"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": false, 
+            "dea_special_hdlg": "4CPG", 
+            "va_classification": "CN309", 
+            "cmop_id": "Z0036", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4010249", 
+                "sameAsLabel": "ZOLPIDEM TARTRATE 5MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "ZOLPIDEM TARTRATE 5MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "5", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "10", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "2.5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "7.5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "5", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "ZOLPIDEM TARTRATE 5MG TAB", 
+            "price_per_dispense_unit": "0.0276", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "1", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "ZOLPIDEM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4023596", 
+                "sameAsLabel": "ZOLPIDEM", 
+                "id": "$ID-50_6", 
+                "label": "ZOLPIDEM"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00378-5305-01", 
+                    "last_cmop_ndc": "00603-6468-32"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0025-5401-31", 
+                    "synonym": "AMBIEN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021871", 
+                "sameAsLabel": "CN309", 
+                "id": "$ID-50_605", 
+                "label": "CN309"
+            }, 
+            "va_product_name": "ZOLPIDEM TARTRATE 5MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM; OUT PT USE ONLY 121307", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "2.76", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "1", 
+            "ndc": "00378-5305-01"
+        }, 
+        {
+            "dea_special_hdlg": "4CPG", 
+            "va_classification": "CN309", 
+            "cmop_id": "Z0020", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4010250", 
+                "sameAsLabel": "ZOLPIDEM TARTRATE 10MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "ZOLPIDEM TARTRATE 10MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "10", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "10", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "ZOLPIDEM TARTRATE 10MG TAB", 
+            "price_per_dispense_unit": "0.0809", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "1", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "ZOLPIDEM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4023596", 
+                "sameAsLabel": "ZOLPIDEM", 
+                "id": "$ID-50_6", 
+                "label": "ZOLPIDEM"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00781-5318-01", 
+                    "last_cmop_ndc": "60429-0531-15"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0025-5421-31", 
+                    "synonym": "AMBIEN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021871", 
+                "sameAsLabel": "CN309", 
+                "id": "$ID-50_605", 
+                "label": "CN309"
+            }, 
+            "va_product_name": "ZOLPIDEM TARTRATE 10MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** SCRIPTPRO ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "8.09", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "1", 
+            "ndc": "00781-5318-01"
+        }, 
+        {
+            "quantity_dispense_message": "TAB", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "C0813", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4013291", 
+                "sameAsLabel": "CITALOPRAM HYDROBROMIDE 20MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CITALOPRAM HYDROBROMIDE 20MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "20", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "40", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "10", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "30", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "20", 
+            "dispense_units_per_order_unit": "1000", 
+            "generic_name": "CITALOPRAM HYDROBROMIDE 20MG TAB", 
+            "price_per_dispense_unit": "0.0359", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CITALOPRAM HBR"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4021129", 
+                "sameAsLabel": "CITALOPRAM", 
+                "id": "$ID-50_6", 
+                "label": "CITALOPRAM"
+            }, 
+            "application_packages_use": "OUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "24658-0141-10", 
+                    "last_cmop_ndc": "24658-0141-10"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0456-4020-01", 
+                    "synonym": "CELEXA", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "CITALOPRAM HYDROBROMIDE 20MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM; (IEN) *** TCGRx & SCRIPTPR0 *** (-LEAVEN 062410 CE) ", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "35.89", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": false, 
+            "ndc": "24658-0141-10"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN709", 
+            "cmop_id": "Q0024", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "200", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "400", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "100", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "300", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "200", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "QUETIAPINE FUMARATE 200MG TAB", 
+            "price_per_dispense_unit": "2.0196", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "QUETIAPINE FUMARATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4024080", 
+                "sameAsLabel": "QUETIAPINE", 
+                "id": "$ID-50_6", 
+                "label": "QUETIAPINE"
+            }, 
+            "application_packages_use": "OX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00310-0272-10", 
+                    "last_cmop_ndc": "00310-0272-10"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0310-0272-10", 
+                    "synonym": "SEROQUEL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4013117", 
+                "sameAsLabel": "QUETIAPINE FUMARATE 200MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "QUETIAPINE FUMARATE 200MG TAB"
+            }, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021873", 
+                "sameAsLabel": "CN709", 
+                "id": "$ID-50_605", 
+                "label": "CN709"
+            }, 
+            "va_product_name": "QUETIAPINE FUMARATE 200MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "NATL FORM (IEN) *** SCRIPTPRO ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "201.96", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00310-0272-10"
+        }, 
+        {
+            "price_per_order_unit": "19.02", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PR", 
+            "va_classification": "CN709", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4015733", 
+                "sameAsLabel": "CLOZAPINE (MYLAN) 25MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CLOZAPINE (MYLAN) 25MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "25", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "37.5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "12.5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "25", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "CLOZAPINE 25MG (MYLAN) TAB", 
+            "price_per_dispense_unit": "0.1902", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CLOZAPINE (MYLAN)"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4024234", 
+                "sameAsLabel": "CLOZAPINE (MYLAN)", 
+                "id": "$ID-50_6", 
+                "label": "CLOZAPINE (MYLAN)"
+            }, 
+            "application_packages_use": "OUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00378-0825-01"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0078-0126-05", 
+                    "synonym": "CLOZARIL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021873", 
+                "sameAsLabel": "CN709", 
+                "id": "$ID-50_605", 
+                "label": "CN709"
+            }, 
+            "va_product_name": "CLOZAPINE (MYLAN) 25MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "VISN RESTR; Verify pt's address/telephone # (REMS REQUIREMENTS)", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "cmop_id": "C1028", 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "reorder_level": "1", 
+            "ndc": "00378-0825-01"
+        }, 
+        {
+            "price_per_order_unit": "2.70", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "C0742", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002195", 
+                "sameAsLabel": "CLONAZEPAM 0.5MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CLONAZEPAM 0.5MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": ".5", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "1", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": ".25", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "0.5", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "CLONAZEPAM 0.5MG TAB", 
+            "price_per_dispense_unit": "0.0270", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "6", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CLONAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017791", 
+                "sameAsLabel": "CLONAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "CLONAZEPAM"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00228-3003-11", 
+                    "last_cmop_ndc": "67544-0301-60"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "KLONOPIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "va_product_name": "CLONAZEPAM 0.5MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "6", 
+            "ndc": "00228-3003-11"
+        }, 
+        {
+            "quantity_dispense_message": "INCREMENTS OF 30", 
+            "price_per_order_unit": "8.18", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002698", 
+                "sameAsLabel": "TEMAZEPAM 15MG CAP", 
+                "id": "$ID-50_68", 
+                "label": "TEMAZEPAM 15MG CAP"
+            }, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "T0471", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "15", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "30", 
+                    "package": "IO"
+                }
+            ], 
+            "strength": "15", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "TEMAZEPAM 15MG CAP", 
+            "price_per_dispense_unit": "0.0818", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "TEMAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017894", 
+                "sameAsLabel": "TEMAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "TEMAZEPAM"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "CAP", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00228-2076-10", 
+                    "last_cmop_ndc": "67544-0038-30"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "RESTORIL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "gender_specific_lbls_on_all_rx": false, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "va_product_name": "TEMAZEPAM 15MG CAP", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM; ENTER AS INCREMENTS OF 30 ONLY", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "4", 
+            "ndc": "00228-2076-10"
+        }, 
+        {
+            "price_per_order_unit": "5.91", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "T0472", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002699", 
+                "sameAsLabel": "TEMAZEPAM 30MG CAP", 
+                "id": "$ID-50_68", 
+                "label": "TEMAZEPAM 30MG CAP"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "30", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "30", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "TEMAZEPAM 30MG CAP", 
+            "price_per_dispense_unit": "0.0591", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "TEMAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017894", 
+                "sameAsLabel": "TEMAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "TEMAZEPAM"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "CAP", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00228-2077-10", 
+                    "last_cmop_ndc": "67544-0287-60"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "RESTORIL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "unit_dose_schedule_type": "FILL on REQUEST", 
+            "va_product_name": "TEMAZEPAM 30MG CAP", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "NATL FORM", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "reorder_level": "2", 
+            "ndc": "00228-2077-10"
+        }, 
+        {
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN709", 
+            "cmop_id": "Q0039", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "50", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "25", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "75", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "50", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "QUETIAPINE FUMARATE 50MG TAB", 
+            "price_per_dispense_unit": "0.9248", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "QUETIAPINE FUMARATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4024080", 
+                "sameAsLabel": "QUETIAPINE", 
+                "id": "$ID-50_6", 
+                "label": "QUETIAPINE"
+            }, 
+            "application_packages_use": "OX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00310-0278-10", 
+                    "last_cmop_ndc": "00310-0278-10"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0310-0278-10", 
+                    "synonym": "SEROQUEL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4025107", 
+                "sameAsLabel": "QUETIAPINE FUMARATE 50MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "QUETIAPINE FUMARATE 50MG TAB"
+            }, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021873", 
+                "sameAsLabel": "CN709", 
+                "id": "$ID-50_605", 
+                "label": "CN709"
+            }, 
+            "va_product_name": "QUETIAPINE FUMARATE 50MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "92.48", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00310-0278-10"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN709", 
+            "cmop_id": "Q0023", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4013116", 
+                "sameAsLabel": "QUETIAPINE FUMARATE 100MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "QUETIAPINE FUMARATE 100MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "100", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "200", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "50", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "150", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "100", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "QUETIAPINE FUMARATE 100MG TAB", 
+            "price_per_dispense_unit": "1.0042", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "QUETIAPINE FUMARATE"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4024080", 
+                "sameAsLabel": "QUETIAPINE", 
+                "id": "$ID-50_6", 
+                "label": "QUETIAPINE"
+            }, 
+            "application_packages_use": "OUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00310-0271-10", 
+                    "last_cmop_ndc": "00310-0271-10"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0310-0271-10", 
+                    "synonym": "SEROQUEL", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021873", 
+                "sameAsLabel": "CN709", 
+                "id": "$ID-50_605", 
+                "label": "CN709"
+            }, 
+            "va_product_name": "QUETIAPINE FUMARATE 100MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "BT"
+            }, 
+            "message": "NATL FORM *** TCGRx ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "100.42", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00310-0271-10"
+        }, 
+        {
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "C0744", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "2", 
+                    "package": "IO"
+                }
+            ], 
+            "strength": "2", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "CLONAZEPAM 2MG TAB", 
+            "price_per_dispense_unit": "0.0245", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CLONAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017791", 
+                "sameAsLabel": "CLONAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "CLONAZEPAM"
+            }, 
+            "application_packages_use": "OUXN", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00228-3005-11", 
+                    "last_cmop_ndc": "00228-3005-11"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "KLONOPIN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002196", 
+                "sameAsLabel": "CLONAZEPAM 2MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CLONAZEPAM 2MG TAB"
+            }, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "va_product_name": "CLONAZEPAM 2MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "2.45", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00228-3005-11"
+        }, 
+        {
+            "quantity_dispense_message": "TAB", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "C0815", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4013293", 
+                "sameAsLabel": "CITALOPRAM HYDROBROMIDE 40MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "CITALOPRAM HYDROBROMIDE 40MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "40", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "20", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "40", 
+            "dispense_units_per_order_unit": "1000", 
+            "generic_name": "CITALOPRAM HYDROBROMIDE 40MG TAB", 
+            "price_per_dispense_unit": "0.0383", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "CITALOPRAM HBR"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4021129", 
+                "sameAsLabel": "CITALOPRAM", 
+                "id": "$ID-50_6", 
+                "label": "CITALOPRAM"
+            }, 
+            "application_packages_use": "OUX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "24658-0142-10", 
+                    "last_cmop_ndc": "24658-0142-10"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0456-4040-01", 
+                    "synonym": "CELEXA", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "CITALOPRAM HYDROBROMIDE 40MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM;  *** TCGRx & SCRIPTPRO ***", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "38.32", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "24658-0142-10"
+        }, 
+        {
+            "price_per_order_unit": "1.54", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4002456", 
+                "sameAsLabel": "LORAZEPAM 0.5MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "LORAZEPAM 0.5MG TAB"
+            }, 
+            "dea_special_hdlg": "4CP", 
+            "va_classification": "CN302", 
+            "cmop_id": "L0190", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": ".5", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "1", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": ".25", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": ".75", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "0.5", 
+            "dispense_units_per_order_unit": "100", 
+            "generic_name": "LORAZEPAM 0.5MG TAB", 
+            "price_per_dispense_unit": "0.0154", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "normal_amount_to_order": "4", 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "LORAZEPAM"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4017848", 
+                "sameAsLabel": "LORAZEPAM", 
+                "id": "$ID-50_6", 
+                "label": "LORAZEPAM"
+            }, 
+            "application_packages_use": "ONX", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00378-2321-01", 
+                    "last_cmop_ndc": "67544-0870-30"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "ATIVAN", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "gender_specific_lbls_on_all_rx": false, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021591", 
+                "sameAsLabel": "CN302", 
+                "id": "$ID-50_605", 
+                "label": "CN302"
+            }, 
+            "va_product_name": "LORAZEPAM 0.5MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM; \"HALF", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00378-2321-01"
+        }, 
+        {
+            "gender_specific_lbls_on_all_rx": false, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "S0223", 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "25", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "12.5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "37.5", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "3", 
+                    "bcma_units_per_dose": "3", 
+                    "dose": "75", 
+                    "package": "I"
+                }, 
+                {
+                    "dispense_units_per_dose": "2.5", 
+                    "dose": "62.5", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "25", 
+            "dispense_units_per_order_unit": "30", 
+            "generic_name": "SERTRALINE HCL 25MG TAB", 
+            "price_per_dispense_unit": "0.1993", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "SERTRALINE HCL"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4020551", 
+                "sameAsLabel": "SERTRALINE", 
+                "id": "$ID-50_6", 
+                "label": "SERTRALINE"
+            }, 
+            "application_packages_use": "OUX", 
+            "standard_sig": "T1 TAB PO QD", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "60505-0180-03", 
+                    "last_cmop_ndc": "60505-0180-03"
+                }
+            ], 
+            "synonym": [
+                {
+                    "ndc_code": "0049-4960-50", 
+                    "synonym": "ZOLOFT", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4010125", 
+                "sameAsLabel": "SERTRALINE HCL 25MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "SERTRALINE HCL 25MG TAB"
+            }, 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "SERTRALINE HCL 25MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM ", 
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "5.98", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "60505-0180-03"
+        }, 
+        {
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "OTHER"
+            }, 
+            "source_of_supply": "6U", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "S0013", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4010124", 
+                "sameAsLabel": "SERTRALINE HCL 100MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "SERTRALINE HCL 100MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "100", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "200", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "50", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "150", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "100", 
+            "dispense_units_per_order_unit": "500", 
+            "generic_name": "SERTRALINE HCL 100MG TAB", 
+            "price_per_dispense_unit": "0.1349", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "SERTRALINE HCL"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4020551", 
+                "sameAsLabel": "SERTRALINE", 
+                "id": "$ID-50_6", 
+                "label": "SERTRALINE"
+            }, 
+            "application_packages_use": "OUX", 
+            "standard_sig": "TAKE OH TABLET (50MG) PO QD", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "60505-0182-03", 
+                    "last_cmop_ndc": "67544-0908-45"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "ZOLOFT", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "SERTRALINE HCL 100MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** TCGRx & SCRIPTPRO ***", 
+            "action_profile_message_op": "\"HALF-TABLET\" WILL SAVE $$", 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "67.46", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "60505-0182-03"
+        }, 
+        {
+            "package_type": {
+                "id": "$ID-50_608", 
+                "label": "BOTTLE"
+            }, 
+            "source_of_supply": "6U", 
+            "gender_specific_lbls_on_all_rx": true, 
+            "dea_special_hdlg": "6PG", 
+            "va_classification": "CN609", 
+            "cmop_id": "S0014", 
+            "psndf_va_product_name_entry": {
+                "sameAs": "vuid:4010123", 
+                "sameAsLabel": "SERTRALINE HCL 50MG TAB", 
+                "id": "$ID-50_68", 
+                "label": "SERTRALINE HCL 50MG TAB"
+            }, 
+            "unit": {
+                "id": "$ID-50_607", 
+                "label": "MG"
+            }, 
+            "current_inventory": 100, 
+            "possible_dosages": [
+                {
+                    "dispense_units_per_dose": "1", 
+                    "dose": "50", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": "2", 
+                    "dose": "100", 
+                    "package": "IO"
+                }, 
+                {
+                    "dispense_units_per_dose": ".5", 
+                    "dose": "25", 
+                    "package": "O"
+                }, 
+                {
+                    "dispense_units_per_dose": "1.5", 
+                    "dose": "75", 
+                    "package": "O"
+                }
+            ], 
+            "strength": "50", 
+            "dispense_units_per_order_unit": "500", 
+            "generic_name": "SERTRALINE HCL 50MG TAB", 
+            "price_per_dispense_unit": "0.1349", 
+            "package_size": {
+                "id": "$ID-50_609", 
+                "label": "OTHER"
+            }, 
+            "ncpdp_dispense_unit": "EACH", 
+            "pharmacy_orderable_item": {
+                "id": "$ID-50_7", 
+                "label": "SERTRALINE HCL"
+            }, 
+            "type": "Drug-50", 
+            "national_drug_file_entry": {
+                "sameAs": "vuid:4020551", 
+                "sameAsLabel": "SERTRALINE", 
+                "id": "$ID-50_6", 
+                "label": "SERTRALINE"
+            }, 
+            "application_packages_use": "OXU", 
+            "standard_sig": "TAKE OH TABLET (25MG) PO QD", 
+            "dispense_unit": "TAB", 
+            "ndc_by_outpatient_site": [
+                {
+                    "outpatient_site": {
+                        "id": "59-1", 
+                        "label": "NODEVISTA"
+                    }, 
+                    "last_local_ndc": "00143-9581-05", 
+                    "last_cmop_ndc": "59762-4900-04"
+                }
+            ], 
+            "synonym": [
+                {
+                    "synonym": "ZOLOFT", 
+                    "intended_use": "TRADE NAME"
+                }
+            ], 
+            "national_drug_class": {
+                "sameAs": "vuid:4021872", 
+                "sameAsLabel": "CN609", 
+                "id": "$ID-50_605", 
+                "label": "CN609"
+            }, 
+            "va_product_name": "SERTRALINE HCL 50MG TAB", 
+            "order_unit": {
+                "id": "$ID-51_5", 
+                "label": "EA"
+            }, 
+            "message": "NATL FORM *** TCGRx & SCRIPTPRO ***", 
+            "action_profile_message_op": "\"HALF-TABLET\" WILL SAVE $$", 
+            "national_formulary_indicator": true, 
+            "price_per_order_unit": "67.46", 
+            "ncpdp_quantity_multiplier": "1", 
+            "cmop_dispense": true, 
+            "ndc": "00143-9581-05"
+        }
+    ], 
+    "50_7": [
+        {
+            "nonva_med": true, 
+            "name": "BuPROPion", 
+            "schedule": "ONCE DAILY", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "synonym": [
+                "WELLBUTRIN SR", 
+                "ZYBAN"
+            ], 
+            "use_dosage_form_med_route_list": false, 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB,SA"
+            }
+        }, 
+        {
+            "nonva_med": true, 
+            "name": "CLONAZEPAM", 
+            "schedule": "ONCE DAILY", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "synonym": [
+                "KLONOPIN"
+            ], 
+            "use_dosage_form_med_route_list": false, 
+            "schedule_type": "FILL ON REQUEST", 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "synonym": [
+                "CLOZARIL"
+            ], 
+            "name": "CLOZAPINE (MYLAN)", 
+            "schedule": "ONCE DAILY", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "nonva_med": true, 
+            "use_dosage_form_med_route_list": false, 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "synonym": [
+                "ATIVAN"
+            ], 
+            "name": "LORAZEPAM", 
+            "schedule": "Q6H PRN", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "nonva_med": true, 
+            "use_dosage_form_med_route_list": false, 
+            "schedule_type": "FILL ON REQUEST", 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "synonym": [
+                "RITALIN"
+            ], 
+            "name": "METHYLPHENIDATE", 
+            "schedule": "BID", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "day_nd_or_dose_nl_limit": "3D", 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "nonva_med": true, 
+            "use_dosage_form_med_route_list": false, 
+            "schedule_type": "FILL ON REQUEST", 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "nonva_med": true, 
+            "name": "SERTRALINE HCL", 
+            "schedule": "ONCE DAILY", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "synonym": [
+                "ZOLOFT"
+            ], 
+            "use_dosage_form_med_route_list": false, 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "synonym": [
+                "RESTORIL"
+            ], 
+            "name": "TEMAZEPAM", 
+            "schedule": "QHS PRN", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "nonva_med": true, 
+            "use_dosage_form_med_route_list": false, 
+            "schedule_type": "FILL ON REQUEST", 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "CAP,ORAL"
+            }
+        }, 
+        {
+            "nonva_med": true, 
+            "name": "TRAZODONE HCL", 
+            "schedule": "QHS (BEDTIME)", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "synonym": [
+                "DESYREL"
+            ], 
+            "use_dosage_form_med_route_list": false, 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "synonym": [
+                "AMBIEN"
+            ], 
+            "name": "ZOLPIDEM", 
+            "schedule": "QHS (BEDTIME)", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "day_nd_or_dose_nl_limit": "7D", 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "nonva_med": true, 
+            "use_dosage_form_med_route_list": false, 
+            "schedule_type": "FILL ON REQUEST", 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "nonva_med": true, 
+            "name": "QUETIAPINE FUMARATE", 
+            "schedule": "BID", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "synonym": [
+                "SEROQUEL"
+            ], 
+            "use_dosage_form_med_route_list": false, 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }, 
+        {
+            "nonva_med": true, 
+            "name": "CITALOPRAM HBR", 
+            "schedule": "ONCE DAILY", 
+            "default_med_route": {
+                "id": "$ID-51_2", 
+                "label": "ORAL"
+            }, 
+            "inactive_date": {
+                "type": "xsd:date", 
+                "value": "2020-12-31"
+            }, 
+            "synonym": [
+                "CELEXA"
+            ], 
+            "use_dosage_form_med_route_list": false, 
+            "type": "Pharmacy_Orderable_Item-50_7", 
+            "dosage_form": {
+                "id": "$ID-50_606", 
+                "label": "TAB"
+            }
+        }
+    ]
+}
