@@ -5,8 +5,9 @@
 const util = require('util');
 const nodem = require('nodem');
 const _ = require('lodash');
+const VDM = require('mvdm/vdm');
+const fileman = require('mvdm/fileman');
 const ParameterService = require('mvdm/parameterService');
-const RPCRunner = require('mvdm/rpcRunner').RPCRunner;
 const nodeVISTAParameters = require('./nodeVISTAParameters');
 
 /**
@@ -40,7 +41,6 @@ let db = null;
 
 const setupParameterService = function setupParameterService() {
     console.log('Setting up Parameter Service...');
-    process.env.gtmroutines = `${process.env.gtmroutines} ../../../VDM/prototypes`;
     db = new nodem.Gtm();
     db.open();
 
