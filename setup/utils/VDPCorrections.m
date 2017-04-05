@@ -51,6 +51,152 @@ VDPCorrections ;
  . Set $Piece(x,"^",5,999)=p
  . Set ^DD(52.07,3,0)=x
  . Quit
+<<<<<<< HEAD
+=======
+ ;
+ ; 6. Too many quotes in input transformation 52.6, 19 (STRENGTH)
+ Do
+ . New p,x
+ . Set x=$Get(^DD(52.6,19,0)),p=$Piece(x,"^",5,999)
+ . Quit:p'="K:X>99999999!(X<0)!(X?.E1"""".""""9N.N) X"
+ . Set p="K:X>99999999!(X<0)!(X?.E1"".""9N.N) X"
+ . Set $Piece(x,"^",5,999)=p
+ . Set ^DD(52.6,19,0)=x
+ . Quit
+ ;
+ ; 7. Error in input transformation 130.03, 4 (ZIP CODE)
+ Do
+ . New p,x
+ . Set x=$Get(^DD(130.03,4,0)),p=$Piece(x,"^",5,999)
+ . Quit:p'="K:$L(X)>10!($L(X)<5)!'(X?.N) X"
+ . Set p="K:X'?1(5N,5N1""-""4N) X"
+ . Set $Piece(x,"^",5,999)=p
+ . Set ^DD(130.03,4,0)=x
+ . Quit
+ ;
+ ; 8. Error in input transformation 2100, 460.2 (VEND ZIP 2)
+ Do
+ . New p,x
+ . Set x=$Get(^DD(2100,460.2,0),p=$Piece(x,"^",5,999)
+ . Quit:p'="K:$L(X)>4!($L(X)<1)!'(X'?1P.E) X"
+ . Set p="K:X'?5N X"
+ . Set $Piece(x,"^",5,999)=p
+ . Set ^DD(2100,460.2,0)=x
+ . Quit
+ ;
+ ; 9. Error in input transform 9.8, 1.4 (DATE OF %INDEX RUN)
+ Do
+ . New p,x
+ . Set x=$Get(^DD(9.8,1.4,0)),p=$Piece(x,"^",5,999)
+ . Quit:p'="S %DT=""ETX"" D ^%DT S X=Y K:3000000<X!(2000000>X) X"
+ . Set p="S %DT=""ETX"" D ^%DT S X=Y K:X<2800101 X"
+ . Set $p(x,"^",5,999)=p
+ . Set ^DD(9.8,1.4,0)=x
+ . Quit
+ ;
+ ; 10. Fields should not be Required in File 52 (fields 99, 99.1, 99.2 and 108)
+ Do
+ . New field,p,x
+ . For field=99,99.1,99.2,108 Do
+ . . Set x=$Get(^DD(52,field,0)),p=$Piece(x,"^",3)
+ . . Quit:p'["R"
+ . . Set $Piece(x,"^",2)=$Translate(p,"R")
+ . . Set ^DD(52,field,0)=x
+ . . Quit
+ . Quit
+ ;
+ ; 11. Cross-reference on File #100, field #.01
+ Do
+ . New count,ii,next,x
+ . Set x=$Get(^DD(100,.01,1,1,1))
+ . Quit:x'="S ^OR(100,""AZ"",DA,$P(^OR(100,DA,0),U,2))="""""
+ . Set x="N Y2 S Y2=$P(^OR(100,DA,0),U,2) S:Y2'="""" S ^OR(100,""AZ"",DA,Y2)="""""
+ . Set ^DD(100,.01,1,1,1)=x
+ . ;
+ . ; Add companion cross-reference on field .02:
+ . Set next=$Order(^DD(100,0.02,1," "),-1)+1
+ . Set ^DD(100,0.02,1,next,0)="100^AZ^MUMPS"
+ . Set ^DD(100,0.02,1,next,1)="S:X'="""" S ^OR(100,""AZ"",DA,X)="""""
+ . Set ^DD(100,0.02,1.next.2)="Q"
+ . Set (ii,count)=0 For  Set ii=$Order(^DD(100,0.02,1,ii)) Quit:'ii  Set count=count+1
+ . Set ^DD(100,0.02,1)="^.1^"_next_"^"_count
+ . Quit
+ ;
+ ; 12. Check whether variable exists in ORDD100.
+ Kill find,replace
+ Set find(1)=" I ORACT'=ORCACT D  Q  ; not Current action"
+ Set replace(1)=" I $G(ORCACT),ORACT'=ORCACT D  Q  ; not Current action"
+ Do FixRoutine("ORDD100",.find,.replace)
+ ;
+ ; 13. Check whether global variable exists in file #51.41, field #15
+ Do
+ . New x
+ . Set x=$Get(^DD(52.41,15,1,1,1))
+ . Do:x="I $P(^PS(52.41,DA,0),""^"",3)=""NW""!($P(^(0),""^"",3)=""RNW"")!($P(^(0),""^"",3)=""RF"") S ^PS(52.41,""AD"",X,$P(^PS(52.41,DA,""INI""),""^""),DA)="""""
+ . . Set x="N Y1 S Y1=$P($G(^PS(52.41,DA,""INI"")),""^"",1) I Y1'="",$P(^PS(52.41,DA,0),""^"",3)=""NW""!($P(^(0),""^"",3)=""RNW"")!($P(^(0),""^"",3)=""RF"") S ^PS(52.41,""AD"",X,Y1,DA)="""""
+ . . Set ^DD(52.41,15,1,1,1)=x
+ . . Quit
+ . Set x=$Get(^DD(52.41,15,1,1,2))
+ . Do:x="K ^PS(52.41,""AD"",X,$P(^PS(52.41,DA,""INI""),""^""),DA)"
+ . . Set x="N Y1 S Y1=$P($G(^PS(52.41,DA,""INI"")),""^"",1) I Y1'="""" K ^PS(52.41,""AD"",X,Y1,DA)"
+ . . Set ^DD(51.41,15,1,1,2)=x
+ . . Quit
+ . Quit
+ ;
+ ; 14. Check whether field is populated in file #52, field #6
+ ;     as well as its companion-field in file #52, field #22
+ Do
+ . New x
+ . Set x=$Get(^DD(52,6,1,1,1))
+ . Do:x="I X,$P(^PSRX(DA,2),""^"",2) S ^PSRX(""ADL"",$P(^PSRX(DA,2),""^"",2),X,DA)="""""
+ . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,2)),""^"",2) I X,Y1 S ^PSRX(""ADL"",Y1,X,DA)="""""
+ . . Set ^DD(52,6,1,1,1)=x
+ . . Quit
+ . Set x=$Get(^DD(52,6,1,1,2))
+ . Do:x="I X,$P(^PSRX(DA,2),""^"",2) K ^PSRX(""ADL"",$P(^PSRX(DA,2),""^"",2),X,DA)"
+ . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,2)),""^"",2) I X,Y1 K ^PSRX(""ADL"",Y1,X,DA)"
+ . . Set ^DD(52,6,1,1,2)=x
+ . . Quit
+ . Set x=$Get(^DD(52,22,1,5,1))
+ . Do:x="I X,$P(^PSRX(DA,0),""^"",6) S ^PSRX(""ADL"",X,$P(^PSRX(DA,0),""^"",6),DA)=""
+ . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,0)),""^"",6) I X,Y1 S ^PSRX(""ADL"",X,Y1,DA)=""
+ . . Set ^DD(52,22,1,5,1)=x
+ . . Quit
+ . Set x=$Get(^DD*52,22,1,5,2))
+ . Do:x="I X,$P(^PSRX(DA,0),""^"",6) K ^PSRX(""ADL"",X,$P(^PSRX(DA,0),""^"",6),DA)"
+ . . Set x="N Y1 S Y1=$P($G(^PSRX(DA,0)),""^"",6) I X,Y1 K ^PSRX(""ADL"",X,Y1,DA)"
+ . . Set ^DD*52,22,1,5,2)=x
+ . . Quit
+ . Quit
+ ;
+ ; 15. Remove unused (and conflicting) field in File #52.04, field #1
+ Do
+ . New count,ii,last,x
+ . Quit:$Piece($Get(^DD(52.04,0)),"^",1)'="SIG1 SUB-FIELD"
+ . Quit:$Piece($Get(^DD(52.04,1,0)),"^",1)'="SIG1"
+ . Kill ^DD(52.04,1)
+ . Kill ^DD(52.04,"B","SIG1",1)
+ . Kill ^DD(52.04,"GL",0,1,1)
+ . Set (count,ii,last)=0 For  Set ii=$Order(^DD(52.04,ii)) Quit:'ii  Set last=ii,count=count+1
+ . Set ^DD(52.04,0)="SIG1 SUB-FIELD^^"_last_"^"_count
+ . Quit
+ ;
+ ;
+ ; ...not clear is #99 is a correction that should be made
+ ; disabled this one for now...
+ ; 99. Uncertainty about which file is being pointed to in 53.51, 0.01 (PATIENT)
+ Do
+ . Quit  ; Don't make this change for the time being
+ . New p,x
+ . Set x=$Get(^DD(53.51,.01,0)),p=$Piece(x,"^",3)
+ . Quit:p'="PS(55,"
+ . Set p="^DPT("
+ . Set $Pece(x,"^",3)=p
+ . Set ^DD(53.51,.01,0)=x
+ . Quit
+ ;
+ Quit
+>>>>>>> cc181c7fd886c32c33fb2bfe54cae7a931128785
  ;
  ; 6. Too many quotes in input transformation 52.6, 19 (STRENGTH)
  Do
