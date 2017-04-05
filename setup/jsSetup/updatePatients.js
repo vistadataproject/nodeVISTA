@@ -24,7 +24,7 @@ process.on('uncaughtException', (err) => {
 const db = new nodem.Gtm();
 db.open();
 
-const userId = utils.lookupUserIdByName(db, 'ALEXANDER,ROBERT');
+const userId = utils.lookupUserIdByName(db, 'MANAGER,SYSTEM');
 const facilityId = utils.lookupFacilityIdByName(db, 'VISTA HEALTH CARE');
 
 VDM.setDBAndModel(db, vdmModel);
