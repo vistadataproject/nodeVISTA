@@ -6,6 +6,7 @@ const util = require('util');
 const nodem = require('nodem');
 const _ = require('lodash');
 const VDM = require('mvdm/vdm');
+var VDMUtils = require('mvdm/vdmUtils');
 const fileman = require('mvdm/fileman');
 const ParameterService = require('mvdm/parameterService');
 const nodeVISTAParameters = require('./nodeVISTAParameters');
@@ -37,21 +38,51 @@ const PARAMETER_FUNCTION_MAP = {
     },
 };
 
-let db = null;
+const lookupIdByName = (db, fileType, name) => {
+    return fileman.lookupBy01(db, fileType, name).id;
+}
 
-const setupParameterService = function setupParameterService() {
+let lookupUserIdByName = null;
+let lookupFacilityIdByName = null;
+
+const setupParameterService = () => {
     console.log('Setting up Parameter Service...');
-    db = new nodem.Gtm();
+
+    // Setup the Nodem driver to the GT.M instance
+    const pathElements = [process.env.gtmroutines, VDMUtils.getVdmPath()];
+    process.env.gtmroutines = pathElements.join(' ');
+
+    const db = new nodem.Gtm();
     db.open();
 
+    process.on('exit', () => {
+        console.log('Closing nodem driver...');
+        db.close();
+    });
+
+    process.on('SIGINT', () => {
+        console.log('Closing nodem driver...');
+        db.close();
+    });
+
+    // Configure the lookup functions with a closure on the db in the lexical scope
+    lookupUserIdByName = _.partial(lookupIdByName, db, '200');
+    lookupFacilityIdByName = _.partial(lookupIdByName, db, '4');
+
+    // Setup VDM with user 'ALEXANDER,ROBERT' and facility 'VISTA HEALTH CARE'
+    const userId = lookupUserIdByName('ALEXANDER,ROBERT');
+    const facilityId = lookupFacilityIdByName('VISTA HEALTH CARE');
+    console.log(`Setting user to ${userId}, facility to ${facilityId}`);
+
+    VDM.setDBAndModel(db, []);
+    VDM.setUserAndFacility(userId, facilityId);
+
+    // Initialize the Parameter Service
     ParameterService.setDB(db);
     ParameterService.setDebug(true);
-
-    const rpcRunner = new RPCRunner(db);
-    rpcRunner.initializeUser(1);
 };
 
-const runParameters = function runParameters() {
+const runParameters = () => {
     console.log(`Performing ${parameterAction} on ${nodeVISTAParameters.length} parameters in VISTA using Parameter Service...`);
     const parameterFunction = PARAMETER_FUNCTION_MAP[parameterAction];
 
@@ -75,10 +106,5 @@ const runParameters = function runParameters() {
     });
 };
 
-const teardownParameterService = function teardownParameterService() {
-    db.close();
-};
-
 setupParameterService();
 runParameters();
-teardownParameterService();
