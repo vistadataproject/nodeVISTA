@@ -36,8 +36,8 @@ process.on('uncaughtException', function(err) {
 
 VDM.setDBAndModel(db, vdmModel);
 // will show in Activity Log for DRUG (50) once load
-var userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM"); // MANAGER,SYSTEM
-var facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
+let userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM"); // MANAGER,SYSTEM
+let facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
 VDM.setUserAndFacility(userId, facilityId);
 
 console.log("\nLoading Pharmacy Meta - Orderables and Drug Definitions")
