@@ -256,7 +256,7 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 
 #apply VDP data dictionary and other (GT/M portability) fixes
 echo "Applying data dictionary fixes"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/vdpCorrections && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
 
 rm -rf utils
 
