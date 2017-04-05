@@ -1,8 +1,7 @@
 {
-  "name": "parameter_service_setup",
+  "name": "jsSetup",
   "version": "1.0.0",
-  "description": "Scripts that add vitals parameter settings",
-  "main": "parameterServiceTest.js",
+  "description": "nodeVISTA javascript setup utilities.",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
