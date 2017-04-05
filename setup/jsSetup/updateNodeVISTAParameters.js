@@ -4,9 +4,9 @@
 
 const util = require('util');
 const nodem = require('nodem');
-const _ = require('underscore');
-const ParameterService = require('../../../VDM/prototypes/parameterService');
-const RPCRunner = require('../../../VDM/prototypes/rpcRunner').RPCRunner;
+const _ = require('lodash');
+const ParameterService = require('mvdm/parameterService');
+const RPCRunner = require('mvdm/rpcRunner').RPCRunner;
 const nodeVISTAParameters = require('./nodeVISTAParameters');
 
 /**
