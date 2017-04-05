@@ -87,8 +87,8 @@ const setupParameterService = () => {
     lookupUserIdByName = _.partial(lookupIdByName, db, '200');
     lookupFacilityIdByName = _.partial(lookupIdByName, db, '4');
 
-    // Setup VDM with user 'ALEXANDER,ROBERT' and facility 'VISTA HEALTH CARE'
-    const userId = lookupUserIdByName('ALEXANDER,ROBERT');
+    // Setup VDM with user 'MANAGER,SYSTEM' and facility 'VISTA HEALTH CARE'
+    const userId = lookupUserIdByName('MANAGER,SYSTEM');
     const facilityId = lookupFacilityIdByName('VISTA HEALTH CARE');
     console.log(`Setting user to ${userId}, facility to ${facilityId}`);
 
