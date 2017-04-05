@@ -10,24 +10,20 @@
 
 'use strict';
 
-/*
- * Basic setup
- */
 const fs = require('fs');
+const _ = require('lodash');
 const nodem = require('nodem');
-const fileman = require('../fileman');
-const testUtils = require('../testUtils');
-const VDM = require('../vdm');
-const vdmModel = require('mvdm/pharmacy/vdmPharmacyModel').vdmModel;
+const fileman = require('../../../../VDM/prototypes/fileman');
+const VDM = require('../../../../VDM/prototypes/vdm');
+const vdmUtils = require('../../../../VDM/prototypes/vdmUtils');
+const testUtils = require('../../../../VDM/prototypes/testUtils');
+const vdmModel = require('../../../../VDM/prototypes/pharmacy/vdmPharmacyModel').vdmModel;
+
+// sets the path for all mumps GT.M routines (compiled .m files)
+process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()}`;
 
 const db = new nodem.Gtm();
 db.open();
-
-VDM.setDBAndModel(db, vdmModel);
-// will show in Activity Log for DRUG (50) once load
-var userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM"); // MANAGER,SYSTEM
-var facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
-VDM.setUserAndFacility(userId, facilityId);
 
 process.on('uncaughtException', function(err) {
   db.close();
@@ -37,29 +33,36 @@ process.on('uncaughtException', function(err) {
   process.exit(1);
 });
 
-process.env.gtmroutines = process.env.gtmroutines + ' ..'; // make VDP MUMPS available
+
+VDM.setDBAndModel(db, vdmModel);
+// will show in Activity Log for DRUG (50) once load
+var userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM"); // MANAGER,SYSTEM
+var facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
+VDM.setUserAndFacility(userId, facilityId);
+
+console.log("\nLoading Pharmacy Meta - Orderables and Drug Definitions")
 
 // Doing fully explicit and not re-entrant loading as issue with 50 delete with UPDATE^DIE (issue openned)
 const MEDMETAFILES = ["50", "50.7", "101.43"];
 MEDMETAFILES.forEach(function(value) { fileman.emptyFile(db, value); });
-console.log("META FILES EMPTIED FULLY", MEDMETAFILES);
+console.log("\tMETA FILES EMPTIED FULLY", MEDMETAFILES);
 
 let METATEMPLATES = JSON.parse(fs.readFileSync("medMetaTemplates.json"))
-console.log("META TEMPLATES loaded");
+console.log("\tMETA TEMPLATES loaded");
 
 let METAATORTEMPLATES = JSON.parse(fs.readFileSync("medMetaAtorTemplates.json"));
-console.log("META for Atorvastatin loaded");
+console.log("\tMETA for Atorvastatin loaded");
 
-let totalLoaded = 0;
+console.log("\tInsertings Drugs and Orderables ...");
 
 // 50.7 sets up 101.43 by side effect (but doesn't delete it by side effect of its deletion!)
 let _50_7s = METATEMPLATES["50_7"].concat(METAATORTEMPLATES["50_7"]);
+let totalPOLoaded = 0;
 _50_7s.forEach(function(resource) {
     resource.inactive_date = {"value": "2020-12-31", "type": "xsd:date"};
     let concrete = testUtils.fillTemplateValues(db, resource);
     let res = VDM.create(concrete);
-    console.log("Created %s of type %s", res.id, res.type);
-    totalLoaded += 1;
+    totalPOLoaded += 1;
 });
 
 // Must come after 50_7 as depends on it
@@ -67,14 +70,14 @@ _50_7s.forEach(function(resource) {
  * Issue: empty doesn't get things back to 1 - and 'number' is first field. Need to fill in?
  */
 let _50s = METATEMPLATES["50"].concat(METAATORTEMPLATES["50"]);
+let totalDrugLoaded = 0;
 _50s.forEach(function(resource) {
     let concrete = testUtils.fillTemplateValues(db, resource);
     let res = VDM.create(concrete);
-    console.log("Created %s of type %s", res.id, res.type);
-    totalLoaded += 1;
+    totalDrugLoaded += 1;
 });
 
-console.log("Finished - meta loaded:", totalLoaded);
+console.log("Finished - Pharmacy meta loaded: drug (50) - %d, Pharmacy Orderables (50.7) - %d\n", totalDrugLoaded, totalPOLoaded);
 
 db.close()
 
