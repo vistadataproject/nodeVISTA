@@ -13,7 +13,7 @@ const utils = require('./utils');
 
 const vdmModel = vdmPatientModel.vdmModel;
 
-process.env.gtmroutines = `${process.env.gtmroutines} ../../../VDM/prototypes`;
+process.env.gtmroutines = `${process.env.gtmroutines} node_modules/mvdm`;
 
 process.on('uncaughtException', (err) => {
     db.close();
