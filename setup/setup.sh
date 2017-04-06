@@ -229,6 +229,7 @@ cd $vdphome
 # Avoid pointing to VDM/prototypes MUMPS directly by resetting gtm path. Use p directory of nodeVISTA
 # TODO: should come from MVDM git but it is only npm installed as part of setup of nodevista 
 echo "Adding VDM (MUMPS) to nodevista/p"
+su $instance -c "mkdir $nodevistahome/p"
 su $vdpid -c "cp VDM/prototypes/*.m $nodevistahome/p"
 
 echo "Installing FMQL"
@@ -258,6 +259,8 @@ echo "Installing Mocha"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
 cd $vdphome
+cp -r /vagrant/vdpCorrections .
+chown -R vdp:vdp vdpCorrections
 
 echo "User $vdpid created"
 
