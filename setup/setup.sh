@@ -257,21 +257,13 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 echo "Installing Mocha"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
-#copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
-cp -r /vagrant/utils .
-chown -R vdp:vdp utils
 
 echo "User $vdpid created"
-
-echo "Running npm install on /vagrant/utils"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
 
 #apply VDP data dictionary and other (GT/M portability) fixes
 echo "Applying data dictionary fixes"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/vdpCorrections && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
-
-rm -rf utils
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
@@ -334,10 +326,6 @@ su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/en
 # enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 
-echo "npm install nodevista/setup/utils..."
-cd $vdphome/nodevista/setup/utils
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/updateNodeVISTAParametersNpmInstall.log"
-
 cd $vdphome/nodevista/setup/jsSetup
 # using parameter service to inject user level settings
 echo "run addUserSettings.js"
@@ -349,7 +337,7 @@ echo "run registerVitalsCPRS.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node registerVitalsCPRS.js >> $vdphome/logs/registerVitalsCPRS.log"
 
 # inject additional nodeVista parameters
-cd $vdphome/nodevista/setup/utils
+cd $vdphome/nodevista/setup/jsSetup/parameters
 echo "run updateNodeVISTAParameters.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js >> $vdphome/logs/updateNodeVISTAParameters.log"
 
