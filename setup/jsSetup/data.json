@@ -4,8 +4,8 @@
 	"initial": "RA",
 	"sex": "MALE",
 	"ssn": "000000029",
-	"access_code": "fakedoc1",
-	"verify_code": "2Doc!@#$",
+	"access_code": "FAKEDOC1",
+	"verify_code": "2DOC!@#$",
 	"terminal_type_last_used": {
 		"id": "3_2-92"
 	},
@@ -154,8 +154,8 @@
 	"initial": "MS",
 	"sex": "FEMALE",
 	"ssn": "000000030",
-	"access_code": "fakenurse1",
-	"verify_code": "2Nur!@#$",
+	"access_code": "FAKENURSE1",
+	"verify_code": "2NUR!@#$",
 	"terminal_type_last_used": {
 		"id": "3_2-92"
 	},
@@ -238,8 +238,8 @@
 	"initial": "FS",
 	"sex": "MALE",
 	"ssn": "000000031",
-	"access_code": "fakepharma1",
-	"verify_code": "2Pha!@#$",
+	"access_code": "FAKEPHARMA1",
+	"verify_code": "2PHA!@#$",
 	"division": [{
 		"division": {
 			"id": "4-2957"
@@ -409,8 +409,8 @@
 	"initial": "JC",
 	"sex": "MALE",
 	"ssn": "000000112",
-	"access_code": "fakeclerk1",
-	"verify_code": "2Cle!@#$",
+	"access_code": "FAKECLERK1",
+	"verify_code": "2CLE!@#$",
 	"terminal_type_last_used": {
 		"id": "3_2-92"
 	},
