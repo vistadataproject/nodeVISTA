@@ -211,7 +211,7 @@ git clone -q https://github.com/vistadataproject/VDM.git
 echo "running my node.js parameter service setup scripts"
 echo "npm install..."
 
-# Add FMQL x 2
+# Add FMQL x 2 (note: will be installed and set up further on. TODO: consider moving up here)
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
 
@@ -221,6 +221,11 @@ chown -R vdp:vdp VDM
 chown -R vdp:vdp FMQL
 
 cd $vdphome
+
+# Avoid pointing to VDM/prototypes MUMPS directly by resetting gtm path. Use p directory of nodeVISTA
+# TODO: should come from MVDM git but it is only npm installed as part of setup of nodevista 
+echo "Adding VDM (MUMPS) to nodevista/p"
+su $vdpid -c "cp VDM/prototypes/*.m $nodevistahome/p"
 
 echo "Installing FMQL"
 #install pm2 (production process manager for node see pm2.keymetrics.io)
@@ -233,8 +238,10 @@ sudo su -c "env PATH=$PATH:/home/nodevista/.nvm/versions/node/v4.7.0/bin /home/n
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/FMQL/webservice && nvm use $nodever && npm install --quiet >> $vdphome/logs/fmqlInstall.log"
 
 #copy in webclient files, rename to directory to static
+# ... blue version is VDM version of FMQL look and naming which overrides defaults
 cd $vdphome/FMQL/webservice
 cp -r ../webclients .
+mv webclients/blueversion/* webclients
 mv webclients static
 chown -R vdp:vdp static
 
@@ -309,6 +316,13 @@ cd $vdphome/nodevista/setup/utils
 echo "run updateNodeVISTAParameters.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js >> $vdphome/logs/updateNodeVISTAParameters.log"
 
+# Add Pharmacy configurations including Patient for DAVID CARTER
+echo "installing pharmacy"
+cd $vdphome/nodevista/setup/jsSetup/pharmacy
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySiteSetup.js  >> $vdphome/logs/pharmacySiteSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdmMedMetaLoad.js  >> $vdphome/logs/vdmMedMetaLoad.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node ppCarterDavidSetup.js  >> $vdphome/logs/ppCarterDavidSetup.log"
+
 cd $basedir
 cd /usr/local/src/nodevista/setup/pySetup
 su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
@@ -329,9 +343,8 @@ fi
 
 cd $vdphome
 
-# echo "Adding FMQL (MUMPS) to nodevistaVISTA"
+# echo "Adding FMQL (MUMPS) to nodevista/p"
 su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
-#***
 
 cd $vdphome/FMQL/webservice
 #start up fmqlServer using pm2 and save settings
