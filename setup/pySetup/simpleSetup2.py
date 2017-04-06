@@ -1,11 +1,8 @@
 """
-Based on post import setup (PostImportSetupScript.py.in) but removes switches for Cache and inlines CONSTANTs
+simpleSetup2: runs POST the JS setup
 
-Broken in three steps between basic setup, then user then patient addition. 
-
-TODO: break out last two steps completely and move them to JS. Finally move whole setup to JS.
-
-NOTE: splitting simpleSetup.py to 2 files for now. postImportSetupBasics were replaced by JS tool.
+TODO: commented out SIGNATUREs as comes in at wrong point in Roll and Scroll now (as basics in setup1). Need
+to get it in the right point.
 """
 
 import os
@@ -45,15 +42,10 @@ def simpleSetup2():
         print "EXIT_PYS_CANT_CONNECT_TO_MUMPS"
         return
 
-    # try:
-    #     print "Setting up basics ..."
-    #     postImportSetupBasics(VistA)
-    # except:
-    #     print "EXIT_PYS_CANT_SETUP_BASICS"
-    #     return
+    # NB: simpleSetup and postImportSetupBasics should go too
 
     try:
-        print "Now setting up Users ..."
+        print "Now setting up Users (signatures only now) ..."
         postImportSetupUsers(VistA)
     except Exception as e:
         print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
@@ -69,85 +61,11 @@ def simpleSetup2():
         print "EXIT_PYS_CANT_SETUP_PATIENTS"
         return
 
-    try:
-        print "Finally complete PARAMETER setup (VITALs/CAPRI) ..."
-        time.sleep(10)
-        VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
-        completeVitalsSetup(VistA)
-    except Exception as e:
-        print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP"
-        return
-
-    print "OK"
-
-def postImportSetupBasics(VistA):
-    """
-    Basics of postImportSetup from initializeFileMan to division addition
-    """
-
-    # from test.cmake
-    TEST_VISTA_SETUP_SITE_NAME = "DEMO.NODEVISTA.ORG"
-    TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY = "@"
-    TEST_VISTA_SETUP_SITE_NAME = "DEMO.NODEVISTA.ORG"
-    TEST_VISTA_SETUP_VOLUME_SET = "PLA"
-    VISTA_TCP_PORT = "9210" # but commented out in test.cmake
-
-    VistA.wait(PROMPT,60)
-
-    # Default site name is 6161
-    # ... sets (via ^ZUSET) ZUGTM to ZU and ^DINIT for MSC FileMan
-    OSEHRASetup.initializeFileman(VistA, TEST_VISTA_SETUP_SITE_NAME, "6161")
-
-    # Setup the primary HFS directory from the
-    # Kernel System Parameters file via FileMan
-    # Use an "@" to remove or set a new file path.
-    OSEHRASetup.setupPrimaryHFSDir(VistA, TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY)
-
-    # Ensure that the null device is correctly configured by adding
-    # a $I for the correct platform rather than VMS and removing
-    # sign-on capabilities
-    OSEHRASetup.configureNULLDevice(VistA)
-
-    # Change the /dev/tty device (GTM-UNIX-CONSOLE) to set
-    # SIGN-ON/SYSTEM DEVICE to be "Yes"
-    OSEHRASetup.configureConsoleDevice(VistA)
-
-    # Create and Christen the New Domain:
-    # Enter the site name into the DOMAIN file then
-    # christen the domain via the XMUDCHR routine.
-    # Finally, add entries of new domain to
-    # Kernel System Parameters and RPC Broker Site Parameters
-    # and re-index both files.
-    OSEHRASetup.setupVistADomain(VistA, TEST_VISTA_SETUP_SITE_NAME)
-
-    # Set up the proper Box:Volume pair
-    # VistA.getenv will query the instance for the local Box:Volume pair
-    # and save the result as the "boxvol" parameter of the VistA object
-    # IE. It can be printed via 'print VistA.boxvol'
-    # ... note: not passing VISTA_TCP_PORT or VISTA_CACHE_NAMESPACE as not set
-    OSEHRASetup.setupBoxVolPair(VistA,TEST_VISTA_SETUP_VOLUME_SET,TEST_VISTA_SETUP_SITE_NAME, "")
-    OSEHRASetup.setupVolumeSet(VistA,TEST_VISTA_SETUP_SITE_NAME,TEST_VISTA_SETUP_VOLUME_SET, "")
-
-    # Start TaskMan through the XUP Menu system.
-    OSEHRASetup.restartTaskMan(VistA)
-
-    #Create the System Manager
-    OSEHRASetup.addSystemManager(VistA)
-
-    # Open FileMan and create the VistA Health Care institution
-    OSEHRASetup.addInstitution(VistA,"VISTA HEALTH CARE","6100")
-
-    # Create the Medical Center Division of
-    # the VistA Health Care institution
-    OSEHRASetup.addDivision(VistA,'VISTA MEDICAL CENTER',"6101","6100")
+    print "Setup 2 Complete OK"
 
 def postImportSetupUsers(VistA):
     """
-    The following is the second half of 'postImportSetupScript' and is more about 
-    providers and patients but has some PARAMETER settings too
-
-    TODO: split out PARAMETER settings and move above. Then make doctor/nurse etc
-    setups a separate User Setup pass
+    Setup Users - paired down in v1.2. Now only resetting signatures.
     """
 
     # The Sikuli test for CPRS orders a Streptozyme test for the patient
@@ -171,7 +89,7 @@ def postImportSetupUsers(VistA):
     #OSEHRASetup.addClerk(VistA,"CLERK,JOE","JC","000000112","M","fakeclerk1","2Cle!@#$")
 
     # Add a Pharmacist
-    #OSEHRASetup.addPharmacist(VistA,"PHARMA,FRED","FP","000000031","M","fakepharma1","2Pha!@#$");
+    #OSEHRASetup.addPharmacist(VistA,"SHARMA,FRED","FS","000000031","M","fakepharma1","2Pha!@#$");
 
     #Create a new Order Menu
     OSEHRASetup.createOrderMenu(VistA)
@@ -197,15 +115,14 @@ def postImportSetupUsers(VistA):
     #VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Doctors electronic signature
     #OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
-    #print "here ok too"
 
     # VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Nurse electronic signature
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
+    #OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
 
     # VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Clerk verification code
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
+    #OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
 
 def postImportSetupPatients(VistA):
 
@@ -216,15 +133,6 @@ def postImportSetupPatients(VistA):
     # Function arguments:
     # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
     OSEHRASetup.addPatient(VistA,'/usr/local/src/nodevista/setup/pySetup/dataFiles/patdata0.csv')
-
-"""
-Add to OSEHRA's OSEHRASetup.registerVitalsCPRS and fix CAPRI setting
-"""
-def completeVitalsSetup(VistA):
-
-    # GMV USER RPC - must be set per user so done later
-    VistA.wait(PROMPT,60)
-    VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
 
 def main():
     simpleSetup2()

@@ -1,11 +1,7 @@
 """
-Based on post import setup (PostImportSetupScript.py.in) but removes switches for Cache and inlines CONSTANTs
+Sets up Basic System - then JS will kick in. A follow on setup (setup2) runs after the JS setup. 
 
-Broken in three steps between basic setup, then user then patient addition. 
-
-TODO: break out last two steps completely and move them to JS. Finally move whole setup to JS.
-
-NOTE: in the process of move all python scripts to JS, keeping commented lines so that we know what was converted to JS.
+REM: will retire this when all runs in JS.
 """
 
 import os
@@ -52,33 +48,7 @@ def simpleSetup():
         print "EXIT_PYS_CANT_SETUP_BASICS"
         return
 
-    # try:
-    #     print "Now setting up Users ..."
-    #     postImportSetupUsers(VistA)
-    # except Exception as e:
-    #     print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
-    #     VistA=ConnectToMUMPS(LOGFILE)
-
-    # try:
-    #     print "Now setting up Patients ..."
-    #     # have to reset VistA as Signature Setup halts from VISTA
-    #     time.sleep(10)
-    #     VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
-    #     postImportSetupPatients(VistA)
-    # except:
-    #     print "EXIT_PYS_CANT_SETUP_PATIENTS"
-    #     return
-
-    # try:
-    #     print "Finally complete PARAMETER setup (VITALs/CAPRI) ..."
-    #     time.sleep(10)
-    #     VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
-    #     completeVitalsSetup(VistA)
-    # except Exception as e:
-    #     print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP"
-    #     return
-
-    print "OK"
+    print "Setup1 COMPLETE OK"
 
 def postImportSetupBasics(VistA):
     """
@@ -140,92 +110,6 @@ def postImportSetupBasics(VistA):
     # Create the Medical Center Division of
     # the VistA Health Care institution
     OSEHRASetup.addDivision(VistA,'VISTA MEDICAL CENTER',"6101","6100")
-
-def postImportSetupUsers(VistA):
-    """
-    The following is the second half of 'postImportSetupScript' and is more about 
-    providers and patients but has some PARAMETER settings too
-
-    TODO: split out PARAMETER settings and move above. Then make doctor/nurse etc
-    setups a separate User Setup pass
-    """
-
-    # The Sikuli test for CPRS orders a Streptozyme test for the patient
-    # This information ensures the test can be ordered at the VistA Health care
-    # Facility
-    OSEHRASetup.setupStrepTest(VistA)
-
-    OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
-
-    """
-    Note that these verifies are temporary - VISTA forces a reset which is done as part of
-    the electronic signature setups below. It's the reset signature that will be used from
-    now on
-    """
-    #OSEHRASetup.addDoctor(VistA,"ALEXANDER,ROBERT","RA",
-    #"000000029","M","fakedoc1","2Doc!@#$")
-
-    #Enter the Nurse Mary Smith
-    #OSEHRASetup.addNurse(VistA,'SMITH,MARY','MS','000000030','F','fakenurse1','2Nur!@#$')
-
-    # Add a clerk user with permissions for Problem List Data entry
-    #OSEHRASetup.addClerk(VistA,"CLERK,JOE","JC","000000112","M","fakeclerk1","2Cle!@#$")
-
-    # Add a Pharmacist
-    #OSEHRASetup.addPharmacist(VistA,"PHARMA,FRED","FP","000000031","M","fakepharma1","2Pha!@#$");
-
-    #Create a new Order Menu
-    OSEHRASetup.createOrderMenu(VistA)
-
-    #Give all users of the instance permission to mark allergies as "Entered in error')
-    OSEHRASetup.addAllergiesPermission(VistA)
-
-    #Give Mary Smith permission to create shared templates
-    OSEHRASetup.addTemplatePermission(VistA,"MS")
-
-    # Add clinic via the XUP menu to allow scheduling
-    OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
-    
-    """
-    The sleep and ConnectToMUMPS is needed as createClinic has halted and 
-    setup signature does a similar thing. Could debug and stop the halts but 
-    as replacing with JS, not worth it.
-    
-    Same "logic" is in OSEHRA's PostImportSetupScript.py
-    """
-    
-    # time.sleep(10)
-    
-    # VistA=ConnectToMUMPS(LOGFILE)
-    # #Set up the Doctors electronic signature
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
-
-    # VistA=ConnectToMUMPS(LOGFILE)
-    # #Set up the Nurse electronic signature
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
-
-    # VistA=ConnectToMUMPS(LOGFILE)
-    # #Set up the Clerk verification code
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
-
-def postImportSetupPatients(VistA):
-
-    # Add patient to the instance using the registration menu.
-    # Not using the Clerk user to avoid dropping the connection on the error when trying to connect to the MPI.
-    # and the Register a Patient menu option.
-    # The patient can be a veteran but not service connected
-    # Function arguments:
-    # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-    OSEHRASetup.addPatient(VistA,'/usr/local/src/nodevista/setup/pySetup/dataFiles/patdata0.csv')
-
-"""
-Add to OSEHRA's OSEHRASetup.registerVitalsCPRS and fix CAPRI setting
-"""
-def completeVitalsSetup(VistA):
-
-    # GMV USER RPC - must be set per user so done later
-    VistA.wait(PROMPT,60)
-    VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
 
 def main():
     simpleSetup()
