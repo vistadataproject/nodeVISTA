@@ -78,7 +78,6 @@ const outpatientSite = {
 let res = fileman.lookupBy01(db, "59", outpatientSite.name, false);
 if (res.length === 0) {
     let res = VDM.create(outpatientSite);
-    console.log(res);
 }
 else {
     console.log("Out Patient Site %s exists - not reinserting", outpatientSite.name);
