@@ -841,7 +841,6 @@ var VDM_MODEL = [
             "description": "This is the name of the service or section for the new person.",
             "datatype": "POINTER",
             "indexed": true,
-            "required": true,
             "range": {
                 "id": "Service_section-49"
             }
@@ -1552,8 +1551,8 @@ var VDM_MODEL = [
             "description": "Answer 'YES' to restrict this user to selecting only those patients\rassociated with the list pointed to by the PATIENT SELECTION LIST field\r(#101.02).",
             "datatype": "BOOLEAN",
             "range": {
-                "false": "1",
-                "true": "0"
+                "YES": "1",
+                "NO": "0"
             }
         },
         {
