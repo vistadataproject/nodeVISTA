@@ -194,19 +194,19 @@ def postImportSetupUsers(VistA):
     Same "logic" is in OSEHRA's PostImportSetupScript.py
     """
     
-    # time.sleep(10)
+    time.sleep(10)
     
-    # VistA=ConnectToMUMPS(LOGFILE)
+    VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Doctors electronic signature
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
+    OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
 
-    # VistA=ConnectToMUMPS(LOGFILE)
+    VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Nurse electronic signature
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
+    OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
 
-    # VistA=ConnectToMUMPS(LOGFILE)
+    VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Clerk verification code
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
+    OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
 
 def postImportSetupPatients(VistA):
 
