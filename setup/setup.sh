@@ -320,6 +320,7 @@ su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/en
 echo "installing pharmacy"
 cd $vdphome/nodevista/setup/jsSetup/pharmacy
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySiteSetup.js  >> $vdphome/logs/pharmacySiteSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySystemSetup.js  >> $vdphome/logs/pharmacySystemSetup.log"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdmMedMetaLoad.js  >> $vdphome/logs/vdmMedMetaLoad.log"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node ppCarterDavidSetup.js  >> $vdphome/logs/ppCarterDavidSetup.log"
 
