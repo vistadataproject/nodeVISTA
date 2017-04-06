@@ -247,6 +247,7 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 cd $vdphome/FMQL/webservice
 cp -r ../webclients .
 mv webclients/blueversion/* webclients
+rmdir webclients/blueversion
 mv webclients static
 chown -R vdp:vdp static
 
@@ -314,9 +315,9 @@ cd $vdphome/nodevista/setup/jsSetup
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/jsScriptsNpmInstall.log"
 
 #***
-cd $vdphome/nodevista/setup/jsSetup
-echo "run addNewUsers.js"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addNewUsers.js >> $vdphome/logs/addNewUsers.log"
+#cd $vdphome/nodevista/setup/jsSetup
+#echo "run addNewUsers.js"
+#su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addNewUsers.js >> $vdphome/logs/addNewUsers.log"
 
 cd /usr/local/src/nodevista/setup/pySetup
 echo "run simple setup 2 (cont)"

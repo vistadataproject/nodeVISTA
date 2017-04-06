@@ -79,17 +79,16 @@ def postImportSetupUsers(VistA):
     the electronic signature setups below. It's the reset signature that will be used from
     now on
     """    
-    #OSEHRASetup.addDoctor(VistA,"ALEXANDER,ROBERT","RA",
-    #"000000029","M","fakedoc1","2Doc!@#$")
+    OSEHRASetup.addDoctor(VistA,"ALEXANDER,ROBERT","RA","000000029","M","fakedoc1","2Doc!@#$")
 
     #Enter the Nurse Mary Smith
-    #OSEHRASetup.addNurse(VistA,'SMITH,MARY','MS','000000030','F','fakenurse1','2Nur!@#$')
+    OSEHRASetup.addNurse(VistA,'SMITH,MARY','MS','000000030','F','fakenurse1','2Nur!@#$')
 
     # Add a clerk user with permissions for Problem List Data entry
-    #OSEHRASetup.addClerk(VistA,"CLERK,JOE","JC","000000112","M","fakeclerk1","2Cle!@#$")
+    OSEHRASetup.addClerk(VistA,"CLERK,JOE","JC","000000112","M","fakeclerk1","2Cle!@#$")
 
     # Add a Pharmacist
-    #OSEHRASetup.addPharmacist(VistA,"SHARMA,FRED","FS","000000031","M","fakepharma1","2Pha!@#$");
+    OSEHRASetup.addPharmacist(VistA,"SHARMA,FRED","FS","000000031","M","fakepharma1","2Pha!@#$");
 
     #Create a new Order Menu
     OSEHRASetup.createOrderMenu(VistA)
@@ -110,19 +109,19 @@ def postImportSetupUsers(VistA):
     
     Same "logic" is in OSEHRA's PostImportSetupScript.py
     """
-    #time.sleep(10)
+    time.sleep(10)
     
-    #VistA=ConnectToMUMPS(LOGFILE)
+    VistA=ConnectToMUMPS(LOGFILE)
     #Set up the Doctors electronic signature
-    #OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
+    OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
 
-    # VistA=ConnectToMUMPS(LOGFILE)
+    VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Nurse electronic signature
-    #OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
+    OSEHRASetup.setupElectronicSignature(VistA,"fakenurse1","2Nur!@#$","1Nur!@#$","MARYS123")
 
-    # VistA=ConnectToMUMPS(LOGFILE)
+    VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Clerk verification code
-    #OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
+    OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
 
 def postImportSetupPatients(VistA):
 
