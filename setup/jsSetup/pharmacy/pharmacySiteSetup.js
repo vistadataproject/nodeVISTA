@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /*
- * Pharmacy Patient Addition
+ * Pharmacy Site Addition ie/ Outpatient Pharmacy's -- OUTPATIENT SITEs
  *
- * (c) 2016 VISTA Data Project
+ * (c) 2017 VISTA Data Project
  */
 
 'use strict';
