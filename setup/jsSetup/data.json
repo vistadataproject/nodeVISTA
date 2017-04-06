@@ -234,8 +234,8 @@
 	}]
 }, {
 	"type": "New_Person-200",
-	"name": "PHARMA,FRED",
-	"initial": "FP",
+	"name": "SHARMA,FRED",
+	"initial": "FS",
 	"sex": "MALE",
 	"ssn": "000000031",
 	"access_code": "fakepharma1",
@@ -245,7 +245,7 @@
 			"id": "4-2957"
 		}
 	}],
-	"signature_block_printed_name": "FRED PHARMA",
+	"signature_block_printed_name": "FRED SHARMA",
 	"service_section": {
 		"id": "49-1"
 	},
