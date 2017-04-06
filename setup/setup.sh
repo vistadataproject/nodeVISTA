@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# (c) 2017 VISTA Data Project
+
 SECONDS=0
 
 # Make sure we are root
@@ -213,7 +215,7 @@ git clone -q https://github.com/vistadataproject/VDM.git
 echo "running my node.js parameter service setup scripts"
 echo "npm install..."
 
-# Add FMQL x 2
+# Add FMQL x 2 (note: will be installed and set up further on. TODO: consider moving up here)
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
 git clone -q https://github.com/caregraf/FMQL.git
 
@@ -223,6 +225,11 @@ chown -R vdp:vdp VDM
 chown -R vdp:vdp FMQL
 
 cd $vdphome
+
+# Avoid pointing to VDM/prototypes MUMPS directly by resetting gtm path. Use p directory of nodeVISTA
+# TODO: should come from MVDM git but it is only npm installed as part of setup of nodevista 
+echo "Adding VDM (MUMPS) to nodevista/p"
+su $vdpid -c "cp VDM/prototypes/*.m $nodevistahome/p"
 
 echo "Installing FMQL"
 #install pm2 (production process manager for node see pm2.keymetrics.io)
@@ -235,8 +242,10 @@ sudo su -c "env PATH=$PATH:/home/nodevista/.nvm/versions/node/v4.7.0/bin /home/n
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/FMQL/webservice && nvm use $nodever && npm install --quiet >> $vdphome/logs/fmqlInstall.log"
 
 #copy in webclient files, rename to directory to static
+# ... blue version is VDM version of FMQL look and naming which overrides defaults
 cd $vdphome/FMQL/webservice
 cp -r ../webclients .
+mv webclients/blueversion/* webclients
 mv webclients static
 chown -R vdp:vdp static
 
@@ -248,10 +257,6 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 echo "Installing Mocha"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
-#install bower
-echo "Installing Bower"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet bower -g >> $vdphome/bowerInstall.log"
-
 #copy over /vagrant/utils - for fixes that go through JS and not pySetup
 cd $vdphome
 cp -r /vagrant/utils .
@@ -262,9 +267,9 @@ echo "User $vdpid created"
 echo "Running npm install on /vagrant/utils"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && npm install --quiet >> $vdphome/logs/utilsNPMInstall.log"
 
-#apply problem data dictionary fix
-echo "Applying problem data dictionary fix (fixDD.js)"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/utils && nvm use $nodever && node fixProblemAuditDD.js >> $vdphome/logs/fixProblemAuditDD.log"
+#apply VDP data dictionary and other (GT/M portability) fixes
+echo "Applying data dictionary fixes"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/vdpCorrections && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
 
 rm -rf utils
 
@@ -348,6 +353,14 @@ cd $vdphome/nodevista/setup/utils
 echo "run updateNodeVISTAParameters.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js >> $vdphome/logs/updateNodeVISTAParameters.log"
 
+# Add Pharmacy configurations including Patient for DAVID CARTER
+echo "installing pharmacy"
+cd $vdphome/nodevista/setup/jsSetup/pharmacy
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySiteSetup.js  >> $vdphome/logs/pharmacySiteSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySystemSetup.js  >> $vdphome/logs/pharmacySystemSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdmMedMetaLoad.js  >> $vdphome/logs/vdmMedMetaLoad.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node ppCarterDavidSetup.js  >> $vdphome/logs/ppCarterDavidSetup.log"
+
 cd $basedir
 cd /usr/local/src/nodevista/setup/pySetup
 su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
@@ -370,11 +383,16 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && bower install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
+su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/rpcServer && npm install --quiet && pm2 start rpcServer.js && pm2 save >> $vdphome/logs/rpcServerStartup.log"
 
 #start up clinical REST service using pm2 and save settings
 echo "Running clinical REST service as a service via pm2"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/nodevista/clinicalService && npm install --quiet && pm2 start index.js --name clinicalService && pm2 save >> $vdphome/logs/clinicalServiceStartup.log"
+
+#update patient records
+echo "run updatePatients.js"
+cd $vdphome/nodevista/setup/jsSetup/patient
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updatePatients.js >> $vdphome/logs/updatePatients.log"
 
 duration=$SECONDS
 echo "$(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds elapsed."

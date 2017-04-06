@@ -43,8 +43,7 @@ const rpcLModel = [].concat(
     require('mvdm/allergies/rpcLAllergiesModel').rpcLModel,
     require('mvdm/problems/rpcLProblemModel').rpcLModel,
     require('mvdm/vitals/rpcLVitalsModel').rpcLModel,
-    require('mvdm/patient/rpcLPatientModel').rpcLModel,
-    require('mvdm/utilityRPCs/rpcLRemoteUtilitiesModel').rpcLModel);
+    require('mvdm/patient/rpcLPatientModel').rpcLModel);
 
 module.exports = {
     vdmModel,
