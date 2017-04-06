@@ -23,7 +23,7 @@ while [[ $# -gt 1 ]]
 done
 
 echo "Clone the MVDM target repository"
-git clone https://github.com/mfuroyama/MVDM.git
+git clone https://github.com/vistadataproject/MVDM.git
 
 echo "Copy files from the VDM soruce repository (branch: $VDM_BRANCH)"
 git clone -b $VDM_BRANCH https://github.com/vistadataproject/VDM.git
