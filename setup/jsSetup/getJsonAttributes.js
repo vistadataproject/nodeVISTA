@@ -2,6 +2,10 @@
 
 'use strict';
 
+/* this is a util to extract all the attributes (minus duplicates) from a given json,
+   it is a convenient tool to check any missing or new attributes that we're not aware of
+*/
+
 const _ = require('lodash');
 const fs = require('fs');
 
