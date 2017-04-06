@@ -9,11 +9,11 @@ const VDM = require('mvdm/vdm');
 const mvdmModel = require('mvdm/patient/mvdmPatientModel').mvdmModel;
 const MVDM = require('mvdm/mvdm');
 const vdmPatientModel = require('mvdm/patient/vdmPatientModel');
-const utils = require('./utils');
+const utils = require('../utils');
 
 const vdmModel = vdmPatientModel.vdmModel;
 
-process.env.gtmroutines = `${process.env.gtmroutines} node_modules/mvdm`;
+process.env.gtmroutines = `${process.env.gtmroutines} ../node_modules/mvdm`;
 
 process.on('uncaughtException', (err) => {
     db.close();

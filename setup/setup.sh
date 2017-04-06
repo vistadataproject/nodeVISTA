@@ -365,7 +365,7 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 
 #update patient records
 echo "run updatePatients.js"
-cd $vdphome/nodevista/setup/jsSetup
+cd $vdphome/nodevista/setup/jsSetup/patient
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updatePatients.js >> $vdphome/logs/updatePatients.log"
 
 duration=$SECONDS
