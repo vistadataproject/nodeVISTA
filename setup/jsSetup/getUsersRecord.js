@@ -31,12 +31,12 @@ VDM.setDBAndModel(db, vdmNonClinicalModel);
     CLERK,JOE (64)
     POSTMASTER (.5)
 */
-// const userIENs = ['61', '62', '63', '64', '.5'];
+//const userIENs = ['61', '62', '63', '64', '.5'];
 const userIENs = ['61', '62', '63', '64'];
 
 const fieldsToRemove = ['id', 'file_manager_access_code',
     'name_components', 'date_verify_code_last_changed', 'date_entered',
-    'last_signon_date_time', 'last_signon_date_time', 'multiple_signon',
+    'last_signon_date_time', 'last_signon_date_time',
     'multiple_signon_limit', 'xus_logon_attempt_count', 'xus_active_user',
     'date_esig_last_changed', 'entry_last_edit_date',
     'creator', 'access_code', 'verify_code', 'last_option_accessed', 'timestamp'];
@@ -94,6 +94,9 @@ _.each(userIENs, (id) => {
     _.each(fieldsToRemove, (field) => {
         delete newPersonJSON[field];
     });
+
+    _.isUndefined(newPersonJSON.restrict_patient_selection) ? 'NO' : 'YES';
+    newPersonJSON.restrict_patient_selection = (newPersonJSON.restrict_patient_selection === 'true') ? "YES" : "NO";
 
     // userRecords += `${util.inspect(newPersonJSON, { depth: null }, 'utf-8' )},\r\n`;
     userRecords += `${JSON.stringify(newPersonJSON)},`;
