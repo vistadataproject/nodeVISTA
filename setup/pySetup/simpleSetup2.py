@@ -5,7 +5,7 @@ Broken in three steps between basic setup, then user then patient addition.
 
 TODO: break out last two steps completely and move them to JS. Finally move whole setup to JS.
 
-NOTE: in the process of move all python scripts to JS, keeping commented lines so that we know what was converted to JS.
+NOTE: splitting simpleSetup.py to 2 files for now. postImportSetupBasics were replaced by JS tool.
 """
 
 import os
@@ -36,7 +36,7 @@ Expect to be called from Shell - PRINT can be read with
      result=`python simpleSetup.py`
      if [ "$result" != "OK" ]; then ... 
 """
-def simpleSetup():
+def simpleSetup2():
 
     try:
         print "Connecting to MUMPS roll n scroll ..."
@@ -45,38 +45,38 @@ def simpleSetup():
         print "EXIT_PYS_CANT_CONNECT_TO_MUMPS"
         return
 
+    # try:
+    #     print "Setting up basics ..."
+    #     postImportSetupBasics(VistA)
+    # except:
+    #     print "EXIT_PYS_CANT_SETUP_BASICS"
+    #     return
+
     try:
-        print "Setting up basics ..."
-        postImportSetupBasics(VistA)
+        print "Now setting up Users ..."
+        postImportSetupUsers(VistA)
+    except Exception as e:
+        print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
+        VistA=ConnectToMUMPS(LOGFILE)
+
+    try:
+        print "Now setting up Patients ..."
+        # have to reset VistA as Signature Setup halts from VISTA
+        time.sleep(10)
+        VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
+        postImportSetupPatients(VistA)
     except:
-        print "EXIT_PYS_CANT_SETUP_BASICS"
+        print "EXIT_PYS_CANT_SETUP_PATIENTS"
         return
 
-    # try:
-    #     print "Now setting up Users ..."
-    #     postImportSetupUsers(VistA)
-    # except Exception as e:
-    #     print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
-    #     VistA=ConnectToMUMPS(LOGFILE)
-
-    # try:
-    #     print "Now setting up Patients ..."
-    #     # have to reset VistA as Signature Setup halts from VISTA
-    #     time.sleep(10)
-    #     VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
-    #     postImportSetupPatients(VistA)
-    # except:
-    #     print "EXIT_PYS_CANT_SETUP_PATIENTS"
-    #     return
-
-    # try:
-    #     print "Finally complete PARAMETER setup (VITALs/CAPRI) ..."
-    #     time.sleep(10)
-    #     VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
-    #     completeVitalsSetup(VistA)
-    # except Exception as e:
-    #     print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP"
-    #     return
+    try:
+        print "Finally complete PARAMETER setup (VITALs/CAPRI) ..."
+        time.sleep(10)
+        VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
+        completeVitalsSetup(VistA)
+    except Exception as e:
+        print "EXIT_PYS_CANT_COMPLETE_PARAMETER_SETUP"
+        return
 
     print "OK"
 
@@ -154,14 +154,13 @@ def postImportSetupUsers(VistA):
     # This information ensures the test can be ordered at the VistA Health care
     # Facility
     OSEHRASetup.setupStrepTest(VistA)
-
     OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
 
     """
     Note that these verifies are temporary - VISTA forces a reset which is done as part of
     the electronic signature setups below. It's the reset signature that will be used from
     now on
-    """
+    """    
     #OSEHRASetup.addDoctor(VistA,"ALEXANDER,ROBERT","RA",
     #"000000029","M","fakedoc1","2Doc!@#$")
 
@@ -179,7 +178,7 @@ def postImportSetupUsers(VistA):
 
     #Give all users of the instance permission to mark allergies as "Entered in error')
     OSEHRASetup.addAllergiesPermission(VistA)
-
+    
     #Give Mary Smith permission to create shared templates
     OSEHRASetup.addTemplatePermission(VistA,"MS")
 
@@ -193,12 +192,12 @@ def postImportSetupUsers(VistA):
     
     Same "logic" is in OSEHRA's PostImportSetupScript.py
     """
+    #time.sleep(10)
     
-    # time.sleep(10)
-    
-    # VistA=ConnectToMUMPS(LOGFILE)
-    # #Set up the Doctors electronic signature
-    # OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
+    #VistA=ConnectToMUMPS(LOGFILE)
+    #Set up the Doctors electronic signature
+    #OSEHRASetup.setupElectronicSignature(VistA,"fakedoc1",'2Doc!@#$','1Doc!@#$','ROBA123')
+    #print "here ok too"
 
     # VistA=ConnectToMUMPS(LOGFILE)
     # #Set up the Nurse electronic signature
@@ -228,7 +227,7 @@ def completeVitalsSetup(VistA):
     VistA.IEN('NEW PERSON','ALEXANDER,ROBERT')
 
 def main():
-    simpleSetup()
+    simpleSetup2()
 
 if __name__ == "__main__":
     main()
