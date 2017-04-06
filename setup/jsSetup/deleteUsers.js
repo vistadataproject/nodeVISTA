@@ -8,6 +8,8 @@ const vdmNonClinicalModel = require('./vdmNewPersonModel').vdmModel;
 const _ = require('lodash');
 const nodem = require('nodem');
 
+// todo: point this mvdm path
+// todo: move this non-clinical
 // sets the path for all mumps GT.M routines (compiled .m files)
 process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()}`;
 
@@ -23,9 +25,9 @@ process.on('uncaughtException', (err) => {
 
 VDM.setDBAndModel(db, vdmNonClinicalModel);
 
-// Delete users based on the 200-ids in VistA - array format
+// delete users based on the 200-ids in VistA - array format
 // const usersId = [66, 67, 68, 69, 70];
-const usersId = _.range(69, 73);
+const usersId = _.range(62, 66);
 
 _.each(usersId, (id) => {
     try {
