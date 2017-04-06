@@ -167,6 +167,8 @@ git clone --depth 1 $repoPath VistA-Source
 
 # Not Ideal - nodevista for pyVISTA - .mjo etc written in here by GTM as runs Py scripts
 git clone https://github.com/vistadataproject/nodevista.git
+# use single branch for development purpose
+#git clone -b 115-using-vdm-to-create-users --single-branch https://github.com/vistadataproject/nodevista.git
 
 #install vdp
 vdpid=vdp
@@ -204,6 +206,8 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 
 echo "Cloning nodevista and VDM for use by $vdpid"
 git clone -q https://github.com/vistadataproject/nodevista.git
+#git clone -b 115-using-vdm-to-create-users --single-branch https://github.com/vistadataproject/nodevista.git
+
 git clone -q https://github.com/vistadataproject/VDM.git
 
 echo "running my node.js parameter service setup scripts"
@@ -278,30 +282,63 @@ chmod a+w /usr/local/src/nodevista/setup/pySetup
 chmod a+w /usr/local/src/nodevista/setup/pySetup/logs
 # NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
 su $instance -c "source $basedir/etc/env && python ZTMGRSET.py"
+
+cd /usr/local/src/nodevista/setup/pySetup
+echo "run simple setup"
 # TODO: should exit if simpleSetup.py fails
 su $instance -c "source $basedir/etc/env && python simpleSetup.py"
-#su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
 
-# enable journaling
-su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
+# Add p and s directories to gtmroutines environment variable
+su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
+if [[ $gtmver == *"6.2"* ]]; then
+    echo "Adding Development directories for GT.M 6.2"
+    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
+else
+    echo "Adding Development directories for GT.M <6.2"
+    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
+fi
+
+# todo: npm install here and there. move to root directory npm install
+# todo: use mvdm mumps directory
+cd $vdphome
+echo "Adding FMQL (MUMPS) to nodevistaVISTA"
+su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
 
 #npm install on VDM prototypes
 echo "npm install VDM prototypes..."
 cd $vdphome/VDM/prototypes
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/VDMNpmInstall.log"
 
-echo "npm install nodevista/setup/utils..."
-cd $vdphome/nodevista/setup/utils
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/updateNodeVISTAParametersNpmInstall.log"
+echo "npm install nodevista/setup/jsSetup..."
+cd $vdphome/nodevista/setup/jsSetup
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/jsScriptsNpmInstall.log"
+
+#***
+cd $vdphome/nodevista/setup/jsSetup
+echo "run addNewUsers.js"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addNewUsers.js >> $vdphome/logs/addNewUsers.log"
+
+cd /usr/local/src/nodevista/setup/pySetup
+echo "run simple setup 2 (cont)"
+su $instance -c "source $basedir/etc/env && python simpleSetup2.py"
 
 echo "npm install nodevista/setup/jsSetup..."
 cd $vdphome/nodevista/setup/jsSetup
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/registerVitalsSetupNpmInstall.log"
 
+# enable journaling
+su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
+
+echo "npm install nodevista/setup/utils..."
+cd $vdphome/nodevista/setup/utils
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/updateNodeVISTAParametersNpmInstall.log"
+
+cd $vdphome/nodevista/setup/jsSetup
 # using parameter service to inject user level settings
 echo "run addUserSettings.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addUserSettings.js >> $vdphome/logs/addUserSettings.log"
 
+cd $vdphome/nodevista/setup/jsSetup
 # using parameter service to inject system level settings
 echo "run registerVitalsCPRS.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node registerVitalsCPRS.js >> $vdphome/logs/registerVitalsCPRS.log"
@@ -319,30 +356,17 @@ echo "Restarting xinetd"
 service xinetd restart
 echo "Done restarting xinetd"
 
-# Add p and s directories to gtmroutines environment variable
-su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
-if [[ $gtmver == *"6.2"* ]]; then
-    echo "Adding Development directories for GT.M 6.2"
-    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
-else
-    echo "Adding Development directories for GT.M <6.2"
-    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
-fi
-
 cd $vdphome
 
-# echo "Adding FMQL (MUMPS) to nodevistaVISTA"
-su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
-#***
+echo "Restarting nodevista"
+service nodevista restart
+echo "Done restarting nodevista"
 
 cd $vdphome/FMQL/webservice
 #start up fmqlServer using pm2 and save settings
 echo "Running FMQL as a service via pm2"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && pm2 start fmqlServer.js && pm2 save >> $vdphome/logs/fmqlStartup.log"
 
-echo "Restarting nodevista"
-service nodevista restart
-echo "Done restarting nodevista"
 
 #start up rpcServer using pm2 and save settings
 echo "Running rpcServer as a service via pm2"
