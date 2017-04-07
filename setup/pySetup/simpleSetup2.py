@@ -1,8 +1,8 @@
 """
 simpleSetup2: runs POST the JS setup
 
-TODO: commented out SIGNATUREs as comes in at wrong point in Roll and Scroll now (as basics in setup1). Need
-to get it in the right point.
+NOTE: for 1.2 USERS (and their signatures) still done here. Next jsSetup will take this over and the User setup part
+will be removed from here.
 """
 
 import os

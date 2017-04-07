@@ -1,5 +1,5 @@
 """
-Sets up Basic System - then JS will kick in. A follow on setup (setup2) runs after the JS setup. 
+Sets up Basic System - then JS can kick in. A follow on setup (setup2) runs after the JS setup. 
 
 REM: will retire this when all runs in JS.
 """
