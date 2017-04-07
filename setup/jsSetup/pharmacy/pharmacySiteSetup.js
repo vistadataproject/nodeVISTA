@@ -10,20 +10,14 @@
 
 const _ = require('lodash');
 const nodem = require('nodem');
-const fileman = require('../../../../VDM/prototypes/fileman');
-const VDM = require('../../../../VDM/prototypes/vdm');
-const vdmUtils = require('../../../../VDM/prototypes/vdmUtils');
-const testUtils = require('../../../../VDM/prototypes/testUtils');
-const vdmModel = require('../../../../VDM/prototypes/pharmacy/vdmPharmacyModel').vdmModel;
-
-process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()}`;
+const fileman = require('mvdm/fileman');
+const VDM = require('mvdm/vdm');
+const vdmUtils = require('mvdm/vdmUtils');
+const testUtils = require('mvdm/testUtils');
+const vdmModel = require('mvdm/pharmacy/vdmPharmacyModel').vdmModel;
 
 let db = new nodem.Gtm();
 db.open();
-VDM.setDBAndModel(db, vdmModel);
-let userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM");
-let facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
-VDM.setUserAndFacility(userId, facilityId);
 
 process.on('uncaughtException', function(err) {
     db.close();
@@ -32,6 +26,11 @@ process.on('uncaughtException', function(err) {
 
     process.exit(1);
 });
+
+VDM.setDBAndModel(db, vdmModel);
+let userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM");
+let facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
+VDM.setUserAndFacility(userId, facilityId);
 
 /*
  * IMPORTANT: manual changes to required in VDM

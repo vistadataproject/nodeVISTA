@@ -13,11 +13,11 @@
 const fs = require('fs');
 const _ = require('lodash');
 const nodem = require('nodem');
-const fileman = require('../../../../VDM/prototypes/fileman');
-const VDM = require('../../../../VDM/prototypes/vdm');
-const vdmUtils = require('../../../../VDM/prototypes/vdmUtils');
-const testUtils = require('../../../../VDM/prototypes/testUtils');
-const vdmModel = require('../../../../VDM/prototypes/pharmacy/vdmPharmacyModel').vdmModel;
+const fileman = require('mvdm/fileman');
+const VDM = require('mvdm/vdm');
+const vdmUtils = require('mvdm/vdmUtils');
+const testUtils = require('mvdm/testUtils');
+const vdmModel = require('mvdm/pharmacy/vdmPharmacyModel').vdmModel;
 
 // sets the path for all mumps GT.M routines (compiled .m files)
 process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()}`;
