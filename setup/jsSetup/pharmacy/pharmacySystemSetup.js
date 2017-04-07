@@ -52,10 +52,9 @@ const pharmacySystem = {
 let res = fileman.lookupBy01(db, "59_7", pharmacySystem.site_name, false);
 if (res.length === 0) {
     let res = VDM.update(pharmacySystem);
-    console.log(res);
 }
 else {
-    console.log("Pharmacy Site %s already updated. Not redoing.", pharmacySystem.name);
+    console.log("Pharmacy Site %s already updated. Not redoing.", pharmacySystem.site_name);
 }
 
 db.close();
