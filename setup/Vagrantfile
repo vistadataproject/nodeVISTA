@@ -14,6 +14,10 @@ Vagrant.configure("2") do |config|
   # Uncomment for manual setup (see setup provision step commented out at the bottom of this script)
   # config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
 
+  # Uncomment for manual setup. Without this, the manual setup will inject an SSH key into the box
+  # screwing up subsequent logins, especially for packaged VMs.
+  # config.ssh.insert_key = false
+
   if Vagrant.has_plugin?("vagrant-timezone")
     config.timezone.value = "UTC"
   end
