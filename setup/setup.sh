@@ -245,7 +245,7 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 #copy in webclient files, rename to directory to static
 # ... blue version is VDM version of FMQL look and naming which overrides defaults
 cd $vdphome/FMQL/webservice
-cp -r ../webclients .
+mv ../webclients .
 mv webclients/blueversion/* webclients
 rmdir webclients/blueversion
 mv webclients static
@@ -284,9 +284,9 @@ chmod a+w /usr/local/src/nodevista/setup/pySetup/logs
 # NB: this has to run BEFORE gtmroutines is changed as MUMPS is hardcoded to see /r in first position
 su $instance -c "source $basedir/etc/env && python ZTMGRSET.py"
 
+# First Python-based simple setup (another pass runs below AFTER js based setup. Note: all setup will go to JS.
 cd /usr/local/src/nodevista/setup/pySetup
 echo "run simple setup"
-# TODO: should exit if simpleSetup.py fails
 su $instance -c "source $basedir/etc/env && python simpleSetup.py"
 
 # Add p and s directories to gtmroutines environment variable
@@ -314,18 +314,12 @@ echo "npm install nodevista/setup/jsSetup..."
 cd $vdphome/nodevista/setup/jsSetup
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/jsScriptsNpmInstall.log"
 
-#***
-#cd $vdphome/nodevista/setup/jsSetup
-#echo "run addNewUsers.js"
-#su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addNewUsers.js >> $vdphome/logs/addNewUsers.log"
+# Note: jsSetup addNewUsers was here. Moved to 1.3 til further testing
 
+# BACK TO PYTHON SETUP (2)
 cd /usr/local/src/nodevista/setup/pySetup
 echo "run simple setup 2 (cont)"
 su $instance -c "source $basedir/etc/env && python simpleSetup2.py"
-
-echo "npm install nodevista/setup/jsSetup..."
-cd $vdphome/nodevista/setup/jsSetup
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet >> $vdphome/logs/registerVitalsSetupNpmInstall.log"
 
 # enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
@@ -353,6 +347,7 @@ su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/en
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdmMedMetaLoad.js  >> $vdphome/logs/vdmMedMetaLoad.log"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node ppCarterDavidSetup.js  >> $vdphome/logs/ppCarterDavidSetup.log"
 
+# BACK TO PYTHON BASED SETUP (3)
 cd $basedir
 cd /usr/local/src/nodevista/setup/pySetup
 su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
