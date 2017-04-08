@@ -259,16 +259,8 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 echo "Installing Mocha"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
-# prepare to invoke vdp corrections
 cd $vdphome
-cp -r /vagrant/vdpCorrections .
-chown -R vdp:vdp vdpCorrections
-
 echo "User $vdpid created"
-
-#apply VDP data dictionary and other (GT/M portability) fixes
-echo "Applying data dictionary and GT/M portability fixes to FOIA"
-su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/vdpCorrections && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
 
 # Ensure group permissions are correct
 chmod -R g+rw /home/$vdpid
@@ -324,6 +316,11 @@ su $instance -c "source $basedir/etc/env && python simpleSetup2.py"
 
 # enable journaling
 su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
+
+#apply VDP data dictionary and other (GT/M portability) fixes
+cd $vdphome/nodevista/setup/vdpCorrections
+echo "Applying data dictionary and GT/M portability fixes to FOIA"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
 
 cd $vdphome/nodevista/setup/jsSetup
 # using parameter service to inject user level settings
