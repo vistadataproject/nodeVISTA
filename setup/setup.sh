@@ -259,6 +259,7 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 echo "Installing Mocha"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && npm install --quiet mocha -g >> $vdphome/mochaInstall.log"
 
+# prepare to invoke vdp corrections
 cd $vdphome
 cp -r /vagrant/vdpCorrections .
 chown -R vdp:vdp vdpCorrections
@@ -266,7 +267,7 @@ chown -R vdp:vdp vdpCorrections
 echo "User $vdpid created"
 
 #apply VDP data dictionary and other (GT/M portability) fixes
-echo "Applying data dictionary fixes"
+echo "Applying data dictionary and GT/M portability fixes to FOIA"
 su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && cd $vdphome/vdpCorrections && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
 
 # Ensure group permissions are correct
