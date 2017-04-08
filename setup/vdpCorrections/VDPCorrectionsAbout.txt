@@ -1,4 +1,4 @@
-Changes to be made for NodeVistA:
+## Data Dictionary (DD) and GT/M portability changes made for _nodeVISTA_
 
  1. Piece number in error in File #125.8, field #10
     DD entry has piece #1, should be piece #3.
@@ -31,7 +31,7 @@ Changes to be made for NodeVistA:
  9. Error in input transform 9.8, 1.4 (DATE OF %INDEX RUN)
     Input transform rejects dates after 31-Dec-1999
 
-10. Fields should not be Required in File 52 (fields 99, 99.1, 99.2 and 108)
+10. Bad Identifier in File 52 (field 108 is not an identifier)
 
 11. Cross-reference on File #100, fields #.01 and #.02
     If this cross-reference is executed before a value has been entered for field #.02

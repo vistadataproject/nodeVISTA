@@ -1,5 +1,7 @@
 VDPCorrections ;
  ;
+CORRECT()
+ ;
  ; Changes to be effected:
  ;
  ; 1. Piece number in error
@@ -92,29 +94,21 @@ VDPCorrections ;
  . Set ^DD(9.8,1.4,0)=x
  . Quit
  ;
- ; 10. Fields should not be Required in File 52 (fields 99, 99.1, 99.2 and 108)
- Do
- . New field,p,x
- . For field=99,99.1,99.2,108 Do
- . . Set x=$Get(^DD(52,field,0)),p=$Piece(x,"^",3)
- . . Quit:p'["R"
- . . Set $Piece(x,"^",2)=$Translate(p,"R")
- . . Set ^DD(52,field,0)=x
- . . Quit
- . Quit
+ ; 10. Bad Identifier in File 52 (field 108 is not an identifier)
+ Kill ^DD(52,0,"ID",108)
  ;
  ; 11. Cross-reference on File #100, field #.01
  Do
  . New count,ii,next,x
  . Set x=$Get(^DD(100,.01,1,1,1))
  . Quit:x'="S ^OR(100,""AZ"",DA,$P(^OR(100,DA,0),U,2))="""""
- . Set x="N Y2 S Y2=$P(^OR(100,DA,0),U,2) S:Y2'="""" S ^OR(100,""AZ"",DA,Y2)="""""
+ . Set x="N Y2 S Y2=$P(^OR(100,DA,0),U,2) S:Y2'="""" ^OR(100,""AZ"",DA,Y2)="""""
  . Set ^DD(100,.01,1,1,1)=x
  . ;
  . ; Add companion cross-reference on field .02:
  . Set next=$Order(^DD(100,0.02,1," "),-1)+1
  . Set ^DD(100,0.02,1,next,0)="100^AZ^MUMPS"
- . Set ^DD(100,0.02,1,next,1)="S:X'="""" S ^OR(100,""AZ"",DA,X)="""""
+ . Set ^DD(100,0.02,1,next,1)="S:X'="""" ^OR(100,""AZ"",DA,X)="""""
  . Set ^DD(100,0.02,1,next,2)="Q"
  . Set (ii,count)=0 For  Set ii=$Order(^DD(100,0.02,1,ii)) Quit:'ii  Set count=count+1
  . Set ^DD(100,0.02,1)="^.1^"_next_"^"_count

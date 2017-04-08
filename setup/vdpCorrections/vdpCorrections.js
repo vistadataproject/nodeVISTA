@@ -26,6 +26,10 @@ process.on('uncaughtException', function(err) {
 
 console.log("\nRunning VDP's DD and MUMPS portability corrections\n");
 
-let res = db.function({function: "^VDPCorrections"});
+let res = db.function({function: "CORRECT^VDPCorrections"});
+
+if (res.ok !== 1) {
+    console.log("Bad result for VDP Corrections:", res);
+}
 
 db.close();
