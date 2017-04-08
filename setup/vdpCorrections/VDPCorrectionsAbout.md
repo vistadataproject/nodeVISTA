@@ -3,7 +3,7 @@
  1. Piece number in error in File #125.8, field #10
     DD entry has piece #1, should be piece #3.
 
- 2. 2. <Syntax> error at EN+14^DGRPD
+ 2. Syntax error at EN+14^DGRPD
     Cache allows extra spaces in a WRITE argument, GT.M does not
 
  3. AC cross-reference in file #8989.5 (Parameters) is not always set.
