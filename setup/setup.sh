@@ -303,7 +303,7 @@ fi
 # todo: npm install here and there. move to root directory npm install
 # todo: use mvdm mumps directory
 cd $vdphome
-echo "Adding FMQL (MUMPS) to nodevistaVISTA"
+echo "Adding FMQL (MUMPS) to nodeVISTA"
 su $vdpid -c "cp FMQL/MUMPS/*.m $nodevistahome/p"
 
 #npm install on VDM prototypes
