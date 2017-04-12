@@ -320,30 +320,30 @@ su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
 #apply VDP data dictionary and other (GT/M portability) fixes
 cd $vdphome/nodevista/setup/vdpCorrections
 echo "Applying data dictionary and GT/M portability fixes to FOIA"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdpCorrections.js >> $vdphome/logs/vdpCorrections.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdpCorrections.js &>> $vdphome/logs/vdpCorrections.log"
 
 cd $vdphome/nodevista/setup/jsSetup
 # using parameter service to inject user level settings
 echo "run addUserSettings.js"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addUserSettings.js >> $vdphome/logs/addUserSettings.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node addUserSettings.js &>> $vdphome/logs/addUserSettings.log"
 
 cd $vdphome/nodevista/setup/jsSetup
 # using parameter service to inject system level settings
 echo "run registerVitalsCPRS.js"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node registerVitalsCPRS.js >> $vdphome/logs/registerVitalsCPRS.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node registerVitalsCPRS.js &>> $vdphome/logs/registerVitalsCPRS.log"
 
 # inject additional nodeVista parameters
 cd $vdphome/nodevista/setup/jsSetup/parameters
 echo "run updateNodeVISTAParameters.js"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js >> $vdphome/logs/updateNodeVISTAParameters.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js &>> $vdphome/logs/updateNodeVISTAParameters.log"
 
 # Add Pharmacy configurations including Patient for DAVID CARTER
 echo "installing pharmacy"
 cd $vdphome/nodevista/setup/jsSetup/pharmacy
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySiteSetup.js  >> $vdphome/logs/pharmacySiteSetup.log"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySystemSetup.js  >> $vdphome/logs/pharmacySystemSetup.log"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdmMedMetaLoad.js  >> $vdphome/logs/vdmMedMetaLoad.log"
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node ppCarterDavidSetup.js  >> $vdphome/logs/ppCarterDavidSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySiteSetup.js &>> $vdphome/logs/pharmacySiteSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node pharmacySystemSetup.js &>> $vdphome/logs/pharmacySystemSetup.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node vdmMedMetaLoad.js &>> $vdphome/logs/vdmMedMetaLoad.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node ppCarterDavidSetup.js &>> $vdphome/logs/ppCarterDavidSetup.log"
 
 # BACK TO PYTHON BASED SETUP (3)
 cd $basedir
@@ -377,7 +377,7 @@ su $vdpid -c "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env
 #update patient records
 echo "run updatePatients.js"
 cd $vdphome/nodevista/setup/jsSetup/patient
-su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updatePatients.js >> $vdphome/logs/updatePatients.log"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updatePatients.js &>> $vdphome/logs/updatePatients.log"
 
 duration=$SECONDS
 echo "$(($duration / 3600)) hours, $((($duration / 60) % 60)) minutes and $(($duration % 60)) seconds elapsed."
