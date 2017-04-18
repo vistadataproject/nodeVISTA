@@ -3,7 +3,7 @@
 'use strict';
 
 /**
- * Clinical models supported by the RPC Server: VDM, MVDM, rpcL
+ * Clinical models supported by the RPC Server: VDM, MVDM, rpcEmulator
  */
 
 // VDM Models
@@ -38,15 +38,15 @@ const mvdmModel = [].concat(
     // patient
     require('mvdm/patient/mvdmPatientModel').mvdmModel);
 
-// Clinical RPC Locker models
-const rpcLModel = [].concat(
-    require('mvdm/allergies/rpcLAllergiesModel').rpcLModel,
-    require('mvdm/problems/rpcLProblemModel').rpcLModel,
-    require('mvdm/vitals/rpcLVitalsModel').rpcLModel,
-    require('mvdm/patient/rpcLPatientModel').rpcLModel);
+// Clinical RPC Emulator models
+const rpcEmulatorModel = [].concat(
+    require('mvdm/allergies/rpcEmulatorAllergiesModel').rpcEmulatorModel,
+    require('mvdm/problems/rpcEmulatorProblemModel').rpcEmulatorModel,
+    require('mvdm/vitals/rpcEmulatorVitalsModel').rpcEmulatorModel,
+    require('mvdm/patient/rpcEmulatorPatientModel').rpcEmulatorModel);
 
 module.exports = {
     vdmModel,
     mvdmModel,
-    rpcLModel,
+    rpcEmulatorModel,
 };

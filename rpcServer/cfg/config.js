@@ -32,21 +32,21 @@ config.client.defaultName = "CPRS";
 config.workerQ = {};
 config.workerQ.size = 1;
 
-config.lockers = [{
+config.emulators = [{
     name: 'Clinical Emulator',
-    path: 'mvdm/cRPCL',
+    path: 'mvdm/cRPCEmulator',
     models: ['./modelsClinical'],
 }, {
     name: 'Non-Clinical Emulator',
-    path: 'mvdm/ncRPCL',
+    path: 'mvdm/ncRPCEmulator',
     models: ['mvdm/nonClinicalRPCs'],
 }, {
     name: 'JS Utility Emulator',
-    path: 'mvdm/ncRPCL',
+    path: 'mvdm/ncRPCEmulator',
     models: ['mvdm/nonClinicalRPCs/utility'],
 }, {
     name: 'Out-Of-Scope Emulator',
-    path: 'mvdm/ncRPCL',
+    path: 'mvdm/ncRPCEmulator',
     models: ['mvdm/nonClinicalRPCs/outofscope'],
 }];
 

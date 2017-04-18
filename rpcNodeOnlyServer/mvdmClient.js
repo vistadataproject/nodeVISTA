@@ -40,8 +40,8 @@ function init() {
 
       var settings = req.body;
 
-      if (_.has(settings, 'isMvdmLocked')) {
-         mvdmManagement.isMvdmLocked = settings.isMvdmLocked;
+      if (_.has(settings, 'isMvdmEmulated')) {
+         mvdmManagement.isMvdmEmulated = settings.isMvdmEmulated;
       }
 
       if (_.has(settings, 'isNodeOnly')) {

@@ -60,28 +60,28 @@ define([
          return this.size();
       },
 
-      distinctLockedTotal: function() {
-         var distinctLocked = 0;
+      distinctEmulatedTotal: function() {
+         var distinctEmulated = 0;
 
          this.forEach(function(rpc) {
-            if (rpc.get('runner') === 'mvdmLocked') {
-               distinctLocked++;
+            if (rpc.get('runner') === 'mvdmEmulated') {
+               distinctEmulated++;
             }
          });
 
-         return distinctLocked;
+         return distinctEmulated;
       },
 
-      lockedTotal: function() {
-         var locked = 0;
+      emulatedTotal: function() {
+         var emulated = 0;
 
          this.forEach(function(rpc) {
-            if (rpc.get('runner') === 'mvdmLocked') {
-               locked += rpc.get('count');
+            if (rpc.get('runner') === 'mvdmEmulated') {
+               emulated += rpc.get('count');
             }
          });
 
-         return locked;
+         return emulated;
       },
 
       top: function(num) {

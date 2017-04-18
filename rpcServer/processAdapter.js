@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 const PROCESS_ADAPTER_CHILD_MODULE = process.env.PROCESS_ADAPTER_CHILD_MODULE || 'nodeVISTAManagerChild.js';
 
-const RPC_SERVER_EVENTS = ['lockedRPCList', 'rpcCall', 'mvdmCreate', 'mvdmDescribe', 'mvdmList', 'mvdmUpdate', 'mvdmRemove', 'mvdmUnremoved', 'mvdmDelete'];
+const RPC_SERVER_EVENTS = ['emulatedRPCList', 'rpcCall', 'mvdmCreate', 'mvdmDescribe', 'mvdmList', 'mvdmUpdate', 'mvdmRemove', 'mvdmUnremoved', 'mvdmDelete'];
 
 /**
  * This class serves two purposes. First, it is responsible for forking and managing the management client application
@@ -101,12 +101,12 @@ class ProcessAdapter {
      * nodeVISTA manager API function. This will allow the nodeVISTAManager to set the MVDM management option on
      * the RPC server side (which used to be a singleton) transparently through the interprocess barrier.
      *
-     * @param {boolean} isRPCLocked State to set the 'isRPCLocked' in the RPC Server
+     * @param {boolean} isRPCEmulated State to set the 'isRPCEmulated' in the RPC Server
      */
-    setRPCLocked(isRPCLocked) {
+    setRPCEmulated(isRPCEmulated) {
         this.sendEventToRPCServer({
-            event: 'isRPCLocked',
-            value: isRPCLocked,
+            event: 'isRPCEmulated',
+            value: isRPCEmulated,
         });
     }
 

@@ -8,11 +8,11 @@ const uuid = require('uuid');
 /**
  * Remote Procedure Call Dispatcher.
  *
- * Dispatches RPC call to an array of RPC lockers.
+ * Dispatches RPC call to an array of RPC emulators.
  *
- * If lockers cannot accommodate handling a RPC call, the dispatcher will default to the RPC runner.
+ * If emulators cannot accommodate handling a RPC call, the dispatcher will default to the RPC runner.
  *
- * By default, lockers will always be invoked. The dispatcher class does provide the ability to turn locking off
+ * By default, emulators will always be invoked. The dispatcher class does provide the ability to turn emulating off
  * for testing purposes.
  *
  */
@@ -20,21 +20,21 @@ class RPCDispatcher {
     /**
      * Constructs instance.
      * @param {Object} db VistA database instance.
-     * @param {Array=} rpcLockers List of RPC locker implementations to register with the dispatcher (e.g. cRPCL, vprL, ncRPCL)
+     * @param {Array=} rpcEmulators List of RPC emulator implementations to register with the dispatcher (e.g. cRPCEmulator, vprL, ncRPCEmulator)
      */
-    constructor(db, rpcLockers) {
+    constructor(db, rpcEmulators) {
         this.rpcRunner = new RPCRunner(db);
-        if (!rpcLockers) {
-            this.rpcLockerList = [];
+        if (!rpcEmulators) {
+            this.rpcEmulatorList = [];
         } else {
-            if (!Array.isArray(rpcLockers)) {
-                throw new Error('Invalid parameter - rpcLockerList must be of type Array');
+            if (!Array.isArray(rpcEmulators)) {
+                throw new Error('Invalid parameter - rpcEmulatorList must be of type Array');
             }
 
-            this.rpcLockerList = rpcLockers;
+            this.rpcEmulatorList = rpcEmulators;
         }
 
-        this.isLocked = true; // by default dispatcher run method checks lockers
+        this.isEmulated = true; // by default dispatcher run method checks emulators
 
         // private methods
 
@@ -47,44 +47,44 @@ class RPCDispatcher {
         };
 
         /**
-         * Finds RPC locker implementation that supports a RPC and the given parameters (if provided).
+         * Finds RPC emulator implementation that supports a RPC and the given parameters (if provided).
          * @param {String} rpcName Name of the Remote procedure call.
          * @param {Object=} rpcArgs Remote procedure call arguments.
-         * @returns {Object} Supported locker implementation or null if not found.
+         * @returns {Object} Supported emulator implementation or null if not found.
          */
-        this.findSupportedLocker = function findSupportedLocker(rpcName, rpcArgs) {
-            let supportedLocker = null;
+        this.findSupportedEmulator = function findSupportedEmulator(rpcName, rpcArgs) {
+            let supportedEmulator = null;
 
-            for (let i = 0; i < this.rpcLockerList.length; i += 1) {
-                const rpcL = this.rpcLockerList[i];
+            for (let i = 0; i < this.rpcEmulatorList.length; i += 1) {
+                const rpcEmulator = this.rpcEmulatorList[i];
 
-                if (rpcL.isRPCSupported(rpcName, rpcArgs)) {
-                    supportedLocker = rpcL;
+                if (rpcEmulator.isRPCSupported(rpcName, rpcArgs)) {
+                    supportedEmulator = rpcEmulator;
                     break;
                 }
             }
 
-            return supportedLocker;
+            return supportedEmulator;
         };
     }
 
     /**
-     * Sets locking value.
-     * @param {boolean} isON Is locking turned on?
+     * Sets emulating value.
+     * @param {boolean} isON Is emulating turned on?
      */
-    setLocking(isON) {
-        this.isLocked = isON;
+    setEmulating(isON) {
+        this.isEmulated = isON;
     }
 
     /**
-     * Returns a list of all locked RPCs
-     * @returns {Array} list of all locked RPCs
+     * Returns a list of all emulated RPCs
+     * @returns {Array} list of all emulated RPCs
      */
-    getLockedRPCList() {
+    getEmulatedRPCList() {
         let rpcList = [];
 
-        this.rpcLockerList.forEach((rpcL) => {
-            rpcList = rpcList.concat(rpcL.getLockedRPCList());
+        this.rpcEmulatorList.forEach((rpcEmulator) => {
+            rpcList = rpcList.concat(rpcEmulator.getEmulatedRPCList());
         });
 
         return rpcList;
@@ -115,29 +115,29 @@ class RPCDispatcher {
     }
 
     /**
-     * Returns the list of registered RPC lockers.
-     * @returns {RPCL} rpc facade's rpcL instance.
+     * Returns the list of registered RPC emulators.
+     * @returns {RPCEmulator} rpc facade's rpcEmulator instance.
      */
-    getRPCLockers() {
-        return this.rpcLockerList;
+    getRPCEmulators() {
+        return this.rpcEmulatorList;
     }
 
     /**
-     * Registers a RPC locker with the dispatcher.
-     * @param {Object} rpcL A RPC locker instance (e.g. cRPCL, vprL).
+     * Registers a RPC emulator with the dispatcher.
+     * @param {Object} rpcEmulator A RPC emulator instance (e.g. cRPCEmulator, vprL).
      */
-    registerLocker(rpcL) {
-        this.rpcLockerList.push(rpcL);
+    registerEmulator(rpcEmulator) {
+        this.rpcEmulatorList.push(rpcEmulator);
     }
 
     /**
      * Dispatch a RPC with arguments.
      *
-     * If locking is turned on, this method will dispatch RPC and arguments to the appropriate RPC locker
-     * that is registered with the class. If no RPC locker is found to accommodates the RPC, by default the RPC will
+     * If emulating is turned on, this method will dispatch RPC and arguments to the appropriate RPC emulator
+     * that is registered with the class. If no RPC emulator is found to accommodates the RPC, by default the RPC will
      * be dispatched to the RPC runner.
      *
-     * If locking is turned off, all calls are dispatched the RPC runner.
+     * If emulating is turned off, all calls are dispatched the RPC runner.
      *
      * @param {String} rpcName VistA remote procedure call name
      * @param {String=} rpcArgs Remote procedure arguments
@@ -147,27 +147,27 @@ class RPCDispatcher {
         let rpcResult;
         let patient;
         let rpcPath;
-        let lockerName;
+        let emulatorName;
 
-        // generate a random transaction id for rpcL and rpcRunner calls
+        // generate a random transaction id for rpcEmulator and rpcRunner calls
         const transactionId = this.generateTransactionId();
 
-        const rpcL = this.findSupportedLocker(rpcName, rpcArgs);
+        const rpcEmulator = this.findSupportedEmulator(rpcName, rpcArgs);
 
-        if (this.isLocked && rpcL !== null) {
+        if (this.isEmulated && rpcEmulator !== null) {
             // Since last pass (or this is first pass), user may have changed. Ask rpcRunner.
             const uNf = this.rpcRunner.getUserAndFacility();
-            rpcL.setUserAndFacility(uNf.userId, uNf.facilityId);
+            rpcEmulator.setUserAndFacility(uNf.userId, uNf.facilityId);
 
             // Proxy for "logged in". userId is 0 if not logged in
             if (uNf.userId === 0) {
                 throw new Error(`NOT LOGGED IN, dropping RPC call: ${rpcName}`);
             }
 
-            rpcPath = 'rpcLocked';
-            lockerName = rpcL.name || 'Unknown';
+            rpcPath = 'rpcEmulated';
+            emulatorName = rpcEmulator.name || 'Unknown';
 
-            rpcResult = rpcL.run(rpcName, rpcArgs, transactionId);
+            rpcResult = rpcEmulator.run(rpcName, rpcArgs, transactionId);
 
             if (rpcResult.patient) {
                 patient = rpcResult.patient;
@@ -193,7 +193,7 @@ class RPCDispatcher {
 
         const ret = {
             path: rpcPath,
-            lockerName,
+            emulatorName,
             rpcResponse: response,
             transactionId,
             result: rpcResult.result,

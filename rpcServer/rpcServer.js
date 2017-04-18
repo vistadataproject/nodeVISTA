@@ -63,8 +63,8 @@ processQueue.start();
 // = Initialize the process adapter which spawns and links the nodeVISTAManager in a new process ==
 const processAdapter = new ProcessAdapter();
 processAdapter.bindEventManager(EventManager);
-processAdapter.registerChildEventHandler('isRPCLocked', (isRPCLocked) => {
-    mvdmManagement.isRPCLocked = isRPCLocked;
+processAdapter.registerChildEventHandler('isRPCEmulated', (isRPCEmulated) => {
+    mvdmManagement.isRPCEmulated = isRPCEmulated;
 });
 // =================================================================================================
 
@@ -80,8 +80,8 @@ captureFile.on("open", function (fd) {
     server.listen(port, function () {
         LOGGER.info('RPCServer listening to %j', server.address());
 
-        //get locked rpc list
-        processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
+        //get emulated rpc list
+        processQueue.handleMessage({method: 'emulatedRPCList'}, function(responseObject) {
             EventManager.emit(responseObject.message.eventType, responseObject.message.event);
         });
     });
@@ -130,7 +130,7 @@ function handleConnection(conn) {
             messageObject.method = 'callRPC';
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
-            messageObject.isRPCLocked = mvdmManagement.isRPCLocked;
+            messageObject.isRPCEmulated = mvdmManagement.isRPCEmulated;
             messageObject.contextId = remoteAddress;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);

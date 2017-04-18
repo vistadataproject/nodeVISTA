@@ -35,13 +35,13 @@ define([
 
          this.management = new ManagementModel();
 
-         //update is mvdm locked icon
+         //update is mvdm emulated icon
          this.listenTo(this.management, 'change', function() {
 
             this.$el.find('.glyphicon-ok-sign').addClass('hidden');
             this.$el.find('.glyphicon-remove-sign').addClass('hidden');
 
-            if (this.management.get('isMvdmLocked')) {
+            if (this.management.get('isMvdmEmulated')) {
                this.$el.find('.glyphicon-ok-sign').removeClass('hidden');
             } else {
                this.$el.find('.glyphicon-remove-sign').removeClass('hidden');
