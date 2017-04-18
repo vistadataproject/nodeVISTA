@@ -38,7 +38,7 @@ const mvdmModel = [].concat(
     // patient
     require('mvdm/patient/mvdmPatientModel').mvdmModel);
 
-// Clinical RPC Locker models
+// Clinical RPC Emulator models
 const rpcLModel = [].concat(
     require('mvdm/allergies/rpcLAllergiesModel').rpcLModel,
     require('mvdm/problems/rpcLProblemModel').rpcLModel,

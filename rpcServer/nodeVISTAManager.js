@@ -52,9 +52,9 @@ function init() {
 
         var settings = req.body;
 
-        if (_.has(settings, 'isRPCLocked')) {
-            mvdmManagement.isRPCLocked = settings.isRPCLocked;
-            processAdapter.setRPCLocked(settings.isRPCLocked);
+        if (_.has(settings, 'isRPCEmulated')) {
+            mvdmManagement.isRPCEmulated = settings.isRPCEmulated;
+            processAdapter.setRPCEmulated(settings.isRPCEmulated);
         }
 
         return res.sendStatus(200);

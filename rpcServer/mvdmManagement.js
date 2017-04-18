@@ -3,7 +3,7 @@
 
 //mvdm default management settings
 var mvdmManagement = {
-    isRPCLocked: true
+    isRPCEmulated: true
 };
 
 module.exports = mvdmManagement;

@@ -101,12 +101,12 @@ class ProcessAdapter {
      * nodeVISTA manager API function. This will allow the nodeVISTAManager to set the MVDM management option on
      * the RPC server side (which used to be a singleton) transparently through the interprocess barrier.
      *
-     * @param {boolean} isRPCLocked State to set the 'isRPCLocked' in the RPC Server
+     * @param {boolean} isRPCEmulated State to set the 'isRPCEmulated' in the RPC Server
      */
-    setRPCLocked(isRPCLocked) {
+    setRPCEmulated(isRPCEmulated) {
         this.sendEventToRPCServer({
-            event: 'isRPCLocked',
-            value: isRPCLocked,
+            event: 'isRPCEmulated',
+            value: isRPCEmulated,
         });
     }
 

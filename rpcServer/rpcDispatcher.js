@@ -20,21 +20,21 @@ class RPCDispatcher {
     /**
      * Constructs instance.
      * @param {Object} db VistA database instance.
-     * @param {Array=} rpcLockers List of RPC locker implementations to register with the dispatcher (e.g. cRPCL, vprL, ncRPCL)
+     * @param {Array=} rpcEmulators List of RPC locker implementations to register with the dispatcher (e.g. cRPCL, vprL, ncRPCL)
      */
-    constructor(db, rpcLockers) {
+    constructor(db, rpcEmulators) {
         this.rpcRunner = new RPCRunner(db);
-        if (!rpcLockers) {
-            this.rpcLockerList = [];
+        if (!rpcEmulators) {
+            this.rpcEmulatorList = [];
         } else {
-            if (!Array.isArray(rpcLockers)) {
-                throw new Error('Invalid parameter - rpcLockerList must be of type Array');
+            if (!Array.isArray(rpcEmulators)) {
+                throw new Error('Invalid parameter - rpcEmulatorList must be of type Array');
             }
 
-            this.rpcLockerList = rpcLockers;
+            this.rpcEmulatorList = rpcEmulators;
         }
 
-        this.isLocked = true; // by default dispatcher run method checks lockers
+        this.isEmulated = true; // by default dispatcher run method checks lockers
 
         // private methods
 
@@ -52,19 +52,19 @@ class RPCDispatcher {
          * @param {Object=} rpcArgs Remote procedure call arguments.
          * @returns {Object} Supported locker implementation or null if not found.
          */
-        this.findSupportedLocker = function findSupportedLocker(rpcName, rpcArgs) {
-            let supportedLocker = null;
+        this.findSupportedEmulator = function findSupportedEmulator(rpcName, rpcArgs) {
+            let supportedEmulator = null;
 
-            for (let i = 0; i < this.rpcLockerList.length; i += 1) {
-                const rpcL = this.rpcLockerList[i];
+            for (let i = 0; i < this.rpcEmulatorList.length; i += 1) {
+                const rpcL = this.rpcEmulatorList[i];
 
                 if (rpcL.isRPCSupported(rpcName, rpcArgs)) {
-                    supportedLocker = rpcL;
+                    supportedEmulator = rpcL;
                     break;
                 }
             }
 
-            return supportedLocker;
+            return supportedEmulator;
         };
     }
 
@@ -72,19 +72,19 @@ class RPCDispatcher {
      * Sets locking value.
      * @param {boolean} isON Is locking turned on?
      */
-    setLocking(isON) {
-        this.isLocked = isON;
+    setEmulating(isON) {
+        this.isEmulated = isON;
     }
 
     /**
      * Returns a list of all locked RPCs
      * @returns {Array} list of all locked RPCs
      */
-    getLockedRPCList() {
+    getEmulatedRPCList() {
         let rpcList = [];
 
-        this.rpcLockerList.forEach((rpcL) => {
-            rpcList = rpcList.concat(rpcL.getLockedRPCList());
+        this.rpcEmulatorList.forEach((rpcL) => {
+            rpcList = rpcList.concat(rpcL.getEmulatedRPCList());
         });
 
         return rpcList;
@@ -118,16 +118,16 @@ class RPCDispatcher {
      * Returns the list of registered RPC lockers.
      * @returns {RPCL} rpc facade's rpcL instance.
      */
-    getRPCLockers() {
-        return this.rpcLockerList;
+    getRPCEmulators() {
+        return this.rpcEmulatorList;
     }
 
     /**
      * Registers a RPC locker with the dispatcher.
      * @param {Object} rpcL A RPC locker instance (e.g. cRPCL, vprL).
      */
-    registerLocker(rpcL) {
-        this.rpcLockerList.push(rpcL);
+    registerEmulator(rpcL) {
+        this.rpcEmulatorList.push(rpcL);
     }
 
     /**
@@ -152,9 +152,9 @@ class RPCDispatcher {
         // generate a random transaction id for rpcL and rpcRunner calls
         const transactionId = this.generateTransactionId();
 
-        const rpcL = this.findSupportedLocker(rpcName, rpcArgs);
+        const rpcL = this.findSupportedEmulator(rpcName, rpcArgs);
 
-        if (this.isLocked && rpcL !== null) {
+        if (this.isEmulated && rpcL !== null) {
             // Since last pass (or this is first pass), user may have changed. Ask rpcRunner.
             const uNf = this.rpcRunner.getUserAndFacility();
             rpcL.setUserAndFacility(uNf.userId, uNf.facilityId);
@@ -164,7 +164,7 @@ class RPCDispatcher {
                 throw new Error(`NOT LOGGED IN, dropping RPC call: ${rpcName}`);
             }
 
-            rpcPath = 'rpcLocked';
+            rpcPath = 'rpcEmulated';
             lockerName = rpcL.name || 'Unknown';
 
             rpcResult = rpcL.run(rpcName, rpcArgs, transactionId);

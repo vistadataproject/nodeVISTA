@@ -63,8 +63,8 @@ processQueue.start();
 // = Initialize the process adapter which spawns and links the nodeVISTAManager in a new process ==
 const processAdapter = new ProcessAdapter();
 processAdapter.bindEventManager(EventManager);
-processAdapter.registerChildEventHandler('isRPCLocked', (isRPCLocked) => {
-    mvdmManagement.isRPCLocked = isRPCLocked;
+processAdapter.registerChildEventHandler('isRPCEmulated', (isRPCEmulated) => {
+    mvdmManagement.isRPCEmulated = isRPCEmulated;
 });
 // =================================================================================================
 
@@ -130,7 +130,7 @@ function handleConnection(conn) {
             messageObject.method = 'callRPC';
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
-            messageObject.isRPCLocked = mvdmManagement.isRPCLocked;
+            messageObject.isRPCEmulated = mvdmManagement.isRPCEmulated;
             messageObject.contextId = remoteAddress;
             processQueue.handleMessage(messageObject, function(responseObject) {
                 LOGGER.debug("in rpcServer handleMessage from rpc responseObject = %j", responseObject);
