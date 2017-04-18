@@ -32,7 +32,7 @@ config.client.defaultName = "CPRS";
 config.workerQ = {};
 config.workerQ.size = 1;
 
-config.lockers = [{
+config.emulators = [{
     name: 'Clinical Emulator',
     path: 'mvdm/cRPCL',
     models: ['./modelsClinical'],

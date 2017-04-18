@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 const PROCESS_ADAPTER_CHILD_MODULE = process.env.PROCESS_ADAPTER_CHILD_MODULE || 'nodeVISTAManagerChild.js';
 
-const RPC_SERVER_EVENTS = ['lockedRPCList', 'rpcCall', 'mvdmCreate', 'mvdmDescribe', 'mvdmList', 'mvdmUpdate', 'mvdmRemove', 'mvdmUnremoved', 'mvdmDelete'];
+const RPC_SERVER_EVENTS = ['emulatedRPCList', 'rpcCall', 'mvdmCreate', 'mvdmDescribe', 'mvdmList', 'mvdmUpdate', 'mvdmRemove', 'mvdmUnremoved', 'mvdmDelete'];
 
 /**
  * This class serves two purposes. First, it is responsible for forking and managing the management client application

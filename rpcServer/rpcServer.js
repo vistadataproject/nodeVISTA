@@ -80,8 +80,8 @@ captureFile.on("open", function (fd) {
     server.listen(port, function () {
         LOGGER.info('RPCServer listening to %j', server.address());
 
-        //get locked rpc list
-        processQueue.handleMessage({method: 'lockedRPCList'}, function(responseObject) {
+        //get emulated rpc list
+        processQueue.handleMessage({method: 'emulatedRPCList'}, function(responseObject) {
             EventManager.emit(responseObject.message.eventType, responseObject.message.event);
         });
     });

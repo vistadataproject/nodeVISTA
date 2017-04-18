@@ -16,7 +16,7 @@ var EventManager = require('./eventManager');
 var rpcsCategorized = require('./cfg/rpcsCategorized');
 var ProcessAdapter = require('./processAdapter');
 
-var lockedRPCList = [];
+var emulatedRPCList = [];
 
 // Initialize the process adapter, which ties this back into the RPC Server
 const processAdapter = new ProcessAdapter();
@@ -60,9 +60,9 @@ function init() {
         return res.sendStatus(200);
     });
 
-    app.get('/lockedRPCList', function(req, res) {
+    app.get('/emulatedRPCList', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(lockedRPCList));
+        res.end(JSON.stringify(emulatedRPCList));
     });
 
     app.get('/rpcList', function(req, res) {
@@ -97,10 +97,10 @@ function init() {
     initMVDMEventListeners(mvdmClients);
     initRPCEventListeners(rpcClients);
 
-    //listen for locked RPC List
-    EventManager.on('lockedRPCList', function(event) {
-        lockedRPCList = event.list.map(function(rpcName) {return {name: rpcName, count: 0};});
-        lockedRPCList.forEach(function(rpc) {
+    //listen for emulated RPC List
+    EventManager.on('emulatedRPCList', function(event) {
+        emulatedRPCList = event.list.map(function(rpcName) {return {name: rpcName, count: 0};});
+        emulatedRPCList.forEach(function(rpc) {
             var category = rpcsCategorized[rpc.name];
             if (category) {
                 rpc = _.extend(rpc, category);
