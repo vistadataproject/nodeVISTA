@@ -5,22 +5,22 @@ define([
 ], function (Handlebars, jsBeautify) {
    'use strict';
 
-   Handlebars.registerHelper('mvdm-lock-select', function(management) {
+   Handlebars.registerHelper('mvdm-emulate-select', function(management) {
 
       if (!management) {
          return;
       }
 
       function setSelected(management, optionValue) {
-         if ((management.isMvdmLocked && optionValue === 'on') ||
-            (!management.isMvdmLocked && optionValue === 'off')) {
+         if ((management.isMvdmEmulated && optionValue === 'on') ||
+            (!management.isMvdmEmulated && optionValue === 'off')) {
             return ' selected';
          }
 
          return '';
       }
 
-      var selectHtml = '<select class="form-control mvdm-lock-select">';
+      var selectHtml = '<select class="form-control mvdm-emulate-select">';
       selectHtml += '<option value="on"' + setSelected(management, 'on') + '>On</option>';
       selectHtml += '<option value="off"' + setSelected(management, 'off') + '>Off</option>';
       selectHtml += '</select>';
@@ -55,8 +55,8 @@ define([
 
       if (runner === 'rpcRunner') {
          return 'RPC Runner';
-      } else if (runner === 'mvdmLocked') {
-         return 'MVDM Locked';
+      } else if (runner === 'mvdmEmulated') {
+         return 'MVDM Emulated';
       } else if (runner === 'server') {
          return 'Server';
       } else return runner;

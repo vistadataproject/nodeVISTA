@@ -21,7 +21,7 @@ define([
       },
       filterBy: function(value) {
          return new RPCEventCollection(this.filter(function(data){
-            return data.get('isRpcsLocked') === (value.toLowerCase() === 'locked');
+            return data.get('isRpcsEmulated') === (value.toLowerCase() === 'emulated');
          }));
       }
    });

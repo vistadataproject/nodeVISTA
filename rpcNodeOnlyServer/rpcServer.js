@@ -51,7 +51,7 @@ function connectVistaDatabase() {
     db.open();
 
     rpcFacade = new RPCFacade(db);
-    rpcFacade.setLocking(true); //default is to utilize mvdm locking
+    rpcFacade.setEmulating(true); //default is to utilize mvdm emulating
 
     rpcContexts = new RPCContexts(db);
 }
@@ -142,10 +142,10 @@ function handleConnection(conn) {
             messageObject.method = 'callRPC';
             messageObject.ipAddress = conn.remoteAddress;
             messageObject.rpcPacket = rpcPacket;
-            messageObject.isMvdmLocked = mvdmManagement.isMvdmLocked;
+            messageObject.isMvdmEmulated = mvdmManagement.isMvdmEmulated;
             messageObject.contextId = remoteAddress;
 
-            rpcFacade.setLocking(messageObject.isMvdmLocked);
+            rpcFacade.setEmulating(messageObject.isMvdmEmulated);
 
             // LOGGER.debug('rpcQWorker in on(\'message\'), callRPC messageObj: %j ', messageObj);
 
@@ -226,8 +226,8 @@ function handleConnection(conn) {
             response = unsupportedRPCs.get(rpcObject.name);
             rpcObject.to = "server";
         } else {
-            // These are normal RPCs that can go to either the locker or the runner.
-            LOGGER.debug("calling RPC locker or runner");
+            // These are normal RPCs that can go to either the emulator or the runner.
+            LOGGER.debug("calling RPC emulator or runner");
             var ret =  rpcFacade.run(rpcObject.name, rpcObject.args);
 
             rpcObject.to = ret.path;

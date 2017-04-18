@@ -24,7 +24,7 @@ define([
       },
 
       events: {
-         "change .mvdm-lock-select": "onMvdmLockChange",
+         "change .mvdm-emulate-select": "onMvdmLockChange",
          "change .node-only-select": "onNodeOnlyChange"
 
       },
@@ -41,21 +41,21 @@ define([
             return;
          }
 
-         var isRpcsLocked = undefined;
+         var isRpcsEmulated = undefined;
          if (event.currentTarget.value.toLowerCase() === 'on') {
-            isRpcsLocked = true;
+            isRpcsEmulated = true;
          } else if (event.currentTarget.value.toLowerCase() === 'off') {
-            isRpcsLocked = false;
+            isRpcsEmulated = false;
          } else {
             return;
          }
 
          //no change
-         if (isRpcsLocked === this.management.get('isMvdmLocked')) {
+         if (isRpcsEmulated === this.management.get('isMvdmEmulated')) {
             return;
          }
 
-         this.management.set('isMvdmLocked', isRpcsLocked);
+         this.management.set('isMvdmEmulated', isRpcsEmulated);
 
          this.management.sync('update', this.management);
       },

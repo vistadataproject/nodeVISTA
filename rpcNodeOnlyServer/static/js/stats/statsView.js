@@ -2,16 +2,16 @@
  * Done:
  *
  * Total number of RPCs invoked
- * Number of calls that are locked
+ * Number of calls that are emulated
  * Number of distinct RPCs invoked
- * Number of distinct RPCs that are locked
+ * Number of distinct RPCs that are emulated
  * Top Ten RPCs invoked (since client start up)
  * Number of calls for each of the distinct RPCs
  *
  * TODO:
  *
  * Categorize RPCs by function (utility RPCs, write RPCs, read RPCs, Authorization RPCs)
- * Break down the utility RPCs - ones that we'll never lock and those that we won't be backing with the model
+ * Break down the utility RPCs - ones that we'll never emulate and those that we won't be backing with the model
  */
 
 
@@ -45,8 +45,8 @@ define([
          this.$el.html(this.template({
             total: RPCStatCollection.total(),
             distinct: RPCStatCollection.distinctTotal(),
-            distinctLocked: RPCStatCollection.distinctLockedTotal(),
-            locked: RPCStatCollection.lockedTotal(),
+            distinctEmulated: RPCStatCollection.distinctEmulatedTotal(),
+            emulated: RPCStatCollection.emulatedTotal(),
             topList: RPCStatCollection.top(20)
          }));
 
