@@ -20,7 +20,7 @@ class RPCDispatcher {
     /**
      * Constructs instance.
      * @param {Object} db VistA database instance.
-     * @param {Array=} rpcEmulators List of RPC emulator implementations to register with the dispatcher (e.g. cRPCL, vprL, ncRPCL)
+     * @param {Array=} rpcEmulators List of RPC emulator implementations to register with the dispatcher (e.g. cRPCEmulator, vprL, ncRPCEmulator)
      */
     constructor(db, rpcEmulators) {
         this.rpcRunner = new RPCRunner(db);
@@ -56,10 +56,10 @@ class RPCDispatcher {
             let supportedEmulator = null;
 
             for (let i = 0; i < this.rpcEmulatorList.length; i += 1) {
-                const rpcL = this.rpcEmulatorList[i];
+                const rpcEmulator = this.rpcEmulatorList[i];
 
-                if (rpcL.isRPCSupported(rpcName, rpcArgs)) {
-                    supportedEmulator = rpcL;
+                if (rpcEmulator.isRPCSupported(rpcName, rpcArgs)) {
+                    supportedEmulator = rpcEmulator;
                     break;
                 }
             }
@@ -83,8 +83,8 @@ class RPCDispatcher {
     getEmulatedRPCList() {
         let rpcList = [];
 
-        this.rpcEmulatorList.forEach((rpcL) => {
-            rpcList = rpcList.concat(rpcL.getEmulatedRPCList());
+        this.rpcEmulatorList.forEach((rpcEmulator) => {
+            rpcList = rpcList.concat(rpcEmulator.getEmulatedRPCList());
         });
 
         return rpcList;
@@ -116,7 +116,7 @@ class RPCDispatcher {
 
     /**
      * Returns the list of registered RPC emulators.
-     * @returns {RPCL} rpc facade's rpcL instance.
+     * @returns {RPCEmulator} rpc facade's rpcEmulator instance.
      */
     getRPCEmulators() {
         return this.rpcEmulatorList;
@@ -124,10 +124,10 @@ class RPCDispatcher {
 
     /**
      * Registers a RPC emulator with the dispatcher.
-     * @param {Object} rpcL A RPC emulator instance (e.g. cRPCL, vprL).
+     * @param {Object} rpcEmulator A RPC emulator instance (e.g. cRPCEmulator, vprL).
      */
-    registerEmulator(rpcL) {
-        this.rpcEmulatorList.push(rpcL);
+    registerEmulator(rpcEmulator) {
+        this.rpcEmulatorList.push(rpcEmulator);
     }
 
     /**
@@ -149,15 +149,15 @@ class RPCDispatcher {
         let rpcPath;
         let emulatorName;
 
-        // generate a random transaction id for rpcL and rpcRunner calls
+        // generate a random transaction id for rpcEmulator and rpcRunner calls
         const transactionId = this.generateTransactionId();
 
-        const rpcL = this.findSupportedEmulator(rpcName, rpcArgs);
+        const rpcEmulator = this.findSupportedEmulator(rpcName, rpcArgs);
 
-        if (this.isEmulated && rpcL !== null) {
+        if (this.isEmulated && rpcEmulator !== null) {
             // Since last pass (or this is first pass), user may have changed. Ask rpcRunner.
             const uNf = this.rpcRunner.getUserAndFacility();
-            rpcL.setUserAndFacility(uNf.userId, uNf.facilityId);
+            rpcEmulator.setUserAndFacility(uNf.userId, uNf.facilityId);
 
             // Proxy for "logged in". userId is 0 if not logged in
             if (uNf.userId === 0) {
@@ -165,9 +165,9 @@ class RPCDispatcher {
             }
 
             rpcPath = 'rpcEmulated';
-            emulatorName = rpcL.name || 'Unknown';
+            emulatorName = rpcEmulator.name || 'Unknown';
 
-            rpcResult = rpcL.run(rpcName, rpcArgs, transactionId);
+            rpcResult = rpcEmulator.run(rpcName, rpcArgs, transactionId);
 
             if (rpcResult.patient) {
                 patient = rpcResult.patient;

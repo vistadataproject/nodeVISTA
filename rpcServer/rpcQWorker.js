@@ -130,8 +130,8 @@ function createDispatcher() {
 
                     rpcEmulator.addMVDMModel(mvdmModels);
                 }
-                if (model.rpcLModel) {
-                    rpcEmulator.addEmulatorModel(model.rpcLModel);
+                if (model.rpcEmulatorModel) {
+                    rpcEmulator.addEmulatorModel(model.rpcEmulatorModel);
                 }
             });
 
@@ -371,7 +371,7 @@ module.exports = function() {
         } else if (messageObj.method === 'emulatedRPCList') {
 
             finished({
-                type: 'rpcL',
+                type: 'rpcEmulator',
                 event: {
                     list: rpcDispatcher.getEmulatedRPCList()
                 },
