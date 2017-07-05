@@ -1,7 +1,7 @@
 var rpcsCategorized = {
     "DG CHK BS5 XREF ARRAY": {
         "mn": "DG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN",
             "XREF"
@@ -9,7 +9,7 @@ var rpcsCategorized = {
     },
     "DG CHK BS5 XREF Y/N": {
         "mn": "DG",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "patient with same name - XREF use ... ie/ ala parameter, special handling",
         "tags": [
             "DFN",
@@ -19,7 +19,7 @@ var rpcsCategorized = {
     },
     "DG CHK PAT/DIV MEANS TEST": {
         "mn": "DG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "MEANS test check",
         "tags": [
             "DFN"
@@ -44,7 +44,7 @@ var rpcsCategorized = {
         ]
     },
     "GMRC LIST CONSULT REQUESTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "number of days to look backwards",
         "tags": [
             "PARAMETER",
@@ -60,13 +60,13 @@ var rpcsCategorized = {
     },
     "GMV ALLERGY": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "GMV CLOSEST READING": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "uses PXRMINDX",
         "tags": [
             "DFN"
@@ -82,7 +82,7 @@ var rpcsCategorized = {
     },
     "GMV DLL VERSION": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "GMV DLL VERSION - with XPAR",
         "tags": [
             "PARAMETER",
@@ -91,14 +91,14 @@ var rpcsCategorized = {
     },
     "GMV EXTRACT REC": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["120.5"],
         "tags": [
             "DFN"
         ]
     },
     "GMV GET CATEGORY IEN": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["120.53"],
         "exArgs": "[\"LOCATION\"]",
         "tags": [
@@ -115,7 +115,7 @@ var rpcsCategorized = {
         ]
     },
     "GMV GET VITAL TYPE IEN": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["120.51"],
         "exArgs": "[\"HEIGHT\"]",
         "tags": [
@@ -125,7 +125,7 @@ var rpcsCategorized = {
     },
     "GMV LATEST VM": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Latest vitals",
         "tags": [
             "DFN"
@@ -166,7 +166,7 @@ var rpcsCategorized = {
     },
     "GMV USER": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Parameter values about a user 200.",
         "tags": [
             "PARAMETER",
@@ -175,14 +175,14 @@ var rpcsCategorized = {
     },
     "GMV V/M ALLDATA": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "GMV VITALS/CAT/QUAL": {
         "mn": "GMV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
@@ -197,7 +197,7 @@ var rpcsCategorized = {
     },
     "OR GET COMBAT VET": {
         "mn": "OR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "relies on the VADPT code, code that grabs pieces of PATIENT (2) into subobjects. Some of the logic there should be reproduced in the MVDM structure and VDM maps.",
         "tags": [
             "DFN"
@@ -205,7 +205,7 @@ var rpcsCategorized = {
     },
     "ORALWORD ALLWORD": {
         "mn": "ORALWORD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Can an Order be made",
         "tags": [
             "DFN"
@@ -223,7 +223,7 @@ var rpcsCategorized = {
     },
     "ORB FOLLOW-UP ARRAY": {
         "mn": "ORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8992", "8992_1"],
         "descr": "Notification follow-up Order - may be about Orders and may be CHANGE. Need to walk through properly.",
         "tags": [
@@ -233,7 +233,7 @@ var rpcsCategorized = {
     },
     "ORB FOLLOW-UP STRING": {
         "mn": "ORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8992", "8992_1"],
         "descr": "Notification follow-up Order String - like FOLLOW-UP ARRAY",
         "tags": [
@@ -243,7 +243,7 @@ var rpcsCategorized = {
     },
     "ORB FOLLOW-UP TYPE": {
         "mn": "ORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.9"],
         "descr": "Looks up follow up type starting with info from Order. Would be K/META if just passed in 100.9 IEN",
         "tags": [
@@ -271,7 +271,7 @@ var rpcsCategorized = {
     },
     "ORB SORT METHOD": {
         "mn": "ORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "User can be involved ie/ per User",
         "tags": [
             "PARAMETER",
@@ -279,7 +279,7 @@ var rpcsCategorized = {
         ]
     },
     "ORBCMA5 GETUDID": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "From 'PSJ OR PAT OE' in 101.41 and argument passed isn't processed",
         "files": ["101.41"],
         "tags": [
@@ -289,7 +289,7 @@ var rpcsCategorized = {
     },
     "ORCDLR2 CHECK ALL LC TO WC": {
         "mn": "ORCDLR2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of lab orders with invalid times",
         "tags": [
             "DFN"
@@ -297,7 +297,7 @@ var rpcsCategorized = {
     },
     "ORCDLR2 CHECK ONE LC TO WC": {
         "mn": "ORCDLR2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get Child times - LR Dialog method",
         "tags": [
             "DFN"
@@ -313,7 +313,7 @@ var rpcsCategorized = {
         ]
     },
     "ORCHECK GETMONO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "read from TMP ORMONOGRAPH which was setup in OCAPI. Example of GLOBAL ARRAY RPC which returns the name of a TMPs setup from Order to be checked. Example of GLOBAL ARRAY RPC which returns the name of a TMP",
         "tags": [
             "K/META",
@@ -322,7 +322,7 @@ var rpcsCategorized = {
     },
     "ORCHECK GETMONOL": {
         "mn": "ORCHECK",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "read from TMP ORMONOGRAPH which was setup in OCAPI",
         "tags": [
             "K/META",
@@ -331,7 +331,7 @@ var rpcsCategorized = {
     },
     "ORCHECK GETXTRA": {
         "mn": "ORCHECK",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Gets multi-line in Monograph whose info is setup by OCAPI",
         "tags": [
             "K/META",
@@ -340,7 +340,7 @@ var rpcsCategorized = {
     },
     "ORCHECK ISMONO": {
         "mn": "ORCHECK",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Is TMP ORMONOGRAPH setup from Order to be checked ie/ determines if monographs to read",
         "tags": [
             "K/META",
@@ -350,7 +350,7 @@ var rpcsCategorized = {
     },
     "ORCNOTE GET TOTAL": {
         "mn": "ORCNOTE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Count progress notes of patient - utility really",
         "tags": [
             "DFN"
@@ -358,7 +358,7 @@ var rpcsCategorized = {
     },
     "ORDDPAPI ADMTIME": {
         "mn": "ORDDPAPI",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "GETWP^XPAR for sys of 'OR ADMIN TIME HELP TEXT'",
         "tags": [
             "PARAMETER",
@@ -367,7 +367,7 @@ var rpcsCategorized = {
     },
     "ORDDPAPI CLOZMSG": {
         "mn": "ORDDPAPI",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "GETWP^XPAR",
         "tags": [
             "PARAMETER",
@@ -376,7 +376,7 @@ var rpcsCategorized = {
     },
     "ORDEA CSVALUE": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "1/0 for controlled substance or not - 101.43",
         "tags": [
             "K/META"
@@ -384,7 +384,7 @@ var rpcsCategorized = {
     },
     "ORDEA DEATEXT": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "GETWP^XPAR",
         "tags": [
             "PARAMETER",
@@ -393,7 +393,7 @@ var rpcsCategorized = {
     },
     "ORDEA HASHINFO": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "basic info (include patient) for order",
         "tags": [
             "DFN"
@@ -401,7 +401,7 @@ var rpcsCategorized = {
     },
     "ORDEA LNKMSG": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "'OR DEA PIV LINK MSG'",
         "tags": [
             "PARAMETER",
@@ -410,7 +410,7 @@ var rpcsCategorized = {
     },
     "ORDEA ORDHINFO": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "From Order",
         "tags": [
             "DFN"
@@ -434,7 +434,7 @@ var rpcsCategorized = {
     },
     "ORDEA PNDHLD": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "1/0 on pending or not",
         "tags": [
             "DFN",
@@ -443,7 +443,7 @@ var rpcsCategorized = {
     },
     "ORDEA SIGINFO": {
         "mn": "ORDEA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "info from PATIENT and PROVIDER to show when signing a controlled substance",
         "tags": [
             "DFN"
@@ -494,7 +494,7 @@ var rpcsCategorized = {
     },
     "ORECS01 VSITID": {
         "mn": "ORECS01",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "visit IEN from criteria (may overlap with allergy visit lookup)",
         "tags": [
             "IEN-LOOKUP",
@@ -503,7 +503,7 @@ var rpcsCategorized = {
     },
     "OREVNTX ACTIVE": {
         "mn": "OREVNTX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.5"],
         "descr": "active events of type",
         "tags": [
@@ -512,7 +512,7 @@ var rpcsCategorized = {
     },
     "OREVNTX LIST": {
         "mn": "OREVNTX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.2"],
         "descr": "processed order (OE/RR) events for patient - 'AC' index in 100.2",
         "tags": [
@@ -521,7 +521,7 @@ var rpcsCategorized = {
     },
     "OREVNTX PAT": {
         "mn": "OREVNTX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "100.2 (per patient) delayed event ie/ MAS move or OR return could delay orders",
         "tags": [
             "DFN"
@@ -529,7 +529,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 AUTHMREL": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Can user manually release delayed orders",
         "tags": [
             "DUZ",
@@ -547,7 +547,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 CMEVTS": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "LOCATION",
@@ -556,7 +556,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 COMP": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "OE/RR PATIENT EVENT completed",
         "files": ["100.2"],
         "tags": [
@@ -566,14 +566,14 @@ var rpcsCategorized = {
     "OREVNTX1 CPACT": {
         "mn": "OREVNTX1",
         "files": ["100.5"],
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "OREVNTX1 CURSPE": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -581,7 +581,7 @@ var rpcsCategorized = {
     "OREVNTX1 DEFLTS": {
         "mn": "OREVNTX1",
         "files": ["100.5"],
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
@@ -605,7 +605,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 DFLTDLG": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "From OE/RR RELEASE EVENT to Dialog (101.41)",
         "files": ["101.41", "100.5"],
         "tags": [
@@ -614,7 +614,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 DFLTEVT": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "PARAMETER",
             "DUZ"
@@ -622,7 +622,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 DIV": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.2"],
         "tags": [
             "DFN",
@@ -632,7 +632,7 @@ var rpcsCategorized = {
     "OREVNTX1 DIV1": {
         "mn": "OREVNTX1",
         "files": ["100.5"],
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META",
             "LOCATION"
@@ -640,7 +640,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 DLGIEN": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "IEN based on name",
         "tags": [
             "IEN-LOOKUP",
@@ -658,7 +658,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 EMPTY": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Does patient event have any orders?",
         "files": ["100.2"],
         "tags": [
@@ -668,7 +668,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 EVT": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Really simple lookup of EVENT 100.5 from PATIENT EVENT 100.2",
         "complexity": "LOW",
         "files": ["100.2", "100.5"],
@@ -678,7 +678,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 EXISTS": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.2"],
         "descr": "return patient event if patient already has delayed orders",
         "tags": [
@@ -687,7 +687,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 GETDLG": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "exArgs": "[\"1\"]",
         "descr": "dlg 101.43 (meta)",
@@ -697,7 +697,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 GETSTS": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "order status value",
         "tags": [
@@ -706,7 +706,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 GTEVT": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "pass in patient event, get event type info",
         "files": ["100.2", "100.5"],
         "complexity": "LOW",
@@ -716,7 +716,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 GTEVT1": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "event based on 100.5 info",
         "complexity": "LOW",
         "files": ["100.5"],
@@ -727,7 +727,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 HAVEPRT": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "parent patient event",
         "files": ["100.2"],
         "complexity": "LOW",
@@ -737,7 +737,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 ISDCOD": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN",
             "PARAMETER",
@@ -746,7 +746,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 ISHDORD": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100", "100.98", "100.01"],
         "descr": "order on hold?",
         "tags": [
@@ -756,7 +756,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 ISPASS": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Same as ISPASS1 but give 100.2 which gets to 100.5",
         "tags": [
             "DFN",
@@ -765,7 +765,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 ISPASS1": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Same as ISPASS but go right to 100.5",
         "tags": [
             "K/META",
@@ -774,7 +774,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 LOC": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Default hospital locn for patient event",
         "files": ["100.2"],
         "tags": [
@@ -784,7 +784,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 LOC1": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.5"],
         "tags": [
             "K/META",
@@ -793,7 +793,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 MATCH": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "match or not patient and event",
         "tags": [
             "DFN"
@@ -801,7 +801,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 MULTS": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "speciality list",
         "files": ["100.5"],
         "exArgs": "[\"1\"]",
@@ -811,7 +811,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 NAME": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "files": ["100.5", "100.2"],
         "descr": "name of 100.5 from 100.2",
@@ -821,7 +821,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 ODPTEVID": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "patient event from Order 100 - easy lookup of event (15) field which pts to 100.2",
         "files": ["100", "100.2"],
@@ -831,7 +831,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 PRMPTID": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.41"],
         "exArgs": "[\"1\"]",
         "tags": [
@@ -840,7 +840,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 PROMPT IDS": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "prompt ids for 101.41",
         "exArgs": "[\"1\"]",
         "files": ["101.41"],
@@ -869,7 +869,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 TYPEXT": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Does EVT have delayed orders?",
         "tags": [
             "DUZ"
@@ -877,7 +877,7 @@ var rpcsCategorized = {
     },
     "OREVNTX1 WRLSTED": {
         "mn": "OREVNTX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of dialogs inside a parameter for a user",
         "files": ["101.41"],
         "tags": [
@@ -887,7 +887,7 @@ var rpcsCategorized = {
     },
     "ORIMO IMOLOC": {
         "mn": "ORIMO",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Inpatient medication on outpatient - uses scheduling API to return info on patient and clinic. Enum of values.",
         "tags": [
             "PATCH",
@@ -896,7 +896,7 @@ var rpcsCategorized = {
     },
     "ORIMO IMOOD": {
         "mn": "ORIMO",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is IMO order?",
         "tags": [
             "DFN",
@@ -905,7 +905,7 @@ var rpcsCategorized = {
     },
     "ORIMO ISCLOC": {
         "mn": "ORIMO",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is clinical location? 0:3 gives if C/CLINICAL",
         "tags": [
             "LOCATION",
@@ -914,7 +914,7 @@ var rpcsCategorized = {
     },
     "ORIMO ISIVQO": {
         "mn": "ORIMO",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is it an IV quick order?",
         "tags": [
             "K/META",
@@ -923,7 +923,7 @@ var rpcsCategorized = {
     },
     "ORK TRIGGER": {
         "mn": "ORK",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "HIGH",
         "descr": "Order Checking",
         "tags": [
@@ -941,7 +941,7 @@ var rpcsCategorized = {
     },
     "ORPRF GETFLG": {
         "mn": "ORPRF",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "relies on HASFLG setup of patient flags - TMP use",
         "tags": [
             "REENTRANCY",
@@ -950,7 +950,7 @@ var rpcsCategorized = {
     },
     "ORPRF HASFLG": {
         "mn": "ORPRF",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "National or local flags. 26.11/26.15 files. This returns flags of patient and also sets up TMP with those flags for use by GETFLG",
         "tags": [
             "REENTRANCY",
@@ -959,7 +959,7 @@ var rpcsCategorized = {
     },
     "ORPRF TRIGGER POPUP": {
         "mn": "ORPRF",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "for CPRS - should it trigger a popup because patient has flags - 1 or 0",
         "tags": [
             "IS-A",
@@ -976,14 +976,14 @@ var rpcsCategorized = {
     },
     "ORQOR DETAIL": {
         "mn": "ORQOR",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "see format in DETAIL^ORQ2",
         "tags": [
             "DFN"
         ]
     },
     "ORQOR LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of patient orders",
         "tags": [
             "DFN"
@@ -991,7 +991,7 @@ var rpcsCategorized = {
     },
     "ORQORB SORT": {
         "mn": "ORQORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Same function as ORB SORT METHOD: sort method for user/division etc",
         "tags": [
             "PARAMETER",
@@ -1000,7 +1000,7 @@ var rpcsCategorized = {
     },
     "ORQPT ATTENDING/PRIMARY": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patient's attending physician and primary provider.",
         "tags": [
             "DFN"
@@ -1008,7 +1008,7 @@ var rpcsCategorized = {
     },
     "ORQPT CLINIC PATIENTS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patients with appointments at a clinic between start and stop dates",
         "tags": [
             "DFN",
@@ -1018,7 +1018,7 @@ var rpcsCategorized = {
     },
     "ORQPT CLINICS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a list of clinics stored in Parameter 'ORWD COMMON CLINIC'",
         "tags": [
             "LOCATION",
@@ -1027,7 +1027,7 @@ var rpcsCategorized = {
     },
     "ORQPT DEFAULT CLINIC DATE RANG": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "default start and stop dates for clinics specific to a user",
         "tags": [
             "LOCATION",
@@ -1037,7 +1037,7 @@ var rpcsCategorized = {
     },
     "ORQPT DEFAULT LIST SORT": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "current user's default patient selection list SORT ORDER setting. Typical preference stuff - 'ORLP DEFAULT LIST ORDER'",
         "tags": [
             "PARAMETER",
@@ -1046,7 +1046,7 @@ var rpcsCategorized = {
     },
     "ORQPT DEFAULT LIST SOURCE": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "the source (ward | team | ...) of the current user's default patient list.",
         "tags": [
             "PARAMETER",
@@ -1055,7 +1055,7 @@ var rpcsCategorized = {
     },
     "ORQPT DEFAULT PATIENT LIST": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns the current user's default patient list. Returning Patients for a User.",
         "tags": [
             "PARAMETER",
@@ -1083,7 +1083,7 @@ var rpcsCategorized = {
     },
     "ORQPT PATIENT TEAM PROVIDERS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.21"],
         "descr": "list of providers linked to a patient via teams. Uses index on 100.21",
         "tags": [
@@ -1094,7 +1094,7 @@ var rpcsCategorized = {
     },
     "ORQPT PROVIDER PATIENTS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patients linked to a provider/user. Uses index in DPT",
         "tags": [
             "DFN",
@@ -1104,7 +1104,7 @@ var rpcsCategorized = {
     },
     "ORQPT PROVIDERS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "an array of providers - note tag DUZ here means Users and not a specific DUZ. Checks provider is active and using XUSEC is a user a provider ie/ has 'PROVIDER' key",
         "files": ["200"],
         "tags": [
@@ -1115,7 +1115,7 @@ var rpcsCategorized = {
     },
     "ORQPT READ RPL": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "global ref leads to list of patients for scroll box (44 max). Uses TMP from MAKE RPL.",
         "tags": [
             "DFN",
@@ -1124,7 +1124,7 @@ var rpcsCategorized = {
     },
     "ORQPT SPECIALTIES": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "treating specialties.",
         "files": ["45.7"],
         "tags": [
@@ -1133,7 +1133,7 @@ var rpcsCategorized = {
     },
     "ORQPT SPECIALTY PATIENTS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patients linked to a treating specialty.",
         "files": ["2"],
         "tags": [
@@ -1143,7 +1143,7 @@ var rpcsCategorized = {
     },
     "ORQPT TEAM PATIENTS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patients on a team. Optional whether to write to TMP or not",
         "files": ["100.21"],
         "tags": [
@@ -1153,7 +1153,7 @@ var rpcsCategorized = {
     },
     "ORQPT TEAMS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of teams.",
         "files": ["100.21"],
         "tags": [
@@ -1162,7 +1162,7 @@ var rpcsCategorized = {
     },
     "ORQPT WARD PATIENTS": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["42", "2"],
         "descr": "patients on a ward. From ward to patient and room bed taken from DPT if available",
         "tags": [
@@ -1172,7 +1172,7 @@ var rpcsCategorized = {
     },
     "ORQPT WARDRMBED": {
         "mn": "ORQPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "the ward, room-bed for a patient",
         "tags": [
@@ -1183,14 +1183,14 @@ var rpcsCategorized = {
         "mn": "ORQPT",
         "complexity": "LOW",
         "files": ["42"],
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Simple name/ien of wards defined in file 42",
         "tags": [
             "LOCATION"
         ]
     },
     "ORQQAL DETAIL": {
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "tags": [
             "DFN"
@@ -1198,14 +1198,14 @@ var rpcsCategorized = {
     },
     "ORQQAL LIST": {
         "mn": "ORQQAL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "tags": [
             "DFN"
         ]
     },
     "ORQQAL LIST REPORT": {
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Patients allergy reactions in Report format (vs ORQQAL LIST)",
         "tags": [
@@ -1234,7 +1234,7 @@ var rpcsCategorized = {
     },
     "ORQQCN ASSIGNABLE MED RESULTS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "medicine results that can be attached to a procedure.",
         "files": ["123", "697.2"],
         "tags": [
@@ -1253,7 +1253,7 @@ var rpcsCategorized = {
     },
     "ORQQCN CANEDIT": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "whether a consult/procedure request can beresubmitted.",
         "domain": "CONSULTS",
         "files": ["123"],
@@ -1263,7 +1263,7 @@ var rpcsCategorized = {
     },
     "ORQQCN DEFAULT REQUEST REASON": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["123.3", "123.5"],
         "tags": [
             "K/META"
@@ -1271,7 +1271,7 @@ var rpcsCategorized = {
     },
     "ORQQCN DETAIL": {
         "mn": "ORQQCN",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "files": ["123"],
         "descr": "formatted detailed information regarding the consult request,including result report if available.",
         "tags": [
@@ -1291,7 +1291,7 @@ var rpcsCategorized = {
     },
     "ORQQCN EDIT DEFAULT REASON": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "when the consults'reason for request can be edited.",
         "files": ["123.3", "123.5"],
         "tags": [
@@ -1300,7 +1300,7 @@ var rpcsCategorized = {
     },
     "ORQQCN FIND CONSULT": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["123"],
         "descr": "a Consult IEN in file 123, return a formatted list item for that",
         "tags": [
@@ -1318,7 +1318,7 @@ var rpcsCategorized = {
     },
     "ORQQCN GET CONSULT": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Given a Consult ID from file 123, return the zero node to the client forloading into a consult record. If the consult has anyassociated TIU records (completion, addenda) these will be returned",
         "files": ["123"],
         "tags": [
@@ -1327,7 +1327,7 @@ var rpcsCategorized = {
     },
     "ORQQCN GET MED RESULT DETAILS": {
         "mn": "ORQQCN",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "Detailed display of medicine results - may be a utility",
         "files": ["691.5"],
         "tags": [
@@ -1336,7 +1336,7 @@ var rpcsCategorized = {
     },
     "ORQQCN GET ORDER NUMBER": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Tie back to orders. Simple lookup",
         "files": ["123", "100"],
         "complexity": "LOW",
@@ -1346,7 +1346,7 @@ var rpcsCategorized = {
     },
     "ORQQCN GET PROC IEN": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "orderable item IEN, return pointer to file 123.3",
         "files": ["123.3", "101.43"],
         "complexity": "LOW",
@@ -1356,7 +1356,7 @@ var rpcsCategorized = {
     },
     "ORQQCN GET PROC SVCS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "an orderable item from the S.PROC XREF in 101.43, return theConsults service from 123.5 that can perform the procedure.",
         "files": ["123.3", "123.5", "101.43"],
         "tags": [
@@ -1366,7 +1366,7 @@ var rpcsCategorized = {
     },
     "ORQQCN GET SERVICE IEN": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.43", "123.5"],
         "complexity": "LOW",
         "tags": [
@@ -1375,7 +1375,7 @@ var rpcsCategorized = {
     },
     "ORQQCN ISPROSVC": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "RPC will return 1 or 0 if the supplied file entry from 123.5 is marked as part of the Consults-Prosthetics interface. This RPC is used to disable the Earliest Appropriate Date field and value when ordering Prosthetics requests via CPRS GUI.",
         "files": ["123.5"],
         "complexity": "LOW",
@@ -1386,7 +1386,7 @@ var rpcsCategorized = {
     },
     "ORQQCN LIST": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "consult requests for a patient within optional date range",
         "files": ["123"],
         "tags": [
@@ -1396,7 +1396,7 @@ var rpcsCategorized = {
     },
     "ORQQCN LOAD FOR EDIT": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "the current values of that record's fields.",
         "files": ["123"],
         "tags": [
@@ -1405,7 +1405,7 @@ var rpcsCategorized = {
     },
     "ORQQCN MED RESULTS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a display of Medicine Package results, followed by any TIU results. Uses 0;15 VPTR to 'GMRC MEDICINE PKG INTERFACE option'",
         "files": ["123"],
         "tags": [
@@ -1421,7 +1421,7 @@ var rpcsCategorized = {
     },
     "ORQQCN PROVDX": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "provisional dx prompting info for service",
         "files": ["123.3", "123.5"],
         "tags": [
@@ -1439,7 +1439,7 @@ var rpcsCategorized = {
     },
     "ORQQCN REMOVABLE MED RESULTS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of medicine results that are currently attached to a procedure.",
         "files": ["123", "697.2"],
         "tags": [
@@ -1466,7 +1466,7 @@ var rpcsCategorized = {
     },
     "ORQQCN SET ACT MENUS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Based on the IEN of the consult passed in, returns a string representingvarious facets of the user's access level for that consult and service. This allows dynamic enabling/disabling of GUI menus based on the user's ability to act on that particular consult. ie/ CPRS config but not parameters?",
         "files": ["123"],
         "tags": [
@@ -1494,7 +1494,7 @@ var rpcsCategorized = {
     },
     "ORQQCN SIGFIND": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "significant findings",
         "files": ["123"],
         "tags": [
@@ -1503,7 +1503,7 @@ var rpcsCategorized = {
     },
     "ORQQCN STATUS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["123.1"],
         "descr": "consult statuses currently in use, as reflected in the \"AC\" XREF of ^GMR(123.1. ie/ [K/META]",
         "tags": [
@@ -1513,7 +1513,7 @@ var rpcsCategorized = {
     },
     "ORQQCN SVC W/SYNONYMS": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "does allow DFN/123 pass in but optional. This is 123.5 meta",
         "files": ["123.5"],
         "tags": [
@@ -1522,21 +1522,21 @@ var rpcsCategorized = {
     },
     "ORQQCN SVCLIST": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORQQCN SVCTREE": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORQQCN UNRESOLVED": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "USER PER PATIENT CONSULTS unresolved",
         "tags": [
             "DFN",
@@ -1545,7 +1545,7 @@ var rpcsCategorized = {
     },
     "ORQQCN URGENCIES": {
         "mn": "ORQQCN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Per user - protocol 101 in play",
         "tags": [
             "DFN"
@@ -1553,7 +1553,7 @@ var rpcsCategorized = {
     },
     "ORQQCN2 GET CONTEXT": {
         "mn": "ORQQCN2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "GET^XPAR PARAMETER 'ORCH CONTEXT CONSULTS'",
         "complexity": "LOW",
         "tags": [
@@ -1563,7 +1563,7 @@ var rpcsCategorized = {
     },
     "ORQQCN2 GET PREREQUISITE": {
         "mn": "ORQQCN2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "blurbs from 123.5"
     },
     "ORQQCN2 SAVE CONTEXT": {
@@ -1584,7 +1584,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQLR DETAIL": {
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "Details of a lab order",
         "domain": "LAB",
         "tags": [
@@ -1593,7 +1593,7 @@ var rpcsCategorized = {
     },
     "ORQQLR SEARCH RANGE INPT": {
         "mn": "ORQQLR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab results search date range for an inpatient",
         "tags": [
             "DFN",
@@ -1602,7 +1602,7 @@ var rpcsCategorized = {
     },
     "ORQQLR SEARCH RANGE OUTPT": {
         "mn": "ORQQLR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQLR SEARCH RANGE OUTPT"],
         "descr": "ala INPT except per user as outpatient location isn't reliable",
         "tags": [
@@ -1620,7 +1620,7 @@ var rpcsCategorized = {
     },
     "ORQQPL AUDIT HIST": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "RETURN PROBLEM AUDIT HISTORY",
         "tags": [
             "DFN"
@@ -1628,14 +1628,14 @@ var rpcsCategorized = {
     },
     "ORQQPL CHECK DUP": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Check for duplicate",
         "tags": [
             "DFN"
         ]
     },
     "ORQQPL CLIN FILTER LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "List of Clinics passed in",
         "tags": [
             "LOCATION",
@@ -1644,7 +1644,7 @@ var rpcsCategorized = {
     },
     "ORQQPL CLIN SRCH": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "clinics (for problem list) - comment says should be replaced by PARAMETER using 'CLIN^ORQPTQ2' but still in use going through names of LOCATIONs",
         "tags": [
             "LOCATION"
@@ -1659,13 +1659,13 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPL DETAIL": {
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORQQPL EDIT LOAD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -1686,7 +1686,7 @@ var rpcsCategorized = {
     },
     "ORQQPL INIT PT": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns death indicator, sc and exposures",
         "tags": [
             "DFN"
@@ -1694,7 +1694,7 @@ var rpcsCategorized = {
     },
     "ORQQPL INIT USER": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["125.99"],
         "parameters": ["ORCH CONTEXT PROBLEMS"],
         "descr": "user params for problem list. Though pitched as per user, most are global settings from 125.99. Note leaves GMPLUSER on symbol table - is evaluated in EDITSAVE",
@@ -1705,7 +1705,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPL LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "List of problems for patient",
         "tags": [
             "DFN"
@@ -1713,7 +1713,7 @@ var rpcsCategorized = {
     },
     "ORQQPL PROB COMMENTS": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Comments of problem",
         "tags": [
             "DFN",
@@ -1722,7 +1722,7 @@ var rpcsCategorized = {
     },
     "ORQQPL PROBLEM LEX SEARCH": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list from clinical lexicon for display in list or combo box",
         "tags": [
             "K/META",
@@ -1730,7 +1730,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPL PROBLEM LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "List of patient problems",
         "tags": [
             "DFN"
@@ -1749,14 +1749,14 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPL PROV FILTER LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Like many get provider/location RPCs, shouldn't be specific to a domain",
         "tags": [
             "DUZ"
         ]
     },
     "ORQQPL PROVIDER LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Like many get provider/location RPCs, shouldn't be specific to a domain",
         "tags": [
             "DUZ"
@@ -1781,7 +1781,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPL SERV FILTER LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["49"],
         "tags": [
             "K/META"
@@ -1789,7 +1789,7 @@ var rpcsCategorized = {
     },
     "ORQQPL SRVC SRCH": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["49"],
         "tags": [
             "K/META"
@@ -1804,7 +1804,7 @@ var rpcsCategorized = {
     },
     "ORQQPL USER PROB CATS": {
         "mn": "ORQQPL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Problem selection lists - globally and in field 125 of user. As a mix of global and user, counts as DUZ and not K/META",
         "files": ["125.1", "200"],
         "tags": [
@@ -1813,7 +1813,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPL USER PROB LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Despite name, USER/DUZ not involved",
         "files": ["125.12"],
         "tags": [
@@ -1829,7 +1829,7 @@ var rpcsCategorized = {
     },
     "ORQQPL4 LEX": {
         "mn": "ORQQPL4",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META",
             "LEXICON"
@@ -1837,27 +1837,27 @@ var rpcsCategorized = {
     },
     "ORQQPP LIST": {
         "mn": "ORQQPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORQQPS DETAIL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Details of a Medication Order - from patient specific but most work is inside PSRX. Note DINUM 55 used too.",
         "tags": [
             "DFN"
         ]
     },
     "ORQQPS LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Patient's condensed medication list",
         "tags": [
             "DFN"
         ]
     },
     "ORQQPX GET DEF LOCATIONS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQPX DEFAULT LOCATIONS"],
         "tags": [
             "PARAMETER",
@@ -1865,7 +1865,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPX GET FOLDERS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQPX REMINDER FOLDERS"],
         "tags": [
             "PARAMETER",
@@ -1873,7 +1873,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPX GET HIST LOCATIONS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["9999999.06"],
         "descr": "IHS LOCATION that maps to 4",
         "tags": [
@@ -1881,14 +1881,14 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPX GET NOT PURPOSE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "NOT OSEHRA",
             "OUT OF SCOPE"
         ]
     },
     "ORQQPX IMMUN LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Patients immunizaton list",
         "files": ["9000010.11"],
         "tags": [
@@ -1897,7 +1897,7 @@ var rpcsCategorized = {
     },
     "ORQQPX LVREMLST": {
         "mn": "ORQQPX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQPX COVER SHEET REM CLASSES", "ORQQPX COVER SHEET REMINDERS"],
         "descr": "cover sheet reminder settings",
         "tags": [
@@ -1907,7 +1907,7 @@ var rpcsCategorized = {
     },
     "ORQQPX NEW COVER SHEET ACTIVE": {
         "mn": "ORQQPX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQPX NEW REMINDER PARAMS"],
         "descr": "Service section from 200 is used",
         "tags": [
@@ -1918,7 +1918,7 @@ var rpcsCategorized = {
     },
     "ORQQPX NEW COVER SHEET REMS": {
         "mn": "ORQQPX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQPX SEARCH ITEMS"],
         "descr": "Service section from 200 is used",
         "tags": [
@@ -1928,7 +1928,7 @@ var rpcsCategorized = {
     },
     "ORQQPX NEW REMINDERS ACTIVE": {
         "mn": "ORQQPX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["PXRM GUI REMINDERS ACTIVE"],
         "descr": "Service section from 200 is used",
         "tags": [
@@ -1939,7 +1939,7 @@ var rpcsCategorized = {
     },
     "ORQQPX REM INSERT AT CURSOR": {
         "mn": "ORQQPX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQPX REMINDER TEXT AT CURSOR"],
         "descr": "Service section from 200 is used",
         "tags": [
@@ -1986,7 +1986,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM CHECK REM VERSION": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Getting version of package ie/ 9.4 (Package Prototype ie/ util though used from Reminder",
         "tags": [
             "S/META"
@@ -1994,7 +1994,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM DIALOG ACTIVE": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["811.9", "801.41"],
         "descr": "For a list of reminders [#811.9] returns same list with status to indicateif an active dialog exists for the reminder",
         "tags": [
@@ -2003,7 +2003,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM DIALOG PROMPTS": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["801.41"],
         "descr": "Additional prompts for a given dialog element",
         "tags": [
@@ -2012,7 +2012,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM EDUCATION SUBTOPICS": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["9999999.09"],
         "descr": "subtopics education",
         "tags": [
@@ -2021,14 +2021,14 @@ var rpcsCategorized = {
     },
     "ORQQPXRM EDUCATION SUMMARY": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORQQPXRM EDUCATION TOPIC": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["9999999.09"],
         "descr": "Detailed description of education topic - 9999999_09 is file",
         "tags": [
@@ -2064,7 +2064,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPXRM GET WH LETTER TEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["790.404"],
         "descr": "Template note of a particular type",
         "exArgs": "[1]",
@@ -2073,7 +2073,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPXRM GET WH LETTER TYPE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "8994 appears wrong as entry seems to be TYPE and not GETTYPE",
         "files": ["790.403"],
         "tags": [
@@ -2082,14 +2082,14 @@ var rpcsCategorized = {
         ]
     },
     "ORQQPXRM GET WH PROC RESULT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "OUT OF SCOPE",
             "NOT OSEHRA"
         ]
     },
     "ORQQPXRM GET WH REPORT TEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["790.1"],
         "descr": "Womans Health",
         "tags": [
@@ -2098,7 +2098,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM MENTAL HEALTH": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "MH TESTS and SURVEYS",
         "files": ["601.71"],
         "tags": [
@@ -2108,7 +2108,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM MENTAL HEALTH RESULTS": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns progress note text based on the results of the test.",
         "files": ["801.41"],
         "tags": [
@@ -2125,7 +2125,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM MHDLL": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "another Reminder score builder",
         "tags": [
             "DFN"
@@ -2133,7 +2133,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM MHV": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "but like others, a score calc => calculated field",
         "tags": [
             "DFN",
@@ -2150,7 +2150,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM PROGRESS NOTE HEADER": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["PXRM PROGRESS NOTE HEADERS"],
         "tags": [
             "LOCATION",
@@ -2159,7 +2159,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM REMINDER CATEGORIES": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["PXRM CPRS LOOKUP CATEGORIES"],
         "tags": [
             "LOCATION",
@@ -2176,7 +2176,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM REMINDER DIALOG": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["811.9", "801.41"],
         "descr": "Dialog for a given reminder",
         "tags": [
@@ -2193,7 +2193,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM REMINDER INQUIRY": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["811.9"],
         "exArgs": "[1]",
         "descr": "Detailed description of reminder",
@@ -2203,7 +2203,7 @@ var rpcsCategorized = {
     },
     "ORQQPXRM REMINDER WEB": {
         "mn": "ORQQPXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["811.9", "800"],
         "descr": "Web addresses for selected reminder - 800 is a meta file and there's only one",
         "tags": [
@@ -2236,7 +2236,7 @@ var rpcsCategorized = {
     },
     "ORQQVI NOTEVIT": {
         "mn": "ORQQVI",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Patient's vitals from a visit of a note ie/ two lookups",
         "tags": [
             "DFN"
@@ -2244,7 +2244,7 @@ var rpcsCategorized = {
     },
     "ORQQVI VITALS": {
         "mn": "ORQQVI",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Most recent vitals (used inside NODEVIT)",
         "tags": [
             "DFN"
@@ -2252,7 +2252,7 @@ var rpcsCategorized = {
     },
     "ORQQVI VITALS FOR DATE RANGE": {
         "mn": "ORQQVI",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "vitals for date range",
         "tags": [
             "DFN"
@@ -2260,7 +2260,7 @@ var rpcsCategorized = {
     },
     "ORQQVI1 DETAIL": {
         "mn": "ORQQVI1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Detail of Tests. Uses ^PXRMINDX(120.5 etc. ie/ vitals too",
         "tags": [
             "DFN"
@@ -2268,7 +2268,7 @@ var rpcsCategorized = {
     },
     "ORQQVI1 GRID": {
         "mn": "ORQQVI1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "^PXRMINDX(120.5 again leveraged",
         "tags": [
             "DFN"
@@ -2276,7 +2276,7 @@ var rpcsCategorized = {
     },
     "ORQQVI2 VITALS HELP": {
         "mn": "ORQQVI2",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "The list of types are hard coded in the file GMRVPCE0 and the help text is hard coded in GMRVPCE2 (should be in a meta data defn)",
         "exArgs": "[1]",
         "tags": [
@@ -2325,7 +2325,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQVS DETAIL NOTES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "the progress notes based on patient and visit identifier.",
         "tags": [
             "DFN",
@@ -2333,7 +2333,7 @@ var rpcsCategorized = {
         ]
     },
     "ORQQVS DETAIL SUMMARY": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "discharge summary for a visit",
         "tags": [
             "DFN"
@@ -2341,7 +2341,7 @@ var rpcsCategorized = {
     },
     "ORQQVS VISITS/APPTS": {
         "mn": "ORQQVS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of patient appointments and visits for a date/time range.location.",
         "tags": [
             "DFN",
@@ -2350,7 +2350,7 @@ var rpcsCategorized = {
     },
     "ORQQXMB MAIL GROUPS": {
         "mn": "ORQQXMB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["3.8"],
         "descr": "Straightforward output from a file, the System wide mail groups file 3.8",
         "tags": [
@@ -2359,7 +2359,7 @@ var rpcsCategorized = {
     },
     "ORQQXQA PATIENT": {
         "mn": "ORQQXQA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "100.9 has notification types. 8992 has user indexed alerts. Notifications per Patient per User - XQALERT leverages 8992, the Alert file which has entry per User and multiple per alert (ie/ hierarchy pattern vs alerts flat and index on user which would be better for MVDM)",
         "files": ["100.9", "8992"],
         "tags": [
@@ -2368,7 +2368,7 @@ var rpcsCategorized = {
     },
     "ORQQXQA USER": {
         "mn": "ORQQXQA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Notifications for User across all patients ... exs from Patch install issue etc etc beyond PATIENT",
         "files": ["100.9", "8992"],
         "tags": [
@@ -2386,7 +2386,7 @@ var rpcsCategorized = {
     },
     "ORVAA VAA": {
         "mn": "ORVAA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "VA Advantage policy name - seems to go into PATIENT(2)/2.312 which holds insurance policies.",
         "tags": [
             "DFN",
@@ -2406,7 +2406,7 @@ var rpcsCategorized = {
     },
     "ORWCH LDFONT": {
         "mn": "ORWCH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWCH FONT SIZE"],
         "descr": "Simple parameter getter - a user preference",
         "tags": [
@@ -2416,7 +2416,7 @@ var rpcsCategorized = {
     },
     "ORWCH LOADALL": {
         "mn": "ORWCH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "size related CPRS GUI chart params for user - rolls up a series of parameters",
         "parameters": ["ORWCH BOUNDS", "ORWCH WIDTHS", "ORWCH COLUMNS"],
         "tags": [
@@ -2426,7 +2426,7 @@ var rpcsCategorized = {
     },
     "ORWCH LOADSIZ": {
         "mn": "ORWCH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "size/bounds for CPRS GUI Control",
         "parameters": ["ORWCH BOUNDS"],
         "tags": [
@@ -2476,7 +2476,7 @@ var rpcsCategorized = {
     },
     "ORWCIRN AUTORDV": {
         "mn": "ORWCIRN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get parameter value for ORWRP CIRN AUTOMATIC.",
         "parameters": ["ORWRP CIRN AUTOMATIC"],
         "tags": [
@@ -2505,7 +2505,7 @@ var rpcsCategorized = {
     },
     "ORWCIRN HDRON": {
         "mn": "ORWCIRN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "pure get of 'ORWRP HDR ON'",
         "parameters": ["ORWRP HDR ON"],
         "tags": [
@@ -2514,7 +2514,7 @@ var rpcsCategorized = {
     },
     "ORWCIRN WEBADDR": {
         "mn": "ORWCIRN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWRP VISTAWEB ADDRESS"],
         "descr": "Can use parameter value but also has hard coded fall backs",
         "tags": [
@@ -2524,7 +2524,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWCOM DETAILS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns details of COM object when passed in COM IEN. Straight read from file",
         "exArgs": "[1]",
         "files": ["101.15"],
@@ -2533,7 +2533,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWCOM GETOBJS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns a list of all active COM objects",
         "files": ["101.15"],
         "tags": [
@@ -2543,7 +2543,7 @@ var rpcsCategorized = {
     },
     "ORWCOM ORDEROBJ": {
         "mn": "ORWCOM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Gets 'ORWCOM PATIENT SELECTED' COM object from PARAMETER. Per service and gets service/section (29) from DUZ/200",
         "parameters": ["ORWCOM PATIENT SELECTED"],
         "tags": [
@@ -2553,7 +2553,7 @@ var rpcsCategorized = {
     },
     "ORWCOM PTOBJ": {
         "mn": "ORWCOM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWCOM PATIENT SELECTED"],
         "descr": "Like ORWCOM ORDEROBJ but for a different COM/PARAMETER",
         "tags": [
@@ -2562,7 +2562,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWCS LIST OF CONSULT REPORTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -2577,7 +2577,7 @@ var rpcsCategorized = {
     },
     "ORWCS REPORT TEXT": {
         "mn": "ORWCS",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "Consult report formatted for an end user",
         "tags": [
             "UNSTRUCTURED READ",
@@ -2586,7 +2586,7 @@ var rpcsCategorized = {
     },
     "ORWCV DTLVST": {
         "mn": "ORWCV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This API returns the text of a progress note or discharge summary relatedto a visit/appointment.",
         "tags": [
             "DFN"
@@ -2594,7 +2594,7 @@ var rpcsCategorized = {
     },
     "ORWCV LAB": {
         "mn": "ORWCV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "labs for a patient",
         "tags": [
             "DFN"
@@ -2631,14 +2631,14 @@ var rpcsCategorized = {
     },
     "ORWCV VST": {
         "mn": "ORWCV",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "visits/admissions for a patient",
         "tags": [
             "DFN"
         ]
     },
     "ORWCV1 COVERSHEET LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWCV1 COVERSHEET LIST"],
         "files": ["101.24", "8994"],
         "tags": [
@@ -2647,7 +2647,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWD DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns the formatting definition (field 10) for an ordering dialog from the ORDERDIALOG file (101.41). Straight forward dump of field 10",
         "comlexity": "LOW",
         "exArgs": "[1]",
@@ -2665,7 +2665,7 @@ var rpcsCategorized = {
     },
     "ORWD FORMID": {
         "mn": "ORWD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "map to windows form for order dialog ... tells the GUI DELPHI code which form to use to process the order dialog ex/ OD_ALLERGY 105 etc. For GUI that isn't in PARAMETERS. Pass in Order to get Order Dialog - ideally would just pass in Order Dialog and then this would be K/META",
         "files": ["100", "101.41", "8989.52"],
         "tags": [
@@ -2674,7 +2674,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWD GET4EDIT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Responses in a format that can be used for edit. Starts from 100 which prevents pure meta data",
         "tags": [
             "DFN",
@@ -2683,7 +2683,7 @@ var rpcsCategorized = {
     },
     "ORWD KEY": {
         "mn": "ORWD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns a 1 if the user holds the KEY, otherwise a 0 is returned.",
         "tags": [
             "XUSEC",
@@ -2692,7 +2692,7 @@ var rpcsCategorized = {
     },
     "ORWD OI": {
         "mn": "ORWD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Orderables (101.43) iterator using named XREF",
         "exArgs": "[\"B\",0,\"A\"]",
         "files": ["101.43"],
@@ -2702,7 +2702,7 @@ var rpcsCategorized = {
     },
     "ORWD PROVKEY": {
         "mn": "ORWD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "does User possess the \"PROVIDER\" key. Like KEY only for specific KEY",
         "tags": [
             "DUZ",
@@ -2740,7 +2740,7 @@ var rpcsCategorized = {
     },
     "ORWD VALIDACT": {
         "mn": "ORWD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is action valid for order",
         "tags": [
             "DFN",
@@ -2749,12 +2749,12 @@ var rpcsCategorized = {
     },
     "ORWD1 COMLOC": {
         "mn": "ORWD1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "? CHECK IF STRUCT"
     },
     "ORWD1 PARAM": {
         "mn": "ORWD1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "? CHECK IF STRUCT"
     },
     "ORWD1 PRINTGUI": {
@@ -2782,7 +2782,7 @@ var rpcsCategorized = {
     },
     "ORWD1 SIG4ONE": {
         "mn": "ORWD1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Does an order need a sig?",
         "tags": [
             "DFN",
@@ -2799,7 +2799,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWD2 DEVINFO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return device info when signing orders. May be out of scope.",
         "tags": [
             "DFN"
@@ -2807,12 +2807,12 @@ var rpcsCategorized = {
     },
     "ORWD2 MANUAL": {
         "mn": "ORWD2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "? CHECK IF STRUCT"
     },
     "ORWDAL32 ALLERGY MATCH": {
         "mn": "ORWDAL32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Given a text string, return a list of possible matches from severaldifferent sources - K meta for Allergy",
         "tags": [
             "K/META"
@@ -2820,7 +2820,7 @@ var rpcsCategorized = {
     },
     "ORWDAL32 CLINUSER": {
         "mn": "ORWDAL32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Can use mark allergy as EIE? [DUZ] [PARAMETER] - combination of parameters",
         "tags": [
@@ -2830,7 +2830,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDAL32 DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get dialog data for allergies - some hard coded, some from 120.84, some like 'top ten symptoms' reflect system use",
         "files": ["120.84"],
         "complexity": "MEDIUM",
@@ -2840,7 +2840,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDAL32 LOAD FOR EDIT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "tags": [
             "DFN"
@@ -2867,7 +2867,7 @@ var rpcsCategorized = {
     },
     "ORWDAL32 SITE PARAMS": {
         "mn": "ORWDAL32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Parameters inside 120.84 for the site ie/ domain setting for site (ie/ not for user but for domain). If VISTA consistent then these would go into PARAMETERs ie. not all site or user parameters go into PARAMETERs. In Allergy Sessions, called with no arguments",
         "tags": [
             "I/META"
@@ -2875,7 +2875,7 @@ var rpcsCategorized = {
     },
     "ORWDAL32 SYMPTOMS": {
         "mn": "ORWDAL32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["120.83"],
         "exArgs": "[1, 1]",
         "tags": [
@@ -2884,7 +2884,7 @@ var rpcsCategorized = {
     },
     "ORWDBA1 BASTATUS": {
         "mn": "ORWDBA1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Billing awareness RPC - checks 9.7 to see if 'PX CLINICAL INDICATOR DATA CAPTURE 1.0' installed and checks and even adds a parameter",
         "tags": [
             "PATCH",
@@ -2893,7 +2893,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDBA1 GETORDX": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Diagnosis for an Order",
         "tags": [
             "DFN"
@@ -2954,7 +2954,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDBA2 GETPDL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "personal diag list in 200/200.0351 of User",
         "tags": [
             "DUZ"
@@ -2962,7 +2962,7 @@ var rpcsCategorized = {
     },
     "ORWDBA3 HINTS": {
         "mn": "ORWDBA3",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Hints for treatment factors - 9.2 HELP Meta",
         "files": ["9.2"],
         "tags": [
@@ -2970,7 +2970,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDBA4 GETBAUSR": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Simple DUZ-based parameter get",
         "parameters": ["OR BILLING AWARENESS BY USER"],
         "tags": [
@@ -2979,7 +2979,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDBA4 GETTFCI": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Roll up of Order Treatment Factors",
         "complexity": "LOW",
         "tags": [
@@ -2987,7 +2987,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDBA7 GETIEN9": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "IEN for an ICD9",
         "tags": [
             "IEN-LOOKUP",
@@ -2996,14 +2996,14 @@ var rpcsCategorized = {
     },
     "ORWDBA7 ISWITCH": {
         "mn": "ORWDBA7",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] has insurance?",
         "tags": [
             "DUZ"
         ]
     },
     "ORWDCN32 DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Should insurance questions be asked - sees if insurance in 2",
         "tags": [
             "DFN",
@@ -3012,7 +3012,7 @@ var rpcsCategorized = {
     },
     "ORWDCN32 NEWDLG": {
         "mn": "ORWDCN32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Lookup particular 101.43",
         "parameters": ["ORWDX NEW PROCEDURE"],
         "files": ["101.41"],
@@ -3023,7 +3023,7 @@ var rpcsCategorized = {
     },
     "ORWDCN32 ORDRMSG": {
         "mn": "ORWDCN32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "order message for orderable Meta",
         "files": ["101.43"],
         "complexity": "LOW",
@@ -3033,7 +3033,7 @@ var rpcsCategorized = {
     },
     "ORWDCN32 PROCEDURES": {
         "mn": "ORWDCN32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns a list of orderable procedures. Same as ORDITM^ORWDX except: 1. Checks inactive date in file 101.43 against NOW instead of DT.2. Checks for at least one service that can perform the procedure.3. Returns variable pointer to procedure in 4th piece of each item.",
         "files": ["101.43"],
         "tags": [
@@ -3042,7 +3042,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDCSLT DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.43", "101.42"],
         "descr": "See file ORWDCSLT.m",
         "tags": [
@@ -3052,7 +3052,7 @@ var rpcsCategorized = {
     },
     "ORWDCSLT LOOK200": {
         "mn": "ORWDCSLT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "User in 200",
         "tags": [
             "DUZ"
@@ -3068,7 +3068,7 @@ var rpcsCategorized = {
     },
     "ORWDFH ATTR": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "for a diet order - repackages raw FM form of 101.43",
         "files": ["101.43"],
         "tags": [
@@ -3077,7 +3077,7 @@ var rpcsCategorized = {
     },
     "ORWDFH CURISO": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return info on patient's active isolation order if any",
         "tags": [
             "DFN"
@@ -3085,7 +3085,7 @@ var rpcsCategorized = {
     },
     "ORWDFH CURRENT MEALS": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of current meal orders",
         "tags": [
             "DFN"
@@ -3093,7 +3093,7 @@ var rpcsCategorized = {
     },
     "ORWDFH DIETS": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Diets available",
         "exArgs": "[1, 1]",
         "tags": [
@@ -3102,7 +3102,7 @@ var rpcsCategorized = {
     },
     "ORWDFH FINDTYP": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Type of dietics order based on display group",
         "files": ["100.98"],
         "tags": [
@@ -3111,7 +3111,7 @@ var rpcsCategorized = {
     },
     "ORWDFH ISOIEN": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.43 'ISOLATION PROCEDURES' IEN",
         "files": ["101.43"],
         "tags": [
@@ -3120,7 +3120,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDFH ISOLIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Dietician reviews - user/patient",
         "files": ["119.4"],
         "tags": [
@@ -3128,7 +3128,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDFH NFSLOC READY": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "OK to order OP Meals from this location",
         "tags": [
             "IS-A",
@@ -3138,7 +3138,7 @@ var rpcsCategorized = {
     },
     "ORWDFH OPDIETS": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of up to 5 outpatient diets from file 119.9 but seems to just use 101.43",
         "files": ["119.9"],
         "exArgs": "[1, 1]",
@@ -3148,7 +3148,7 @@ var rpcsCategorized = {
     },
     "ORWDFH PARAM": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "dietetics parameters for a patient at a location",
         "tags": [
             "DFN"
@@ -3156,7 +3156,7 @@ var rpcsCategorized = {
     },
     "ORWDFH QTY2CC": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "cc's given a product, strength, & quantity",
         "files": ["101.43"],
         "tags": [
@@ -3165,7 +3165,7 @@ var rpcsCategorized = {
     },
     "ORWDFH TFPROD": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of active tubefeeding products",
         "files": ["101.43"],
         "tags": [
@@ -3174,14 +3174,14 @@ var rpcsCategorized = {
     },
     "ORWDFH TXT": {
         "mn": "ORWDFH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "text of the current and any future diets for patients - specific index in 100 ... ie/ will need to analyze indexes",
         "tags": [
             "DFN"
         ]
     },
     "ORWDGX LOAD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Load a list of activity orders",
         "files": ["101.43"],
         "tags": [
@@ -3190,23 +3190,23 @@ var rpcsCategorized = {
         ]
     },
     "ORWDGX VMDEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORWDLR ABBSPEC": {
         "mn": "ORWDLR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "? CHECK IF STRUCT"
     },
     "ORWDLR ALLSAMP": {
         "mn": "ORWDLR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "? CHECK IF STRUCT"
     },
     "ORWDLR DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get dialog definition specific to lab",
         "tags": [
             "K/META",
@@ -3214,7 +3214,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDLR LOAD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return sample, specimen, & urgency info about a lab test",
         "files": ["101.43"],
         "tags": [
@@ -3223,7 +3223,7 @@ var rpcsCategorized = {
     },
     "ORWDLR OIPARAM": {
         "mn": "ORWDLR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "same as ORWDLR LOAD and no longer used",
         "tags": [
             "DEPRECATED",
@@ -3240,7 +3240,7 @@ var rpcsCategorized = {
     },
     "ORWDLR32 ABBSPEC": {
         "mn": "ORWDLR32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "specimens with abbreviation (uses 'E' xref)",
         "files": ["61"],
         "tags": [
@@ -3249,7 +3249,7 @@ var rpcsCategorized = {
     },
     "ORWDLR32 ALLSAMP": {
         "mn": "ORWDLR32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "all collection samples",
         "files": ["62", "64.91"],
         "tags": [
@@ -3258,14 +3258,14 @@ var rpcsCategorized = {
     },
     "ORWDLR32 ALLSPEC": {
         "mn": "ORWDLR32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a set of specimens from topography file",
         "tags": [
             "K/META"
         ]
     },
     "ORWDLR32 DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab order dialog definition - like ORWDLR DEF",
         "tags": [
             "K/META",
@@ -3273,7 +3273,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDLR32 GET LAB TIMES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab collect times for a date and location - LR parameters",
         "tags": [
             "PARAMETER",
@@ -3281,7 +3281,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDLR32 IC DEFAULT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "default immediate collect time for the user’s division. Uses LABORATORY SITE (69.9) which sets up lab for site.",
         "files": ["69.9"],
         "tags": [
@@ -3301,7 +3301,7 @@ var rpcsCategorized = {
     },
     "ORWDLR32 IMMED COLLECT": {
         "mn": "ORWDLR32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "help screen showing immediate collect times",
         "tags": [
             "DUZ",
@@ -3320,7 +3320,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDLR32 LOAD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "sample, specimen, & urgency info about a lab test",
         "files": ["101.43"],
         "tags": [
@@ -3338,7 +3338,7 @@ var rpcsCategorized = {
     },
     "ORWDLR32 ONE SAMPLE": {
         "mn": "ORWDLR32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "data for one colelction sample",
         "files": ["62", "61"],
         "tags": [
@@ -3347,7 +3347,7 @@ var rpcsCategorized = {
     },
     "ORWDLR32 ONE SPECIMEN": {
         "mn": "ORWDLR32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "one specimen",
         "files": ["61"],
         "tags": [
@@ -3364,7 +3364,7 @@ var rpcsCategorized = {
     },
     "ORWDLR33 FUTURE LAB COLLECTS": {
         "mn": "ORWDLR33",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "number of days in the future to allow Lab Collects",
         "parameters": ["LR LAB COLLECT FUTURE"],
         "tags": [
@@ -3382,7 +3382,7 @@ var rpcsCategorized = {
     },
     "ORWDLR33 LC TO WC": {
         "mn": "ORWDLR33",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "text instructing user when LC changed to WC on accept/release - path from DUZ(2) so location based",
         "parameters": ["ORWLR LC CHANGED TO WC"],
         "tags": [
@@ -3393,7 +3393,7 @@ var rpcsCategorized = {
     },
     "ORWDOR LKSCRN": {
         "mn": "ORWDOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.41"],
         "descr": "off XREF of 100",
         "tags": [
@@ -3411,7 +3411,7 @@ var rpcsCategorized = {
     },
     "ORWDOR VMSLCT": {
         "mn": "ORWDOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Default list for the vitals dialog",
         "files": ["101.43"],
         "tags": [
@@ -3441,7 +3441,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 DOSEALT": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "dose alternatives - all from 101.43 lookup (part of Pharmacy/Med prototype scope)",
         "files": ["101.43"],
         "complexity": "MEDIUM",
@@ -3451,7 +3451,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 DOWSCH": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "all schedules - though can't see DFN use quickly (revisit)",
         "tags": [
             "DFN"
@@ -3469,7 +3469,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 FORMALT": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.43, formulary alternatives",
         "tags": [
             "K/META"
@@ -3477,7 +3477,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 HASOIPI": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.41 - put orderable into SIG (may be a parameter in other domains but per orderable here)",
         "files": ["101.41"],
         "tags": [
@@ -3486,7 +3486,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 HASROUTE": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.41, routes",
         "files": ["101.41"],
         "tags": [
@@ -3504,7 +3504,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 LOCPICK": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWDPS ROUTING DEFAULT"],
         "descr": "value is mapped but pure XPAR on 'ORWDPS ROUTING DEFAULT' per location (passed in) ie/ [LOCATION] preference for where pick up happens (Window or By Mail or In clinic) etc.",
         "tags": [
@@ -3514,7 +3514,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 ODSLCT": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "fixed values in code for DEFAULTs with a few variables check (location etc). This would go to pure JS or preferably a config meta defn. ie/ dialog defaults.",
         "files": ["101.42"],
         "tags": [
@@ -3523,7 +3523,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 QOMEDALT": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "K/META per package 9.4 off 101.41, 101.43 ? on whether COMPUTED or plain get(s)",
         "files": ["101.41", "101.43", "9.4"],
         "tags": [
@@ -3532,7 +3532,7 @@ var rpcsCategorized = {
     },
     "ORWDPS1 SCHALL": {
         "mn": "ORWDPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DFN] all schedules [LOCATION]",
         "tags": [
             "DFN",
@@ -3541,7 +3541,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 ADMIN": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DFN] but 101.43 and [LOCATION] too",
         "tags": [
             "DFN",
@@ -3550,7 +3550,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 CHKGRP": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DFN] indirectly ie/ concrete order categorized [COMPUTED] ... legimate computed property",
         "tags": [
             "DFN",
@@ -3559,7 +3559,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 CHKPI": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DFN] pre-existing patient instruction",
         "tags": [
             "DFN"
@@ -3575,7 +3575,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 MAXREF": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "maximum # of refills",
         "tags": [
             "DFN"
@@ -3583,7 +3583,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 OISLCT": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "defaults for 101.43 values. Should be in parameter/config file - K meta",
         "tags": [
             "HARD CODED",
@@ -3592,7 +3592,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 QOGRP": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "If quick order belong to Inpatient Med Order Group: return 1",
         "tags": [
             "K/META"
@@ -3608,7 +3608,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 REQST": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DFN] calculated from [LOCATION] and 101.43 meta",
         "tags": [
             "DFN",
@@ -3617,7 +3617,7 @@ var rpcsCategorized = {
     },
     "ORWDPS2 SCHREQ": {
         "mn": "ORWDPS2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[K/META] - is schedule required [IS-A] for a combination of orderable item, route, specific drug",
         "tags": [
             "K/META",
@@ -3626,7 +3626,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 ALLIVRTE": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[K/META] Route 51.2",
         "files": ["51.2"],
         "tags": [
@@ -3635,7 +3635,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 ALLROUTE": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["51.2"],
         "descr": "list of all available med routes",
         "tags": [
@@ -3644,7 +3644,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 AUTH": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Checks restrictions for entering inpatient meds. If no restrictions, a 0is returned. If there is a restriction, it is returned in the format: 1^restriction text",
         "parameters": ["OR OREMAS MED ORDERS"],
         "tags": [
@@ -3654,7 +3654,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 AUTHNVA": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "checks restrictions for entering non-VA meds. If no restrictions, a 0 isreturned. If there is a restriction, it is returned in the format:1^restriction text",
         "parameters": ["OR OREMAS NON-VA MED ORDERS"],
         "tags": [
@@ -3664,7 +3664,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 DLGSLCT": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "default lists for order dialogs in CPRS GUI.",
         "complexity": "HIGH",
         "tags": [
@@ -3673,7 +3673,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 DOSES": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Doses for an orderable",
         "files": ["101.43"],
         "tags": [
@@ -3682,7 +3682,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 DRUGMSG": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Local Drug definition 50",
         "files": ["50"],
         "tags": [
@@ -3691,7 +3691,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 FORMALT": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of formulary alternatives",
         "files": ["101.43"],
         "tags": [
@@ -3700,7 +3700,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 ISSPLY": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.43"],
         "descr": "is orderable item a supply?",
         "tags": [
@@ -3711,7 +3711,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 IVAMT": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.43"],
         "tags": [
             "K/META"
@@ -3719,7 +3719,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 MEDISIV": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "true if orderable item is IV medication",
         "complexity": "LOW",
         "files": ["101.43"],
@@ -3730,7 +3730,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 OISLCT": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "defaults for pharm OI - list of options",
         "complexity": "MEDIUM",
         "files": ["101.43"],
@@ -3740,7 +3740,7 @@ var rpcsCategorized = {
     },
     "ORWDPS32 SCSTS": {
         "mn": "ORWDPS32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "service connected eligibility for a patient - one path goes to billing API",
         "tags": [
             "DFN"
@@ -3785,7 +3785,7 @@ var rpcsCategorized = {
     },
     "ORWDPS33 COMPLOC": {
         "mn": "ORWDPS33",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[IS-A] [DFN] as about an order and its [LOCATION]",
         "tags": [
             "IS-A",
@@ -3794,7 +3794,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDPS33 GETADDFR": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "takes an Additive Orderable ITEM IEN and it returns the defaultadditive frequency defined to the additive file.",
         "tags": [
             "K/META"
@@ -3802,7 +3802,7 @@ var rpcsCategorized = {
     },
     "ORWDPS33 IVDOSFRM": {
         "mn": "ORWDPS33",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "NEEDs WORK: going through elements in an Order (according to comments)",
         "tags": [
             "DFN"
@@ -3818,7 +3818,7 @@ var rpcsCategorized = {
     },
     "ORWDPS4 CPLST": {
         "mn": "ORWDPS4",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get 'copay' questions DFN on 100",
         "tags": [
             "DFN"
@@ -3826,7 +3826,7 @@ var rpcsCategorized = {
     },
     "ORWDPS4 IPOD4OP": {
         "mn": "ORWDPS4",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is an Inpt (IV OI) order on an OutPatient",
         "tags": [
             "DFN",
@@ -3835,7 +3835,7 @@ var rpcsCategorized = {
     },
     "ORWDPS4 ISUDIV": {
         "mn": "ORWDPS4",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "OI of the order is for both UD and IV",
         "complexity": "LOW",
         "tags": [
@@ -3854,7 +3854,7 @@ var rpcsCategorized = {
     },
     "ORWDPS5 ISVTP": {
         "mn": "ORWDPS5",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is verbalTelephonedOrPolicy ie/ should be an enum, added in RPC",
         "tags": [
             "DFN",
@@ -3864,7 +3864,7 @@ var rpcsCategorized = {
     },
     "ORWDPS5 LESAPI": {
         "mn": "ORWDPS5",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Call LES Api (LES Api not in OSEHRA) from inside CPRS for validating changed lab order",
         "tags": [
             "DFN",
@@ -3874,7 +3874,7 @@ var rpcsCategorized = {
     },
     "ORWDPS5 LESGRP": {
         "mn": "ORWDPS5",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return all of the orders' display groups LES checked - hard coded list keys off 100.98 DISPLAY GROUP. In prep for LES Api call. LES Api is not in OSEHRA",
         "tags": [
             "HARD CODED",
@@ -3882,7 +3882,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDRA DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get Dialog Data for Radiology - like others for other Orderable types, takes arguments for different data ('modifiers', 'urgencies' etc)",
         "complexity": "MEDIUM",
         "files": ["101.42", "101.43"],
@@ -3893,7 +3893,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 APPROVAL": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] radiologists who can approve a procedure ie/ [QUERY]",
         "tags": [
             "DUZ",
@@ -3901,7 +3901,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDRA32 DEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Argument decides which of the (hard coded) meta data you want to see",
         "tags": [
             "K/META",
@@ -3910,7 +3910,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 IMTYPSEL": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "List of active imaging types - 79.2 but keys off a check to 101.43 of $D(^ORD(101.43,\"S.\"_ORX)) which seems to be id's of imaging types that can be ordered.",
         "files": ["101.42", "79.3"],
         "tags": [
@@ -3919,7 +3919,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 ISOLATN": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is a patient on isolation procedures? [COMPUTED]",
         "tags": [
             "DFN",
@@ -3929,7 +3929,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 LOCTYPE": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "location type - easy one field read",
         "complexity": "LOW",
         "tags": [
@@ -3938,7 +3938,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 PROCMSG": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "order message for procedure 101.43 but none in nodeVISTA (bound(8))",
         "complexity": "LOW",
         "tags": [
@@ -3947,7 +3947,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 RADSRC": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "contract agreements of type SHARING or CONTRACT file 34. empty in nodeVISTA. Referenced by rad/med orders",
         "files": ["34"],
         "tags": [
@@ -3956,7 +3956,7 @@ var rpcsCategorized = {
     },
     "ORWDRA32 RAORDITM": {
         "mn": "ORWDRA32",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "subset of orderable imaging types",
         "tags": [
             "K/META"
@@ -3965,7 +3965,7 @@ var rpcsCategorized = {
     "ORWDX AGAIN": {
         "mn": "ORWDX",
         "domain": "ORDER",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Property of 101.41 dictates whether this dialog leads to another",
         "tags": [
@@ -3984,7 +3984,7 @@ var rpcsCategorized = {
     },
     "ORWDX DGNM": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "100.98 display group by name",
         "tags": [
@@ -3994,7 +3994,7 @@ var rpcsCategorized = {
     },
     "ORWDX DGRP": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Like DGNM except allowed to pass tick mark and IEN of 100.48 too",
         "tags": [
@@ -4004,7 +4004,7 @@ var rpcsCategorized = {
     },
     "ORWDX DISMSG": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Return 'disabled message' for 101.41 dialog if available (none in nodeVISTA)",
         "tags": [
@@ -4012,7 +4012,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDX DLGDEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Name of 101.41 will return a dialog definition",
         "tags": [
@@ -4021,7 +4021,7 @@ var rpcsCategorized = {
     },
     "ORWDX DLGID": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get IEN of Dialog of Order",
         "complexity": "LOW",
         "tags": [
@@ -4030,7 +4030,7 @@ var rpcsCategorized = {
     },
     "ORWDX DLGQUIK": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Pass in either X + IEN of Order or IEN of cached quick order or IEN of orderable (101.43) and get responses for an orderable. Normally never mix DFN and K/META but here K/META comes indirectly from 100 if that is used instead of orderable reference directly",
         "tags": [
             "DFN",
@@ -4039,7 +4039,7 @@ var rpcsCategorized = {
     },
     "ORWDX FORMID": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Pass IEN of Order and get form id of the base dialog of the order. Only means something to Delphi. Another example of 100 Id leading into K/META when should have started in K/META id",
         "tags": [
             "DFN",
@@ -4047,7 +4047,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDX LOADRSP": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
@@ -4068,7 +4068,7 @@ var rpcsCategorized = {
     },
     "ORWDX MSG": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Message text of 101.43 orderable",
         "tags": [
             "K/META"
@@ -4076,7 +4076,7 @@ var rpcsCategorized = {
     },
     "ORWDX ORDITM": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "subset of orderable items - starting value for looping index, direction, index name",
         "tags": [
             "K/META",
@@ -4140,7 +4140,7 @@ var rpcsCategorized = {
     },
     "ORWDX WRLST": {
         "mn": "ORWDX",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of dialogs for writing orders. One optional argument is LOCATION.",
         "tags": [
             "K/META",
@@ -4174,7 +4174,7 @@ var rpcsCategorized = {
     },
     "ORWDX1 PATWARD": {
         "mn": "ORWDX1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patient ward",
         "tags": [
             "DFN"
@@ -4203,7 +4203,7 @@ var rpcsCategorized = {
     },
     "ORWDX2 DCREASON": {
         "mn": "ORWDX2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "List of valid discontinuation reasons from 100.03.",
         "tags": [
@@ -4240,7 +4240,7 @@ var rpcsCategorized = {
     },
     "ORWDXA DCREQIEN": {
         "mn": "ORWDXA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "IEN for Requesting Physician Cancelled reason 100.03",
         "tags": [
@@ -4257,7 +4257,7 @@ var rpcsCategorized = {
     },
     "ORWDXA FLAGTXT": {
         "mn": "ORWDXA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "text of flag on order",
         "tags": [
             "DFN"
@@ -4273,7 +4273,7 @@ var rpcsCategorized = {
     },
     "ORWDXA ISACTOI": {
         "mn": "ORWDXA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "files": ["101.43"],
         "descr": "is order item 101.43 active?",
@@ -4284,7 +4284,7 @@ var rpcsCategorized = {
     },
     "ORWDXA OFCPLX": {
         "mn": "ORWDXA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is order a parent?",
         "tags": [
             "DFN",
@@ -4324,7 +4324,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDXA WCGET": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "matches WCPUT - returns WARD COMMENTs for an Order",
         "tags": [
             "DFN"
@@ -4379,7 +4379,7 @@ var rpcsCategorized = {
     },
     "ORWDXC FILLID": {
         "mn": "ORWDXC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Filler ID (namespace) for a dialog. 101.41/100.98 - part of Order Checks",
         "files": ["101.41", "100.98"],
         "tags": [
@@ -4388,7 +4388,7 @@ var rpcsCategorized = {
     },
     "ORWDXC ON": {
         "mn": "ORWDXC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "ORK SYSTEM ENABLE/DISABLE ie/ if order checking on",
         "tags": [
             "PARAMETER",
@@ -4421,7 +4421,7 @@ var rpcsCategorized = {
     },
     "ORWDXM DLGNAME": {
         "mn": "ORWDXM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "name(s) of dialog & base dialog given IEN",
         "tags": [
             "K/META",
@@ -4430,7 +4430,7 @@ var rpcsCategorized = {
     },
     "ORWDXM FORMID": {
         "mn": "ORWDXM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "the FormID for a dialog 101.41",
         "files": ["101.41"],
         "tags": [
@@ -4438,7 +4438,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDXM LOADSET": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Contents of an Order Set 101.41",
         "tags": [
             "K/META"
@@ -4446,7 +4446,7 @@ var rpcsCategorized = {
     },
     "ORWDXM MENU": {
         "mn": "ORWDXM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "menu contents for an order dialog",
         "tags": [
             "K/META"
@@ -4454,7 +4454,7 @@ var rpcsCategorized = {
     },
     "ORWDXM MSTYLE": {
         "mn": "ORWDXM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "the menu style for the system PARAMETER at system level",
         "tags": [
             "PARAMETER",
@@ -4463,7 +4463,7 @@ var rpcsCategorized = {
     },
     "ORWDXM PROMPTS": {
         "mn": "ORWDXM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.41 ... record summary",
         "tags": [
             "K/META"
@@ -4479,7 +4479,7 @@ var rpcsCategorized = {
     },
     "ORWDXM1 SVRPC": {
         "mn": "ORWDXM1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "PARAMETER 'OR RA RFS CARRY ON' - should 'study' continue?",
         "tags": [
             "PARAMETER",
@@ -4494,7 +4494,7 @@ var rpcsCategorized = {
     },
     "ORWDXM3 ISUDQO": {
         "mn": "ORWDXM3",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is this a unit dose quick order ie/ set of &'s. COMPUTED or could have a set of classifications that are calculated",
         "tags": [
             "IS-A",
@@ -4503,7 +4503,7 @@ var rpcsCategorized = {
     },
     "ORWDXQ DLGNAME": {
         "mn": "ORWDXQ",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.41 name",
         "tags": [
             "K/META"
@@ -4517,13 +4517,13 @@ var rpcsCategorized = {
         ]
     },
     "ORWDXQ GETQLST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORWDXQ GETQNAM": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "More Quick order stuff",
         "tags": [
             "K/META"
@@ -4556,7 +4556,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDXR GETPKG": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "(prefix of) Package 9.4 to which Order is related (should really be on Orderable?)",
         "tags": [
             "DFN"
@@ -4564,7 +4564,7 @@ var rpcsCategorized = {
     },
     "ORWDXR GTORITM": {
         "mn": "ORWDXR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "return orderable item",
         "tags": [
@@ -4573,7 +4573,7 @@ var rpcsCategorized = {
     },
     "ORWDXR ISCPLX": {
         "mn": "ORWDXR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "DFN - is it complex? IS-A COMPUTED",
         "tags": [
             "DFN",
@@ -4583,7 +4583,7 @@ var rpcsCategorized = {
     },
     "ORWDXR ISNOW": {
         "mn": "ORWDXR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "DFN - is first time for Order, NOW?",
         "tags": [
             "DFN",
@@ -4593,7 +4593,7 @@ var rpcsCategorized = {
     },
     "ORWDXR ISREL": {
         "mn": "ORWDXR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "has 100 been released?",
         "tags": [
             "DFN",
@@ -4602,7 +4602,7 @@ var rpcsCategorized = {
     },
     "ORWDXR ORCPLX": {
         "mn": "ORWDXR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "children orders of a complex order",
         "tags": [
             "DFN"
@@ -4618,7 +4618,7 @@ var rpcsCategorized = {
     },
     "ORWDXR RNWFLDS": {
         "mn": "ORWDXR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "return fields for the renew action",
         "tags": [
             "DFN"
@@ -4626,7 +4626,7 @@ var rpcsCategorized = {
     },
     "ORWDXR01 CANCHG": {
         "mn": "ORWDXR01",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "can edit?",
         "tags": [
             "DFN",
@@ -4636,7 +4636,7 @@ var rpcsCategorized = {
     },
     "ORWDXR01 ISSPLY": {
         "mn": "ORWDXR01",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is PLO SUPPLY DIALOG?",
         "tags": [
             "IS-A",
@@ -4645,7 +4645,7 @@ var rpcsCategorized = {
     },
     "ORWDXR01 OXDATA": {
         "mn": "ORWDXR01",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "order check usage",
         "tags": [
             "DFN"
@@ -4660,7 +4660,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB COMPORD": {
         "mn": "ORWDXVB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get sequence order of Blood Components for selection. Returns 101.43 in sequence and 101.43 walk summarizes these components",
         "files": ["101.43"],
         "tags": [
@@ -4669,7 +4669,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWDXVB GETALL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Patient's blood bank activity",
         "tags": [
             "DFN"
@@ -4677,7 +4677,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB NURSADMN": {
         "mn": "ORWDXVB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This procedure checks the parameter OR VBECS SUPPRESS NURS ADMIN to seeif the Nursing Administration Order prompt/pop-up should be supressedafter a VBECS Blood Bank order has been created.",
         "parameters": ["OR VBECS SUPPRESS NURS ADMIN"],
         "tags": [
@@ -4686,7 +4686,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB RAW": {
         "mn": "ORWDXVB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return raw Lab Test Results associated with Blood Bank order - pass in test 60s too",
         "tags": [
             "DFN"
@@ -4694,7 +4694,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB RESULTS": {
         "mn": "ORWDXVB",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "Return patient's Lab Test Results associated with Blood Bank order",
         "tags": [
             "DFN"
@@ -4702,7 +4702,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB STATALOW": {
         "mn": "ORWDXVB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Check to see if user is allowed to order STAT orders through VBECS.Checks users with parameter: OR VBECS STAT USER ie/ USER PROFILE",
         "tags": [
             "DUZ",
@@ -4711,7 +4711,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB SUBCHK": {
         "mn": "ORWDXVB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Check to see if selected test is a Blood Component or a Diagnostic Test. 101.43",
         "tags": [
             "K/META",
@@ -4720,7 +4720,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB VBTNS": {
         "mn": "ORWDXVB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "days back to check 'ORWDXVB VBECS TNS CHECK'",
         "parameters": ["ORWDXVB VBECS TNS CHECK"],
         "tags": [
@@ -4729,7 +4729,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB3 COLLTIM": {
         "mn": "ORWDXVB3",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC checks the value of the parameter OR VBECS REMOVE COLL TIMEto determine if a default collection time should be presented on theVBECS order dialog.",
         "parameters": ["OR VBECS REMOVE COLL TIME"],
         "tags": [
@@ -4738,7 +4738,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB3 DIAGORD": {
         "mn": "ORWDXVB3",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get sequence order of Diagnostic Tests for selection. List kept in PRAMETER and walks 101.43 for Diagnostic tests. Like 'ORWDXVB COMPORD'",
         "tags": [
             "PARAMETER",
@@ -4747,7 +4747,7 @@ var rpcsCategorized = {
     },
     "ORWDXVB3 SWPANEL": {
         "mn": "ORWDXVB3",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC checks the value of the parameter OR VBECS DIAGNOSTIC PANEL 1STto determine the location of the Diagnostic and Component panels on theVBECS order dialog.",
         "parameters": ["OR VBECS DIAGNOSTIC PANEL 1ST"],
         "tags": [
@@ -4756,7 +4756,7 @@ var rpcsCategorized = {
     },
     "ORWGEPT CLINRNG": {
         "mn": "ORWGEPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "OUT OF SCOPE",
             "NOT OSEHRA"
@@ -4764,7 +4764,7 @@ var rpcsCategorized = {
     },
     "ORWGN AUTHUSR": {
         "mn": "ORWGN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "can a user access group notes ie/ USER PREFERENCE",
         "tags": [
             "PARAMETER",
@@ -4773,7 +4773,7 @@ var rpcsCategorized = {
     },
     "ORWGN GNLOC": {
         "mn": "ORWGN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is valid GN location",
         "parameters": ["OR GN LOCATIONS"],
         "tags": [
@@ -4783,7 +4783,7 @@ var rpcsCategorized = {
     },
     "ORWGN IDTVALID": {
         "mn": "ORWGN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns Implementation date of the ICD code set",
         "tags": [
             "K/META"
@@ -4791,7 +4791,7 @@ var rpcsCategorized = {
     },
     "ORWGN MAXFRQ": {
         "mn": "ORWGN",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Lexicon - checks if the frequency of an ICD-10 search term is than the maximum allowed ICD-10 return values. (strange in group note utils)",
         "tags": [
             "K/META"
@@ -4799,7 +4799,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC ALLITEMS": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patient summary - all items",
         "tags": [
             "DFN"
@@ -4807,7 +4807,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC ALLVIEWS": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "all views of user - USER PREFERENCE",
         "tags": [
             "DUZ"
@@ -4815,7 +4815,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC CLASS": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "classifications from 50.605 etc",
         "tags": [
             "K/META"
@@ -4823,7 +4823,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC DATEITEM": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patient items in date range",
         "tags": [
             "DFN"
@@ -4839,21 +4839,21 @@ var rpcsCategorized = {
         ]
     },
     "ORWGRPC DETAIL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get all reports for types of data",
         "tags": [
             "DFN"
         ]
     },
     "ORWGRPC DETAILS": {
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWGRPC FASTDATA": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DFN] all non graph data on patient",
         "tags": [
             "DFN"
@@ -4861,14 +4861,14 @@ var rpcsCategorized = {
     },
     "ORWGRPC FASTITEM": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWGRPC FASTLABS": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -4914,21 +4914,21 @@ var rpcsCategorized = {
     },
     "ORWGRPC ITEMDATA": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWGRPC ITEMS": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWGRPC LOOKUP": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "item names for long lookup",
         "tags": [
             "DFN"
@@ -4936,7 +4936,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC PUBLIC": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "PARAMETER"
@@ -4944,7 +4944,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC RPTPARAM": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "OE/RR REPORT",
         "files": ["101.24"],
         "tags": [
@@ -4971,7 +4971,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC TAX": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "reminder taxonomies",
         "tags": [
             "K/META"
@@ -4983,7 +4983,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC TESTSPEC": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Test spec data for lab tests",
         "tags": [
             "K/META"
@@ -4991,7 +4991,7 @@ var rpcsCategorized = {
     },
     "ORWGRPC TYPES": {
         "mn": "ORWGRPC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "all types of data on a patient",
         "tags": [
             "DFN"
@@ -5019,7 +5019,7 @@ var rpcsCategorized = {
     },
     "ORWLR CUMULATIVE SECTION": {
         "mn": "ORWLR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This rpc retrieves the part of the lab cumulative report selected by the user on the Labs tab.",
         "tags": [
             "DFN"
@@ -5033,7 +5033,7 @@ var rpcsCategorized = {
     },
     "ORWLRR ALLTESTS": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["60"],
         "descr": "lab results",
         "tags": [
@@ -5042,7 +5042,7 @@ var rpcsCategorized = {
     },
     "ORWLRR ATESTS": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "files": ["60"],
         "tags": [
@@ -5051,7 +5051,7 @@ var rpcsCategorized = {
     },
     "ORWLRR ATG": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] lab",
         "files": ["60", "69.2", "68"],
         "tags": [
@@ -5061,7 +5061,7 @@ var rpcsCategorized = {
     },
     "ORWLRR ATOMICS": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "files": ["60"],
         "tags": [
@@ -5070,7 +5070,7 @@ var rpcsCategorized = {
     },
     "ORWLRR CHART": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "tags": [
             "DFN"
@@ -5078,7 +5078,7 @@ var rpcsCategorized = {
     },
     "ORWLRR CHEMTEST": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "files": ["60"],
         "exArgs": "[1, 1]",
@@ -5088,14 +5088,14 @@ var rpcsCategorized = {
     },
     "ORWLRR GRID": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "tags": [
             "DFN"
         ]
     },
     "ORWLRR INFO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["60"],
         "tags": [
             "K/META"
@@ -5103,7 +5103,7 @@ var rpcsCategorized = {
     },
     "ORWLRR INTERIM": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Interim Report [DFN]",
         "tags": [
             "DFN"
@@ -5111,7 +5111,7 @@ var rpcsCategorized = {
     },
     "ORWLRR INTERIMG": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab [DFN]",
         "tags": [
             "DFN"
@@ -5119,7 +5119,7 @@ var rpcsCategorized = {
     },
     "ORWLRR INTERIMS": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab [DFN]",
         "tags": [
             "DFN"
@@ -5127,7 +5127,7 @@ var rpcsCategorized = {
     },
     "ORWLRR MICRO": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab [DFN]",
         "tags": [
             "DFN"
@@ -5135,7 +5135,7 @@ var rpcsCategorized = {
     },
     "ORWLRR NEWOLD": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab [DFN]",
         "tags": [
             "DFN"
@@ -5143,7 +5143,7 @@ var rpcsCategorized = {
     },
     "ORWLRR PARAM": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab site setup file",
         "files": ["69.9"],
         "tags": [
@@ -5152,7 +5152,7 @@ var rpcsCategorized = {
     },
     "ORWLRR SPEC": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["61"],
         "tags": [
             "K/META"
@@ -5160,14 +5160,14 @@ var rpcsCategorized = {
     },
     "ORWLRR TG": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWLRR USERS": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "files": ["68"],
         "tags": [
@@ -5177,7 +5177,7 @@ var rpcsCategorized = {
     },
     "ORWLRR UTGA": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "QUERY",
             "DUZ"
@@ -5185,7 +5185,7 @@ var rpcsCategorized = {
     },
     "ORWLRR UTGD": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "tags": [
             "QUERY",
@@ -5194,7 +5194,7 @@ var rpcsCategorized = {
     },
     "ORWLRR UTGR": {
         "mn": "ORWLRR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab",
         "tags": [
             "QUERY",
@@ -5203,7 +5203,7 @@ var rpcsCategorized = {
     },
     "ORWMC PATIENT PROCEDURES": {
         "mn": "ORWMC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns a list of patient procedures for a specific patient.",
         "tags": [
             "DFN"
@@ -5211,7 +5211,7 @@ var rpcsCategorized = {
     },
     "ORWMC PATIENT PROCEDURES1": {
         "mn": "ORWMC",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This remote procedure call returns a list of patient procedures for a specific patient.",
         "tags": [
             "DFN"
@@ -5235,7 +5235,7 @@ var rpcsCategorized = {
     },
     "ORWNSS NSSMSG": {
         "mn": "ORWNSS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "DUZ to Service for parameter lookup",
         "complexity": "LOW",
         "parameters": ["ORWIM NSS MESSAGE"],
@@ -5246,7 +5246,7 @@ var rpcsCategorized = {
     },
     "ORWNSS QOSCH": {
         "mn": "ORWNSS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "101.41 [K/META]",
         "tags": [
             "K/META"
@@ -5254,7 +5254,7 @@ var rpcsCategorized = {
     },
     "ORWNSS VALSCH": {
         "mn": "ORWNSS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Validate a schedule for IM order",
         "tags": [
             "IS-A",
@@ -5263,7 +5263,7 @@ var rpcsCategorized = {
     },
     "ORWOR ACTION TEXT": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return detail action information",
         "tags": [
             "DFN"
@@ -5279,7 +5279,7 @@ var rpcsCategorized = {
     },
     "ORWOR PKISITE": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "100.7 SITE PARAMETER not in parameter by [LOCATION] as accesses site set global",
         "tags": [
             "LOCATION"
@@ -5287,7 +5287,7 @@ var rpcsCategorized = {
     },
     "ORWOR PKIUSE": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "user can use PKI Digital Signature?",
         "tags": [
             "DUZ"
@@ -5295,7 +5295,7 @@ var rpcsCategorized = {
     },
     "ORWOR RESULT": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Results of order identified by ID",
         "tags": [
             "DFN"
@@ -5303,14 +5303,14 @@ var rpcsCategorized = {
     },
     "ORWOR RESULT HISTORY": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWOR SHEETS": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "order sheets for a patient",
         "tags": [
             "DFN"
@@ -5318,7 +5318,7 @@ var rpcsCategorized = {
     },
     "ORWOR TSALL": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "treating specialities straight return",
         "files": ["45.7"],
         "tags": [
@@ -5327,14 +5327,14 @@ var rpcsCategorized = {
     },
     "ORWOR UNSIGN": {
         "mn": "ORWOR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "return unsigned orders",
         "tags": [
             "DFN"
         ]
     },
     "ORWOR VWGET": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get preferred view for orders",
         "parameters": ["ORCH CONTEXT ORDERS"],
         "tags": [
@@ -5353,20 +5353,20 @@ var rpcsCategorized = {
     },
     "ORWOR1 CHKDIG": {
         "mn": "ORWOR1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is digital sig required",
         "tags": [
             "DFN"
         ]
     },
     "ORWOR1 GETDEA": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWOR1 GETDSCH": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Check if order is drug schedule",
         "tags": [
@@ -5374,7 +5374,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWOR1 GETDSIG": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Get digital signature from order",
         "tags": [
@@ -5382,7 +5382,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWOR1 GETDTEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "descr": "Get text from order",
         "tags": [
@@ -5415,20 +5415,20 @@ var rpcsCategorized = {
     },
     "ORWORB FASTUSER": {
         "mn": "ORWORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "'notifications for current user', across all patients (note: need to get into notifications)",
         "tags": [
             "DFN"
         ]
     },
     "ORWORB GET TIU ALERT INFO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWORB GETDATA": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8992"],
         "descr": "XQADATA for an alert",
         "tags": [
@@ -5437,7 +5437,7 @@ var rpcsCategorized = {
     },
     "ORWORB GETSORT": {
         "mn": "ORWORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "'method for sorting gui display' - PARAMETER !",
         "tags": [
             "PARAMETER"
@@ -5492,7 +5492,7 @@ var rpcsCategorized = {
     },
     "ORWORB TEXT FOLLOWUP": {
         "mn": "ORWORB",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Returns text for notifications/alerts with a simple text message follow-upaction."
     },
     "ORWORB UNSIG ORDERS FOLLOWUP": {
@@ -5505,7 +5505,7 @@ var rpcsCategorized = {
     },
     "ORWORDG ALLTREE": {
         "mn": "ORWORDG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.98"],
         "tags": [
             "K/META"
@@ -5513,7 +5513,7 @@ var rpcsCategorized = {
     },
     "ORWORDG GRPSEQB": {
         "mn": "ORWORDG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.98"],
         "parameters": ["ORWOR CATEGORY SEQUENCE"],
         "tags": [
@@ -5523,7 +5523,7 @@ var rpcsCategorized = {
     },
     "ORWORDG IEN": {
         "mn": "ORWORDG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lookup 100.98 by name",
         "tags": [
             "K/META",
@@ -5532,7 +5532,7 @@ var rpcsCategorized = {
     },
     "ORWORDG MAPSEQ": {
         "mn": "ORWORDG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "DISPLAY GROUP GROUPED",
         "files": ["100.98"],
         "tags": [
@@ -5542,14 +5542,14 @@ var rpcsCategorized = {
     },
     "ORWORDG REVSTS": {
         "mn": "ORWORDG",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return the status flags available for review orders",
         "tags": [
             "K/META"
         ]
     },
     "ORWORR AGET": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get abbrev. event delayed order list for patient",
         "tags": [
             "DFN",
@@ -5557,7 +5557,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWORR GET": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN",
             "QUERY"
@@ -5572,19 +5572,19 @@ var rpcsCategorized = {
         ]
     },
     "ORWORR GETBYIFN": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWORR GETTXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWORR RGET": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Orders of AutoDC/Release Event",
         "tags": [
             "DFN",
@@ -5593,7 +5593,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ACTIVE CODE": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is code active at a particular date - ICD/CPT etc",
         "tags": [
             "K/META"
@@ -5601,7 +5601,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ACTIVE PROV": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Provider active for PCE for a visit date ie/ not a particular visit?",
         "tags": [
             "DUZ",
@@ -5610,7 +5610,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ACTPROB": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Build list of active problems for patient.",
         "tags": [
             "DFN"
@@ -5618,7 +5618,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ALWAYS CHECKOUT": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWPCE DISABLE AUTO CHECKOUT"],
         "descr": "DUZ for service for lookup",
         "tags": [
@@ -5629,7 +5629,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ANYTIME": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWPCE ANYTIME ENCOUNTERS"],
         "tags": [
             "DUZ",
@@ -5638,7 +5638,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ASKPCE": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWPCE ASK ENCOUNTER UPDATE"],
         "tags": [
             "DUZ",
@@ -5646,7 +5646,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWPCE AUTO VISIT TYPE SELECT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "PARAMETER",
@@ -5655,7 +5655,7 @@ var rpcsCategorized = {
     },
     "ORWPCE CPTMODS": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "modifiers for CPT",
         "tags": [
             "K/META"
@@ -5663,7 +5663,7 @@ var rpcsCategorized = {
     },
     "ORWPCE CPTREQD": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "IS-A",
             "DFN"
@@ -5671,7 +5671,7 @@ var rpcsCategorized = {
     },
     "ORWPCE CXNOSHOW": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "IS-A",
             "DFN"
@@ -5686,7 +5686,7 @@ var rpcsCategorized = {
     },
     "ORWPCE DIAG": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get list of diagnoses for clinic",
         "tags": [
             "K/META",
@@ -5696,7 +5696,7 @@ var rpcsCategorized = {
     },
     "ORWPCE FORCE": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Retrieve FORCE GUI PCE Entry for a given User/Location",
         "tags": [
             "DUZ",
@@ -5706,7 +5706,7 @@ var rpcsCategorized = {
     },
     "ORWPCE GAFOK": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "patch - true if all supporting MH GAF Code exists",
         "tags": [
             "IS-A",
@@ -5715,7 +5715,7 @@ var rpcsCategorized = {
     },
     "ORWPCE GAFURL": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns MH url which is in YTAPI5.m",
         "tags": [
             "HARD CODED",
@@ -5730,21 +5730,21 @@ var rpcsCategorized = {
         ]
     },
     "ORWPCE GET EDUCATION TOPICS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "QUERY",
             "K/META"
         ]
     },
     "ORWPCE GET EXAM TYPE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "QUERY",
             "K/META"
         ]
     },
     "ORWPCE GET EXCLUDED": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "List of excluded PCE entries - for user, kept in PARAMETER",
         "tags": [
             "PARAMETER",
@@ -5752,14 +5752,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWPCE GET HEALTH FACTORS TY": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "QUERY",
             "K/META"
         ]
     },
     "ORWPCE GET IMMUNIZATION TYPE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Active immunizations",
         "tags": [
             "QUERY",
@@ -5767,14 +5767,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWPCE GET SET OF CODES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "QUERY",
             "K/META"
         ]
     },
     "ORWPCE GET SKIN TEST TYPE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Active entries in 9999999.28",
         "tags": [
             "QUERY",
@@ -5782,7 +5782,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWPCE GET TREATMENT TYPE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "TREATMENT (9999999_17) listing",
         "tags": [
             "QUERY",
@@ -5790,14 +5790,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWPCE GET VISIT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN",
             "IEN-LOOKUP"
         ]
     },
     "ORWPCE GETMOD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Info for a specified modifier",
         "tags": [
             "K/META"
@@ -5812,7 +5812,7 @@ var rpcsCategorized = {
     },
     "ORWPCE HASCPT": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "type maps to CPT through 811_1 (leverages meta)",
         "tags": [
             "K/META"
@@ -5820,7 +5820,7 @@ var rpcsCategorized = {
     },
     "ORWPCE HASVISIT": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "doc has visit",
         "tags": [
             "DFN",
@@ -5829,7 +5829,7 @@ var rpcsCategorized = {
     },
     "ORWPCE HF": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Part of set like IMM ... list of health factors for clinic",
         "tags": [
             "LOCATION",
@@ -5838,7 +5838,7 @@ var rpcsCategorized = {
     },
     "ORWPCE HNCOK": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "true if Head and/or Neck Cancer is enabled ... PATCH checker",
         "tags": [
             "IS-A",
@@ -5848,7 +5848,7 @@ var rpcsCategorized = {
     },
     "ORWPCE I10IMPDT": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "HARD CODED",
             "S/META"
@@ -5856,7 +5856,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ICDVER": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "System config - ICD code version 9 or 10",
         "tags": [
             "HARD CODED",
@@ -5865,7 +5865,7 @@ var rpcsCategorized = {
     },
     "ORWPCE IMM": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of immunizations for clinic - calls into 357.6 PACKAGE INTERFACE, 357.2 SELECTION LIST etc. Not Parameter as would seem to fit",
         "tags": [
             "K/META",
@@ -5874,7 +5874,7 @@ var rpcsCategorized = {
     },
     "ORWPCE ISCLINIC": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "is it a clinic?",
         "tags": [
             "LOCATION",
@@ -5883,7 +5883,7 @@ var rpcsCategorized = {
     },
     "ORWPCE LEX": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lexicon",
         "tags": [
             "K/META"
@@ -5891,14 +5891,14 @@ var rpcsCategorized = {
     },
     "ORWPCE LEXCODE": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lexicon",
         "tags": [
             "K/META"
         ]
     },
     "ORWPCE LOADGAF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "GAF score Patient",
         "tags": [
             "DFN",
@@ -5908,7 +5908,7 @@ var rpcsCategorized = {
     },
     "ORWPCE MH TEST AUTHORIZED": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Indicates if a given mental health test can be given by the given user.",
         "tags": [
             "DUZ",
@@ -5917,7 +5917,7 @@ var rpcsCategorized = {
     },
     "ORWPCE MHCLINIC": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "if mental health clinic",
         "tags": [
             "LOCATION",
@@ -5926,7 +5926,7 @@ var rpcsCategorized = {
     },
     "ORWPCE MHTESTOK": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "mental health APIs active and user allowed",
         "tags": [
             "DUZ",
@@ -5936,7 +5936,7 @@ var rpcsCategorized = {
     },
     "ORWPCE NOTEVSTR": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "visit - author for note",
         "tags": [
             "DFN"
@@ -5944,7 +5944,7 @@ var rpcsCategorized = {
     },
     "ORWPCE PCE4NOTE": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "encounter for note",
         "tags": [
             "DFN"
@@ -5952,7 +5952,7 @@ var rpcsCategorized = {
     },
     "ORWPCE PED": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of education topics for a clinic",
         "tags": [
             "LOCATION",
@@ -5961,7 +5961,7 @@ var rpcsCategorized = {
     },
     "ORWPCE PROC": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of procedures for a clinic",
         "tags": [
             "LOCATION",
@@ -5986,7 +5986,7 @@ var rpcsCategorized = {
     },
     "ORWPCE SCDIS": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "service connected and rated disabilities",
         "tags": [
             "DFN"
@@ -5994,7 +5994,7 @@ var rpcsCategorized = {
     },
     "ORWPCE SCSEL": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "sc conditions that may be selected for patient",
         "tags": [
             "DFN"
@@ -6002,7 +6002,7 @@ var rpcsCategorized = {
     },
     "ORWPCE SK": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "skin tests for a clinic",
         "tags": [
             "LOCATION",
@@ -6011,7 +6011,7 @@ var rpcsCategorized = {
     },
     "ORWPCE TRT": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "treatment types for a clinic",
         "tags": [
             "LOCATION",
@@ -6020,7 +6020,7 @@ var rpcsCategorized = {
     },
     "ORWPCE VISIT": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "visit types for a clinic",
         "tags": [
             "LOCATION",
@@ -6029,7 +6029,7 @@ var rpcsCategorized = {
     },
     "ORWPCE XAM": {
         "mn": "ORWPCE",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "exams for a clinic",
         "tags": [
             "LOCATION",
@@ -6038,7 +6038,7 @@ var rpcsCategorized = {
     },
     "ORWPCE1 NONCOUNT": {
         "mn": "ORWPCE1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Is a given HOSPITAL LOCATION (file 44) a non-count clinic?  (DBIA #964) [LOCATION]",
         "tags": [
             "LOCATION",
@@ -6047,7 +6047,7 @@ var rpcsCategorized = {
     },
     "ORWPCE4 LEX": {
         "mn": "ORWPCE4",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "QUERY",
             "K/META"
@@ -6055,7 +6055,7 @@ var rpcsCategorized = {
     },
     "ORWPFSS IS PFSS ACTIVE?": {
         "mn": "ORWPFSS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "should you pass visit string with order - PATCH check and others",
         "tags": [
             "IS-A",
@@ -6065,7 +6065,7 @@ var rpcsCategorized = {
     },
     "ORWPS ACTIVE": {
         "mn": "ORWPS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "listing of a patient’s active inpatient and outpatientmedications.",
         "tags": [
             "DFN"
@@ -6073,7 +6073,7 @@ var rpcsCategorized = {
     },
     "ORWPS COVER": {
         "mn": "ORWPS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of medications to display on the CPRS GUI cover sheet for apatient.",
         "tags": [
             "DFN",
@@ -6081,7 +6081,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWPS DETAIL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Med Order Detail",
         "tags": [
             "DFN"
@@ -6089,7 +6089,7 @@ var rpcsCategorized = {
     },
     "ORWPS MEDHIST": {
         "mn": "ORWPS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Show admin history for a med - uses Orders (100)",
         "tags": [
             "DFN"
@@ -6097,7 +6097,7 @@ var rpcsCategorized = {
     },
     "ORWPS REASON": {
         "mn": "ORWPS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "non va med reasons - reasons/meta stored in PARAMETER. Could have been K/META file. ex/ \"1^Non-VA medication not recommended by VA provider.\"",
         "tags": [
             "PARAMETER",
@@ -6106,7 +6106,7 @@ var rpcsCategorized = {
     },
     "ORWPS1 NEWDLG": {
         "mn": "ORWPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return order dialog info for New Medication, in or outpatient - D NEWDLG^ORWPS1(.X,0) works - 101_41-147 to PSO OERR",
         "tags": [
             "PARAMETER",
@@ -6115,7 +6115,7 @@ var rpcsCategorized = {
     },
     "ORWPS1 PICKUP": {
         "mn": "ORWPS1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "file 550 CMOP Setup/Config (disabled in nodeVISTA - out of scope?) - simple two value setting",
         "tags": [
             "S/META"
@@ -6131,14 +6131,14 @@ var rpcsCategorized = {
     },
     "ORWPT ADMITLST": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWPT APPTLST": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "date ranges for clinic appointments",
         "tags": [
             "DFN",
@@ -6147,7 +6147,7 @@ var rpcsCategorized = {
     },
     "ORWPT BYWARD": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of patients in a ward (file 42)",
         "tags": [
             "DFN",
@@ -6156,7 +6156,7 @@ var rpcsCategorized = {
     },
     "ORWPT CLINRNG": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "date ranges for clinic appointments",
         "tags": [
             "K/META",
@@ -6166,7 +6166,7 @@ var rpcsCategorized = {
     },
     "ORWPT CWAD": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "CWAD flags for patient - relies on TIU and its indexes (hence A shows). Put into Doc Issue.",
         "tags": [
             "DFN"
@@ -6174,7 +6174,7 @@ var rpcsCategorized = {
     },
     "ORWPT DFLTSRC": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORLP DEFAULT LIST SOURCE"],
         "descr": "Users default patient list source - parameter 'ORLP DEFAULT LIST SOURCE' used",
         "tags": [
@@ -6184,7 +6184,7 @@ var rpcsCategorized = {
     },
     "ORWPT DIEDON": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Date of death if expired.",
         "tags": [
             "DFN"
@@ -6192,7 +6192,7 @@ var rpcsCategorized = {
     },
     "ORWPT DISCHARGE": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "given a patient and an admission date, return the discharge date/time.",
         "tags": [
             "DFN"
@@ -6200,7 +6200,7 @@ var rpcsCategorized = {
     },
     "ORWPT ENCTITL": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Values to display for encounter (LOCNAME^LOCABBR^ROOMBED^PROVNAME)",
         "tags": [
             "DFN"
@@ -6208,7 +6208,7 @@ var rpcsCategorized = {
     },
     "ORWPT FULLSSN": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "SSN in the format 999999999(P), return a list of matchingpatients.",
         "tags": [
             "DFN",
@@ -6217,7 +6217,7 @@ var rpcsCategorized = {
     },
     "ORWPT FULLSSN RPL": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "an SSN in the format 999999999(P), return a list of matching patients based on Restricted Patient List. From Users 101.21 and OE/RR LIST",
         "tags": [
             "DFN",
@@ -6225,7 +6225,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWPT ID INFO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "identifying information for a patient - series of values from Patient (2)",
         "tags": [
             "DFN"
@@ -6233,7 +6233,7 @@ var rpcsCategorized = {
     },
     "ORWPT INPLOC": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Patient location keys off .102, patient movement in PATIENT (2)",
         "tags": [
             "DFN"
@@ -6241,7 +6241,7 @@ var rpcsCategorized = {
     },
     "ORWPT LAST5": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "list of patients by matching A9999 identifiers",
         "tags": [
             "DFN",
@@ -6251,7 +6251,7 @@ var rpcsCategorized = {
     "ORWPT LAST5 RPL": {
         "mn": "ORWPT",
         "descr": "Takes DUZ and returns list from User record either its fixed 101.02 patient selection list OR from its OE/RR LIST (100_21) list",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN",
             "QUERY"
@@ -6268,7 +6268,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWPT LIST ALL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return a bolus of patient names.  From is either Name or IEN^Name.",
         "tags": [
             "DFN"
@@ -6276,7 +6276,7 @@ var rpcsCategorized = {
     },
     "ORWPT PTINQ": {
         "mn": "ORWPT",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "Returns formatted patient inquiry text for display in GUI environment.",
         "tags": [
             "DFN"
@@ -6319,7 +6319,7 @@ var rpcsCategorized = {
     },
     "ORWPT TOP": {
         "mn": "ORWPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "'last selected patient' => profile? stored in GLOBAL DISV! (implicltly per user). ORWPT SELECT sets",
         "tags": [
             "DFN",
@@ -6327,14 +6327,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWPT1 PCDETAIL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWPT1 PRCARE": {
         "mn": "ORWPT1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Primary care info",
         "tags": [
             "DFN",
@@ -6343,7 +6343,7 @@ var rpcsCategorized = {
     },
     "ORWPT16 ADMITLST": {
         "mn": "ORWPT16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return a list of admissions per patient (relies on 42 and 405 - see ADMITLST^ORWPT)",
         "tags": [
             "DFN"
@@ -6351,7 +6351,7 @@ var rpcsCategorized = {
     },
     "ORWPT16 APPTLST": {
         "mn": "ORWPT16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return list of appointments per patient. Done in VISIT prototype as goes there.",
         "tags": [
             "DFN"
@@ -6359,26 +6359,26 @@ var rpcsCategorized = {
     },
     "ORWPT16 DEMOG": {
         "mn": "ORWPT16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return common patient demographic info - nice and easy - straight out of DPT(2)/PATIENT. See DEMOG^ORWPT16",
         "tags": [
             "DFN"
         ]
     },
     "ORWPT16 GETVSIT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWPT16 ID INFO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWPT16 LIST ALL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Bolus of patient names",
         "tags": [
             "DFN"
@@ -6386,7 +6386,7 @@ var rpcsCategorized = {
     },
     "ORWPT16 LOOKUP": {
         "mn": "ORWPT16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return a set of patient names - uses FM API on PATIENT (2) - should be easy to lock. LOOKUP^ORWPT16",
         "tags": [
             "DFN"
@@ -6394,7 +6394,7 @@ var rpcsCategorized = {
     },
     "ORWPT16 PSCNVT": {
         "mn": "ORWPT16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "seems to do nothing S VAL=0",
         "tags": [
             "DFN",
@@ -6402,7 +6402,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWRA DEFAULT EXAM SETTINGS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORCH CONTEXT REPORTS"],
         "tags": [
             "PARAMETER"
@@ -6410,7 +6410,7 @@ var rpcsCategorized = {
     },
     "ORWRA IMAGING EXAMS": {
         "mn": "ORWRA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This remote procedure call returns a list on imaging exams for aspecific patient.",
         "tags": [
             "DFN"
@@ -6418,7 +6418,7 @@ var rpcsCategorized = {
     },
     "ORWRA IMAGING EXAMS1": {
         "mn": "ORWRA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This remote procedure call returns a list on imaging exams for aspecific patient.",
         "tags": [
             "DFN"
@@ -6433,21 +6433,21 @@ var rpcsCategorized = {
     },
     "ORWRA REPORT TEXT": {
         "mn": "ORWRA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWRA REPORT TEXT1": {
         "mn": "ORWRA",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWRP COLUMN HEADERS": {
         "mn": "ORWRP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Get list of Column headers for a ListView type report from file 101.24.",
         "tags": [
             "K/META"
@@ -6462,7 +6462,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWRP LAB REPORT LISTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWRP REPORT LAB LIST"],
         "files": ["101.24"],
         "tags": [
@@ -6527,14 +6527,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWRP REPORT LISTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORWRP REPORT TEXT": {
         "mn": "ORWRP",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "This rpc retrieves the report text for a report selected onthe Report tab.the report format on the roll n scroll version of CPRS.",
         "tags": [
             "DFN"
@@ -6562,20 +6562,20 @@ var rpcsCategorized = {
         ]
     },
     "ORWRP1 LISTNUTR": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWRP16 REPORT LISTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "ORWRP16 REPORT TEXT": {
         "mn": "ORWRP16",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "VITALS CUMMULATE/ HEALTH SUMMARY etc as options",
         "tags": [
             "K/META"
@@ -6583,7 +6583,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 COMPABV": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[K/META] This RPC returns an array of the ADHOC Health Summary components by abbreviation. 142 Health Summary Type - a hard coded 'GMTS HS ADHOC OPTION' id for health summary which gathers others.",
         "tags": [
             "K/META"
@@ -6591,7 +6591,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 COMPDISP": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[K/META] This RPC returns an array of the ADHOC Health Summary components by display name. Ala COMPABV, different form",
         "tags": [
             "K/META"
@@ -6599,7 +6599,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 GETLKUP": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWRP ADHOC LOOKUP"],
         "descr": "not per user 'ORWRP ADHOC LOOKUP' global",
         "tags": [
@@ -6608,7 +6608,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 HS COMP FILES": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC gets a list of files to select from for the ADHOC Health Summary. 142.5",
         "files": ["142.5"],
         "tags": [
@@ -6617,7 +6617,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 HS COMPONENT SUBS": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC returns an array of ADHOC Health Summary subcomponents. Particular subcomponent",
         "tags": [
             "K/META"
@@ -6625,7 +6625,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 HS COMPONENTS": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC returns an array of the ADHOC Health Summary components.",
         "tags": [
             "K/META"
@@ -6633,7 +6633,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 HS FILE LOOKUP": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC gets the list of file entries for the file defined for a specificHealth Summary component on the ADHOC Health Summary.  Current choicesinclude files 60, 9999999.64, 811.9 (reminder defn), 8925.1, 81, and possibly others(handled generically).  The file entries are used to populate a combo boxon the form.",
         "tags": [
             "K/META"
@@ -6641,7 +6641,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 HS REPORT TEXT": {
         "mn": "ORWRP2",
-        "catag": "READ UNSTRUCTURED",
+        "catag": "READ",
         "descr": "uses HEALTH SUMMARY META file 142 ie/ key HEALTH SUMMARY REPORT",
         "tags": [
             "DFN"
@@ -6649,7 +6649,7 @@ var rpcsCategorized = {
     },
     "ORWRP2 HS SUBITEMS": {
         "mn": "ORWRP2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC expands a Laboratory Test panel to all it's sub-components forselection in the ADHOC Health Summary. ie/ type 60",
         "tags": [
             "K/META"
@@ -6667,7 +6667,7 @@ var rpcsCategorized = {
     },
     "ORWRP3 EXPAND COLUMNS": {
         "mn": "ORWRP3",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC loads and expands nested reports defined in the OE/RR Reportsfile (#101.24) for use on the Reports Tab in CPRS.",
         "tags": [
             "K/META",
@@ -6684,13 +6684,13 @@ var rpcsCategorized = {
         ]
     },
     "ORWSR CASELIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWSR GET SURG CONTEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORCH CONTEXT SURGERY"],
         "complexity": "LOW",
         "tags": [
@@ -6699,7 +6699,7 @@ var rpcsCategorized = {
     },
     "ORWSR IS NON-OR PROCEDURE": {
         "mn": "ORWSR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Surgery - is case non-OR or not",
         "tags": [
             "DFN",
@@ -6707,21 +6707,21 @@ var rpcsCategorized = {
         ]
     },
     "ORWSR LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWSR ONECASE": {
         "mn": "ORWSR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Given a TIU document IEN, return the surgical case record and all otherdocuments related to the case, for display in the GUI treeview.",
         "tags": [
             "DFN"
         ]
     },
     "ORWSR RPTLIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -6736,7 +6736,7 @@ var rpcsCategorized = {
     },
     "ORWSR SHOW OPTOP WHEN SIGNING": {
         "mn": "ORWSR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Hard coded to 0",
         "tags": [
             "HARD CODED"
@@ -6744,7 +6744,7 @@ var rpcsCategorized = {
     },
     "ORWSR SHOW SURG TAB": {
         "mn": "ORWSR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORWOR SHOW SURGERY TAB"],
         "complexity": "LOW",
         "tags": [
@@ -6753,7 +6753,7 @@ var rpcsCategorized = {
     },
     "ORWTIU CANLINK": {
         "mn": "ORWTIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Given a title, call CANLINK^TIULP to determine whether this title can use linked as an Interdisciplinary child note. dbia #2322 - error messages if can't link document",
         "tags": [
             "DUZ"
@@ -6761,14 +6761,14 @@ var rpcsCategorized = {
     },
     "ORWTIU CHKTXT": {
         "mn": "ORWTIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Check for existence of text in TIU(8925,TIUDA, either in \"TEXT\" or \"TEMP\" nodes, before allowing signature. (should be easy to try)",
         "tags": [
             "DFN"
         ]
     },
     "ORWTIU GET DCSUMM CONTEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORCH CONTEXT SUMMRIES"],
         "tags": [
             "DUZ",
@@ -6776,19 +6776,19 @@ var rpcsCategorized = {
         ]
     },
     "ORWTIU GET LISTBOX ITEM": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWTIU GET SAVED CP FIELDS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "ORWTIU GET TIU CONTEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORCH CONTEXT NOTES"],
         "tags": [
             "PARAMETER",
@@ -6797,7 +6797,7 @@ var rpcsCategorized = {
     },
     "ORWTIU IDNOTES INSTALLED": {
         "mn": "ORWTIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[PATCH] check if patch installed [IS-A] - returned 1 on OSEHRA",
         "tags": [
             "PATCH",
@@ -6846,7 +6846,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPD GETDFLT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "complexity": "LOW",
         "parameters": ["ORWRP TIME/OCC LIMITS ALL"],
         "tags": [
@@ -6863,7 +6863,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPD GETOCM": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORCH CONTEXT MEDS"],
         "complexity": "LOW",
         "tags": [
@@ -6871,7 +6871,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPD GETSETS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.24"],
         "tags": [
             "K/META"
@@ -6888,7 +6888,7 @@ var rpcsCategorized = {
     },
     "ORWTPD RSDFLT": {
         "mn": "ORWTPD",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get system or package level default setting for all repors.",
         "tags": [
             "PARAMETER"
@@ -6913,14 +6913,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPD1 GETCSDEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQCSDR CS RANGE START", "ORQQCSDR CS RANGE STOP"],
         "tags": [
             "PARAMETER"
         ]
     },
     "ORWTPD1 GETCSRNG": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQCSDR CS RANGE START", "ORQQCSDR CS RANGE STOP"],
         "tags": [
             "PARAMETER",
@@ -6928,14 +6928,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPD1 GETEAFL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQEAFL ENC APPT FUTURE LIMIT"],
         "tags": [
             "PARAMETER"
         ]
     },
     "ORWTPD1 GETEDATS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQEAPT ENC APPT START", "ORQQEAPT ENC APPT STOP"],
         "tags": [
             "PARAMETER",
@@ -6943,7 +6943,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPD1 GETEFDAT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQEAPT ENC APPT START", "ORQQEAPT ENC APPT STOP"],
         "tags": [
             "PARAMETER"
@@ -6968,14 +6968,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPN GETCLASS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.1"],
         "tags": [
             "K/META"
         ]
     },
     "ORWTPN GETTC": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.1"],
         "tags": [
             "K/META"
@@ -6983,7 +6983,7 @@ var rpcsCategorized = {
     },
     "ORWTPO CSARNGD": {
         "mn": "ORWTPO",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "parameters": ["ORQQCSDR CS RANGE START", "ORQQCSDR CS RANGE STOP"],
         "tags": [
             "PARAMETER"
@@ -6991,27 +6991,27 @@ var rpcsCategorized = {
     },
     "ORWTPO CSLABD": {
         "mn": "ORWTPO",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "lab results",
         "tags": [
             "PARAMETER"
         ]
     },
     "ORWTPO GETIMGD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "PARAMETER"
         ]
     },
     "ORWTPO GETTABS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8989.51"],
         "tags": [
             "PARAMETER"
         ]
     },
     "ORWTPP ADDLIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "adds current user to a team - TODO? need to change to DUZ as teams reference patients",
         "files": ["100.21"],
         "tags": [
@@ -7020,7 +7020,7 @@ var rpcsCategorized = {
     },
     "ORWTPP CHKSURR": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "check if current user's surrogate is valid",
         "tags": [
             "PARAMETER",
@@ -7029,7 +7029,7 @@ var rpcsCategorized = {
     },
     "ORWTPP CLDAYS": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get user's clinic defaults",
         "tags": [
             "PARAMETER",
@@ -7047,7 +7047,7 @@ var rpcsCategorized = {
     },
     "ORWTPP CLRANGE": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get current user's default clinic start, stop dates",
         "tags": [
             "DUZ",
@@ -7056,7 +7056,7 @@ var rpcsCategorized = {
     },
     "ORWTPP CSARNG": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get current user's start, stop defaults",
         "tags": [
             "DUZ",
@@ -7065,7 +7065,7 @@ var rpcsCategorized = {
     },
     "ORWTPP CSLAB": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "get user's lab date range defaults",
         "tags": [
             "PARAMETER",
@@ -7073,7 +7073,7 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPP DELLIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.21"],
         "descr": "TODO? should be DFN and DFN/DUZ joining list?",
         "tags": [
@@ -7081,97 +7081,97 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPP GETCOMBO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETCOS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETDCOS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETIMG": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETNOT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETNOTO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETOC": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETOTHER": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETREM": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETSUB": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETSURR": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETTD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP GETTU": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP LSDEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP NEWLIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP PLISTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.21"],
         "tags": [
             "DUZ"
@@ -7179,7 +7179,7 @@ var rpcsCategorized = {
     },
     "ORWTPP PLTEAMS": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.21"],
         "descr": "get current user's teams and personal lists - uses OE/RR LIST (100_21) which links providers and patients",
         "tags": [
@@ -7283,14 +7283,14 @@ var rpcsCategorized = {
         ]
     },
     "ORWTPP SORTDEF": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "ORWTPP TEAMS": {
         "mn": "ORWTPP",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] all teams a user is a member of (exculdes personal lists) - 100.21 (should be pure get but 'c' index used seems to be a MUMPS index)",
         "tags": [
             "DUZ"
@@ -7298,7 +7298,7 @@ var rpcsCategorized = {
     },
     "ORWTPR NOTDESC": {
         "mn": "ORWTPR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "OE/RR NOTIFICATIONS ie/ used to generate notifications [K/META]",
         "tags": [
             "K/META"
@@ -7306,7 +7306,7 @@ var rpcsCategorized = {
     },
     "ORWTPR OCDESC": {
         "mn": "ORWTPR",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Order checks 100_8 (ex duplicate drug) - gets text [K/META]",
         "tags": [
             "K/META"
@@ -7314,14 +7314,14 @@ var rpcsCategorized = {
     },
     "ORWTPT ATEAMS": {
         "mn": "ORWTPT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "100.21 all teams available to subscribe to [I/META]",
         "tags": [
             "I/META"
         ]
     },
     "ORWTPT GETTEAM": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["100.21"],
         "tags": [
             "DUZ"
@@ -7329,14 +7329,14 @@ var rpcsCategorized = {
     },
     "ORWU CLINLOC": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[LOCATION] set of clinics",
         "tags": [
             "LOCATION"
         ]
     },
     "ORWU DEFAULT DIVISION": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "LOCATION"
@@ -7344,7 +7344,7 @@ var rpcsCategorized = {
     },
     "ORWU DEVICE": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "subset of entries from the device file [I/META]",
         "tags": [
             "I/META"
@@ -7385,7 +7385,7 @@ var rpcsCategorized = {
     },
     "ORWU HAS OPTION ACCESS": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "does a user have access to a specified menu option",
         "tags": [
             "DUZ"
@@ -7393,7 +7393,7 @@ var rpcsCategorized = {
     },
     "ORWU HASKEY": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "does user possess a security key?",
         "tags": [
             "DUZ"
@@ -7401,7 +7401,7 @@ var rpcsCategorized = {
     },
     "ORWU HOSPLOC": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a set of locations from HOSPITAL LOCATION",
         "tags": [
             "LOCATION"
@@ -7409,7 +7409,7 @@ var rpcsCategorized = {
     },
     "ORWU INPLOC": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a set of wards from HOSPITAL LOCATION",
         "tags": [
             "LOCATION"
@@ -7417,7 +7417,7 @@ var rpcsCategorized = {
     },
     "ORWU NEWPERS": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns set of names from 200",
         "tags": [
             "DUZ"
@@ -7432,7 +7432,7 @@ var rpcsCategorized = {
     },
     "ORWU PARAM": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Simple call to return a parameter value.  The call assumes the currentuser, defaultable entities, and one instance.",
         "tags": [
             "DUZ",
@@ -7441,7 +7441,7 @@ var rpcsCategorized = {
     },
     "ORWU PARAMS": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Simple call to return a list of parameter values using GETLST",
         "tags": [
             "DUZ",
@@ -7458,7 +7458,7 @@ var rpcsCategorized = {
     },
     "ORWU TOOLMENU": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "number of items for tool menu",
         "tags": [
             "DUZ",
@@ -7467,7 +7467,7 @@ var rpcsCategorized = {
     },
     "ORWU USERINFO": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "User Parameters ie/ add to User Prototype",
         "tags": [
             "DUZ"
@@ -7489,7 +7489,7 @@ var rpcsCategorized = {
     },
     "ORWU VERSION": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "version number of package or namespace [SYS]",
         "tags": [
             "S/META"
@@ -7497,7 +7497,7 @@ var rpcsCategorized = {
     },
     "ORWU VERSRV": {
         "mn": "ORWU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[K/META] server version of option name",
         "tags": [
             "K/META"
@@ -7505,7 +7505,7 @@ var rpcsCategorized = {
     },
     "ORWU1 NAMECVT": {
         "mn": "ORWU1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] 200/20.2 (sig block)",
         "tags": [
             "DUZ"
@@ -7513,7 +7513,7 @@ var rpcsCategorized = {
     },
     "ORWU1 NEWLOC": {
         "mn": "ORWU1",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return \"CZ\" locations from HOSPITAL LOCATION file [LOCATION]",
         "tags": [
             "LOCATION"
@@ -7521,7 +7521,7 @@ var rpcsCategorized = {
     },
     "ORWU16 DEVICE": {
         "mn": "ORWU16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "devices",
         "tags": [
             "S/META"
@@ -7529,7 +7529,7 @@ var rpcsCategorized = {
     },
     "ORWU16 HOSPLOC": {
         "mn": "ORWU16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return a bolus from the HOSPITAL LOCATION file",
         "tags": [
             "QUERY",
@@ -7538,7 +7538,7 @@ var rpcsCategorized = {
     },
     "ORWU16 NEWPERS": {
         "mn": "ORWU16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Return a bolus from the NEW PERSON file [QUERY] 200 but not for particular user. KEY used to filter list (who has key?)",
         "tags": [
             "QUERY",
@@ -7547,7 +7547,7 @@ var rpcsCategorized = {
     },
     "ORWU16 USERINFO": {
         "mn": "ORWU16",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
@@ -7567,7 +7567,7 @@ var rpcsCategorized = {
     },
     "ORWU2 COSIGNER": {
         "mn": "ORWU2",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "cosigner 200 in TIUs",
         "tags": [
             "DFN"
@@ -7575,7 +7575,7 @@ var rpcsCategorized = {
     },
     "ORWUH POPUP": {
         "mn": "ORWUH",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "instructions for given control",
         "parameters": ["ORWUH WHATSTHIS"],
         "tags": [
@@ -7584,7 +7584,7 @@ var rpcsCategorized = {
     },
     "ORWUL FV4DG": {
         "mn": "ORWUL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.44", "101.43"],
         "descr": "quick and orderables",
         "tags": [
@@ -7594,7 +7594,7 @@ var rpcsCategorized = {
     },
     "ORWUL FVIDX": {
         "mn": "ORWUL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.43"],
         "descr": "101.43 return index of item beginning with FROM",
         "tags": [
@@ -7604,7 +7604,7 @@ var rpcsCategorized = {
     },
     "ORWUL FVSUB": {
         "mn": "ORWUL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "subset of orders in view",
         "files": ["101.44"],
         "tags": [
@@ -7614,7 +7614,7 @@ var rpcsCategorized = {
     },
     "ORWUL QV4DG": {
         "mn": "ORWUL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "the quick order list, given a display group name ... checks parameter ORWDQ QUICK VIEW for permission and group from 100.98",
         "parameters": ["ORWDQ QUICK VIEW"],
         "tags": [
@@ -7625,7 +7625,7 @@ var rpcsCategorized = {
     },
     "ORWUL QVIDX": {
         "mn": "ORWUL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["101.44"],
         "tags": [
             "K/META",
@@ -7634,7 +7634,7 @@ var rpcsCategorized = {
     },
     "ORWUL QVSUB": {
         "mn": "ORWUL",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "subset of orders in view",
         "files": ["101.44"],
         "tags": [
@@ -7652,7 +7652,7 @@ var rpcsCategorized = {
     },
     "ORWUXT LST": {
         "mn": "ORWUXT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "just Q",
         "tags": [
             "HARD CODED",
@@ -7661,7 +7661,7 @@ var rpcsCategorized = {
     },
     "ORWUXT REF": {
         "mn": "ORWUXT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "just Q",
         "tags": [
             "HARD CODED",
@@ -7670,7 +7670,7 @@ var rpcsCategorized = {
     },
     "ORWUXT VAL": {
         "mn": "ORWUXT",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "just Q",
         "tags": [
             "HARD CODED",
@@ -7679,7 +7679,7 @@ var rpcsCategorized = {
     },
     "PXRM REMINDER CATEGORY": {
         "mn": "PXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "811.7 List reminders and categories in display order for a reminder category.",
         "tags": [
             "K/META"
@@ -7695,7 +7695,7 @@ var rpcsCategorized = {
     },
     "PXRM REMINDERS AND CATEGORIES": {
         "mn": "PXRM",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "gives list of reminder types - straight IEN^NAME ie/ ala SELECT in FMQL [QUERY] allows paging",
         "tags": [
             "K/META",
@@ -7704,7 +7704,7 @@ var rpcsCategorized = {
     },
     "TIU AUTHORIZATION": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] allows the calling application to evaluate privilege to performany ASU-mediated action on a TIU document. [IS-A] - logic on property combinations",
         "tags": [
             "DUZ",
@@ -7713,7 +7713,7 @@ var rpcsCategorized = {
     },
     "TIU CAN CHANGE COSIGNER?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[DUZ] [IS-A] BOOLEAN RPC to evaluate user's privilege to modify the expected cosigner, given the current status of the document, and the user's role with respect to it.",
         "tags": [
             "DUZ",
@@ -7739,7 +7739,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU DETAILED DISPLAY": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -7747,7 +7747,7 @@ var rpcsCategorized = {
     "TIU DIV AND CLASS INFO": {
         "mn": "TIU",
         "descr": "a list of Divisions and User Classes for a specific User.",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "K/META"
@@ -7755,7 +7755,7 @@ var rpcsCategorized = {
     },
     "TIU DOCUMENTS BY CONTEXT": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "documents by context",
         "tags": [
             "QUERY",
@@ -7763,7 +7763,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU FIELD CAN EDIT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "TRUE if the current user is allowed to edit template fields.",
         "tags": [
             "DUZ",
@@ -7795,7 +7795,7 @@ var rpcsCategorized = {
     },
     "TIU FIELD EXPORT": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Exports Template Fields in XML format 8927.1 - [K/META] ... kind of utility",
         "tags": [
             "K/META",
@@ -7812,7 +7812,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU FIELD LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8927.1"],
         "tags": [
             "K/META"
@@ -7834,13 +7834,13 @@ var rpcsCategorized = {
         ]
     },
     "TIU FIELD LOAD": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU FIELD LOAD BY IEN": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
@@ -7853,7 +7853,7 @@ var rpcsCategorized = {
     },
     "TIU FIELD NAME IS UNIQUE": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[IS-A] [K/META] Returns TRUE if the template field name is unique 8927.1",
         "files": ["8927.1"],
         "tags": [
@@ -7875,56 +7875,56 @@ var rpcsCategorized = {
         ]
     },
     "TIU GET ADDITIONAL SIGNERS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET ALERT INFO": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET BOILERPLATE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU GET DEFAULT PROVIDER": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "S/META"
         ]
     },
     "TIU GET DOCUMENT PARAMETERS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET DOCUMENT STATUS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET DOCUMENT TITLE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET DOCUMENTS FOR REQUEST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET DS TITLES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.98"],
         "tags": [
             "DUZ",
@@ -7932,7 +7932,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU GET DS URGENCIES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "unusual as comes from doc dd",
         "tags": [
             "K/META",
@@ -7940,64 +7940,64 @@ var rpcsCategorized = {
         ]
     },
     "TIU GET LINKED PRF NOTES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Represents a complex set of filters to get meta on notes wanted. Tie into PRF - one of two in TIU.",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET LIST OF OBJECTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "TIU GET PERSONAL PREFERENCES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
     },
     "TIU GET PN TITLES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ",
             "K/META"
         ]
     },
     "TIU GET PRF ACTIONS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET PRF TITLE": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU GET PRINT NAME": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU GET RECORD TEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET REQUEST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "returns the variable pointer to the REQUESTINGPACKAGE REFERENCE (File #8925, Field #1405). This would be the record inthe Requesting Package (e.g., Consult/Request Tracking or Surgery) forwhich the resulting document has been entered in TIU.",
         "tags": [
             "DFN"
         ]
     },
     "TIU GET SITE PARAMETERS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "S/META",
             "LOCATION"
@@ -8005,7 +8005,7 @@ var rpcsCategorized = {
     },
     "TIU HAS AUTHOR SIGNED?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "has author signed",
         "tags": [
             "IS-A",
@@ -8022,7 +8022,7 @@ var rpcsCategorized = {
     },
     "TIU ID CAN ATTACH": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This BOOLEAN RPC evaluates the question of whether a particular documentmay be attached as an entry to an Interdisciplinary Note (i.e., can thisdocument be an ID Child?). Based on doc types",
         "tags": [
             "IS-A",
@@ -8031,7 +8031,7 @@ var rpcsCategorized = {
     },
     "TIU ID CAN RECEIVE": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This BOOLEAN RPC evaluates the question of whether a particular documentmay receive an entry as an Interdisciplinary Parent Note (i.e., can thisdocument be an ID Parent?). [DFN] [IS-A]",
         "tags": [
             "DFN",
@@ -8048,7 +8048,7 @@ var rpcsCategorized = {
     },
     "TIU IDENTIFY CLINPROC CLASS": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC gets the CLINICAL PROCEDURES TIU Document Definitionfile (#8925.1) IEN.",
         "tags": [
             "K/META"
@@ -8056,7 +8056,7 @@ var rpcsCategorized = {
     },
     "TIU IDENTIFY CONSULTS CLASS": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC returns the record number of the class CONSULTS in the TIUDOCUMENT DEFINITION file (#8925.1). [QUERY] [K/META]",
         "tags": [
             "K/META",
@@ -8065,7 +8065,7 @@ var rpcsCategorized = {
     },
     "TIU IDENTIFY SURGERY CLASS": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC returns the record number of the class identified by the CLNAMEparameter in the TIU DOCUMENT DEFINITION file (#8925.1).",
         "tags": [
             "IEN-LOOKUP",
@@ -8074,7 +8074,7 @@ var rpcsCategorized = {
     },
     "TIU IS THIS A CLINPROC?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC evaluates whether or not a Title is under theCLINICAL PROCEDURES Class.",
         "tags": [
             "IS-A",
@@ -8083,7 +8083,7 @@ var rpcsCategorized = {
     },
     "TIU IS THIS A CONSULT?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "BOOLEAN RPC which evaluates whether the title indicated is that of aconsult.",
         "tags": [
             "IS-A",
@@ -8092,7 +8092,7 @@ var rpcsCategorized = {
     },
     "TIU IS THIS A SURGERY?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "BOOLEAN RPC which evaluates whether the title indicated is that of aSURGICAL REPORT or PROCEDURE REPORT (NON-O.R.).",
         "tags": [
             "IS-A",
@@ -8101,7 +8101,7 @@ var rpcsCategorized = {
     },
     "TIU IS USER A PROVIDER?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This Boolean RPC returns TRUE if the user was a known provider on the date specified - Checks USR CLASS PROVIDER AND 200 Person Class.",
         "tags": [
             "DUZ",
@@ -8110,7 +8110,7 @@ var rpcsCategorized = {
     },
     "TIU IS USER A USR PROVIDER": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This Boolean RPC returns TRUE if the user was a member of USR CLASS PROVIDER on the date specified.",
         "tags": [
             "DUZ",
@@ -8119,7 +8119,7 @@ var rpcsCategorized = {
     },
     "TIU ISPRF": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC is to check to see if the passed in TIU DOCUMENT TITLE IEN is a Patient Record Flag TITLE. IEN lookup that is more complicated than most taking. PRF docs PATIENT RECORD FLAG CAT I and PATIENT RECORD FLAG CAT II",
         "tags": [
             "IS-A",
@@ -8129,7 +8129,7 @@ var rpcsCategorized = {
     },
     "TIU JUSTIFY DELETE?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -8149,7 +8149,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU LOAD RECORD FOR EDIT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DFN"
         ]
@@ -8161,34 +8161,34 @@ var rpcsCategorized = {
         ]
     },
     "TIU LONG LIST BOILERPLATED": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "HEURISTIC"
         ]
     },
     "TIU LONG LIST CLINPROC TITLES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.1"],
         "tags": [
             "K/META"
         ]
     },
     "TIU LONG LIST CONSULT TITLES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.1"],
         "tags": [
             "K/META"
         ]
     },
     "TIU LONG LIST OF TITLES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.1"],
         "tags": [
             "K/META"
         ]
     },
     "TIU LONG LIST SURGERY TITLES": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8925.1"],
         "tags": [
             "K/META"
@@ -8196,7 +8196,7 @@ var rpcsCategorized = {
     },
     "TIU NOTES": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This API gets lists of progress notes for a patient, with optional parameters for STATUS, EARLY DATE/TIME, and LATE DATE/TIME. [DFN] [QUERY]",
         "tags": [
             "DFN",
@@ -8205,7 +8205,7 @@ var rpcsCategorized = {
     },
     "TIU NOTES 16 BIT": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This API gets lists of progress notes for a patient, with optional parameters for STATUS, EARLY DATE/TIME, and LATE DATE/TIME. [DFN] [QUERY]",
         "tags": [
             "DFN",
@@ -8214,7 +8214,7 @@ var rpcsCategorized = {
     },
     "TIU NOTES BY VISIT": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This API gets lists of Progress Notes by visit from TIU. [DFN] [QUERY]",
         "tags": [
             "DFN",
@@ -8223,7 +8223,7 @@ var rpcsCategorized = {
     },
     "TIU ONE VISIT NOTE?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Boolean RPC to evaulate if note has a corresponding visit. [DFN] [IS-A]",
         "tags": [
             "DFN",
@@ -8231,7 +8231,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU PERSONAL TITLE LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "DUZ"
         ]
@@ -8245,7 +8245,7 @@ var rpcsCategorized = {
     },
     "TIU REM DLG OK AS TEMPLATE": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "TRUE is the passed in reminder dialog is allowed to be used ina TIU Template.",
         "tags": [
             "IS-A",
@@ -8254,7 +8254,7 @@ var rpcsCategorized = {
     },
     "TIU REMINDER DIALOGS": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a list of reminder dialogs allowed for use as Templates.",
         "tags": [
             "K/META"
@@ -8262,7 +8262,7 @@ var rpcsCategorized = {
     },
     "TIU REQUIRES COSIGNATURE": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This Boolean RPC simply evaluates whether the current user requirescosignature for TIU DOCUMENTS, and returns a 1 if true, or a 0 if false.",
         "tags": [
             "DUZ",
@@ -8294,7 +8294,7 @@ var rpcsCategorized = {
     },
     "TIU SUMMARIES": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This API gets lists of Discharge Summaries for a patient, with optional parameters for STATUS, EARLY DATE/TIME, and LATE DATE/TIME.",
         "tags": [
             "DFN",
@@ -8303,7 +8303,7 @@ var rpcsCategorized = {
     },
     "TIU SUMMARIES BY VISIT": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This API returns lists of Discharge Summaries by visit.",
         "tags": [
             "DFN",
@@ -8312,7 +8312,7 @@ var rpcsCategorized = {
     },
     "TIU TEMPLATE ACCESS LEVEL": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "PARAMETER",
             "DUZ"
@@ -8320,7 +8320,7 @@ var rpcsCategorized = {
     },
     "TIU TEMPLATE ALL TITLES": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[K/META] Returns a long list of all active titles.",
         "tags": [
             "K/META"
@@ -8347,61 +8347,61 @@ var rpcsCategorized = {
         ]
     },
     "TIU TEMPLATE GET DEFAULTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GET DESCRIPTION": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GETBOIL": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GETITEMS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GETLINK": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GETPROOT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GETROOTS": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE GETTEXT": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE ISEDITOR": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
     },
     "TIU TEMPLATE LISTOWNR": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "tags": [
             "K/META"
         ]
@@ -8414,7 +8414,7 @@ var rpcsCategorized = {
     },
     "TIU TEMPLATE PERSONAL OBJECTS": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "a list or Patient Data Objects allowed in Personal Templates [DUZ]",
         "tags": [
             "DUZ"
@@ -8459,7 +8459,7 @@ var rpcsCategorized = {
         ]
     },
     "TIU USER CLASS LONG LIST": {
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "files": ["8930"],
         "tags": [
             "K/META"
@@ -8467,7 +8467,7 @@ var rpcsCategorized = {
     },
     "TIU USER INACTIVE?": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "[IS-A] [DUZ] evaluates user's DIUSER status and termination status when selected.Returns 0 if active 1 if inactive",
         "tags": [
             "IS-A",
@@ -8482,7 +8482,7 @@ var rpcsCategorized = {
     },
     "TIU WHICH SIGNATURE ACTION": {
         "mn": "TIU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "This RPC infers whether the user is trying to sign or cosign the docuementin question, and indicates which ASU ACTION the GUI should pass to the TIUAUTHORIZATION RPC.",
         "tags": [
             "DFN"
@@ -8490,7 +8490,7 @@ var rpcsCategorized = {
     },
     "VAFCTFU CONVERT ICN TO DFN": {
         "mn": "VAFCTFU",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Given a patient Integration Control Number (ICN), this will returnthe patient Internal Entry Number (IEN) from the PATIENT file (#2). [QUERY] [DFN]",
         "tags": [
             "QUERY",
@@ -8637,7 +8637,7 @@ var rpcsCategorized = {
     },
     "YS GAF API": {
         "mn": "YS",
-        "catag": "READ STRUCTURED",
+        "catag": "READ",
         "descr": "Mental Health [DFN]",
         "tags": [
             "DFN"
