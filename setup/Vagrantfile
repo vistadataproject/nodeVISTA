@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant virtual environment requires a box to build off of.
 
   config.vm.box = "nodeVISTA"
-  config.vm.box_url = "http://45.33.127.157/files/vagrant/nodeVISTA.json"
+  config.vm.box_url = "https://demoservices.vistadataproject.info/files/vagrant/nodeVISTA.json"
 
   # Uncomment for manual setup (see setup provision step commented out at the bottom of this script)
   # config.vm.box = "addgene/xenial64" #Official Ubuntu 16.04 LTS (Xenial Xerus) Daily Build Cloud Image
