@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const nodem = require('nodem');
+const ProgressBar = require('progress');
 const emulatorUtils = require('mvdm/nonClinicalRPCs/rpcEmulatorUtils');
 const DataModel = require('mvdm/nonClinicalRPCs/vdmNonClinicalModel').vdmModel;
 const VDM = require('mvdm/vdm');
@@ -11,8 +12,7 @@ class CPTCodeGenerator {
     constructor(options) {
         this.db = null;
         this.process = {};
-        this.createCount = 0;
-        this.maxCount = options.maxCount || Number.MAX_SAFE_INTEGER;
+        this.maxCount = options.maxCount;
         this.codeAlpha = 'A';
         this.codeNumeric = 0;
         this.isVerbose = !!options.isVerbose;
@@ -24,14 +24,11 @@ class CPTCodeGenerator {
     init() {
         this.initDriver();
         this.initProcess();
-
-        const res = VDM.query('COUNT 757_02');
-        this.totalCount = res.count;
     }
 
     initDriver() {
         // Setup the nodem driver
-        process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()}`;
+        process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()} ${__dirname}`;
         this.db = new nodem.Gtm();
         this.db.open();
         VDM.setDBAndModel(this.db, DataModel);
@@ -45,6 +42,7 @@ class CPTCodeGenerator {
     }
 
     initProcess() {
+        console.log('Initializing data structures...');
         if (!VDM.exists('81_1-1')) {
             VDM.create({
                 type: 'Cpt_Category-81_1',
@@ -60,6 +58,11 @@ class CPTCodeGenerator {
             cptSource: `757_03-${cptSourceIEN}`,
             cptCategory: '81_1-1',
         });
+
+        // Get the last CPT code that has been processed in the system
+        console.log('Getting last known CPT code...');
+        const result = this.db.function({ function: 'GetLastCPTCode^RAWCPT' });
+        this.retrieveCPTCode(result.result || '');
     }
 
     getNextCPTCode() {
@@ -77,41 +80,42 @@ class CPTCodeGenerator {
         }
         this.codeAlpha = code[0];
         this.codeNumeric = parseInt(code.slice(1), 10);
-        this.logVerbose(`Active code is ${this.codeAlpha}${_.padStart(this.codeNumeric.toString(), 4, '0')}`);
+        console.log(`Active code is ${this.codeAlpha}${_.padStart(this.codeNumeric.toString(), 4, '0')}`);
     }
 
 
     generateCodes() {
-        // Iterate through all the 757.02 entries, pull down the VDM model for each and check for missing 'code' and
-        // 'classification_source'. If we find one, we add the fields, and create a corresponding CPT file entry.
-        this.totalIterations = 0;
-        console.log('Grab some coffee...this may take a while!');
-        emulatorUtils.vdmForEach('757.02', (vdmObject) => {
-            if (_.get(vdmObject, 'classification_source.id') === this.process.cptSource) {
-                this.retrieveCPTCode(vdmObject.code || '');
-            } else if (!vdmObject.code && !vdmObject.classification_source) {
-                const updatedObject = this.updateCode(vdmObject);
-                this.createCPTCodeEntry(updatedObject);
-                this.createProviderNarrative(updatedObject);
-                this.createCount += 1;
-            }
-            this.totalIterations += 1;
+        // Grab the codes that don't have CPT codes associated yet, and create one for each
+        console.log('Getting a list of the unset CPT codes (this may take a few minutes)...');
+        const result = this.db.function({ function: 'GetUnsetCodes^RAWCPT' });
+        const unsetCodes = JSON.parse(result.result || '[]');
+        console.log(`Retrieved ${unsetCodes.length} unset codes!`);
 
-            this.showProgress();
-            return (this.createCount >= this.maxCount);
+        const codeCount = this.maxCount || unsetCodes.length;
+        const codeList = unsetCodes.slice(0, codeCount);
+
+        const bar = new ProgressBar('  [:bar] :current of :total :percent   :elapseds elapsed, eta :etas', {
+            incomplete: ' ',
+            width: 15,
+            total: codeCount,
+            renderThrottle: 50,
         });
-        console.log('');
-        this.logVerbose(`Created ${this.createCount} new CPT Code entries!`);
-    }
 
-    showProgress() {
-        const shouldUpdate = (this.hasMaxCount) ? (this.createCount % 10 === 0) : (this.totalIterations % 100 === 0);
-        if (shouldUpdate) {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
-            const progress = (this.hasMaxCount) ? `${this.createCount} / ${this.maxCount}` : `${this.totalIterations} / ${this.totalCount}`;
-            process.stdout.write(`Progress: ${progress}`);
-        }
+        let createCount = 0;
+        let providerNarrativeFails = 0;
+        codeList.forEach((codeIEN) => {
+            const vdmObj = VDM.describe(`757_02-${codeIEN}`);
+            const updatedObject = this.updateCode(vdmObj);
+            this.createCPTCodeEntry(updatedObject);
+            providerNarrativeFails += this.createProviderNarrative(updatedObject);
+            bar.tick();
+            bar.render();
+            createCount += 1;
+        });
+
+        bar.terminate();
+        console.log(`Created ${createCount} new CPT Code entries!`);
+        console.log(`(${providerNarrativeFails} failed creates for Provider Narratives)`);
     }
 
     updateCode(vdmObject) {
@@ -169,7 +173,8 @@ class CPTCodeGenerator {
         if (!_.has(vdmObject, 'expression')) {
             return;
         }
-        const narrative = vdmObject.expression.label;
+        const rawNarrative = vdmObject.expression.label || '';
+        const narrative = rawNarrative.length > 40 ? `${rawNarrative.slice(0, 37)}...` : rawNarrative;
         const lexiconId = vdmObject.expression.id;
 
         const providerNarrative = {
@@ -181,7 +186,11 @@ class CPTCodeGenerator {
         };
 
         this.logVerbose(`Creating Provider Narrative for ${narrative}, ID: ${lexiconId}`);
-        VDM.create(providerNarrative);
+        try {
+            VDM.create(providerNarrative);
+        } catch (e) {
+            // Be silent
+        }
     }
 
     logVerbose(msg) {
