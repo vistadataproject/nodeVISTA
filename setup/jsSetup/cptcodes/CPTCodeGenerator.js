@@ -7,6 +7,15 @@ const emulatorUtils = require('mvdm/nonClinicalRPCs/rpcEmulatorUtils');
 const DataModel = require('mvdm/nonClinicalRPCs/vdmNonClinicalModel').vdmModel;
 const VDM = require('mvdm/vdm');
 const vdmUtils = require('mvdm/vdmUtils');
+const fileman = require('mvdm/fileman');
+
+function lookupUserIdByName(db, name) {
+    return fileman.lookupBy01(db, "200", name).id;
+}
+
+function lookupFacilityIdByName(db, name) {
+    return fileman.lookupBy01(db, "4", name).id;
+}
 
 class CPTCodeGenerator {
     constructor(options) {
@@ -31,7 +40,12 @@ class CPTCodeGenerator {
         process.env.gtmroutines = `${process.env.gtmroutines} ${vdmUtils.getVdmPath()} ${__dirname}`;
         this.db = new nodem.Gtm();
         this.db.open();
+
+        const userId = lookupUserIdByName(this.db, 'MANAGER,SYSTEM');
+        const facilityId = lookupFacilityIdByName(this.db, 'VISTA HEALTH CARE');
+
         VDM.setDBAndModel(this.db, DataModel);
+        VDM.setUserAndFacility(userId, facilityId);
 
         // Setup the clasing of the driver
         ['exit', 'SIGINT'].forEach((signal) => {
