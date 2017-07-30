@@ -152,9 +152,9 @@ Vagrant.configure("2") do |config|
   end
 
   # Uncomment for manual setup
-  config.vm.provision :shell do |s|
-    s.path = "setup.sh"
-  end
+  # config.vm.provision :shell do |s|
+  #   s.path = "setup.sh"
+  # end
 
   # Uncomment this if you want to run the *FULL* install. The contents of the post install
   # are pretty lengthy and only pertain to certain domains, so only uncommnt this block if
