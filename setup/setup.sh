@@ -337,6 +337,11 @@ cd $vdphome/nodevista/setup/jsSetup/parameters
 echo "run updateNodeVISTAParameters.js"
 su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node updateNodeVISTAParameters.js &>> $vdphome/logs/updateNodeVISTAParameters.log"
 
+# setup splash screen
+cd $vdphome/nodevista/setup/jsSetup/system
+echo "run introMsg.js"
+su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node introMsg.js &>> $vdphome/logs/introMsg.log"
+
 # Add Pharmacy configurations including Patient for DAVID CARTER
 echo "installing pharmacy"
 cd $vdphome/nodevista/setup/jsSetup/pharmacy

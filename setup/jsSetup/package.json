@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.4",
+    "mvdm": "git+https://github.com/vistadataproject/MVDM.git",
     "nodem": "0.8.1",
-    "mvdm": "git+https://github.com/vistadataproject/MVDM.git"
+    "progress": "^2.0.0"
   }
 }
