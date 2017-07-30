@@ -10,11 +10,11 @@ const vdmUtils = require('mvdm/vdmUtils');
 const fileman = require('mvdm/fileman');
 
 function lookupUserIdByName(db, name) {
-    return fileman.lookupBy01(db, "200", name).id;
+    return fileman.lookupBy01(db, '200', name).id;
 }
 
 function lookupFacilityIdByName(db, name) {
-    return fileman.lookupBy01(db, "4", name).id;
+    return fileman.lookupBy01(db, '4', name).id;
 }
 
 class CPTCodeGenerator {
@@ -26,6 +26,7 @@ class CPTCodeGenerator {
         this.codeNumeric = 0;
         this.isVerbose = !!options.isVerbose;
         this.hasMaxCount = !!options.maxCount;
+        this.showProgressBar = _.isFunction(_.get(process, 'stdout.clearLine'));
 
         this.init();
     }
@@ -122,12 +123,16 @@ class CPTCodeGenerator {
             const updatedObject = this.updateCode(vdmObj);
             this.createCPTCodeEntry(updatedObject);
             providerNarrativeFails += this.createProviderNarrative(updatedObject);
-            bar.tick();
-            bar.render();
+            if (this.showProgressBar) {
+                bar.tick();
+                bar.render();
+            }
             createCount += 1;
         });
 
-        bar.terminate();
+        if (this.showProgressBar) {
+            bar.terminate();
+        }
         console.log(`Created ${createCount} new CPT Code entries!`);
         console.log(`(${providerNarrativeFails} failed creates for Provider Narratives)`);
     }
