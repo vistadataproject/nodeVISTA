@@ -20,7 +20,11 @@ const vdmModel = [].concat(
     require('mvdm/vitals/vdmVitalsModel').vdmModel,
 
     // patient
-    require('mvdm/patient/vdmPatientModel').vdmModel);
+    require('mvdm/patient/vdmPatientModel').vdmModel,
+
+    //PCE;
+    require('mvdm/PCE/vdmPCEModel').vdmModel);
+
 
 // MVDM Models
 const mvdmModel = [].concat(
@@ -36,14 +40,28 @@ const mvdmModel = [].concat(
     require('mvdm/vitals/mvdmVitalsModel').mvdmModel,
 
     // patient
-    require('mvdm/patient/mvdmPatientModel').mvdmModel);
+    require('mvdm/patient/mvdmPatientModel').mvdmModel,
+
+    //PCE
+    require('mvdm/PCE/mvdmPCE_CPTModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_DiagnosisModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_ExamModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_HealthFactorsModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_SkinModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_ProviderModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_PatientEdModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_ImmunizationModel').mvdmModel);
 
 // Clinical RPC Emulator models
 const rpcEmulatorModel = [].concat(
     require('mvdm/allergies/rpcEmulatorAllergiesModel').rpcEmulatorModel,
     require('mvdm/problems/rpcEmulatorProblemModel').rpcEmulatorModel,
     require('mvdm/vitals/rpcEmulatorVitalsModel').rpcEmulatorModel,
-    require('mvdm/patient/rpcEmulatorPatientModel').rpcEmulatorModel);
+    require('mvdm/patient/rpcEmulatorPatientModel').rpcEmulatorModel,
+    require('mvdm/PCE/rpcEmulatorPCEModel').rpcEmulatorModel
+    );
+
+
 
 module.exports = {
     vdmModel,
