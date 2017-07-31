@@ -192,8 +192,7 @@ class CPTCodeGenerator {
         if (!_.has(vdmObject, 'expression')) {
             return;
         }
-        const rawNarrative = vdmObject.expression.label || '';
-        const narrative = rawNarrative.length > 40 ? `${rawNarrative.slice(0, 37)}...` : rawNarrative;
+        const narrative = vdmObject.expression.label || '';
         const lexiconId = vdmObject.expression.id;
 
         const providerNarrative = {
