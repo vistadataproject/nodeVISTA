@@ -43,13 +43,13 @@ const mvdmModel = [].concat(
     require('mvdm/patient/mvdmPatientModel').mvdmModel,
 
     //PCE
-    //require('mvdm/PCE/mvdmPCE_CPTModel').mvdmModel,
-    //require('mvdm/PCE/mvdmPCE_DiagnosisModel').mvdmModel,
-    //require('mvdm/PCE/mvdmPCE_ExamModel').mvdmModel,
-    //require('mvdm/PCE/mvdmPCE_HealthFactorsModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_CPTModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_DiagnosisModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_ExamModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_HealthFactorsModel').mvdmModel,
     require('mvdm/PCE/mvdmPCE_SkinModel').mvdmModel,
     require('mvdm/PCE/mvdmPCE_ProviderModel').mvdmModel,
-    //require('mvdm/PCE/mvdmPCE_PatientEdModel').mvdmModel,
+    require('mvdm/PCE/mvdmPCE_PatientEdModel').mvdmModel,
     require('mvdm/PCE/mvdmPCE_ImmunizationModel').mvdmModel);
 
 // Clinical RPC Emulator models
