@@ -42,11 +42,11 @@ class CPTCodeGenerator {
         this.db = new nodem.Gtm();
         this.db.open();
 
-        const userId = lookupUserIdByName(this.db, 'MANAGER,SYSTEM');
-        const facilityId = lookupFacilityIdByName(this.db, 'VISTA HEALTH CARE');
+        // const userId = lookupUserIdByName(this.db, 'MANAGER,SYSTEM');
+        // const facilityId = lookupFacilityIdByName(this.db, 'VISTA HEALTH CARE');
 
         VDM.setDBAndModel(this.db, DataModel);
-        VDM.setUserAndFacility(userId, facilityId);
+        // VDM.setUserAndFacility(userId, facilityId);
 
         // Setup the clasing of the driver
         ['exit', 'SIGINT'].forEach((signal) => {
