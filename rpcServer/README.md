@@ -106,4 +106,4 @@ The other log files are standard info, debug, and error outputs from the rpc and
 
 **Troubleshooting**
   * Sometimes the dependencies can get behind. Try deleting node_modules/mvdm: ```rm -Rf node_modules/mvdm``` and re-running ```npm install```
-  * The same goes for bower: ```bower install```
+  * The same goes for bower: ```bower install```   or ```npm install bower```
