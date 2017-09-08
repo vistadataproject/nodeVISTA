@@ -17,6 +17,7 @@
   "dependencies": {
     "body-parser": "^1.16.0",
     "bunyan": "^1.8.5",
+    "cors": "^2.8.4",
     "es6-error": "^4.0.2",
     "ewd-qoper8": "file:../lib/ewd-qoper8",
     "express": "^4.14.1",
