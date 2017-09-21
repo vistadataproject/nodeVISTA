@@ -6,6 +6,7 @@ const fs = require('fs');
 const express = require('express');
 const expressJwt = require('express-jwt');
 const jsonwebtoken = require('jsonwebtoken');
+const cors = require('cors');
 const config = require('./config/config.js');
 const logger = require('./logger.js');
 const HttpStatus = require('http-status');
@@ -19,6 +20,13 @@ const vitalsRouter = require('./vitalsRouter');
 const app = express();
 
 // middleware
+
+app.use(cors({
+    origin: '*',
+    methods: 'GET,PUT,POST,DELETE,OPTIONS',
+    exposedHeaders: ['x-access-token', 'x-refresh-token'],
+    allowedHeaders: ['content-type', 'Authorization'],
+}));
 
 // require JWT token for all services except auth
 app.use(
