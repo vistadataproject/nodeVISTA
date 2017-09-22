@@ -51,7 +51,9 @@ const mvdmModel = [].concat(
     require('mvdm/PCE/mvdmPCE_ProviderModel').mvdmModel,
     require('mvdm/PCE/mvdmPCE_PatientEdModel').mvdmModel,
     require('mvdm/PCE/mvdmPCE_ImmunizationModel').mvdmModel,
-    require('mvdm/PCE/mvdmOutpatientEncounter').mvdmModel);
+    require('mvdm/PCE/mvdmOutpatientEncounter').mvdmModel,
+    require('mvdm/PCE/mvdmProviderNarrativeModel').mvdmModel
+    );
 
 // Clinical RPC Emulator models
 const rpcEmulatorModel = [].concat(
