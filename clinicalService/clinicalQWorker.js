@@ -7,12 +7,14 @@ const logger = require('./logger.js');
 const nodem = require('nodem');
 const vdmUtils = require('mvdm/vdmUtils');
 const ClinicalServiceFactory = require('mvdm/clinicalServiceFactory');
+const PCEServiceFactory = require('mvdm/PCE/pceServiceFactory');
 const UnsupportedMethodError = require('./errors/unsupportedMethodError');
 const InvalidContextError = require('./errors/invalidContextError');
 const InvalidParametersError = require('./errors/invalidParametersError');
 
 let db;
 let clincalServiceFactory;
+let pceServiceFactory;
 
 process.on('uncaughtException', (err) => {
     if (db) {
@@ -48,10 +50,13 @@ function setServiceContext(context) {
 
     // restore user & patient context
     clincalServiceFactory = new ClinicalServiceFactory(db, context.userId, context.facilityId);
+    pceServiceFactory = new PCEServiceFactory(db, context.userId, context.facilityId);   
     logger.debug(`setServiceContext - creating clinical service factory instance: ${context.userId} ${context.facilityId}`);
+    logger.debug(`setServiceContext - creating pce service factory instance: ${context.userId} ${context.facilityId}`);
 
     if (context.patientId) {
         clincalServiceFactory.selectPatient(context.patientId);
+        pceServiceFactory.selectPatient(context.patientId);
 
         logger.debug(`setServiceContext - calling select patient: ${context.patientId}`)
     }
@@ -68,9 +73,7 @@ module.exports = function () {
     this.on('message', (messageObj, send, finished) => {
         try {
             let service;
-
             setServiceContext(messageObj.context);
-
             // create a service
             if (messageObj.service === 'PatientService' && messageObj.method === 'selectPatient') {
                 service = clincalServiceFactory;
@@ -80,7 +83,22 @@ module.exports = function () {
                 service = clincalServiceFactory.createAllergyService();
             } else if (messageObj.service === 'VitalsService') {
                 service = clincalServiceFactory.createVitalsService();
+            } else if (messageObj.service === 'pceExamService') {
+                service = pceServiceFactory.createPceExamService();
+            } else if (messageObj.service === 'pceSkinService') {
+                service = pceServiceFactory.createPceSkinTestService();
+            } else if (messageObj.service === 'pcePatientEdService') {
+                service = pceServiceFactory.createPcePatientEdService();
+            } else if (messageObj.service === 'pceImmunizationService') {
+                service = pceServiceFactory.createPceImmunizationService();
+            } else if (messageObj.service === 'pceHealthFactorService') {
+                service = pceServiceFactory.createPceHealthFactorService();
+            } else if (messageObj.service === 'pceCptService') {
+                service = pceServiceFactory.createPceCptService();
+            } else if (messageObj.service === 'pceDiagnosisService') {
+                service = pceServiceFactory.createPceDiagnosisService();
             }
+
 
             // invoke service method with args array
             validateMethod(messageObj.service, service, messageObj.method);

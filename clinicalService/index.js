@@ -15,6 +15,7 @@ const authRouter = require('./authRouter');
 const patientRouter = require('./patientRouter');
 const allergyRouter = require('./allergyRouter');
 const problemRouter = require('./problemRouter');
+const pceRouter = require('./pceRouter');
 const vitalsRouter = require('./vitalsRouter');
 
 const app = express();
@@ -29,20 +30,20 @@ app.use(cors({
 }));
 
 // require JWT token for all services except auth
-app.use(
-    expressJwt({
-        secret: fs.readFileSync(config.jwt.publicKey),
-        requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
-    }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
+// app.use(
+//     expressJwt({    `
+//         secret: fs.readFileSync(config.jwt.publicKey),
+//         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
+//     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
 
 // require patient token for all services expect /auth/* and /patient/select
-app.use(
-    requiresToken({
-        secret: fs.readFileSync(config.jwt.publicKey),
-        requestProperty: 'patient',
-        requestHeaderField: 'x-patient-token',
-        tokenSubject: 'patientToken',
-    }).unless({ path: [/^\/auth/, /^\/auth\/.*/, /^\/patient\/select/, /^\/patient\/select\//] }));
+// app.use(
+//     requiresToken({
+//         secret: fs.readFileSync(config.jwt.publicKey),
+//         requestProperty: 'patient',
+//         requestHeaderField: 'x-patient-token',
+//         tokenSubject: 'patientToken',
+//     }).unless({ path: [/^\/auth/, /^\/auth\/.*/, /^\/patient\/select/, /^\/patient\/select\//] }));
 
 // init routers
 app.use('/auth', authRouter);
@@ -50,10 +51,11 @@ app.use('/patient', patientRouter);
 app.use('/allergy', allergyRouter);
 app.use('/problem', problemRouter);
 app.use('/vitals', vitalsRouter);
+app.use('/pce', pceRouter);
 
 const port = config.port;
 app.listen(port, () => {
-    logger.info(`Clinical Service listening on port ${port}`);
+    logger.info(`PCE Service listening on port ${port}`);
 });
 
 // error handling
