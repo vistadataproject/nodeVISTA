@@ -55,7 +55,7 @@ app.use('/pce', pceRouter);
 
 const port = config.port;
 app.listen(port, () => {
-    logger.info(`PCE Service listening on port ${port}`);
+    logger.info(`Clinical & PCE Service listening on port ${port}`);
 });
 
 // error handling
