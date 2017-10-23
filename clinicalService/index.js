@@ -30,20 +30,20 @@ app.use(cors({
 }));
 
 // require JWT token for all services except auth
-// app.use(
-//     expressJwt({    `
-//         secret: fs.readFileSync(config.jwt.publicKey),
-//         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
-//     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
+ app.use(
+     expressJwt({
+         secret: fs.readFileSync(config.jwt.publicKey),
+         requestProperty: 'auth', // change decoded JWT token from 'req.user' to 'req.auth'
+     }).unless({ path: [/^\/auth/, /^\/auth\/.*/] })); // auth requests don't require a JWT token
 
 // require patient token for all services expect /auth/* and /patient/select
-// app.use(
-//     requiresToken({
-//         secret: fs.readFileSync(config.jwt.publicKey),
-//         requestProperty: 'patient',
-//         requestHeaderField: 'x-patient-token',
-//         tokenSubject: 'patientToken',
-//     }).unless({ path: [/^\/auth/, /^\/auth\/.*/, /^\/patient\/select/, /^\/patient\/select\//] }));
+ app.use(
+     requiresToken({
+         secret: fs.readFileSync(config.jwt.publicKey),
+         requestProperty: 'patient',
+         requestHeaderField: 'x-patient-token',
+         tokenSubject: 'patientToken',
+     }).unless({ path: [/^\/auth/, /^\/auth\/.*/, /^\/patient\/select/, /^\/patient\/select\//] }));
 
 // init routers
 app.use('/auth', authRouter);
