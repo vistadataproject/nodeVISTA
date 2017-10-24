@@ -95,6 +95,20 @@ function createDispatcher() {
     let vdmModels = [];
     let mvdmModels = [];
 
+    // We create a generic function to ensure uniqueness of model definitions, then we create specialized versions of
+    // the function to handle both VDM and MVDM definitions. We use these functions in place of the straight-up Array
+    // 'concat' function to prevent emulators from clobbering other emulator VDM/MVDM defintions.
+    const getUniqueModels = (type, key, modelArray, modelsToAdd) => {
+        LOGGER.info(`Adding ${modelsToAdd.length} ${type} models...`);
+        const allModels = modelArray.concat(modelsToAdd);
+        const uniqueModels = _.uniqBy(allModels, key);
+
+        LOGGER.info(`...found ${allModels.length - uniqueModels.length} duplicates, current ${type} model count: ${uniqueModels.length}`);
+        return uniqueModels;
+    };
+    const getUniqueVDMModels = _.partial(getUniqueModels, 'VDM', 'fmId');
+    const getUniqueMVDMModels = _.partial(getUniqueModels, 'MVDM', 'fmIdForId');
+
     emulators.forEach((emulator) => {
         const name = emulator.name || 'UNKNOWN';
         LOGGER.info(`Registering emulator: ${name}...`);
@@ -120,13 +134,13 @@ function createDispatcher() {
                 // Inject model dependencies into the emulator instance
                 if (model.vdmModel) {
                     // add to existing vdm model list (VDM is a singleton)
-                    vdmModels = vdmModels.concat(model.vdmModel);
+                    vdmModels = getUniqueVDMModels(vdmModels, model.vdmModel);
 
                     rpcEmulator.addVDMModel(vdmModels);
                 }
                 if (model.mvdmModel) {
                     // add to existing MVDM list (MVDM is a singleton)
-                    mvdmModels = mvdmModels.concat(model.mvdmModel);
+                    mvdmModels = getUniqueMVDMModels(mvdmModels, model.mvdmModel);
 
                     rpcEmulator.addMVDMModel(mvdmModels);
                 }
