@@ -60,6 +60,7 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # extra utils - used for cmake and dashboards and initial clones
 echo "Updating operating system"
+apt-get clean
 apt-get update -qq > /dev/null
 apt-get install -qq -y build-essential cmake-curses-gui git dos2unix daemon > /dev/null
 
@@ -89,7 +90,7 @@ apt-get -y -qq update > /dev/null
 apt-get -y -qq upgrade > /dev/null
 
 # Install baseline packages
-apt-get install -y -qq git xinetd perl wget curl python ssh mysql-server default-jdk maven sshpass > /dev/null
+apt-get install -y -qq git xinetd unzip perl wget curl python ssh mysql-server default-jdk maven sshpass > /dev/null
 
 # Ensure scripts know that we are installing for ubuntu
 export ubuntu=true;
@@ -217,7 +218,12 @@ echo "npm install..."
 
 # Add FMQL x 2 (note: will be installed and set up further on. TODO: consider moving up here)
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
-git clone -q https://github.com/caregraf/FMQL.git
+
+# For now, we retrieve the FMQL files from a private SSL server as a ZIP archive, then unzip
+# git clone -q https://github.com/caregraf/FMQL.git
+wget https://demoservices.vistadataproject.info/files/data/FMQL.zip
+unzip FMQL.zip
+rm FMQL.zip
 
 #change ownership of git clones to vdp
 chown -R vdp:vdp nodevista
