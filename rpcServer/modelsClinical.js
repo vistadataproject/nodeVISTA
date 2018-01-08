@@ -22,7 +22,11 @@ const vdmModel = [].concat(
     // patient
     require('mvdm/patient/vdmPatientModel').vdmModel,
 
-    //PCE;
+    // provider
+    require('mvdm/fileman/vdmNewPersonModel').vdmModel,
+    require('mvdm/fileman/vdmMasParametersModel').vdmModel,
+
+    // PCE;
     require('mvdm/PCE/vdmPCEModel').vdmModel);
 
 
