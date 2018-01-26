@@ -15,6 +15,6 @@ const banner = `
               |_| |_|\\___/ \\__,_|\\___| \\_/  |___|____/ |_/_/   \\_\\
 `;
 
-const text = 'Welcome! You are currently viewing the nodeVISTA demo for the VISTA Data Project (VDP). \r \r  Where nodeVISTA provided secure and consistent read-write interface for VISTA, VDP further enhances the usablity by connecting the fragmented VISTA networks under one standardized data model. A single, industry-standard model provides increased accessibility, data integrity and ease of information access across all VA VISTA systems, providing better and more effecient service. For further information, please visit:\r \r http://vistadataproject.info/\r \r VISTA Data Project is currently managed by HRG Technologies LLC. \r ';
+const text = 'Welcome! You are logging into a node.js-enabled VISTA, nodeVISTA, a test system for development and testing and demonstration. \r \r This VISTA has been seeded with Users and test Patient Data using mechanisms developed during the VISTA Data Project (vistadataproject.info). \r';
 
 VDM.update({ id: '8989_3-1', type: 'Kernel_System_Parameters-8989_3', intro_message: `${banner}\r\r${text}` });

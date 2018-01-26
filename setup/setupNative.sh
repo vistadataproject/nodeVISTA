@@ -8,6 +8,9 @@ basedir=$origdir
 
 SECONDS=0
 
+# For use in wgets from demoservices.vistadataproject. Get FMQL and other images that match this version
+DATA_VERSION="1.1"
+
 # Make sure we are root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root" 1>&2
@@ -29,7 +32,6 @@ echo "Installing node.js via NVM (node version manager)"
 sudo apt-get update
 sudo apt-get -y install vim
 
-# TODO: change to osehravista as will make generic, free of node.js
 instance="nodevista"
 repoPath="https://github.com/OSEHRA/VistA-M.git"
 nodever="4.7.0"
@@ -212,7 +214,9 @@ echo "npm install..."
 
 # Add FMQL x 2 (note: will be installed and set up further on. TODO: consider moving up here)
 echo "Cloning FMQL MUMPS and One Page Clients for use by $vdpid"
-git clone -q https://github.com/caregraf/FMQL.git
+wget https://demoservices.vistadataproject.info/files/data/FMQL.zip
+unzip FMQL.zip
+rm FMQL.zip
 
 #change ownership of git clones to vdp
 chown -R vdp:vdp nodevista
@@ -309,8 +313,8 @@ cd /usr/local/src/nodevista/setup/pySetup
 echo "run simple setup 2 (cont)"
 su $instance -c "source $basedir/etc/env && python simpleSetup2.py"
 
-# enable journaling
-su $instance -c "source $basedir/etc/env && $basedir/bin/enableJournal.sh"
+# disable journaling
+su $instance -c "source $basedir/etc/env && $basedir/bin/disableJournal.sh"
 
 #apply VDP data dictionary and other (GT/M portability) fixes
 cd $vdphome/nodevista/setup/vdpCorrections
