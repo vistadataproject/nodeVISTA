@@ -148,4 +148,21 @@ router.put('/remove',
         });
     });
 
+/**
+ * /allergy/markAsNKA
+ *  PUT:
+ *      Marks patient record as having NKA (No Known Allergies)
+ *      produces: application/json
+ *      responses:
+ *          200: Marked patient record as having NKA (No Known Allergies)
+ */
+router.put('/markAsNKA',
+    (req, res, next) => {
+        clinicalService.callService(utils.toContext(req), 'AllergyService', 'markAsNKA').then((result) => {
+            res.send(result);
+        }).catch((err) => {
+            next(err);
+        });
+    });
+
 module.exports = router;
