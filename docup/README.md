@@ -36,3 +36,7 @@ exit to the host and ...
 > docker commit osehrabase vam/nodevistaDemo:b2 
 
 __Note__: eventually the addition of nodeVISTA setups (New Configurations+FMQL) will be a one of many "demo/test VISTA" setups built over the OSEHRA base
+
+## Improve on Base Docker
+
+  * [docker and pm2](http://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/) with _RUN npm install pm2 -g_ and more
