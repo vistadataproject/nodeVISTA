@@ -1,10 +1,12 @@
 # From OSEHRA to nodeVISTA Container
 
+__3 Outstanding__: 1. need to test the final 'nodevista addition' script, 2. pm2 supprting restart and 3. CPRS connecting (port is there but from Parallels CPRS?)
+
 Start with the git [docker-vista](https://github.com/OSEHRA/docker-vista) ...
 
 > git clone https://github.com/OSEHRA/docker-vista
 
-This has the software and docker file needed to create an image with OSEHRA VISTA on Cent OS.
+This has the software and docker file needed to create an image with OSEHRA VISTA on Cent OS. It sets up basic variables (ex/ basedir) and permissions to allow the following to work.
 
 Build this image using Docker ...
 
