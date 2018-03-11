@@ -100,6 +100,22 @@ describe('test allergy service route', () => {
             });
     });
 
+    it('PUT /allergy/markAsNKA - mark patient record with NKA', (done) => {
+        chai.request(endpoint)
+            .put('/allergy/markAsNKA')
+            .set('authorization', `Bearer ${accessToken}`) // pass in accessToken
+            .set('x-patient-token', patientToken) // pass in patientToken
+            .send()
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(HttpStatus.OK);
+                const json = JSON.parse(res.text);
+                const allergy = json.created;
+                expect(allergy.hasReactions).to.be.false;
+                done();
+            });
+    });
+
     it('POST /allergy - create with missing/empty parameters', (done) => {
         chai.request(endpoint)
             .post('/allergy')
