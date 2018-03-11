@@ -23,6 +23,7 @@ This maps the image's CPRS 9430 port to 9530 (to avoid clashes with other images
 SSH into the container (to add the nodeVISTA additions ...)
 
 > ssh root@localhost -p 2222
+password: docker
 
 ## Adding the nodeVISTA additions
 
