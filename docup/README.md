@@ -1,6 +1,6 @@
 # From OSEHRA to nodeVISTA Container
 
-__3 Outstanding__: 1. need to test the final 'nodevista addition' script, 2. pm2 supprting restart and 3. CPRS connecting (port is there but from Parallels CPRS?)
+__3 Outstanding__: 1. need to test the final 'nodevista addition' script, 2. pm2 supprting restart and 3. CPRS connecting (port is there but from Parallels CPRS?) and debug port access with the likes of _ss -t -a_
 
 Start with the git [docker-vista](https://github.com/OSEHRA/docker-vista) ...
 
