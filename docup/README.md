@@ -66,6 +66,15 @@ Docker on OS X is NOT native - it is running on an Oracle VirtualBox virtual mac
 
 and use that host in CPRS in parallels along with the RPC Broker port (_9530_) exposed in the container. 
 
+## Publishing Image (to vistadataproject in Docker)
+
+```text
+> docker tag vam/nvdemo:b2a vistadataproject/nodevistas:b2a
+> docker login 
+...
+> docker push vistadataproject/nodevistas:b2a
+```
+
 ## More to Investigate and Work 
 
   * [docker and pm2](http://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/) with _RUN npm install pm2 -g_ and more
