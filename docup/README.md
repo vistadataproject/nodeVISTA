@@ -1,6 +1,6 @@
 # From OSEHRA to nodeVISTA Container
 
-__3 Outstanding__: 1. need to test the final 'nodevista addition' script, 2. pm2 supprting restart and 3. CPRS connecting (port is there but from Parallels CPRS?) and debug port access with the likes of _ss -t -a_ and even _telnet_
+__2 Stage One Outstanding__: 1. need to test the final 'nodevista addition' script, 2. pm2 supprting restart
 
 Start with the git [docker-vista](https://github.com/OSEHRA/docker-vista) ...
 
@@ -33,10 +33,42 @@ Copy in _addNodeVISTA.sh_ and execute it
 
 exit to the host and ...
 
-> docker commit osehrabase vam/nodevistaDemo:b2 
+> docker commit osehrabase vam/nodevistaDemo:b2a
 
-__Note__: eventually the addition of nodeVISTA setups (New Configurations+FMQL) will be a one of many "demo/test VISTA" setups built over the OSEHRA base
+and see the new image ...
 
-## Improve on Base Docker
+```text
+> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+vam/nvdemo          b2a                 0a80a8dad466        4 minutes ago       10.9GB
+```
+
+Now stop (and destroy) the container with _docker stop {containerid}_ and start a new container from the newly committed image ...
+
+> docker run -p 9530:9430 -p 8001:8001 -p 2222:22 -p 9500:9000 -d -P vam/nvdemo:b2a
+
+__Note__: the addition of nodeVISTA setups (New Configurations+FMQL) will be a one of many "demo/test VISTA" setups built over the OSEHRA base
+
+## Connect the Rambler and CPRS
+
+__Rambler;__
+
+Open __localhost:{FMQL port}__, set to _9500_ in the docker above.
+
+__CPRS:__
+
+Docker on OS X is NOT native - it is running on an Oracle VirtualBox virtual machine and the _--network="host"_ setting refers to this virtual box and not the native IP. From the host mac, get its current IP address ...
+
+```text
+> ipconfig getifaddr en0
+192.168.1.8
+```
+
+and use that host in CPRS in parallels along with the RPC Broker port (_9530_) exposed in the container. 
+
+## More to Investigate and Work 
 
   * [docker and pm2](http://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/) with _RUN npm install pm2 -g_ and more
+  * why "p" and "s" introduces a problem for VISTA broker setup (is there some aspect of the GT/M MUMPS 'port' generation that requires env directories being upgraded/setup first?)
+  * run “Docker in Docker” in Docker for Mac (<=> same network namespace?), so you can run a swarm of Docker daemons which might be enough of a test environment for your multi-host apps.
+  * [Parallels as host for Docker on OS X](https://zitseng.com/archives/10861) - only if this provides advantage for CPRS in Windows in Parallels
