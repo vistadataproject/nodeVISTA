@@ -1,6 +1,6 @@
 # From OSEHRA to nodeVISTA Container
 
-__2 Stage One Outstanding__: 1. need to test the final 'nodevista addition' script, 2. pm2 supprting restart
+__2 Stage One Outstanding__: 1. fix PM2 (right now still need to manually restart FMQL with _pm2 start fmqlServer.js and 2. need to test the final 'nodevista addition' script
 
 Start with the git [docker-vista](https://github.com/OSEHRA/docker-vista) ...
 
