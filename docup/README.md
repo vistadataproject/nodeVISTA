@@ -70,5 +70,6 @@ and use that host in CPRS in parallels along with the RPC Broker port (_9530_) e
 
   * [docker and pm2](http://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/) with _RUN npm install pm2 -g_ and more
   * why "p" and "s" introduces a problem for VISTA broker setup (is there some aspect of the GT/M MUMPS 'port' generation that requires env directories being upgraded/setup first?)
+  * do more on host machine vs VM host - [see post on windows route settings](https://forums.docker.com/t/how-to-access-docker-container-from-another-machine-on-local-network/4737/13) and more on the official [docker networking](https://docs.docker.com/config/containers/container-networking/) and using [bridge networking](https://docs.docker.com/network/bridge/#use-ipv6) and [four ways to connect](http://blog.oddbit.com/2014/08/11/four-ways-to-connect-a-docker/)
   * run “Docker in Docker” in Docker for Mac (<=> same network namespace?), so you can run a swarm of Docker daemons which might be enough of a test environment for your multi-host apps.
   * [Parallels as host for Docker on OS X](https://zitseng.com/archives/10861) - only if this provides advantage for CPRS in Windows in Parallels
