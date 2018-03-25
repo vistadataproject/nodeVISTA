@@ -35,7 +35,7 @@ Then point CPRS to this IP Address and port _9330_.
 
 ## Publishing Image 
 
-to vistadataproject in Docker ...
+to vistadataproject in _Docker Hub_ ...
 
 ```text
 > docker tag vam/nvdemo:b2 vistadataproject/nodevista:b2
@@ -43,6 +43,8 @@ to vistadataproject in Docker ...
 ...
 > docker push vistadataproject/nodevista:b2
 ```
+
+available for _docker pull_
 
 ## Ending it all
 
