@@ -12,7 +12,7 @@ Build this image using Docker ...
 
 > docker build -t osehrabase . 
 
-Note:__ assumes you have installed docker. See how to install [docker for OS X]().
+Note:__ assumes you have installed docker. See how to install [docker for OS X](https://docs.docker.com/docker-for-mac/install/).
 
 Start a container using the new image ...
 

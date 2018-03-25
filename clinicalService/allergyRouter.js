@@ -27,7 +27,7 @@ function validateAllergyId(allergyId) {
 }
 
 /**
- * /allergies
+ * /allergy
  *  POST:
  *      Creates a new allergy.
  *      produces: application/json
