@@ -30,13 +30,17 @@ utils.init();
  */
 function setGTMNull() {
 
-    VDM.update({ id: '8989_3-1', type: 'Kernel_System_Parameters-8989_3', intro_message: `${banner}\r\r${text}` });
+    /*
+     * Very specific to Devices and NULL devices in 3/18. May change. Setting GTM/Linux device to have name NULL
+     */
+    let qres = VDM.query("DESCRIBE 3_5 FILTER(.01=ZZNULL&1='/dev/null')")
+    if (qres.results.length !== 1)
+        throw "No one ZZNULL NULL device of dev/null";
+    let device = { id: qres.results[0].id, type: qres.results[0].type, name: "NULL" };
+    VDM.update(device);
 
 }
 
-/*
- * Rename CONSOLE to GTM-UNIX-CONSOLE and make it SIGN-ON/SYSTEM DEVICE: YES
- */
-function setGTMConsole() {
+// TODO: CONSOLE, HFS (let subtype = VDM.lookupIdByLabel("Terminal_Type-3_2", "P-HFS/80/99999")), VIRTUAL TERMINAL
 
-}
+setGTMNull();
