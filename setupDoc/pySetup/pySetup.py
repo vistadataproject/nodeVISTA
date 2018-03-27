@@ -46,8 +46,8 @@ def pySetup():
         print "Setting up basics ..."
         postImportSetupBasics(VistA)
     except:
-        print "EXIT_PYS_CANT_SETUP_BASICS"
-        return
+        print "EXIT_PYS_CANT_SETUP_BASICS_BUT_GOING_ON"
+        VistA=ConnectToMUMPS(LOGFILE)
 
     try:
         print "Now setting up Users (signatures only now) ..."
@@ -125,7 +125,7 @@ def postImportSetupUsers(VistA):
     #Give Mary Smith permission to create shared templates
     OSEHRASetup.addTemplatePermission(VistA,"MS")
 
-    # Add clinic via the XUP menu to allow scheduling
+    # Add clinic via the XUP menu to allow scheduling - DOCKER V2 move to JS
     OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
     
     """

@@ -83,18 +83,15 @@ su vdp -c "source $basedir/etc/env && node vdpCorrections.js &>> /home/vdp/logs/
 jsSetup="$nvconfiger/jsSetup"
 cd $jsSetup
 su vdp -c "source $basedir/etc/env && npm install --quiet >> /home/vdp/logs/jsNPMInstall.log"
-cd $jsSetup/parameters
-echo "register system parameters x 2 ..."
-su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs/registerVitalsCPRS.log"
-su $vdpid -c "source $basedir/etc/env && node updateNodeVISTAParameters.js &>> $vdplogs/updateNodeVISTAParameters.log"
 cd $jsSetup/system
-echo "setting up Institution and DEVICEs ..."
+echo "setting up Institution, DEVICEs and SYS level parameters ..."
 su $vdpid -c "source $basedir/etc/env && node kspSetup.js &>> $vdplogs/kspSetup.log"
 su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
 su $vdpid -c "source $basedir/etc/env && node domainSetup.js &>> $vdplogs/domainSetup.log"
+su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs/registerVitalsCPRS.log"
 # ADD DEVICE setup - NULL, ...
 cd $jsSetup/pharmacy
-echo "installing pharmacy"
+echo "installing system pharmacy"
 su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
 su $vdpid -c  "source $basedir/etc/env && node pharmacySystemSetup.js &>> $vdplogs/pharmacySystemSetup.log"
 su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vdmMedMetaLoad.log"
@@ -107,14 +104,17 @@ su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vd
 cd $nvconfiger/pySetup
 echo "[py] FM and Patient, User setup not yet in VDM ..."
 su $instance -c "source $basedir/etc/env && python pySetup.py"
+echo "[py] Clinics too - needed for Problem Tests ..."
 su $instance -c "source $basedir/etc/env && python clinicsSetup.py"                    
 
 # Back to JS to finish off User and Patient (when both fully in JS, PY roll won't intervene)
 echo "Finishing users and patients ..."
 cd $jsSetup/user
 su $vdpid -c "source $basedir/etc/env && node addUserSettings.js &>> $vdplogs/addUserSettings.log"
+su $vdpid -c "source $basedir/etc/env && node updateUserParameters.js &>> $vdplogs/updateUserParameters.log"
 cd $jsSetup/patient
-su $vdpid -c  "source $basedir/etc/env && node updatePatients.js &>> $vdplogs/updatePatients.log"
+su $vdpid -c  "source $basedir/etc/env && node enhanceCarterDavid.js &>> $vdplogs/enhanceCarterDavid.log"
+su $vdpid -c  "source $basedir/etc/env && node ppCarterDavidSetup.js &>> $vdplogs/ppCarterDavidSetup.log"
 
 #
 # Mv entryfile and cleanup scriptdir (/opt/vista) and the usr/local/src entry
