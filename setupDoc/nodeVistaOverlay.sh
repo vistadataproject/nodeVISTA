@@ -20,6 +20,7 @@ echo "export gtmroutines=\"\${gtmroutines}\"\" \"\/home/nodevista/node_modules/n
 # https://serverfault.com/questions/824975/failed-to-get-d-bus-connection-operation-not-permitted to fix error
 
 # Add vdp user and ensure same setup as nodevista user
+# Note: NV Docker VERSION 2 may just reuse nodevista user for all
 useradd -c "VDP User" -m -U "vdp" -s /bin/bash -G nodevista
 echo vdp:vdp | chpasswd
 echo "source /home/nodevista/etc/env" >> /home/vdp/.bashrc
@@ -32,9 +33,8 @@ vdplogs="/home/vdp/logs"
 #
 # FMQL setup and start - move AFTER VISTA setup AND start from docker
 #
-# TODO: move out to own docker as a service BUT do need need for MVDM
-# load to work (need to install it in node_modules ala mvdm install
-# a/cing for MUMPS copy too. Pkg MUMPS in full install too)
+# Note: NV Docker VERSION 2 should have fmqlServer.js (as opposed to 
+# underlying FMQL addition in a separate container. May also load KIDS?
 #
 echo "Installing FMQL ..."
 cd $vdphome
@@ -52,12 +52,10 @@ su vdp -c "source $basedir/etc/env && npm install"
 echo "FMQL successfully installed - for use under MVDM"
 
 #
-# VISTA Configuration - both Python and JS (VDP/VDM) based configuration
+# VISTA Configuration - mainly JS (VDP/VDM) but some residue of Roll'nS Py-based configuration
 #
 # Note: NV Docker VERSION 2 should do less installation of Patient data, leaving Patient
-# data insertion to other images based on a base image. Only NULL device, domain,
-# KSP etc should be setup in the base image along with a well structured multi-division
-# hospital.
+# data insertion to other images based on a base image. 
 #
 
 # Copy configurers from /opt/vista into vdp
@@ -67,15 +65,6 @@ cp -r /opt/vista/pySetup $nvconfiger
 cp -r /opt/vista/vdpCorrections $nvconfiger
 cp -r /opt/vista/jsSetup $nvconfiger
 chown -R vdp:vdp $vdphome/nvconfiger
-
-# First Python-based simple setup relying on old OSEHRA utilities
-cd $nvconfiger/pySetup
-echo "[py] basic setup (device, domain etc)"
-su $instance -c "source $basedir/etc/env && python simpleSetup.py"
-echo "[py] add users, patients"
-su $instance -c "source $basedir/etc/env && python simpleSetup2.py"
-echo "[py] add clinics"
-su $instance -c "source $basedir/etc/env && python clinicsSetup.py" # docker v2 cleanup 
 
 # Need VDM git M utilities into NV to support use of (M)VDM for configuration.
 # The mvdm module (MVDM git) is used in configure below. Should be separate M under docker nv setup 
@@ -94,35 +83,38 @@ su vdp -c "source $basedir/etc/env && node vdpCorrections.js &>> /home/vdp/logs/
 jsSetup="$nvconfiger/jsSetup"
 cd $jsSetup
 su vdp -c "source $basedir/etc/env && npm install --quiet >> /home/vdp/logs/jsNPMInstall.log"
-# using parameter service to inject user level settings
-echo "run addUserSettings.js"
-su $vdpid -c "source $basedir/etc/env && node addUserSettings.js &>> $vdplogs/addUserSettings.log"
-# using parameter service to inject system level settings
-echo "run registerVitalsCPRS.js"
-su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs/registerVitalsCPRS.log"
-# inject additional nodeVista parameters
 cd $jsSetup/parameters
-echo "run updateNodeVISTAParameters.js"
+echo "register system parameters x 2 ..."
+su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs/registerVitalsCPRS.log"
 su $vdpid -c "source $basedir/etc/env && node updateNodeVISTAParameters.js &>> $vdplogs/updateNodeVISTAParameters.log"
-# setup splash screen
 cd $jsSetup/system
-echo "run SYSTEM setups ..."
+echo "setting up Institution and DEVICEs ..."
 su $vdpid -c "source $basedir/etc/env && node kspSetup.js &>> $vdplogs/kspSetup.log"
 su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
-echo "installing pharmacy"
+su $vdpid -c "source $basedir/etc/env && node domainSetup.js &>> $vdplogs/domainSetup.log"
+# ADD DEVICE setup - NULL, ...
 cd $jsSetup/pharmacy
+echo "installing pharmacy"
 su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
 su $vdpid -c  "source $basedir/etc/env && node pharmacySystemSetup.js &>> $vdplogs/pharmacySystemSetup.log"
 su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vdmMedMetaLoad.log"
-su $vdpid -c  "source $basedir/etc/env && node ppCarterDavidSetup.js &>> $vdplogs/ppCarterDavidSetup.log"
-# update patient records
-echo "run updatePatients.js"
-cd $jsSetup/patient
-su $vdpid -c  "source $basedir/etc/env && node updatePatients.js &>> $vdplogs/updatePatients.log"
 # Not for now - create CPT codes for all terms in the system. This takes a long time, so we only build this
 # cd $vdphome/nodevista/setup/jsSetup/cptcodes
 # echo "run CPTCodeGenerator.js - Full Install"
 # su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node CPTCodeGenerator.js | tee -a $vdphome/logs/CPTCodeGenerator.log"
+
+# Py part - Patient reg, User add and FM reinit still done thru Py driven roll and scroll
+cd $nvconfiger/pySetup
+echo "[py] FM and Patient, User setup not yet in VDM ..."
+su $instance -c "source $basedir/etc/env && python pySetup.py"
+su $instance -c "source $basedir/etc/env && python clinicsSetup.py"                    
+
+# Back to JS to finish off User and Patient (when both fully in JS, PY roll won't intervene)
+echo "Finishing users and patients ..."
+cd $jsSetup/user
+su $vdpid -c "source $basedir/etc/env && node addUserSettings.js &>> $vdplogs/addUserSettings.log"
+cd $jsSetup/patient
+su $vdpid -c  "source $basedir/etc/env && node updatePatients.js &>> $vdplogs/updatePatients.log"
 
 #
 # Mv entryfile and cleanup scriptdir (/opt/vista) and the usr/local/src entry

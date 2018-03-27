@@ -26,14 +26,14 @@ ConnectToMUMPS relies on environment:
 """
 # print "Platform", sys.platform, "GT.M MUMPS VM", os.getenv('gtm_dist'), "GTM Prompt", os.getenv("gtm_prompt")
 
-LOGFILE = '/home/nodevista/log/simpleSetup2.txt'
+LOGFILE = '/home/nodevista/log/pySetup.txt'
 
 """
 Expect to be called from Shell - PRINT can be read with 
      result=`python simpleSetup.py`
      if [ "$result" != "OK" ]; then ... 
 """
-def simpleSetup2():
+def pySetup():
 
     try:
         print "Connecting to MUMPS roll n scroll ..."
@@ -42,7 +42,12 @@ def simpleSetup2():
         print "EXIT_PYS_CANT_CONNECT_TO_MUMPS"
         return
 
-    # NB: simpleSetup and postImportSetupBasics should go too
+    try:
+        print "Setting up basics ..."
+        postImportSetupBasics(VistA)
+    except:
+        print "EXIT_PYS_CANT_SETUP_BASICS"
+        return
 
     try:
         print "Now setting up Users (signatures only now) ..."
@@ -61,7 +66,25 @@ def simpleSetup2():
         print "EXIT_PYS_CANT_SETUP_PATIENTS"
         return
 
-    print "Setup User, Patient ... Complete OK"
+    print "PY Setup FileMan, User, Patient ... Complete OK"
+
+def postImportSetupBasics(VistA):
+    """
+    Basics of postImportSetup from initializeFileMan to division addition
+    """
+
+    # from test.cmake
+    TEST_VISTA_SETUP_SITE_NAME = "DEMO.NODEVISTA.ORG"
+    TEST_VISTA_STATION_NUMBER = "999"
+
+    VistA.wait(PROMPT,60)
+
+    # Reset site name to domain name, station number too. Uses D ^DINIT
+    # ... sets (via ^ZUSET) ZUGTM to ZU and ^DINIT for MSC FileMan
+    OSEHRASetup.initializeFileman(VistA, TEST_VISTA_SETUP_SITE_NAME, TEST_VISTA_STATION_NUMBER) # from 6161
+
+    # Start TaskMan through the XUP Menu system.
+    OSEHRASetup.restartTaskMan(VistA)
 
 def postImportSetupUsers(VistA):
     """
@@ -103,7 +126,7 @@ def postImportSetupUsers(VistA):
     OSEHRASetup.addTemplatePermission(VistA,"MS")
 
     # Add clinic via the XUP menu to allow scheduling
-    # OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
+    OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
     
     """
     The sleep and ConnectToMUMPS is needed as createClinic has halted and 
@@ -137,7 +160,7 @@ def postImportSetupPatients(VistA):
     OSEHRASetup.addPatient(VistA,'dataFiles/patdata0.csv')
 
 def main():
-    simpleSetup2()
+    pySetup()
 
 if __name__ == "__main__":
     main()

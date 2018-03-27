@@ -4,6 +4,7 @@ const nodem = require('nodem');
 const parameterService = require('mvdm/parameterService');
 const RPCRunner = require('mvdm/rpcRunner').RPCRunner;
 const _ = require('lodash');
+const utils = require('../utils');
 
 const db = new nodem.Gtm();
 const DEBUG = true;
@@ -24,9 +25,10 @@ process.on('exit', () => {
     parameterService.printDebug('exiting db');
 });
 
-// Initialize the user via RPC Runner - assuming 62 is ALEXANDER,ROBERT
+const userIEN = parseInt(utils.lookupUserIdByName(db, 'ALEXANDER,ROBERT').split("-")[1]);
+console.log("updating vital settings for", userIEN);
 const rpcRunner = new RPCRunner(db);
-rpcRunner.initializeUser(62);
+rpcRunner.initializeUser(userIEN);
 
 const parameterList = [{
     type: 'add',
