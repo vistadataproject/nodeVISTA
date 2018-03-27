@@ -88,11 +88,11 @@ cd $jsSetup
 su vdp -c "source $basedir/etc/env && npm install --quiet >> /home/vdp/logs/jsNPMInstall.log"
 cd $jsSetup/system
 echo "setting up Institution, DEVICEs and SYS level parameters ..."
+su $vdpid -c "source $basedir/etc/env && node deviceSetup.js &>> $vdplogs/deviceSetup.log"
 su $vdpid -c "source $basedir/etc/env && node kspSetup.js &>> $vdplogs/kspSetup.log"
 su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
 su $vdpid -c "source $basedir/etc/env && node domainSetup.js &>> $vdplogs/domainSetup.log"
 su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs/registerVitalsCPRS.log"
-su $vdpid -c "source $basedir/etc/env && node deviceSetup.js &>> $vdplogs/deviceSetup.log"
 cd $jsSetup/pharmacy
 echo "installing system pharmacy"
 su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
