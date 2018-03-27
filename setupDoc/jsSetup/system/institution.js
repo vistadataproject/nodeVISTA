@@ -61,3 +61,11 @@ VDM.update({id: '40_8-1', type: "Medical_Center_Division-40_8", "name": INSTITUT
 // Not in nonClinical MVDM ... must add (Issue: ...)
 // 5. MPI LOCAL - one and only entry use STATION NUMBER
 // VDM.update({id: "984_1-1", type: "Master_Patient_Index-", station_number: STATION_NUMBER etc etc});
+
+/*
+ * TODO: move Clinic Create in Here
+ *
+ *     # OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
+ *
+ * OR DO A PY AFTER JS?
+ */
