@@ -106,8 +106,9 @@ echo "run updateNodeVISTAParameters.js"
 su $vdpid -c "source $basedir/etc/env && node updateNodeVISTAParameters.js &>> $vdplogs/updateNodeVISTAParameters.log"
 # setup splash screen
 cd $jsSetup/system
-echo "run introMsg.js"
-su $vdpid -c "source $basedir/etc/env && node introMsg.js &>> $vdplogs/introMsg.log"
+echo "run SYSTEM setups ..."
+su $vdpid -c "source $basedir/etc/env && node kspSetup.js &>> $vdplogs/kspSetup.log"
+su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
 echo "installing pharmacy"
 cd $jsSetup/pharmacy
 su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
