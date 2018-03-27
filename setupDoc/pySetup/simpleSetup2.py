@@ -71,13 +71,6 @@ def postImportSetupUsers(VistA):
     # Required to add Patient, User etc 
     OSEHRASetup.addSystemManager(VistA)
 
-    # Open FileMan and create the VistA Health Care institution
-    OSEHRASetup.addInstitution(VistA,"VISTA HEALTH CARE","999")
-
-    # Create the Medical Center Division of
-    # the VistA Health Care institution
-    OSEHRASetup.addDivision(VistA,'VISTA MEDICAL CENTER',"6101","999")
-
     # The Sikuli test for CPRS orders a Streptozyme test for the patient
     # This information ensures the test can be ordered at the VistA Health care
     # Facility
@@ -110,7 +103,7 @@ def postImportSetupUsers(VistA):
     OSEHRASetup.addTemplatePermission(VistA,"MS")
 
     # Add clinic via the XUP menu to allow scheduling
-    OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
+    # OSEHRASetup.createClinic(VistA,'VISTA HEALTH CARE','VHC','M')
     
     """
     The sleep and ConnectToMUMPS is needed as createClinic has halted and 
