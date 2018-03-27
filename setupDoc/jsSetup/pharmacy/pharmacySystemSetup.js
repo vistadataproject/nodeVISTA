@@ -30,7 +30,7 @@ process.on('uncaughtException', function(err) {
 });
 
 VDM.setDBAndModel(db, vdmModel);
-let userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM");
+let userId = testUtils.lookupUserIdByName(db, "USER,ONE"); // Not MANAGER,SYSTEM as base osehra doesn't have it
 let facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
 VDM.setUserAndFacility(userId, facilityId);
 

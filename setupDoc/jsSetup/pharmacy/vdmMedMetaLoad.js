@@ -36,7 +36,7 @@ process.on('uncaughtException', function(err) {
 
 VDM.setDBAndModel(db, vdmModel);
 // will show in Activity Log for DRUG (50) once load
-let userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM"); // MANAGER,SYSTEM
+let userId = testUtils.lookupUserIdByName(db, "USER,ONE"); // USER,ONE
 let facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
 VDM.setUserAndFacility(userId, facilityId);
 

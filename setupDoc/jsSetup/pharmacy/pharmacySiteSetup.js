@@ -28,7 +28,7 @@ process.on('uncaughtException', function(err) {
 });
 
 VDM.setDBAndModel(db, vdmModel);
-let userId = testUtils.lookupUserIdByName(db, "MANAGER,SYSTEM");
+let userId = testUtils.lookupUserIdByName(db, "USER,ONE"); // Not MANAGER,SYSTEM so can run on OSEHRA base
 let facilityId = testUtils.lookupFacilityIdByName(db, "VISTA HEALTH CARE");
 VDM.setUserAndFacility(userId, facilityId);
 
@@ -70,7 +70,7 @@ const outpatientSite = {
     
     "prescription_number_upper_bound": 1000000,
     
-    "inactive_date": { "value": "2017-12-31T00:00:00Z", "type": "xsd:date" }
+    "inactive_date": { "value": "2018-12-31T00:00:00Z", "type": "xsd:date" }
     
 };
 
