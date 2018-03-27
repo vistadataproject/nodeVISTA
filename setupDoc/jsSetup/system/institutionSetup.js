@@ -45,7 +45,7 @@ function setupInstitution(institutionName, stationNumber) {
         // shouldn't be NATIONAL status (as 999 not national!) but using for testing
         let MEANINGLESSNPI = "1234567890";
         let res = VDM.create({type: "Institution-4", name: institutionName, station_number: stationNumber, status: "National", "npi": MEANINGLESSNPI, pointer_to_agency: agencyRef});
-        institutionRef = { id: res.id, label: res.label };
+        institutionRef = { id: res.id, label: res.name };
 
     }
 

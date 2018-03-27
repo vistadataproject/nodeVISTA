@@ -47,20 +47,20 @@ def pySetup():
         postImportSetupBasics(VistA)
     except:
         print "EXIT_PYS_CANT_SETUP_BASICS_BUT_GOING_ON"
-        VistA=ConnectToMUMPS(LOGFILE)
+        VistA=ConnectToMUMPS(re.sub(r'Setup', 'Setup1', LOGFILE))
 
     try:
         print "Now setting up Users (signatures only now) ..."
         postImportSetupUsers(VistA)
     except Exception as e:
         print "EXIT_PYS_PROBLEM_SETTING_USERS_BUT_GOING_ON"
-        VistA=ConnectToMUMPS(LOGFILE)
+        VistA=ConnectToMUMPS(re.sub(r'Setup', 'Setup2', LOGFILE))
 
     try:
         print "Now setting up Patients ..."
         # have to reset VistA as Signature Setup halts from VISTA
         time.sleep(10)
-        VistA=ConnectToMUMPS(LOGFILE) # reset up VISTA
+        VistA=ConnectToMUMPS(re.sub(r'Setup', 'Setup3', LOGFILE)) # reset up VISTA
         postImportSetupPatients(VistA)
     except:
         print "EXIT_PYS_CANT_SETUP_PATIENTS"
@@ -97,8 +97,8 @@ def postImportSetupUsers(VistA):
     # The Sikuli test for CPRS orders a Streptozyme test for the patient
     # This information ensures the test can be ordered at the VistA Health care
     # Facility
-    OSEHRASetup.setupStrepTest(VistA)
-    OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
+    # OSEHRASetup.setupStrepTest(VistA)
+    # OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
 
     """
     Note that these verifies are temporary - VISTA forces a reset which is done as part of
