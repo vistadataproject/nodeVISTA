@@ -55,7 +55,9 @@ echo "FMQL successfully installed - for use under MVDM"
 # VISTA Configuration - mainly JS (VDP/VDM) but some residue of Roll'nS Py-based configuration
 #
 # Note: NV Docker VERSION 2 should do less installation of Patient data, leaving Patient
-# data insertion to other images based on a base image. 
+# data insertion to other images based on a base image AND move at least clinic setup to
+# JS and preferably user/patient setup too (even if that requires MUMPS wrappers on
+# calls RnS reduces too) ie/ nix Roll and Scroll use all together. 
 #
 
 # Copy configurers from /opt/vista into vdp
@@ -104,8 +106,6 @@ su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vd
 cd $nvconfiger/pySetup
 echo "[py] FM and Patient, User setup not yet in VDM ..."
 su $instance -c "source $basedir/etc/env && python pySetup.py"
-echo "[py] Clinics too - needed for Problem Tests ..."
-su $instance -c "source $basedir/etc/env && python clinicsSetup.py"                    
 
 # Back to JS to finish off User and Patient (when both fully in JS, PY roll won't intervene)
 echo "Finishing users and patients ..."
@@ -115,6 +115,11 @@ su $vdpid -c "source $basedir/etc/env && node updateUserParameters.js &>> $vdplo
 cd $jsSetup/patient
 su $vdpid -c  "source $basedir/etc/env && node enhanceCarterDavid.js &>> $vdplogs/enhanceCarterDavid.log"
 su $vdpid -c  "source $basedir/etc/env && node ppCarterDavidSetup.js &>> $vdplogs/ppCarterDavidSetup.log"
+
+# Back to Py (first thing to go to JS in V2), add clinics required for VDM problem tests that rely on User RA
+cd $nvconfiger/pySetup
+echo "[py] Clinics too - needed for Problem Tests ..."
+su $instance -c "source $basedir/etc/env && python clinicsSetup.py"
 
 #
 # Mv entryfile and cleanup scriptdir (/opt/vista) and the usr/local/src entry

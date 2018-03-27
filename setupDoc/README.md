@@ -68,6 +68,7 @@ nodevista                    latest ...
                          
 ## More to Investigate and Work 
 
+  * Move off Roll and Scroll/Python completely even if this means new MUMPS wrappers for routines called by Roll and Scroll
   * Split OUT FMQL Server (not FMQL as utility under MVDM) to own Container; FMQL included as node module along with M installs in it
   * [docker and pm2](http://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/) with _RUN npm install pm2 -g_ and more
   * do more on host machine vs VM host - [see post on windows route settings](https://forums.docker.com/t/how-to-access-docker-container-from-another-machine-on-local-network/4737/13) and more on the official [docker networking](https://docs.docker.com/config/containers/container-networking/) and using [bridge networking](https://docs.docker.com/network/bridge/#use-ipv6) and [four ways to connect](http://blog.oddbit.com/2014/08/11/four-ways-to-connect-a-docker/)
