@@ -61,6 +61,7 @@ echo "FMQL successfully installed - for use under MVDM"
 #
 
 # Copy configurers from /opt/vista into vdp
+echo "Copying NV configer from nodeVISTA git ..."
 mkdir $vdphome/nvconfiger
 nvconfiger="$vdphome/nvconfiger"
 cp -r /opt/vista/pySetup $nvconfiger

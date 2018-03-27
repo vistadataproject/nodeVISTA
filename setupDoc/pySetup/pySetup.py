@@ -6,6 +6,7 @@ will be removed from here.
 """
 
 import os
+import re
 import sys
 import logging
 import time
