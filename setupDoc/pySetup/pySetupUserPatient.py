@@ -87,6 +87,8 @@ def postImportSetupUsers(VistA):
     # Required to add Patient, User etc 
     OSEHRASetup.addSystemManager(VistA)
 
+    OSEHRASetup.setupStrepTest(VistA)
+
     # Must login as System Manager (utility takes care of resetting verify)
     OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
 
