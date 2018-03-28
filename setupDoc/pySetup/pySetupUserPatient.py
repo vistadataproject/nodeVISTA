@@ -64,24 +64,6 @@ def pySetupPU():
 
     print "PY Setup FileMan, User, Patient ... Complete OK"
 
-def postImportSetupBasics(VistA):
-    """
-    Basics of postImportSetup from initializeFileMan to division addition
-    """
-
-    # from test.cmake
-    TEST_VISTA_SETUP_SITE_NAME = "DEMO.NODEVISTA.ORG"
-    TEST_VISTA_STATION_NUMBER = "999"
-
-    VistA.wait(PROMPT,60)
-
-    # Reset site name to domain name, station number too. Uses D ^DINIT
-    # ... sets (via ^ZUSET) ZUGTM to ZU and ^DINIT for MSC FileMan
-    OSEHRASetup.initializeFileman(VistA, TEST_VISTA_SETUP_SITE_NAME, TEST_VISTA_STATION_NUMBER) # from 6161
-
-    # Start TaskMan through the XUP Menu system.
-    OSEHRASetup.restartTaskMan(VistA)
-
 def postImportSetupUsers(VistA):
 
     # Required to add Patient, User etc 

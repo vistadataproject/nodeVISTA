@@ -67,6 +67,14 @@ def postImportSetupBasics(VistA):
     # ... sets (via ^ZUSET) ZUGTM to ZU and ^DINIT for MSC FileMan
     OSEHRASetup.initializeFileman(VistA, TEST_VISTA_SETUP_SITE_NAME, TEST_VISTA_STATION_NUMBER) # from 6161
 
+    # Create and Christen the New Domain:
+    # Enter the site name into the DOMAIN file then
+    # christen the domain via the XMUDCHR routine.
+    # Finally, add entries of new domain to
+    # Kernel System Parameters and RPC Broker Site Parameters
+    # and re-index both files.
+    # OSEHRASetup.setupVistADomain(VistA, TEST_VISTA_SETUP_SITE_NAME)
+
     # Start TaskMan through the XUP Menu system.
     OSEHRASetup.restartTaskMan(VistA)
 

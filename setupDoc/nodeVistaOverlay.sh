@@ -97,7 +97,7 @@ su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs
 # Py part - Patient reg, User add and FM reinit still done thru Py driven roll and scroll
 cd $nvconfiger/pySetup
 echo "[py] FM and Patient, User setup not yet in VDM ..."
-su $instance -c "source $basedir/etc/env && python pySetupBasics.py"
+# su $instance -c "source $basedir/etc/env && python pySetupBasics.py"
 su $instance -c "source $basedir/etc/env && python pySetupUserPatient.py"
 
 # Pharmacy setup (maybe CPT in future)
