@@ -93,6 +93,14 @@ su $vdpid -c "source $basedir/etc/env && node kspSetup.js &>> $vdplogs/kspSetup.
 su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
 su $vdpid -c "source $basedir/etc/env && node domainSetup.js &>> $vdplogs/domainSetup.log"
 su $vdpid -c "source $basedir/etc/env && node registerVitalsCPRS.js &>> $vdplogs/registerVitalsCPRS.log"
+
+# Py part - Patient reg, User add and FM reinit still done thru Py driven roll and scroll
+cd $nvconfiger/pySetup
+echo "[py] FM and Patient, User setup not yet in VDM ..."
+su $instance -c "source $basedir/etc/env && python pySetupBasics.py"
+su $instance -c "source $basedir/etc/env && python pySetupUserPatient.py"
+
+# Pharmacy setup (maybe CPT in future)
 cd $jsSetup/pharmacy
 echo "installing system pharmacy"
 su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
@@ -103,12 +111,7 @@ su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vd
 # echo "run CPTCodeGenerator.js - Full Install"
 # su $vdpid -c  "source $nodevistahome/.nvm/nvm.sh && source $nodevistahome/etc/env && nvm use $nodever && node CPTCodeGenerator.js | tee -a $vdphome/logs/CPTCodeGenerator.log"
 
-# Py part - Patient reg, User add and FM reinit still done thru Py driven roll and scroll
-cd $nvconfiger/pySetup
-echo "[py] FM and Patient, User setup not yet in VDM ..."
-su $instance -c "source $basedir/etc/env && python pySetup.py"
-
-# Back to JS to finish off User and Patient (when both fully in JS, PY roll won't intervene)
+# Finish off User and Patient (when both fully in JS, PY roll won't intervene)
 echo "Finishing users and patients ..."
 cd $jsSetup/user
 su $vdpid -c "source $basedir/etc/env && node addUserSettings.js &>> $vdplogs/addUserSettings.log"
