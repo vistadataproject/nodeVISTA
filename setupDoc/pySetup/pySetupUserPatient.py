@@ -27,7 +27,7 @@ ConnectToMUMPS relies on environment:
 """
 # print "Platform", sys.platform, "GT.M MUMPS VM", os.getenv('gtm_dist'), "GTM Prompt", os.getenv("gtm_prompt")
 
-LOGFILE = '/home/nodevista/log/pySetup.txt'
+LOGFILE = '/home/nodevista/log/pySetupPU.txt'
 
 """
 Expect to be called from Shell - PRINT can be read with 
@@ -87,7 +87,7 @@ def postImportSetupUsers(VistA):
     # Required to add Patient, User etc 
     OSEHRASetup.addSystemManager(VistA)
 
-    OSEHRASetup.setupStrepTest(VistA)
+    OSEHRASetup.setupStrepTest(VistA) # ties in with ORDER MENU below (may nix both!)
 
     # Must login as System Manager (utility takes care of resetting verify)
     OSEHRASetup.signonZU(VistA,"SM1234","SM1234!!")
