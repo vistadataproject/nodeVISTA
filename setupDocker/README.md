@@ -18,7 +18,9 @@ and launch the container when the image is built/found ...
 
 which has the CPRS/RPC Broker port, 9430, at 9330, the SSH port at 32 and FMQL at 9030.
 
-Note: you can login to the container with ssh (port 22 is open) using _ssh root@localhost -p 32_
+and you can login to the container with (mapping of port 22 to 32 to avoid clash with other SSH containers) ...
+
+> ssh root@localhost -p 32
 
 ## Connecting Clients
 
