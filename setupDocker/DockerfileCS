@@ -1,0 +1,11 @@
+FROM vistadataproject/nodevista999:b2
+WORKDIR /home/vdp
+RUN git clone https://github.com/vistadataproject/nodeVISTA.git
+WORKDIR /home/vdp/nodeVISTA/clinicalService
+RUN source /home/nodevista/etc/env && npm install --quiet
+# WORKDIR /home/vdp/nodeVISTA
+# RUN chown -R vdp:vdp clinicalService
+# RUN chmod a+w clinicalService
+COPY entryComboCS.sh /home/nodevista/bin/
+ENTRYPOINT /home/nodevista/bin/entryComboCS.sh
+EXPOSE 22 9430 9000 9030
