@@ -14,9 +14,9 @@ In this directory ...
 
 and launch the container when the image is built/found ...
 
-> docker run -p 9330:9430 -p 32:22 -p 9030:9000 -d -P --name nodevista999 nodevista999 
+> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -d -P --name nodevista999 nodevista999 
 
-which has the CPRS/RPC Broker port, 9430, at 9330, the SSH port at 32 and FMQL at 9030.
+which has the CPRS/RPC Broker port, 9430, at 9330, the SSH port at 32 and FMQL at 9100.
 
 and you can login to the container with (mapping of port 22 to 32 to avoid clash with other SSH containers) ...
 
@@ -25,6 +25,10 @@ and you can login to the container with (mapping of port 22 to 32 to avoid clash
 Extra - building dependent image _nodevista999cs_ that also runs Clinical Services ...
 
 > docker build -f DockerfileCS -t nodevista999cs .
+
+and run with the following so that the _clinicalServices REST_ is available ...
+
+> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9030:9030 -d -P --name nodevista999cs nodevista999cs
 
 ## Connecting Clients
 
