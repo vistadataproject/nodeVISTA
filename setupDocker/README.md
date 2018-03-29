@@ -22,6 +22,10 @@ and you can login to the container with (mapping of port 22 to 32 to avoid clash
 
 > ssh root@localhost -p 32
 
+Extra - building dependent image _nodevista999cs_ that also runs Clinical Services ...
+
+> docker build -f DockerfileCS -t nodevista999cs .
+
 ## Connecting Clients
 
 You can access the _Rambler_ from your browser at _http://localhost:9030_.
