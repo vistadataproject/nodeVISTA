@@ -144,8 +144,12 @@ Success, response: accept
 
 > Docker uses resource isolation features of the Linux kernel such as cgroups and kernel namespaces to allow independent "containers" to run within a single Linux instance, avoiding the overhead of starting virtual machines. ... “LXC” refers to capabilities of the Linux kernel (specifically namespaces and control groups) which allow sandboxing processes from one another, and controlling their resource allocations.
 
+to OS X ...
+
 > OS X client uses Apple's builtin hypervisor framework – yeah, Apple quietly embedded a hypervisor API in its desktop operating system. Previously, you had to use Docker with Oracle's VirtualBox.
                          
+[This account](https://blog.docker.com/2016/05/docker-unikernels-open-source/) goes into details on the OS X setup.
+
 ## More to Investigate and Work 
 
   * Split OUT FMQL Server (not FMQL as utility under MVDM) to own Container; FMQL included as node module along with M installs in it
