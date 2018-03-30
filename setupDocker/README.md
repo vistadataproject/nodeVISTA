@@ -4,6 +4,14 @@ This docker replaces nodeVISTA's _vagrantFile_ option.
 
 __Note__: Docker for nodeVISTA is in a subdirectory of the nodeVISTA git and not in the VAM Docker git as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
+The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). __BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will _pull_ from the Docker Registry ...
+
+> docker pull vistadataproject/nodevista999
+
+and then run a container ...
+
+> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9030:9030 -d -P --name nodevista999 vistadataproject/nodevista999
+
 ## Building the Image and Starting the Container
 
 __Note__: the docker and basic scripts here are based on the OSEHRA Docker git, [github.com/OSEHRA/docker-vista](https://github.com/OSEHRA/docker-vista) which has both a wider (targets VISTA's beyond FOIA) and narrower (lack of node-based configuration) scope.
@@ -32,9 +40,9 @@ and run with the following so that the _clinicalServices REST_ is available ...
 
 ## Connecting Clients
 
-You can access the _Rambler_ from your browser at _http://localhost:9030_.
+You can access the _Rambler_ from your browser at _http://localhost:9030_ and use the Clinical Service REST at _localhost:9300_.
 
-Docker on OS X is NOT native - it is running on an Oracle VirtualBox virtual machine and the _--network="host"_ setting refers to this virtual box and not the native IP. From the host mac, get its current IP address ...
+But for CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
 
 ```text
 > ipconfig getifaddr en0
@@ -131,6 +139,12 @@ IP ADDRESS: 127.0.0.1
 PORT: 9430
 Success, response: accept
 ```
+
+## Background on Docker
+
+> Docker uses resource isolation features of the Linux kernel such as cgroups and kernel namespaces to allow independent "containers" to run within a single Linux instance, avoiding the overhead of starting virtual machines. ... “LXC” refers to capabilities of the Linux kernel (specifically namespaces and control groups) which allow sandboxing processes from one another, and controlling their resource allocations.
+
+> OS X client uses Apple's builtin hypervisor framework – yeah, Apple quietly embedded a hypervisor API in its desktop operating system. Previously, you had to use Docker with Oracle's VirtualBox.
                          
 ## More to Investigate and Work 
 
