@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+
+    nodevista:
+        image: vistadataproject/nodevista999:latest
+        ports:
+            - 9430:9430
+            - 9000:9000
+            - 9030:9030
+            - 22:22
+        deploy:
+            replicas: 1
+            update_config:
+                parallelism: 1
+                delay: 10s
+            restart_policy:
+                condition: on-failure
+            placement:
+                constraints: [node.role == worker]
