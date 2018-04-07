@@ -28,10 +28,11 @@ ADD . /opt/vista/
 # nodeVISTA 
 # - args: -b (docker) gtm (-g) p/s dev dirs (-d) skip tests (-s) named (-i). Expose 9000, 9011, 9012 too
 # ... used -g along with older GTM/install.sh as version from 3/22/18 failed to install mumps (-y or -g)
-# - ports: 22 for SSH, 9430 for RPC Broker, 9000 for FMQL
+# - ports: 9430 for RPC Broker, 9000 for FMQL
+* ... note: not exposing 22 as can ssh using -exec -it --privileged <cid> bash
 # 
 RUN ./autoInstaller.sh -b -g -d -s -i nodevista && ./nodeVistaOverlay.sh
 # ENTRYPOINT /home/nodevista/bin/start.sh
 ENTRYPOINT /home/nodevista/bin/entryCombo.sh
-EXPOSE 22 9430 9000
+EXPOSE 9430 9000
 
