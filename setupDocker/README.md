@@ -22,13 +22,15 @@ In this directory ...
 
 and launch the container when the image is built/found ...
 
-> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -d -P --name nodevista999 nodevista999 
+> docker run -p 9330:9430 -p 9100:9000 -d -P --name nodevista999 nodevista999 
 
-which has the CPRS/RPC Broker port, 9430, at 9330, the SSH port at 32 and FMQL at 9100.
+which has the CPRS/RPC Broker port, 9430, at 9330 and FMQL at 9100.
 
-and you can login to the container with (mapping of port 22 to 32 to avoid clash with other SSH containers) ...
+and you can login to the container with ...
 
-> ssh root@localhost -p 32
+> docker exec -it -e COLUMNS=$COLUMNS -e LINES=$LINES -e TERM=$TERM --privileged nodevista999 bash
+
+__Note__: _docker run_ with _-v_ (named volume) for _home/nodevista/g_ should persist the database across docker runs.
 
 Extra - building dependent image _nodevista999cs_ that also runs Clinical Services ...
 
