@@ -38,16 +38,23 @@ vdplogs="/home/vdp/logs"
 #
 echo "Installing FMQL ..."
 cd $vdphome
-wget https://demoservices.vistadataproject.info/files/data/FMQL.zip
+# wget https://demoservices.vistadataproject.info/files/data/FMQL.zip
+git clone https://github.com/caregraf/FMQLv1.git
+cd FMQLv1/Releases
+mv FMQL.zip ../../
+cd $vdphome
+rm -rf FMQLv1
 unzip FMQL.zip
-rm FMQL.zip
+rm -f FMQL.zip
 chown -R vdp:vdp FMQL
 su vdp -c "cp FMQL/MUMPS/*.m $basedir/p"
 cd FMQL/webservice
-mv ../webclients static
-mv static/blueversion/* static/.
-rmdir static/blueversion
+# mv ../webclients static
+# mv static/blueversion/* static/.
+# rmdir static/blueversion
 chown -R vdp:vdp static
+# mv $scriptdir/fmqlPackage.json package.json
+# chown vdp:vdp package.json
 su vdp -c "source $basedir/etc/env && npm install"
 echo "FMQL successfully installed - for use under MVDM"
 
