@@ -4,13 +4,15 @@ This docker replaces nodeVISTA's _vagrantFile_ option.
 
 __Note__: Docker for nodeVISTA is in a subdirectory of the nodeVISTA git and not in the VAM Docker git as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
-The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). __BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will _pull_ from the Docker Registry ...
+The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). 
+
+__BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will _pull_ from the Docker Registry ...
 
 > docker pull vistadataproject/nodevista999
 
 and then run a container ...
 
-> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9030:9030 -d -P --name nodevista999 vistadataproject/nodevista999
+> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -d -P --name nodevista999 vistadataproject/nodevista999
 
 ## Building the Image and Starting the Container
 
@@ -18,13 +20,13 @@ __Note__: the docker and basic scripts here are based on the OSEHRA Docker git, 
 
 In this directory ...
 
-> docker build -t nodevista999 .
+> docker build --no-cache -t nodevista999 .
 
 and launch the container when the image is built/found ...
 
-> docker run -p 9330:9430 -p 9100:9000 -d -P --name nodevista999 nodevista999 
+> docker run -p 9330:9430 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 nodevista999 
 
-which has the CPRS/RPC Broker port, 9430, at 9330 and FMQL at 9100.
+which has the CPRS/RPC Broker port, 9430, at 9330, FMQL at 9100, _vistalink_, 8001, at 9331.
 
 and you can login to the container with ...
 
@@ -32,9 +34,9 @@ and you can login to the container with ...
 
 __Note__: _docker run_ with _-v_ (named volume) for _home/nodevista/g_ should persist the database across docker runs.
 
-Extra - building dependent image _nodevista999cs_ that also runs Clinical Services ...
+Extra - building dependent image _nodevista999cs_ that also runs __VAM Clinical Services__ ...
 
-> docker build -f DockerfileCS -t nodevista999cs .
+> docker build --no-cache -f DockerfileCS -t nodevista999cs .
 
 and run with the following so that the _clinicalServices REST_ is available ...
 
