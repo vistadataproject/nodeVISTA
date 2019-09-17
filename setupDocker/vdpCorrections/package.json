@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodem": "0.8.1"
+    "nodem": "git+https://github.com/dlwicksell/nodem.git"
   }
 }
