@@ -126,12 +126,13 @@ echo "run (new) institution setup ..."
 su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
 echo "run (new) device setup ..."
 su $vdpid -c "source $basedir/etc/env && node deviceSetup.js &>> $vdplogs/deviceSetup.log"
-echo "installing pharmacy"
-cd $jsSetup/pharmacy
-su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
-su $vdpid -c  "source $basedir/etc/env && node pharmacySystemSetup.js &>> $vdplogs/pharmacySystemSetup.log"
-su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vdmMedMetaLoad.log"
-su $vdpid -c  "source $basedir/etc/env && node ppCarterDavidSetup.js &>> $vdplogs/ppCarterDavidSetup.log"
+# Removed Install of Pharmacy (for now) due to DD update error for 50 - DD(50,30,0) undefined though don't see in VDM or src data
+# echo "installing pharmacy"
+# cd $jsSetup/pharmacy
+# su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
+# su $vdpid -c  "source $basedir/etc/env && node pharmacySystemSetup.js &>> $vdplogs/pharmacySystemSetup.log"
+# su $vdpid -c  "source $basedir/etc/env && node vdmMedMetaLoad.js &>> $vdplogs/vdmMedMetaLoad.log"
+# su $vdpid -c  "source $basedir/etc/env && node ppCarterDavidSetup.js &>> $vdplogs/ppCarterDavidSetup.log"
 # update patient records
 echo "run updatePatients.js"
 cd $jsSetup/patient
