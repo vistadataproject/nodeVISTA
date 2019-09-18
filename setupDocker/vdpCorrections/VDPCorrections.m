@@ -173,6 +173,9 @@ CORRECT()
  . Set ^DD(52.04,0)="SIG1 SUB-FIELD^^"_last_"^"_count
  . Quit
  ;
+ ; 16. [9/19] Bad Trigger in DD 50 that causes insert of entries to fail - DIH=50,DIG=30 D ^DICR where 50/30 isn't valid 
+ Kill ^DD(50,13,1,30)
+ ;
  ;
  ; ...not clear is #99 is a correction that should be made
  ; disabled this one for now...

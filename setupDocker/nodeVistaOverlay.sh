@@ -126,7 +126,7 @@ echo "run (new) institution setup ..."
 su $vdpid -c "source $basedir/etc/env && node institutionSetup.js &>> $vdplogs/institutionSetup.log"
 echo "run (new) device setup ..."
 su $vdpid -c "source $basedir/etc/env && node deviceSetup.js &>> $vdplogs/deviceSetup.log"
-# Removed Install of Pharmacy (for now) due to DD update error for 50 - DD(50,30,0) undefined though don't see in VDM or src data
+# Removed Install of Pharmacy (for now) due to 50 update error (see README in directory) 9/19
 # echo "installing pharmacy"
 # cd $jsSetup/pharmacy
 # su $vdpid -c  "source $basedir/etc/env && node pharmacySiteSetup.js &>> $vdplogs/pharmacySiteSetup.log"
