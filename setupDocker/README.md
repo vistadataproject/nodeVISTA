@@ -22,7 +22,11 @@ In this directory ...
 
 > docker build --no-cache -t nodevista999 .
 
-and launch the container when the image is built/found ...
+__Notes__: 
+  * the centos (linux) used is centos:latest which will be old if cached in your images already. To use the latest _centos_, do a docker pull centos:latest before building. 
+  * see below for how to publish to Docker Hub
+
+When it finishes (takes a while), launch the container when the image is built/found ...
 
 > docker run -p 9330:9430 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 nodevista999 
 
