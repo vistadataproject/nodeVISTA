@@ -4,6 +4,7 @@ const nodem = require('nodem');
 const parameterService = require('mvdm/parameterService');
 const RPCRunner = require('mvdm/rpcRunner').RPCRunner;
 const _ = require('lodash');
+const utils = require('./utils');
 
 const db = new nodem.Gtm();
 const DEBUG = true;
