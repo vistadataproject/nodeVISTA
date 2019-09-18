@@ -48,6 +48,7 @@ def simpleSetup():
         print "Setting up basics ..."
         postImportSetupBasics(VistA)
     except:
+        print e
         print "EXIT_PYS_CANT_SETUP_BASICS"
         return
 
