@@ -8,11 +8,11 @@ The following describes how to build a nodeVISTA image and run it in a docker co
 
 __BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will _pull_ from the Docker Registry ...
 
-> docker pull vistadataproject/nodevista999
+> docker pull vistadataproject/nodevista999:latest
 
 and then run a container ...
 
-> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -d -P --name nodevista999 vistadataproject/nodevista999
+> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 vistadataproject/nodevista999:latest
 
 ## Building the Image and Starting the Container
 
