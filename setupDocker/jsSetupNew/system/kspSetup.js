@@ -30,14 +30,13 @@ function setupKSP() {
               | | | | (_) | (_| |  __/\\ V /  | | ___) || |/ ___ \\
               |_| |_|\\___/ \\__,_|\\___| \\_/  |___|____/ |_/_/   \\_\\
 `;
+    /* from https://www.ascii-art-generator.org */
     const banner = `
-                                   #     #                   #    
- ####  #       ####  #    # #####  #     # #  ####  #####   # #   
-#    # #      #    # #    # #    # #     # # #        #    #   #  
-#      #      #    # #    # #    # #     # #  ####    #   #     # 
-#      #      #    # #    # #    #  #   #  #      #   #   ####### 
-#    # #      #    # #    # #    #   # #   # #    #   #   #     # 
- ####  ######  ####   ####  #####     #    #  ####    #   #     # 
+                      __                ___    ___      __  ___ 
+                _____/ /___  __  ______/ / |  / (_)____/ /_/   |
+               / ___/ / __ \/ / / / __  /| | / / / ___/ __/ /| |
+              / /__/ / /_/ / /_/ / /_/ / | |/ / (__  ) /_/ ___ |
+              \___/_/\____/\__,_/\__,_/  |___/_/____/\__/_/  |_|
 `;
 
     const text = 'Welcome! You are logging into cloudVISTA, a test system for development, testing and demonstration of VistA in the Cloud. \r \r This VistA has been seeded with Users and test Patient Data using mechanisms developed during the _VISTA Data_ and _VAM_ Projects (vistadataproject.info). \r';
