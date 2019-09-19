@@ -23,15 +23,24 @@ utils.init();
 
 function setupKSP() {
 
-    const banner = `
+    const bannerOld = `
                                _    _      ________________  _
                _ __   ___   __| | __\\ \\   / /_ _/ ___|_   _|/ \\
               | '_ \\ / _ \\ / _\` |/ _ \\ \\ / / | |\\___ \\ | | / _ \\
               | | | | (_) | (_| |  __/\\ V /  | | ___) || |/ ___ \\
               |_| |_|\\___/ \\__,_|\\___| \\_/  |___|____/ |_/_/   \\_\\
 `;
+    const banner = `
+                                   #     #                   #    
+ ####  #       ####  #    # #####  #     # #  ####  #####   # #   
+#    # #      #    # #    # #    # #     # # #        #    #   #  
+#      #      #    # #    # #    # #     # #  ####    #   #     # 
+#      #      #    # #    # #    #  #   #  #      #   #   ####### 
+#    # #      #    # #    # #    #   # #   # #    #   #   #     # 
+ ####  ######  ####   ####  #####     #    #  ####    #   #     # 
+`;
 
-    const text = 'Welcome! You are logging into a node.js-enabled VISTA, nodeVISTA, a test system for development and testing and demonstration. \r \r This VISTA has been seeded with Users and test Patient Data using mechanisms developed during the VISTA Data Project (vistadataproject.info). \r';
+    const text = 'Welcome! You are logging into cloudVISTA, a test system for development, testing and demonstration of VistA in the Cloud. \r \r This VistA has been seeded with Users and test Patient Data using mechanisms developed during the _VISTA Data_ and _VAM_ Projects (vistadataproject.info). \r';
 
     let res = VDM.update({
         id: '8989_3-1',
