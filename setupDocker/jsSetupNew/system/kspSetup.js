@@ -39,7 +39,7 @@ function setupKSP() {
               \___/_/\____/\__,_/\__,_/  |___/_/____/\__/_/  |_|
 `;
 
-    const text = 'Welcome! You are logging into cloudVISTA, a test system for development, testing and demonstration of VistA in the Cloud. \r \r This VistA has been seeded with Users and test Patient Data using mechanisms developed during the _VISTA Data_ and _VAM_ Projects (vistadataproject.info). \r';
+    const text = 'Welcome! You are logging into cloudVistA, a test system for development, testing and demonstration of VistA in the Cloud. \r \r This VistA has been seeded with Users and test Patient Data using mechanisms developed during the _VISTA Data_ and _VAM_ Projects (vistadataproject.info). \r';
 
     let res = VDM.update({
         id: '8989_3-1',
