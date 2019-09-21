@@ -48,7 +48,9 @@ and run with the following so that the _clinicalServices REST_ is available ...
 
 ## Connecting Clients
 
-You can access the _Rambler_ from your browser at _http://localhost:9030_ and use the Clinical Service REST at _localhost:9300_.
+To access the _Rambler_ point your browser to _http://localhost:9030_ and use the Clinical Service REST at _localhost:9300_.
+
+To access the Vista Data Model (VDM) Browser at: http://localhost:9100/schema
 
 But for CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
 
