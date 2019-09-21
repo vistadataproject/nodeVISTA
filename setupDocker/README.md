@@ -26,9 +26,6 @@ In this directory ...
 
 
 
-
-
-
 __Notes__: 
   * the centos (linux) used is centos:latest which will be old if cached in your images already. To use the latest _centos_, do a docker pull centos:latest before building. 
   * see below for how to publish to Docker Hub
@@ -61,9 +58,9 @@ and run with the following so that the _clinicalServices REST_ is available ...
 
 To access the _Rambler_: http://localhost:9030_ and use the Clinical Service REST at _localhost:9300_.
 
-To browse the native Vista Data Model (Fileman data model)_: http://localhost:9100/schema
+To browse the native Vista Data Model (Fileman schema)_: http://localhost:9100/schema
 
-To query the Vista database (Fileman query):  http://localhost:9100/query?fmql=DESCRIBE%202-25&format=HTML
+To query the Vista database (Fileman query):  http://localhost:9100/query
 
 But for CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
 
