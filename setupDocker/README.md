@@ -14,6 +14,8 @@ and then run a container ...
 
 > docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 vistadataproject/nodevista999:latest
 
+
+
 ## Building the Image and Starting the Container
 
 __Note__: the docker and basic scripts here are based on the OSEHRA Docker git, [github.com/OSEHRA/docker-vista](https://github.com/OSEHRA/docker-vista) which has both a wider (targets VISTA's beyond FOIA) and narrower (lack of node-based configuration) scope.
@@ -21,6 +23,11 @@ __Note__: the docker and basic scripts here are based on the OSEHRA Docker git, 
 In this directory ...
 
 > docker build --no-cache -t nodevista999 .
+
+
+
+
+
 
 __Notes__: 
   * the centos (linux) used is centos:latest which will be old if cached in your images already. To use the latest _centos_, do a docker pull centos:latest before building. 
@@ -46,13 +53,17 @@ and run with the following so that the _clinicalServices REST_ is available ...
 
 > docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9030:9030 -d -P --name nodevista999cs nodevista999cs
 
+
+
+
+
 ## Connecting Clients
 
 To access the _Rambler_: http://localhost:9030_ and use the Clinical Service REST at _localhost:9300_.
 
-To browse the _Vista Data Model_: http://localhost:9100/schema
+To browse the native Vista Data Model (Fileman data model)_: http://localhost:9100/schema
 
-To query the raw Fileman database:  http://localhost:9100/query?fmql=DESCRIBE%202-25&format=HTML
+To query the Vista database (Fileman query):  http://localhost:9100/query?fmql=DESCRIBE%202-25&format=HTML
 
 But for CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
 
@@ -62,6 +73,8 @@ But for CPRS running in a separate virtual machine on your Mac, you need to use 
 ```
 
 Then point CPRS to this IP Address and port _9330_. 
+
+
 
 ## Publishing Image 
 
