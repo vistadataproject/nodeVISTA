@@ -14,6 +14,9 @@ and then run a container ...
 
 > docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 vistadataproject/nodevista999:latest
 
+if the container has previously been started, then restart:
+
+> docker restart nodevista999
 
 
 ## Building the Image and Starting the Container
