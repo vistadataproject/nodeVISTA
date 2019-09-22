@@ -2,6 +2,8 @@
 
 This docker replaces nodeVISTA's _vagrantFile_ option.
 
+Contents:
+* [Pull and Run the Docker Container](#pull-and-run-the-docker-container)
 * [Building the Image and Starting the Container](#building-the-image-and-starting-the-container)
 * [Connecting Clients](#connecting-clients)
 * [Publishing Image](#publishing-image)
@@ -17,6 +19,9 @@ The following describes how to build a nodeVISTA image and run it in a docker co
 
 __BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will _pull_ from the Docker Registry ...
 
+
+## Pull and Run the Docker Container
+
 > docker pull vistadataproject/nodevista999:latest
 
 and then run a container ...
@@ -26,6 +31,9 @@ and then run a container ...
 if the container has previously been started, then restart:
 
 > docker restart nodevista999
+
+If you wish to build the Docker Container...
+
 
 
 ## Building the Image and Starting the Container
@@ -68,13 +76,13 @@ and run with the following so that the _clinicalServices REST_ is available ...
 
 ## Connecting Clients
 
-To access the _Rambler_: http://localhost:9030_ and use the Clinical Service REST at _localhost:9300_.
+Web Clients:
+* To browse the native Vista Data Model: http://localhost:9100/schema
+* To query the native Vista database:  http://localhost:9100/query
+* To access the _Rambler_ and Clinical Services REST: http://localhost:9030
 
-To browse the native Vista Data Model: http://localhost:9100/schema
-
-To query the native Vista database:  http://localhost:9100/query
-
-But for CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
+Thick Clients:
+* For CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
 
 ```text
 > ipconfig getifaddr en0
