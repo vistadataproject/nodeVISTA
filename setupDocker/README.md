@@ -2,6 +2,15 @@
 
 This docker replaces nodeVISTA's _vagrantFile_ option.
 
+* Building the Image and Starting the Container
+* Connecting Clients
+* Publishing Image 
+* Ending it all
+* QA of nodeVISTA inside Docker
+* Background on Docker
+* More to Investigate and Work
+
+
 __Note__: Docker for nodeVISTA is in a subdirectory of the nodeVISTA git and not in the VAM Docker git as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
 The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). 
