@@ -26,7 +26,6 @@ if the container has previously been started, then restart:
 
 > docker restart nodevista999
 
-If you wish to build the Docker Container...
 
 
 ## Connecting Clients
