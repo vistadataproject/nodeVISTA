@@ -13,10 +13,6 @@ Contents:
 
 __Note__: This docker replaces nodeVISTA's _vagrantFile_ option.  Docker for nodeVISTA is in a subdirectory of the nodeVISTA git and not in the VAM Docker git as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
-The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). 
-
-__BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will _pull_ from the Docker Registry ...
-
 
 ## Pull and Run the Docker Container
 
@@ -86,6 +82,11 @@ nodevista999                    latest ...
 
 
 ## Building the Image and Starting the Container
+
+The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). 
+
+__BUT MOST PEOPLE WILL NEVER BUILD THE IMAGE__. They will [pull from the Docker Registry](#pull-and-run-the-docker-container)
+
 
 __Note__: the docker and basic scripts here are based on the OSEHRA Docker git, [github.com/OSEHRA/docker-vista](https://github.com/OSEHRA/docker-vista) which has both a wider (targets VISTA's beyond FOIA) and narrower (lack of node-based configuration) scope.
 
