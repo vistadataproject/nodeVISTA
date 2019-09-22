@@ -4,9 +4,8 @@ The Project calls for a test and demo VISTA system ("_nodeVISTA_"). _nodeVISTA_ 
 
 __Note__: by September 2018, _nodeVISTA_ will become a simple reconfiguration of FOIA VISTA (wholly). Reconfiguration will (just) use the VDM module.
 
-* [clinical REST Service](#https://github.com/vistadataproject/nodeVISTA/tree/master/clinicalService)
 
-* https://github.com/vistadataproject/nodeVISTA/tree/master/clinicalService
+* https://github.com/vistadataproject/nodeVISTA/tree/master/clinicalService#clinical-rest-service
 
 * https://github.com/vistadataproject/nodeVISTA/tree/master/rpcServer#rpc-server
 
