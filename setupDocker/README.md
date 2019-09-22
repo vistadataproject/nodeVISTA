@@ -3,12 +3,12 @@
 This docker replaces nodeVISTA's _vagrantFile_ option.
 
 * [Building the Image and Starting the Container](#building-the-image-and-starting-the-container)
-* [Connecting Clients](#Connecting Clients)
-* [Publishing Image](#Publishing Image)
-* [Ending it all](#Ending it all)
-* [QA of nodeVISTA inside Docker](#QA of nodeVISTA inside Docker)
-* [Background on Docker](#Background on Docker)
-* [More to Investigate and Work](#More to Investigate and Work)
+* [Connecting Clients](#connecting-clients)
+* [Publishing Image](#publishing-image)
+* [Ending it all](#ending-it-all)
+* [QA of nodeVISTA inside Docker](#qa-of-nodevista-inside-docker)
+* [Background on Docker](#background-on-docker)
+* [More to Investigate and Work](#more-to-investigate-and-work)
 
 
 __Note__: Docker for nodeVISTA is in a subdirectory of the nodeVISTA git and not in the VAM Docker git as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
