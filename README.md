@@ -6,5 +6,9 @@ __Note__: by September 2018, _nodeVISTA_ will become a simple reconfiguration of
 
 * [clinical REST Service](#https://github.com/vistadataproject/nodeVISTA/tree/master/clinicalService)
 
-https://github.com/vistadataproject/nodeVISTA/tree/master/clinicalService
+* https://github.com/vistadataproject/nodeVISTA/tree/master/clinicalService
+
+* https://github.com/vistadataproject/nodeVISTA/tree/master/rpcServer#rpc-server
+
+* https://github.com/vistadataproject/nodeVISTA/tree/master/setupDocker#docker-for-nodevista
 
