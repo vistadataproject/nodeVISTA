@@ -2,10 +2,10 @@
 
 Contents:
 * [Pull and Run the Docker Container](#pull-and-run-the-docker-container)
-* [Building the Image and Starting the Container](#building-the-image-and-starting-the-container)
 * [Connecting Clients](#connecting-clients)
 * [Publishing Image](#publishing-image)
 * [Ending it all](#ending-it-all)
+* [Building the Image and Starting the Container](#building-the-image-and-starting-the-container)
 * [QA of nodeVISTA inside Docker](#qa-of-nodevista-inside-docker)
 * [Background on Docker](#background-on-docker)
 * [More to Investigate and Work](#more-to-investigate-and-work)
@@ -31,45 +31,6 @@ if the container has previously been started, then restart:
 > docker restart nodevista999
 
 If you wish to build the Docker Container...
-
-
-
-## Building the Image and Starting the Container
-
-__Note__: the docker and basic scripts here are based on the OSEHRA Docker git, [github.com/OSEHRA/docker-vista](https://github.com/OSEHRA/docker-vista) which has both a wider (targets VISTA's beyond FOIA) and narrower (lack of node-based configuration) scope.
-
-In this directory ...
-
-> docker build --no-cache -t nodevista999 .
-
-
-
-__Notes__: 
-  * the centos (linux) used is centos:latest which will be old if cached in your images already. To use the latest _centos_, do a docker pull centos:latest before building. 
-  * see below for how to publish to Docker Hub
-
-When it finishes (takes a while), launch the container when the image is built/found ...
-
-> docker run -p 9330:9430 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 nodevista999 
-
-which has the CPRS/RPC Broker port, 9430, at 9330, FMQL at 9100, _vistalink_, 8001, at 9331.
-
-and you can login to the container with ...
-
-> docker exec -it -e COLUMNS=$COLUMNS -e LINES=$LINES -e TERM=$TERM --privileged nodevista999 bash
-
-__Note__: _docker run_ with _-v_ (named volume) for _home/nodevista/g_ should persist the database across docker runs.
-
-Extra - building dependent image _nodevista999cs_ that also runs __VAM Clinical Services__ ...
-
-> docker build --no-cache -f DockerfileCS -t nodevista999cs .
-
-and run with the following so that the _clinicalServices REST_ is available ...
-
-> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9030:9030 -d -P --name nodevista999cs nodevista999cs
-
-
-
 
 
 ## Connecting Clients
@@ -121,6 +82,45 @@ nodevista999                    latest ...
 > docker image rm nodevista999
 ...
 ```
+
+
+
+## Building the Image and Starting the Container
+
+__Note__: the docker and basic scripts here are based on the OSEHRA Docker git, [github.com/OSEHRA/docker-vista](https://github.com/OSEHRA/docker-vista) which has both a wider (targets VISTA's beyond FOIA) and narrower (lack of node-based configuration) scope.
+
+In this directory ...
+
+> docker build --no-cache -t nodevista999 .
+
+
+
+__Notes__: 
+  * the centos (linux) used is centos:latest which will be old if cached in your images already. To use the latest _centos_, do a docker pull centos:latest before building. 
+  * see below for how to publish to Docker Hub
+
+When it finishes (takes a while), launch the container when the image is built/found ...
+
+> docker run -p 9330:9430 -p 9100:9000 -p 9331:8001 -d -P --name nodevista999 nodevista999 
+
+which has the CPRS/RPC Broker port, 9430, at 9330, FMQL at 9100, _vistalink_, 8001, at 9331.
+
+and you can login to the container with ...
+
+> docker exec -it -e COLUMNS=$COLUMNS -e LINES=$LINES -e TERM=$TERM --privileged nodevista999 bash
+
+__Note__: _docker run_ with _-v_ (named volume) for _home/nodevista/g_ should persist the database across docker runs.
+
+Extra - building dependent image _nodevista999cs_ that also runs __VAM Clinical Services__ ...
+
+> docker build --no-cache -f DockerfileCS -t nodevista999cs .
+
+and run with the following so that the _clinicalServices REST_ is available ...
+
+> docker run -p 9330:9430 -p 32:22 -p 9100:9000 -p 9030:9030 -d -P --name nodevista999cs nodevista999cs
+
+
+
 
 ## QA of nodeVISTA inside Docker
 
