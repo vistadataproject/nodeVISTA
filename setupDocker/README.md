@@ -5,7 +5,7 @@ Contents:
 * [Connecting Clients](#connecting-clients)
 * [Publishing Image](#publishing-image)
 * [Ending it all](#ending-it-all)
-* [Building the Image and Starting the Container](#building-the-image-and-starting-the-container)
+* [Optional: Building the Image and Starting the Container](#optional-building-the-image-and-starting-the-container)
 * [QA of nodeVISTA inside Docker](#qa-of-nodevista-inside-docker)
 * [Background on Docker](#background-on-docker)
 * [More to Investigate and Work](#more-to-investigate-and-work)
@@ -81,7 +81,7 @@ nodevista999                    latest ...
 
 
 
-## Building the Image and Starting the Container
+## Optional: Building the Image and Starting the Container
 
 The following describes how to build a nodeVISTA image and run it in a docker container on your Mac. It assumes that you have installed _Docker for Mac_ available from [docker.com](https://docs.docker.com/docker-for-mac/install/). 
 
