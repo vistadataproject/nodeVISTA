@@ -11,7 +11,7 @@ Contents:
 * [More to Investigate and Work](#more-to-investigate-and-work)
 
 
-__Note__: Docker for nodeVISTA is in a subdirectory of the nodeVISTA git (and not in the VAM Docker git) as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
+__Note__: This docker replaces nodeVISTA's _vagrantFile_ installation and configuration procedure.  Docker for nodeVISTA is in a subdirectory of the nodeVISTA git (and not in the VAM Docker git) as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
 
 ## Pull and Run the Docker Container
