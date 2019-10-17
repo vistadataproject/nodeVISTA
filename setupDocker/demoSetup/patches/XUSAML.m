@@ -149,7 +149,7 @@ FINDUSER() ;Function. Identify user
  S XARRY(8)=$G(^TMP("XUSAML",$J,"Name","urn:oasis:names:tc:xspa:2.0:subject:npi")) ;NPI
  ;S XARRY(9)=$G(^TMP("XUSAML",$J,"Name","SSN")) ;SSN is not part of STS Token specification v2.0
  ; S XARRY(10)=$G(^TMP("XUSAML",$J,"Name","upn")) ;Active Directory User Principle Name (UPN)
- S XARRY(10)="robert.alexander@vam.info"
+ S XARRY(10)="robert.alexander@vam.info"  ; VAMCG
  ; S XARRY(11)=$G(^TMP("XUSAML",$J,"Name","email")) ;E-Mail Address
  S XARRY(11)="robert.alexander@vam.info"  ; VAMCG
  ;S ???=$G(^TMP("XUSAML",$J,"Name","urn:oasis:names:tc:xacml:2.0:subject:role")) ;Role-based access is not yet implemented
