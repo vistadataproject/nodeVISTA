@@ -47,7 +47,7 @@ Web Clients:
 * To query the native Vista database:  http://localhost:9100/query
 * To access the _Rambler_ and Clinical Services REST: http://localhost:9030
 
-Thick Clients:
+Windows Clients:
 * The primary thick client of VISTA is a Windows application called CPRS.
 * To run on a Macintosh, CPRS must be installed and run within a Windows virtual machine using Virtualbox.  
 * Virtualbox networking must be set to 'Bridged' for the guest WindowsOS to match that of the MacOS host.
