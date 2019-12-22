@@ -26,6 +26,14 @@ if the container has previously been started, then restart:
 
 > docker restart nodevista999
 
+## Confirm docker container is running
+
+> docker ps
+
+## SSH to Docker container
+
+> docker exec -it nodevista999 bash
+
 
 
 ## Connecting Clients
@@ -36,7 +44,7 @@ Web Clients:
 * To access the _Rambler_ and Clinical Services REST: http://localhost:9030
 
 Thick Clients:
-* For CPRS running in a separate virtual machine on your Mac, you need to use actual network IP of the Mac. Get that IP address ...
+* The main thick client of VISTA is a Windows application called CPRS. To run on a Macintosh, CPRS must be installed and run within a Windows virtual machine using Virtualbox.  Networking must be bridged for Windows encironment to match that of the Macintosh host.
 
 ```text
 > ipconfig getifaddr en0
