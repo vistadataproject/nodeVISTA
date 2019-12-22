@@ -50,10 +50,10 @@ The main thick client of VISTA is a Windows application called the Computerized 
 From the Macintosh host, obtain IP address of the docker container <dockerIPaddress>:
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-From the Windows guest environment in Virtualbox, confirm it can reach the NodeVistA docker environment using bridged networking:
+From the Windows virtual machine, confirm it can reach the NodeVistA docker environment:
 > ping -r 5 <dockerIPaddress>
  
-Right-click on the CPRS icon and open its "Properties". Click on the "Shortcut" tab. In the "Target" field paste:
+Confirgure CPRS to use the correct IP and port address to reach nodeVISTA. Right-click on the CPRS icon and open its "Properties". Click on the "Shortcut" tab. In the "Target" field paste:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=<dockerIPaddress> p=9330 showrpcs
 
 
