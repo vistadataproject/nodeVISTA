@@ -51,10 +51,10 @@ From the Macintosh host, obtain the __docker IP address__ of nodeVISTA:
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
 From the Windows virtual machine, confirm it can reach the NodeVistA docker environment:
-> ping -r 5 *dockerIPaddress*
+> ping -r 5 *__dockerIPaddress__*
 
 Confirgure CPRS to use the correct IP and port address to reach nodeVISTA. Right-click on the CPRS icon and open its "Properties". Click on the "Shortcut" tab. In the "Target" field paste:
-> "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*dockerIPaddress* p=9330 showrpcs
+> "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
 
 
 
