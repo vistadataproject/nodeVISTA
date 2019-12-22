@@ -36,28 +36,23 @@ Optional: Access command line interface of Docker container
 
 ## Connecting Clients
 
-Thin Clients (Web):
+### Web Clients
 * To browse the native Vista Data Model: http://localhost:9100/schema
 * To query the native Vista database:  http://localhost:9100/query
 * To access the _Rambler_ and Clinical Services REST: http://localhost:9030
 
-Thick Clients (Windows):
+### Thick Clients
 * The primary thick client of VISTA is a Windows application called CPRS.
 * To run on a Macintosh, CPRS must be installed and run within a Windows virtual machine using Virtualbox.  
 * Virtualbox networking must be set to 'Bridged' so the guest Windows environment extends to and matches the host Macintosh environment
 
-From the Mac host, get IP address of the docker container:
-
+From the Macintosh host, get IP address of the docker container:
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-This <dockerIPaddress> is the one CPRS will connect to.
-
 From the Windows environment, confirm it can reach the NodeVistA docker environment:
-
 > ping -r 5 <dockerIPaddress>
  
 Then point CPRS to this docker IP Address and port _9330_:
-
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=<dockerIPaddress> p=9330 showrpcs
 
 
