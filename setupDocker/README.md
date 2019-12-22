@@ -37,6 +37,7 @@ if the container has previously been started, then restart:
 ## Get the IP address of the container
 
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
+
 This will be the IP address that the CPRS thick client will be connecting
 
 ## Connecting Clients
