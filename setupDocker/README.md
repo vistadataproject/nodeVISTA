@@ -47,14 +47,14 @@ Optional: Access command line interface of Docker container
 The main thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS). To run on a Macintosh, CPRS must be installed and run on a Windows virtual machine using Virtualbox.  Virtualbox networking must be set to 'Bridged' so the guest Windows environment extends to and matches the host Macintosh environment. Information on CPRS is [here](https://www.osehra.org/content/install-vistarpms-clients). Download CPRS [here](http://code.osehra.org/files/clients/OSEHRA_VistA/Installer_For_All_Clients/OSEHRA_VISTA_GUI_Demo.msi)
 
 
-From the Macintosh host, obtain IP address of the docker container <dockerIPaddress>:
+From the Macintosh host, obtain IP address of the docker container <<dockerIPaddress>>:
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
 From the Windows virtual machine, confirm it can reach the NodeVistA docker environment:
-> ping -r 5 <dockerIPaddress>
+> ping -r 5 <<dockerIPaddress>>
  
 Confirgure CPRS to use the correct IP and port address to reach nodeVISTA. Right-click on the CPRS icon and open its "Properties". Click on the "Shortcut" tab. In the "Target" field paste:
-> "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=<dockerIPaddress> p=9330 showrpcs
+> "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=<<dockerIPaddress>> p=9330 showrpcs
 
 
 
