@@ -41,8 +41,11 @@ Optional: Access command line interface of Docker container
 * To query the native Vista database:  http://localhost:9100/query
 * To access the _Rambler_ and Clinical Services REST: http://localhost:9030
 
+
+
 ### Thick Clients
-The primary thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS). To run on a Macintosh, CPRS must be installed and run on a Windows virtual machine using Virtualbox.  Virtualbox networking must be set to 'Bridged' so the guest Windows environment extends to and matches the host Macintosh environment.  To download the CPRS client click [here](https://www.osehra.org/content/install-vistarpms-clients)
+The main thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS). To run on a Macintosh, CPRS must be installed and run on a Windows virtual machine using Virtualbox.  Virtualbox networking must be set to 'Bridged' so the guest Windows environment extends to and matches the host Macintosh environment. Information on CPRS is [here](https://www.osehra.org/content/install-vistarpms-clients). Download CPRS [here](http://code.osehra.org/files/clients/OSEHRA_VistA/Installer_For_All_Clients/OSEHRA_VISTA_GUI_Demo.msi)
+
 
 From the Macintosh host, obtain IP address of the docker container <dockerIPaddress>:
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
