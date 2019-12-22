@@ -14,7 +14,7 @@ Contents:
 __Note__: This docker replaces nodeVISTA's _vagrantFile_ installation and configuration process.  Docker for nodeVISTA is in a subdirectory of the nodeVISTA git (and not in the VAM Docker git) as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
 
-# Pull and Run the Docker Container
+## Pull and Run the Docker Container
 
 > docker pull vistadataproject/nodevista999:latest
 
@@ -26,28 +26,28 @@ if the container has previously been started, then restart:
 
 > docker restart nodevista999
 
-### Confirm docker container is running
+Confirm docker container is running
 
 > docker ps
 
-### SSH to Docker container
+Optional: SSH to Docker container
 
 > docker exec -it nodevista999 bash
 
-### Get the IP address of the container
+Optional: Get the IP address of the container
 
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-This will be the IP address that the CPRS thick client will be connecting
+This will be the IP address that the thick client (CPRS) will connect to
 
-# Connecting Clients
+## Connecting Clients
 
-### Web Clients:
+Web Clients:
 * To browse the native Vista Data Model: http://localhost:9100/schema
 * To query the native Vista database:  http://localhost:9100/query
 * To access the _Rambler_ and Clinical Services REST: http://localhost:9030
 
-### Thick Clients:
+Thick Clients:
 * The primary thick client of VISTA is a Windows application called CPRS.
 * To run on a Macintosh, CPRS must be installed and run within a Windows virtual machine using Virtualbox.  
 * Virtualbox networking must be set to 'Bridged' for the guest WindowsOS to match that of the MacOS host.
@@ -58,7 +58,7 @@ Then point CPRS to this IP Address and port _9330_.
 
 
 
-# Publishing Image 
+## Publishing Image 
 
 to vistadataproject in Docker ...
 
@@ -69,7 +69,7 @@ to vistadataproject in Docker ...
 > docker push vistadataproject/nodevista999:b2
 ```
 
-# Ending it all
+## Ending it all
 
 Stop the container, prune it (and other stopped containers) and remove the image.
 
