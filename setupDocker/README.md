@@ -14,7 +14,7 @@ Contents:
 __Note__: This docker replaces nodeVISTA's _vagrantFile_ installation and configuration process.  Docker for nodeVISTA is in a subdirectory of the nodeVISTA git (and not in the VAM Docker git) as this Docker is largely a launcher for the dynamic building of an image as opposed to the executable assembly you find for _vicsServer_ or _Router_.
 
 
-## Pull and Run the Docker Container
+# Pull and Run the Docker Container
 
 > docker pull vistadataproject/nodevista999:latest
 
@@ -40,7 +40,7 @@ if the container has previously been started, then restart:
 
 This will be the IP address that the CPRS thick client will be connecting
 
-## Connecting Clients
+# Connecting Clients
 
 ### Web Clients:
 * To browse the native Vista Data Model: http://localhost:9100/schema
@@ -58,7 +58,7 @@ Then point CPRS to this IP Address and port _9330_.
 
 
 
-## Publishing Image 
+# Publishing Image 
 
 to vistadataproject in Docker ...
 
@@ -69,7 +69,7 @@ to vistadataproject in Docker ...
 > docker push vistadataproject/nodevista999:b2
 ```
 
-## Ending it all
+# Ending it all
 
 Stop the container, prune it (and other stopped containers) and remove the image.
 
