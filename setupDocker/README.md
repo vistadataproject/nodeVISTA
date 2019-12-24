@@ -51,15 +51,15 @@ The main Windows thick client of VISTA is the Computerized Patient Record System
 
 __Connect CPRS in WindowsVM to nodeVISTA in docker__
 
-In Virtualbox: set networking to 'Bridged'
+Virtualbox: set networking to 'Bridged'
 
-On the Mac host: Obtain the __docker IP address__ of nodeVISTA
+Mac host: Obtain the __docker IP address__ of nodeVISTA
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-In the Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
+Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
 > ping -r 5 *__dockerIPaddress__*
 
-In CPRS: Confirgure CPRS to connect to the nodeVISTA server:  Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, past the following in the "Target" field:
+CPRS: Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, past the following in the "Target" field:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
 
 
