@@ -45,21 +45,19 @@ Optional: Access command line interface of Docker container
 
 ### Thick Clients
 The main Windows thick client of VISTA is the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine (VM) using Virtualbox. To create a Windows VM using Virtualbox and install CPRS:
-* Download [Virtualbox](https://www.virtualbox.org) and install on the Mac or Linux host
-* Download [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) and install as a VM in Virtualbox
-* Download [CPRS](https://www.osehra.org/content/install-vistarpms-clients) and install witin the Windows VM
+* Download and install [Virtualbox](https://www.virtualbox.org) on the Mac or Linux host
+* Download and install [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) as a VM in Virtualbox
+* Download and install [CPRS](https://www.osehra.org/content/install-vistarpms-clients) witin the Windows VM
 
-__Connect CPRS in WindowsVM to nodeVISTA in docker__
+Set networking to 'Bridged' (in Virtualbox)
 
-Virtualbox: set networking to 'Bridged'
-
-Mac host: Obtain the __docker IP address__ of nodeVISTA
+Obtain the __docker IP address__ of nodeVISTA (On the Mac host)
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
+Confirm the Windows environment can reach the NodeVistA docker environment (in Windows VM)
 > ping -r 5 *__dockerIPaddress__*
 
-CPRS: Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, past the following in the "Target" field:
+Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, paste the following in the "Target" field:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
 
 
