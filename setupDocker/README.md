@@ -49,7 +49,7 @@ The main client of VISTA is a Windows application called the Computerized Patien
 * Install [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) as a VM in Virtualbox
 * Witin the Windows VM, download and install [CPRS](https://www.osehra.org/content/install-vistarpms-clients)
 
-__Connecting CPRS to nodeVISTA in docker__
+#### Connect CPRS in WindowsVM to nodeVISTA in docker
 __In Virtualbox:__ set networking to 'Bridged'
 
 __On the Mac host:__ Obtain the __docker IP address__ of nodeVISTA
