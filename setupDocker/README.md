@@ -53,10 +53,10 @@ On the Mac host: Obtain the __docker IP address__ of nodeVISTA
 In the Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
 > ping -r 5 *__dockerIPaddress__*
 
-Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, paste the following in the "Target" field:
+Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, paste the following in the "Target" field, with the correct *dockerIPaddress*:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
 
-Click on the CPRS client to login.  
+Double-click on the CPRS icon to open it and login.  
 
 
 
