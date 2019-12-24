@@ -44,15 +44,28 @@ Optional: Access command line interface of Docker container
 
 
 ### Thick Clients
-The main thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS). To run on a Macintosh, CPRS must be run on a Windows virtual machine using Virtualbox. Virtualbox networking must be set to 'Bridged' so the guest Windows environment extends to and matches the host Macintosh environment. These three components may be downloaded here: [Virtualbox](https://www.virtualbox.org), [Windows ISO](https://www.microsoft.com/en-us/software-download/windows10ISO), [CPRS](http://code.osehra.org/files/clients/OSEHRA_VistA/Installer_For_All_Clients/OSEHRA_VISTA_GUI_Demo.msi)
+The main client of VISTA is a Windows application called the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine using Virtualbox.
+
+__Create Windows VM__
+1. Download and install [Virtualbox](https://www.virtualbox.org) virtualization
+2. Download [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) installation disk
+3. Create a Windows VM in Virtualbox
+
+__Install CPRS__
+1. Download the OSEHRA [CPRS](https://www.osehra.org/content/install-vistarpms-clients) client
 
 
-From the Macintosh host, obtain the __docker IP address__ of nodeVISTA:
+__Network VM to Docker__
+1. Set networking in Virtualbox to 'Bridged'
+
+2. On the Macintosh host, obtain the __docker IP address__ of nodeVISTA:
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-From the Windows virtual machine, confirm it can reach the NodeVistA docker environment:
+3. Within the Windows virtual machine, confirm it can reach the NodeVistA docker environment:
 > ping -r 5 *__dockerIPaddress__*
 
+
+__Configure CPRS__
 Confirgure CPRS to use the correct IP and port address to reach nodeVISTA. Right-click on the CPRS icon and open its "Properties". Click on the "Shortcut" tab. In the "Target" field paste:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
 
