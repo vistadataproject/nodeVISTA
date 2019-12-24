@@ -44,24 +44,22 @@ Optional: Access command line interface of Docker container
 
 
 ### Thick Clients
-The main Windows thick client of VISTA is the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine (VM) using Virtualbox.  Networking in Virtualbox must be set to bridged so the host (Macintosh) netorking is the same as the guest (Windows) network.
+The main Windows thick client of VISTA is the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine (VM) using Virtualbox.  
 
-Download and install [Virtualbox](https://www.virtualbox.org) on the Mac or Linux host
+Download and install [Virtualbox](https://www.virtualbox.org) on the Macintosh host. Download and install [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) as a VM in Virtualbox. Finally, download and install [CPRS](https://www.osehra.org/content/install-vistarpms-clients) witin the Windows VM.
 
-Download and install [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) as a VM in Virtualbox
+In Virtualbox: Set networking to 'Bridged
 
-Download and install [CPRS](https://www.osehra.org/content/install-vistarpms-clients) witin the Windows VM
-
-Set networking to 'Bridged' (in Virtualbox)
-
-Obtain the __docker IP address__ of nodeVISTA (On the Mac host)
+On the Mac host: Obtain the __docker IP address__ of nodeVISTA
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-Confirm the Windows environment can reach the NodeVistA docker environment (in Windows VM)
+In the Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
 > ping -r 5 *__dockerIPaddress__*
 
 Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, paste the following in the "Target" field:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
+
+Click on the CPRS client to login.  
 
 
 
