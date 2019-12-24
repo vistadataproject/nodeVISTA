@@ -44,20 +44,22 @@ Optional: Access command line interface of Docker container
 
 
 ### Thick Clients
-The main Windows thick client of VISTA is the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine (VM) using Virtualbox
-
-Create a Windows VM using Virtualbox and install CPRS:
+The main Windows thick client of VISTA is the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine (VM) using Virtualbox. To create a Windows VM using Virtualbox and install CPRS:
 * Download [Virtualbox](https://www.virtualbox.org) and install on the Mac or Linux host
 * Download [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) and install as a VM in Virtualbox
 * Download [CPRS](https://www.osehra.org/content/install-vistarpms-clients) and install witin the Windows VM
 
-Connect CPRS in WindowsVM to nodeVISTA in docker
-* In Virtualbox: set networking to 'Bridged'
-* On the Mac host: Obtain the __docker IP address__ of nodeVISTA
+__Connect CPRS in WindowsVM to nodeVISTA in docker__
+
+In Virtualbox: set networking to 'Bridged'
+
+On the Mac host: Obtain the __docker IP address__ of nodeVISTA
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
-* In the Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
+
+In the Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
 > ping -r 5 *__dockerIPaddress__*
-* In CPRS: Confirgure CPRS to connect to the nodeVISTA server:  Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, past the following in the "Target" field:
+
+In CPRS: Confirgure CPRS to connect to the nodeVISTA server:  Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, past the following in the "Target" field:
 > "C:\Program Files (x86)\VistA\CPRS\CPRSChart.ext" CCOW=diable s=*__dockerIPaddress__* p=9330 showrpcs
 
 
