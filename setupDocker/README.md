@@ -73,9 +73,8 @@ to vistadataproject in Docker ...
 
 ## Ending it all
 
-Stop the container, prune it (and other stopped containers) and remove the image.
+Stop the container and prune it (and other stopped containers)
 
-List, stop and prune container:
 ```text
 > docker container list 
      CONTAINER ID        IMAGE ...
