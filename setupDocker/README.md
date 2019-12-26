@@ -80,9 +80,7 @@ List, stop and prune container:
 > docker container list 
      CONTAINER ID        IMAGE ...
      9db4b8e4380f        nodevista999 ...
-```
 
-```text
 > docker stop nodevista999   
 > docker container prune
      ... y
@@ -93,10 +91,7 @@ List and remove image:
 > docker image list
      REPOSITORY                    TAG ...
      nodevista999                  latest ...
-     ...
-```
 
-```text
 > docker image rm nodevista999
      ...
 ```
