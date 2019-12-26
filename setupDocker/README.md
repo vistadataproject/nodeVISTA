@@ -79,14 +79,23 @@ Stop the container, prune it (and other stopped containers) and remove the image
 > docker container list 
 CONTAINER ID        IMAGE ...
 9db4b8e4380f    nodevista999 ...
-...
+```
+
+```text
 > docker stop nodevista999   
 > docker container prune
 ... y
+```
+
+```text
 > docker image list
 REPOSITORY                    TAG ...
 nodevista999                    latest ...
 ...
+
+```
+
+```text
 > docker image rm nodevista999
 ...
 ```
