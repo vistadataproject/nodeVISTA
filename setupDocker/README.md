@@ -49,12 +49,18 @@ To run CPRS on a Macintosh or Linux machine, one requires a Windows virtual mach
 
 To configure the connection between the CPRS client and nodeVISTA server:
 
-__In Virtualbox:__ Set networking to 'Bridged
+__In Virtualbox:__ 
 
-__On the Mac host:__ Obtain the __docker IP address__ of nodeVISTA
+Set networking to 'Bridged
+
+__On the Mac host:__ 
+
+Obtain the __docker IP address__ of nodeVISTA
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-__In the Windows VM:__ Confirm the Windows environment can reach the NodeVistA docker environment
+__In the Windows VM:__ 
+
+Confirm the Windows environment can reach the NodeVistA docker environment
 > ping -r 5 *__dockerIPaddress__*
 
 Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, paste the following in the "Target" field, with the correct *dockerIPaddress*:
