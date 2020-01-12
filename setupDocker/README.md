@@ -43,7 +43,9 @@ Optional: Access command line interface of Docker container
 
 
 ### Thick Clients
-The main Windows thick client of VISTA is the Computerized Patient Record System (CPRS). To run on a Macintosh or Linux machine, CPRS must be run on a Windows virtual machine (VM) using Virtualbox. To create this Windows VM, install [Virtualbox](https://www.virtualbox.org), then download and install [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) within Virtualbox. Then download and install the [CPRS](https://www.osehra.org/content/install-vistarpms-clients) client in the Windows VM.  To configure the connection between CPRS and nodeVISTA:
+The main thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS).  CPRS may be downloaded and installed from [here](https://www.osehra.org/content/install-vistarpms-clients). 
+
+To run CPRS on a Macintosh or Linux machine, one may do this within a a Windows virtual machine. To creat a Windows virtual machine, download [Virtualbox](https://www.virtualbox.org), then download and install the Windows operating system from the  [Windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO) disk image. To configure the connection between CPRS and nodeVISTA:
 
 In Virtualbox: Set networking to 'Bridged
 
