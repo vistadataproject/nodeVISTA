@@ -43,14 +43,24 @@ Optional: Access command line interface of Docker container
 
 
 ### Thick Clients
-The main thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS).  To run CPRS on a Macintosh or Linux machine, one requires a Windows virtual machine. To create a Windows virtual machine, first download and install [Virtualbox](https://www.virtualbox.org), then download and install the Windows operating system from the Windows 10 disk image [here](https://www.microsoft.com/en-us/software-download/windows10ISO). Finally, download and install CPRS from [here](https://www.osehra.org/content/install-vistarpms-clients). To configure the connection between CPRS and nodeVISTA:
+The main thick client of VISTA is a Windows application called the Computerized Patient Record System (CPRS).  The windows installer for CPRS is [here](https://www.osehra.org/content/install-vistarpms-clients).
 
-In Virtualbox: Set networking to 'Bridged
+To run CPRS on a Macintosh or Linux machine, one requires a Windows virtual machine. To create a Windows virtual machine, first download and install [Virtualbox](https://www.virtualbox.org), then download and install the Windows operating system from the Windows 10 disk image [here](https://www.microsoft.com/en-us/software-download/windows10ISO). Finally, download and install CPRS installer within the virtualized Windows environment.  
 
-On the Mac host: Obtain the __docker IP address__ of nodeVISTA
+To configure the connection between the CPRS client and nodeVISTA server:
+
+__In Virtualbox:__ 
+
+Set networking to 'Bridged
+
+__On the Mac host:__ 
+
+Obtain the __docker IP address__ of nodeVISTA
 > sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" nodevista999
 
-In the Windows VM: Confirm the Windows environment can reach the NodeVistA docker environment
+__In the Windows VM:__ 
+
+Confirm the Windows environment can reach the NodeVistA docker environment
 > ping -r 5 *__dockerIPaddress__*
 
 Right-click on the CPRS icon and open its "Properties". In the "Shortcut" tab, paste the following in the "Target" field, with the correct *dockerIPaddress*:
